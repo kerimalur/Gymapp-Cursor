@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { User } from '@/types';
 import { supabase } from '@/lib/supabase';
+import { saveAllData } from '@/lib/supabaseSync';
 import { Session } from '@supabase/supabase-js';
 
 interface AuthState {
@@ -12,8 +13,8 @@ interface AuthState {
   setSyncing: (syncing: boolean) => void;
   signInWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
-  initializeAuth: (onDataLoaded?: (data: any) => void) => () => void;
-  syncData: (workoutStore: any, nutritionStore: any) => Promise<void>;
+  initializeAuth: () => () => void;
+  syncData: (workoutStore: any, nutritionStore: any, bodyWeightStore?: any) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -32,7 +33,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   signInWithGoogle: async () => {
     try {
       set({ loading: true });
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
@@ -65,7 +66,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
   
-  initializeAuth: (onDataLoaded) => {
+  initializeAuth: () => {
     let mounted = true;
 
     const initializeUser = async (session: Session | null) => {
@@ -74,32 +75,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           const user: User = {
             uid: session.user.id,
             email: session.user.email || '',
-            displayName: session.user.user_metadata?.name || 'User',
-            photoURL: session.user.user_metadata?.avatar_url,
+            displayName: session.user.user_metadata?.name || session.user.user_metadata?.full_name || 'User',
+            photoURL: session.user.user_metadata?.avatar_url || session.user.user_metadata?.picture,
             hasCompletedOnboarding: session.user.user_metadata?.hasCompletedOnboarding || false,
             createdAt: new Date(session.user.created_at),
           };
 
           if (mounted) {
             set({ user, loading: false });
-            
-            // Load user data
-            if (onDataLoaded) {
-              try {
-                // Fetch workout and nutrition data
-                const [workoutData, nutritionData] = await Promise.all([
-                  supabase.from('workout_sessions').select('*').eq('user_id', session.user.id),
-                  supabase.from('meals').select('*').eq('user_id', session.user.id),
-                ]);
-
-                onDataLoaded({
-                  workoutSessions: workoutData.data || [],
-                  meals: nutritionData.data || [],
-                });
-              } catch (error) {
-                console.error('Error loading user data:', error);
-              }
-            }
           }
         } else {
           if (mounted) {
@@ -130,16 +113,38 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     };
   },
   
-  syncData: async (workoutStore, nutritionStore) => {
+  syncData: async (workoutStore, nutritionStore, bodyWeightStore) => {
     const { user } = get();
     if (!user) return;
     
     try {
       set({ syncing: true });
       
-      // Sync would happen automatically through Zustand persistence
-      // and direct Supabase updates, but you can add batch syncs here if needed
-      
+      await saveAllData(
+        user.uid,
+        {
+          customExercises: workoutStore.customExercises || [],
+          trainingDays: workoutStore.trainingDays || [],
+          trainingPlans: workoutStore.trainingPlans || [],
+          workoutSessions: workoutStore.workoutSessions || [],
+        },
+        {
+          meals: nutritionStore.meals || [],
+          nutritionGoals: nutritionStore.nutritionGoals,
+          supplements: nutritionStore.supplements || [],
+          trackedMeals: nutritionStore.trackedMeals || [],
+          mealTemplates: nutritionStore.mealTemplates || [],
+          customFoods: nutritionStore.customFoods || [],
+          supplementPresets: nutritionStore.supplementPresets || [],
+          sleepEntries: nutritionStore.sleepEntries || [],
+          trackingSettings: nutritionStore.trackingSettings,
+        },
+        bodyWeightStore ? {
+          entries: bodyWeightStore.entries || [],
+          goal: bodyWeightStore.goal,
+        } : {}
+      );
+
       console.log('Data synced successfully');
     } catch (error) {
       console.error('Error syncing data:', error);

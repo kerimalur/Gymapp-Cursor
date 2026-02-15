@@ -340,7 +340,8 @@ function WorkoutContent() {
     // Update local store first
     useWorkoutStore.getState().setWorkoutSessions(updatedSessions);
     
-    // Force immediate sync to Firebase
+    // Sync will happen automatically via AuthProvider store subscription
+    // But also trigger an immediate sync for important data
     if (user) {
       try {
         const currentState = useWorkoutStore.getState();
@@ -349,6 +350,7 @@ function WorkoutContent() {
             trainingDays: currentState.trainingDays,
             trainingPlans: currentState.trainingPlans,
             workoutSessions: updatedSessions,
+            customExercises: currentState.customExercises,
           },
           {
             nutritionGoals: nutritionStore.nutritionGoals,
@@ -362,9 +364,9 @@ function WorkoutContent() {
             trackedMeals: nutritionStore.trackedMeals,
           }
         );
-        console.log('Training erfolgreich in Firebase gespeichert:', completedWorkout.id);
+        console.log('Training erfolgreich in Supabase gespeichert:', completedWorkout.id);
       } catch (error) {
-        console.error('Fehler beim Speichern in Firebase:', error);
+        console.error('Fehler beim Speichern in Supabase:', error);
         toast.error('Fehler beim Speichern in der Cloud');
       }
     }

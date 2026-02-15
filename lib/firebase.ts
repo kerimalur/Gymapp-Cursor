@@ -1,8 +1,4 @@
-// ⚠️ DEPRECATED: Firebase has been migrated to Supabase
-// This file is kept for reference only. Use lib/supabase.ts instead.
-// All Firebase functionality has been replaced with Supabase equivalents.
-
+// DEPRECATED: This file is no longer needed.
+// All functionality has been moved to lib/supabase.ts
+// This file exists only as a placeholder and can be safely deleted.
 export const deprecated = true;
-
-// Migration complete - all Firebase code has been moved to Supabase
-// If you see imports from this file, they need to be updated to use lib/supabase.ts

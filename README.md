@@ -1,6 +1,6 @@
 # GymApp Pro - Professionelle Fitness Tracking Software
 
-Eine moderne, umfassende Fitness- und Ernährungs-Tracking-App, entwickelt mit Next.js, TypeScript, Tailwind CSS und Firebase.
+Eine moderne, umfassende Fitness- und Ernährungs-Tracking-App, entwickelt mit Next.js, TypeScript, Tailwind CSS und Supabase.
 
 ## 🚀 Features
 
@@ -47,7 +47,7 @@ Eine moderne, umfassende Fitness- und Ernährungs-Tracking-App, entwickelt mit N
 - **Framework**: Next.js 14 (App Router)
 - **Sprache**: TypeScript
 - **Styling**: Tailwind CSS
-- **Backend**: Firebase (Authentication, Firestore)
+- **Backend**: Supabase (Authentication, PostgreSQL)
 - **State Management**: Zustand
 - **Charts**: Recharts
 - **Animationen**: Framer Motion
@@ -67,10 +67,13 @@ cd gymapp-cursor
 npm install
 ```
 
-3. Firebase-Konfiguration einrichten:
+3. Supabase-Konfiguration einrichten:
    - Erstelle eine `.env.local` Datei im Root-Verzeichnis
-   - Kopiere den Inhalt aus `.env.local.example`
-   - Füge deine Firebase-Konfigurationsdaten ein
+   - Füge deine Supabase URL und Anon Key ein:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+   ```
 
 4. Development-Server starten:
 ```bash
@@ -82,22 +85,16 @@ npm run dev
 http://localhost:3000
 ```
 
-## 🔧 Firebase Setup
+## 🔧 Supabase Setup
 
-1. Erstelle ein neues Firebase-Projekt auf [firebase.google.com](https://firebase.google.com)
+1. Erstelle ein neues Supabase-Projekt auf [supabase.com](https://supabase.com)
 2. Aktiviere Authentication (Google Sign-In)
-3. Erstelle eine Firestore-Datenbank
-4. Kopiere die Firebase-Konfiguration in deine `.env.local`
+3. Führe das SQL-Schema aus `lib/supabase.sql` im SQL Editor aus
+4. Kopiere die Supabase-URL und Anon Key in deine `.env.local`
 
-### Firestore Collections:
+### Datenbank-Tabellen:
 
-- **users**: Benutzerprofile
-- **trainingDays**: Trainingstage
-- **trainingPlans**: Trainingspläne
-- **workoutSessions**: Trainingseinheiten
-- **meals**: Mahlzeiten
-- **savedMeals**: Gespeicherte Mahlzeiten
-- **supplements**: Supplements
+- **user_data**: Alle Benutzerdaten (JSONB - Workout, Ernährung, Körpergewicht)
 
 ## 📱 App-Struktur
 
@@ -125,7 +122,8 @@ gymapp-cursor/
 │   ├── exerciseDatabase.ts # Übungsdatenbank
 │   └── foodDatabase.ts     # Lebensmittel-Datenbank
 ├── lib/                     # Utility-Funktionen
-│   └── firebase.ts         # Firebase-Konfiguration
+│   ├── supabase.ts          # Supabase-Client
+│   └── supabaseSync.ts      # Daten-Synchronisation
 ├── store/                   # Zustand-Stores
 │   ├── useAuthStore.ts
 │   ├── useWorkoutStore.ts
@@ -149,7 +147,7 @@ gymapp-cursor/
 1. Repository zu GitHub pushen
 2. Auf [vercel.com](https://vercel.com) anmelden
 3. Neues Projekt erstellen und Repository verbinden
-4. Environment Variables hinzufügen (Firebase-Config)
+4. Environment Variables hinzufügen (Supabase URL & Anon Key)
 5. Deployen!
 
 ## 📝 Lizenz
@@ -164,7 +162,7 @@ Entwickelt für persönliche Fitness-Ziele.
 
 - Icons von [Lucide](https://lucide.dev/)
 - UI-Inspiration von modernen Fitness-Apps
-- Firebase für die Backend-Infrastruktur
+- Supabase für die Backend-Infrastruktur
 
 ---
 

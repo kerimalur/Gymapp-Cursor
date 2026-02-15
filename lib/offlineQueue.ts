@@ -1,7 +1,7 @@
 /**
- * Offline Queue for Firebase Sync
+ * Offline Queue for Supabase Sync
  *
- * This module implements a persistent queue for Firebase operations.
+ * This module implements a persistent queue for Supabase operations.
  * If a sync fails (network error, crash, etc.), operations are queued
  * and automatically retried when the connection is restored.
  */
@@ -14,7 +14,7 @@ interface QueuedOperation {
   retryCount: number;
 }
 
-const QUEUE_STORAGE_KEY = 'firebase-sync-queue';
+const QUEUE_STORAGE_KEY = 'supabase-sync-queue';
 const MAX_RETRIES = 5;
 
 /**

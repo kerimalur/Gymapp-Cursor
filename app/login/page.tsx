@@ -27,13 +27,7 @@ export default function LoginPage() {
       router.push('/dashboard');
     } catch (error: any) {
       console.error('Login error:', error);
-      if (error.code === 'auth/popup-closed-by-user') {
-        toast.error('Anmeldung abgebrochen');
-      } else if (error.code === 'auth/popup-blocked') {
-        toast.error('Popup wurde blockiert. Bitte erlaube Popups für diese Seite.');
-      } else {
-        toast.error('Anmeldung fehlgeschlagen');
-      }
+      toast.error(error.message || 'Anmeldung fehlgeschlagen');
     } finally {
       setIsSigningIn(false);
     }

@@ -1,22 +1,28 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-// Create Supabase client - will be valid only if env vars are set
-// During build time or without env vars, this will be a dummy client
-let supabaseClient: ReturnType<typeof createClient> | null = null;
+// Create Supabase client
+// During build time env vars may be missing, so we handle that gracefully
+let supabaseClient: SupabaseClient | null = null;
 
 if (supabaseUrl && supabaseAnonKey) {
   try {
-    supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+    supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true,
+      },
+    });
   } catch (error) {
     console.warn('Failed to initialize Supabase client', error);
   }
 }
 
-// Export a safe client that won't crash if not initialized
-export const supabase = supabaseClient || {
+// Fallback mock for build time (when env vars are not available)
+const mockClient = {
   auth: {
     getUser: async () => ({ data: { user: null }, error: new Error('Supabase not initialized') }),
     getSession: async () => ({ data: { session: null }, error: new Error('Supabase not initialized') }),
@@ -25,14 +31,20 @@ export const supabase = supabaseClient || {
     onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
   },
   from: () => ({
-    select: () => ({ eq: () => ({ data: null, error: new Error('Supabase not initialized') }) }),
+    select: () => ({ eq: () => ({ data: null, error: new Error('Supabase not initialized'), single: async () => ({ data: null, error: new Error('Supabase not initialized') }) }) }),
     insert: () => ({ select: () => ({ single: async () => ({ data: null, error: new Error('Supabase not initialized') }) }) }),
     update: () => ({ eq: () => ({ data: null, error: new Error('Supabase not initialized') }) }),
     delete: () => ({ eq: () => ({ data: null, error: new Error('Supabase not initialized') }) }),
+    upsert: async () => ({ data: null, error: new Error('Supabase not initialized') }),
   }),
-} as any;
+} as unknown as SupabaseClient;
 
-// Auth helper
+export const supabase: SupabaseClient = supabaseClient || mockClient;
+
+// Check if Supabase is properly initialized
+export const isSupabaseReady = !!supabaseClient;
+
+// Auth helpers
 export async function getCurrentUser() {
   const { data: { user } } = await supabase.auth.getUser();
   return user;
