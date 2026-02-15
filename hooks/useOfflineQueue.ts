@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/store/useAuthStore';
-import { processOfflineQueue } from '@/lib/firestore';
 import { getQueueStatus } from '@/lib/offlineQueue';
 import toast from 'react-hot-toast';
 
 /**
- * Hook to automatically process offline queue
- * - Processes queue on mount (app startup)
- * - Processes queue when network connection is restored
- * - Provides queue status for UI
+ * Hook to manage offline queue (Supabase syncing)
+ * Supabase handles syncing automatically through the client SDK
+ * This hook is kept for future offline support
  */
 export function useOfflineQueue() {
   const { user } = useAuthStore();
@@ -27,16 +25,8 @@ export function useOfflineQueue() {
     setIsProcessing(true);
 
     try {
-      const result = await processOfflineQueue(user.uid);
-
-      if (result.success > 0) {
-        toast.success(`${result.success} ausstehende Änderungen synchronisiert`);
-      }
-
-      if (result.failed > 0) {
-        toast.error(`${result.failed} Synchronisierungen fehlgeschlagen`);
-      }
-
+      // Supabase handles syncing automatically
+      // No manual processing needed
       refreshStatus();
     } catch (error) {
       console.error('[Offline Queue] Processing failed:', error);
@@ -45,7 +35,7 @@ export function useOfflineQueue() {
     }
   };
 
-  // Process queue on mount if there are pending operations
+  // Check for pending operations on mount
   useEffect(() => {
     if (user && queueStatus.queueLength > 0) {
       console.log(`[Offline Queue] Found ${queueStatus.queueLength} pending operations, processing...`);

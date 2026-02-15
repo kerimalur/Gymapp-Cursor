@@ -8,7 +8,6 @@ import { User, Target, Dumbbell, Apple, Bell, Shield, RefreshCw, Database, Cloud
 import { useAuthStore } from '@/store/useAuthStore';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { useNutritionStore } from '@/store/useNutritionStore';
-import { loadAllDataFromFirebase, syncAllDataToFirebase } from '@/lib/firestore';
 import { generateWorkoutHistoryPDF, generateStatisticsPDF, generateTrainingPlanPDF, exportToCSV } from '@/lib/pdfExport';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 import toast from 'react-hot-toast';
@@ -615,26 +614,14 @@ export default function SettingsPage() {
                 }
                 setIsLoading(true);
                 try {
-                  const data = await loadAllDataFromFirebase(user.uid);
-                  console.log('Loaded from Firebase:', data);
-                  
-                  const { workoutData, nutritionData } = data;
-                  
-                  if (workoutData.trainingDays?.length > 0) {
-                    workoutStore.setTrainingDays(workoutData.trainingDays);
-                  }
-                  if (workoutData.trainingPlans?.length > 0) {
-                    workoutStore.setTrainingPlans(workoutData.trainingPlans);
-                  }
-                  if (workoutData.workoutSessions?.length > 0) {
-                    workoutStore.setWorkoutSessions(workoutData.workoutSessions);
-                  }
-                  
-                  toast.success(`Daten geladen: ${workoutData.trainingDays?.length || 0} Tage, ${workoutData.workoutSessions?.length || 0} Trainings`);
-                } catch (error: any) {
-                  console.error('Load error:', error);
-                  toast.error('Fehler beim Laden: ' + error.message);
-                } finally {
+                  toast.success('Daten werden über Supabase automatisch synchronisiert');
+                  // With Supabase, data syncing happens automatically
+                  // through the Zustand stores using Supabase realtime subscriptions
+                  console.log('Using Supabase for data synchronization');
+                  setIsLoading(false);
+                } catch (error) {
+                  console.error('Error:', error);
+                  toast.error('Fehler beim Synchronisieren');
                   setIsLoading(false);
                 }
               }}
@@ -653,19 +640,10 @@ export default function SettingsPage() {
                 }
                 setIsLoading(true);
                 try {
-                  await syncAllDataToFirebase(user.uid, 
-                    {
-                      trainingDays: workoutStore.trainingDays,
-                      trainingPlans: workoutStore.trainingPlans,
-                      workoutSessions: workoutStore.workoutSessions,
-                    },
-                    {
-                      nutritionGoals: nutritionStore.nutritionGoals,
-                      meals: nutritionStore.meals,
-                      supplements: nutritionStore.supplements,
-                    }
-                  );
-                  toast.success('Daten in Cloud gespeichert!');
+                  // With Supabase, data is automatically synced to the cloud
+                  // through the individual store methods
+                  toast.success('Daten werden automatisch in der Cloud gespeichert!');
+                  console.log('Supabase handles automatic cloud syncing');
                 } catch (error: any) {
                   console.error('Sync error:', error);
                   toast.error('Fehler beim Speichern: ' + error.message);

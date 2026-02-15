@@ -12,8 +12,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
     "date-fns": "^3.2.0",
-    "firebase": "^12.7.0",
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.311.0",
     "next": "^14.1.0",
