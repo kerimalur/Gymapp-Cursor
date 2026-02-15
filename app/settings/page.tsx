@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { User, Target, Dumbbell, Apple, Bell, Shield, RefreshCw, Database, Cloud, Clock, FileText, Download, FileSpreadsheet, History, BarChart3 } from 'lucide-react';
