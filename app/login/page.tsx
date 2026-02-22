@@ -53,7 +53,7 @@ export default function LoginPage() {
               <Dumbbell className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              GymApp Pro
+              gym app Kerim
             </h1>
             <p className="text-gray-600 text-lg">
               Dein professioneller Fitness Tracker
