@@ -27,6 +27,8 @@ const mockClient = {
     getUser: async () => ({ data: { user: null }, error: new Error('Supabase not initialized') }),
     getSession: async () => ({ data: { session: null }, error: new Error('Supabase not initialized') }),
     signInWithOAuth: async () => ({ data: null, error: new Error('Supabase not initialized') }),
+    signInWithPassword: async () => ({ data: null, error: new Error('Supabase not initialized') }),
+    signUp: async () => ({ data: { user: null, session: null }, error: new Error('Supabase not initialized') }),
     signOut: async () => ({ error: new Error('Supabase not initialized') }),
     onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
   },

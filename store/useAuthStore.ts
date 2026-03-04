@@ -11,7 +11,8 @@ interface AuthState {
   setUser: (user: User | null) => void;
   setLoading: (loading: boolean) => void;
   setSyncing: (syncing: boolean) => void;
-  signInWithGoogle: () => Promise<void>;
+  signInWithEmail: (email: string, password: string) => Promise<void>;
+  signUpWithEmail: (email: string, password: string) => Promise<{ needsEmailConfirmation: boolean }>;
   logout: () => Promise<void>;
   initializeAuth: () => () => void;
   syncData: (workoutStore: any, nutritionStore: any, bodyWeightStore?: any) => Promise<void>;
@@ -30,19 +31,41 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   
   setSyncing: (syncing) => set({ syncing }),
   
-  signInWithGoogle: async () => {
+  signInWithEmail: async (email, password) => {
     try {
       set({ loading: true });
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
-        },
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
 
       if (error) throw error;
     } catch (error: any) {
-      console.error('Google sign-in error:', error);
+      console.error('Email sign-in error:', error);
+      set({ loading: false });
+      throw error;
+    }
+  },
+
+  signUpWithEmail: async (email, password) => {
+    try {
+      set({ loading: true });
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
+      if (!data.session) {
+        set({ loading: false });
+      }
+
+      return {
+        needsEmailConfirmation: !data.session,
+      };
+    } catch (error: any) {
+      console.error('Email sign-up error:', error);
       set({ loading: false });
       throw error;
     }
