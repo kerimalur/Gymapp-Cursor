@@ -3,6 +3,7 @@
 import { Sidebar } from './Sidebar';
 import { useState, useEffect } from 'react';
 import { useOfflineQueue } from '@/hooks/useOfflineQueue';
+import { FloatingQuickActions } from '@/components/ui/FloatingQuickActions';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -88,6 +89,8 @@ export function DashboardLayout({ children, showSidebar = true }: DashboardLayou
           {children}
         </main>
       </div>
+
+      {showSidebar && <FloatingQuickActions />}
     </div>
   );
 }

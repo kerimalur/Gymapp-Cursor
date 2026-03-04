@@ -104,11 +104,6 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
       return;
     }
     
-    if (planDays.length === 0) {
-      toast.error('Bitte füge mindestens einen Trainingstag hinzu');
-      return;
-    }
-
     setLoading(true);
     
     const updatedPlan: TrainingPlan = {
@@ -117,7 +112,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
       sessionsPerWeek: planDays.length,
       trainingDays: planDays.map(d => d.trainingDayId),
       isActive,
-      currentDayIndex: Math.min(currentDayIndex, planDays.length - 1),
+      currentDayIndex: planDays.length > 0 ? Math.min(currentDayIndex, planDays.length - 1) : 0,
       // Advanced settings
       description,
       restDaysBetweenSessions,
@@ -170,7 +165,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
           </button>
           <button
             onClick={handleSave}
-            disabled={loading || !name.trim() || planDays.length === 0}
+            disabled={loading || !name.trim()}
             className="px-6 py-2.5 rounded-xl font-medium text-white bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 shadow-lg shadow-violet-500/25 transition-all disabled:opacity-50 disabled:shadow-none"
           >
             {loading ? 'Speichern...' : 'Änderungen speichern'}
@@ -557,3 +552,4 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
     </Modal>
   );
 }
+

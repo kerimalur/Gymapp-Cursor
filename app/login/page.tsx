@@ -5,12 +5,13 @@ export const dynamic = 'force-dynamic';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/useAuthStore';
-import { Dumbbell } from 'lucide-react';
+import { Dumbbell, BarChart3, CalendarDays, HeartPulse } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const router = useRouter();
   const { user, loading, signInWithEmail, signUpWithEmail } = useAuthStore();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [email, setEmail] = useState('');
@@ -51,12 +52,12 @@ export default function LoginPage() {
           setPassword('');
           setConfirmPassword('');
         } else {
-          toast.success('Konto erstellt und angemeldet!');
+          toast.success('Konto erstellt und angemeldet');
           router.push('/dashboard');
         }
       } else {
         await signInWithEmail(normalizedEmail, password);
-        toast.success('Erfolgreich angemeldet!');
+        toast.success('Erfolgreich angemeldet');
         router.push('/dashboard');
       }
     } catch (error: any) {
@@ -69,71 +70,67 @@ export default function LoginPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-500 via-primary-600 to-purple-700">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700">
+        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-white" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-500 via-primary-600 to-purple-700">
-      <div className="absolute inset-0 bg-black/10"></div>
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700">
+      <div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
+      <div className="absolute -bottom-16 -right-8 h-72 w-72 rounded-full bg-violet-300/20 blur-3xl" />
 
-      <div className="relative z-10 w-full max-w-md px-6">
-        <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 animate-fade-in">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full gradient-primary mb-4">
-              <Dumbbell className="w-10 h-10 text-white" />
-            </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">gym app Kerim</h1>
-            <p className="text-gray-600 text-lg">Dein professioneller Fitness Tracker</p>
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-6xl grid-cols-1 gap-8 px-6 py-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="rounded-3xl border border-white/20 bg-white/10 p-7 backdrop-blur-sm lg:p-10">
+          <div className="mb-7 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-blue-700 shadow-lg">
+            <Dumbbell className="h-9 w-9" />
           </div>
+          <h1 className="text-4xl font-black tracking-tight text-white md:text-5xl">Gym App Kerim</h1>
 
-          <div className="space-y-3 mb-8">
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <div className="w-2 h-2 rounded-full bg-primary-600"></div>
-              </div>
-              <p className="text-gray-700">Verfolge deine Workouts und Fortschritte</p>
+          <div className="mt-8 grid grid-cols-3 gap-3">
+            <div className="rounded-2xl border border-white/20 bg-white/15 p-4 text-white">
+              <BarChart3 className="mb-3 h-7 w-7" />
+              <div className="h-2 w-full rounded bg-white/20" />
             </div>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <div className="w-2 h-2 rounded-full bg-primary-600"></div>
-              </div>
-              <p className="text-gray-700">Intelligentes Regenerations-Tracking</p>
+            <div className="rounded-2xl border border-white/20 bg-white/15 p-4 text-white">
+              <CalendarDays className="mb-3 h-7 w-7" />
+              <div className="h-2 w-full rounded bg-white/20" />
             </div>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <div className="w-2 h-2 rounded-full bg-primary-600"></div>
-              </div>
-              <p className="text-gray-700">Cloud-Sync - Deine Daten sind ueberall verfuegbar</p>
+            <div className="rounded-2xl border border-white/20 bg-white/15 p-4 text-white">
+              <HeartPulse className="mb-3 h-7 w-7" />
+              <div className="h-2 w-full rounded bg-white/20" />
             </div>
           </div>
+        </div>
+
+        <div className="rounded-3xl bg-white p-8 shadow-2xl md:p-10">
+          <h2 className="mb-6 text-2xl font-bold text-slate-900">{isRegisterMode ? 'Registrieren' : 'Anmelden'}</h2>
 
           <form onSubmit={handleEmailAuth} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">E-Mail</label>
+              <label className="mb-1 block text-sm font-semibold text-slate-700">E-Mail</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
                 placeholder="deinename@email.com"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none transition-colors"
+                className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
                 disabled={isSubmitting}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Passwort</label>
+              <label className="mb-1 block text-sm font-semibold text-slate-700">Passwort</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete={isRegisterMode ? 'new-password' : 'current-password'}
                 placeholder={isRegisterMode ? 'Mindestens 6 Zeichen' : 'Dein Passwort'}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none transition-colors"
+                className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
                 disabled={isSubmitting}
                 required
               />
@@ -141,14 +138,14 @@ export default function LoginPage() {
 
             {isRegisterMode && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Passwort bestaetigen</label>
+                <label className="mb-1 block text-sm font-semibold text-slate-700">Passwort bestaetigen</label>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   autoComplete="new-password"
                   placeholder="Passwort wiederholen"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none transition-colors"
+                  className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
                   disabled={isSubmitting}
                   required
                 />
@@ -158,14 +155,16 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-3 bg-primary-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 hover:bg-primary-700 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-6 py-3.5 font-semibold text-white transition-all hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isSubmitting ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-              ) : null}
+              {isSubmitting ? <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-white" /> : null}
               {isSubmitting
-                ? (isRegisterMode ? 'Konto wird erstellt...' : 'Wird angemeldet...')
-                : (isRegisterMode ? 'Konto erstellen' : 'Mit E-Mail anmelden')}
+                ? isRegisterMode
+                  ? 'Konto wird erstellt...'
+                  : 'Wird angemeldet...'
+                : isRegisterMode
+                  ? 'Konto erstellen'
+                  : 'Einloggen'}
             </button>
           </form>
 
@@ -177,21 +176,12 @@ export default function LoginPage() {
               setConfirmPassword('');
             }}
             disabled={isSubmitting}
-            className="w-full mt-4 text-sm font-medium text-primary-700 hover:text-primary-800 disabled:opacity-50"
+            className="mt-4 w-full text-sm font-medium text-blue-700 hover:text-blue-800 disabled:opacity-50"
           >
-            {isRegisterMode
-              ? 'Hast du schon ein Konto? Jetzt anmelden'
-              : 'Noch kein Konto? Jetzt registrieren'}
+            {isRegisterMode ? 'Schon ein Konto? Jetzt anmelden' : 'Noch kein Konto? Jetzt registrieren'}
           </button>
-
-          <p className="text-center text-sm text-gray-500 mt-6">
-            Deine Daten werden sicher in der Cloud gespeichert
-          </p>
         </div>
       </div>
-
-      <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"></div>
     </div>
   );
 }

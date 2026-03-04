@@ -81,6 +81,11 @@ interface NutritionState {
   trackedMeals: TrackedMeal[];
   setFoodItems: (items: FoodItem[]) => void;
   setMeals: (meals: Meal[]) => void;
+  setMealTemplates: (templates: MealTemplate[]) => void;
+  setCustomFoods: (foods: CustomFood[]) => void;
+  setSupplementPresets: (presets: SupplementPreset[]) => void;
+  setSleepEntries: (entries: SleepEntry[]) => void;
+  setTrackingSettings: (settings: TrackingSettings) => void;
   addMeal: (meal: Meal) => void;
   setSavedMeals: (meals: SavedMeal[]) => void;
   setNutritionGoals: (goals: NutritionGoals) => void;
@@ -143,6 +148,11 @@ export const useNutritionStore = create<NutritionState>()(
       },
       setFoodItems: (foodItems) => set({ foodItems }),
       setMeals: (meals) => set({ meals }),
+      setMealTemplates: (mealTemplates) => set({ mealTemplates }),
+      setCustomFoods: (customFoods) => set({ customFoods }),
+      setSupplementPresets: (supplementPresets) => set({ supplementPresets }),
+      setSleepEntries: (sleepEntries) => set({ sleepEntries }),
+      setTrackingSettings: (trackingSettings) => set({ trackingSettings }),
       addMeal: (meal) => set((state) => ({ meals: [...state.meals, meal] })),
       setSavedMeals: (savedMeals) => set({ savedMeals }),
       setNutritionGoals: (nutritionGoals) => set({ nutritionGoals }),

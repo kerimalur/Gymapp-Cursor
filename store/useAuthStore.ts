@@ -13,9 +13,10 @@ interface AuthState {
   setSyncing: (syncing: boolean) => void;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   signUpWithEmail: (email: string, password: string) => Promise<{ needsEmailConfirmation: boolean }>;
+  updateProfile: (updates: { displayName?: string }) => Promise<void>;
   logout: () => Promise<void>;
   initializeAuth: () => () => void;
-  syncData: (workoutStore: any, nutritionStore: any, bodyWeightStore?: any) => Promise<void>;
+  syncData: (workoutStore: any, nutritionStore: any, bodyWeightStore?: any, settingsData?: any) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -70,6 +71,52 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       throw error;
     }
   },
+
+  updateProfile: async ({ displayName }) => {
+    try {
+      const metadata: Record<string, any> = {};
+      if (displayName !== undefined) {
+        metadata.name = displayName;
+        metadata.full_name = displayName;
+      }
+
+      const { data, error } = await supabase.auth.updateUser({
+        data: metadata,
+      });
+
+      if (error) throw error;
+
+      if (displayName !== undefined) {
+        const currentUser = get().user;
+        if (currentUser) {
+          set({
+            user: {
+              ...currentUser,
+              displayName: displayName || currentUser.displayName,
+            },
+          });
+        } else if (data.user) {
+          set({
+            user: {
+              uid: data.user.id,
+              email: data.user.email || '',
+              displayName:
+                data.user.user_metadata?.name ||
+                data.user.user_metadata?.full_name ||
+                'User',
+              photoURL: data.user.user_metadata?.avatar_url || data.user.user_metadata?.picture,
+              hasCompletedOnboarding: data.user.user_metadata?.hasCompletedOnboarding || false,
+              createdAt: new Date(data.user.created_at),
+            },
+            loading: false,
+          });
+        }
+      }
+    } catch (error: any) {
+      console.error('Profile update error:', error);
+      throw error;
+    }
+  },
   
   logout: async () => {
     try {
@@ -82,6 +129,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         localStorage.removeItem('workout-storage');
         localStorage.removeItem('nutrition-storage');
         localStorage.removeItem('body-weight-storage');
+        localStorage.removeItem('app-settings-storage');
       }
     } catch (error) {
       console.error('Logout error:', error);
@@ -136,7 +184,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     };
   },
   
-  syncData: async (workoutStore, nutritionStore, bodyWeightStore) => {
+  syncData: async (workoutStore, nutritionStore, bodyWeightStore, settingsData) => {
     const { user } = get();
     if (!user) return;
     
@@ -146,14 +194,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       await saveAllData(
         user.uid,
         {
+          exercises: workoutStore.exercises || [],
           customExercises: workoutStore.customExercises || [],
           trainingDays: workoutStore.trainingDays || [],
           trainingPlans: workoutStore.trainingPlans || [],
           workoutSessions: workoutStore.workoutSessions || [],
+          workoutSettings: workoutStore.workoutSettings,
         },
         {
+          foodItems: nutritionStore.foodItems || [],
           meals: nutritionStore.meals || [],
+          savedMeals: nutritionStore.savedMeals || [],
           nutritionGoals: nutritionStore.nutritionGoals,
+          dailyTracking: nutritionStore.dailyTracking,
           supplements: nutritionStore.supplements || [],
           trackedMeals: nutritionStore.trackedMeals || [],
           mealTemplates: nutritionStore.mealTemplates || [],
@@ -165,7 +218,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         bodyWeightStore ? {
           entries: bodyWeightStore.entries || [],
           goal: bodyWeightStore.goal,
-        } : {}
+        } : {},
+        settingsData || {}
       );
 
       console.log('Data synced successfully');

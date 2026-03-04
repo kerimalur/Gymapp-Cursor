@@ -58,11 +58,6 @@ const icons = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
     </svg>
   ),
-  plates: (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18m9-9H3" />
-    </svg>
-  ),
 };
 
 const navigation = [
@@ -71,9 +66,7 @@ const navigation = [
   { name: 'Statistiken', href: '/statistics', icon: 'statistics', highlight: false },
   { name: 'Muskelbalance', href: '/muscle-balance', icon: 'statistics', highlight: false },
   { name: 'Regeneration', href: '/recovery', icon: 'recovery', highlight: false },
-  { name: 'Kalender', href: '/calendar', icon: 'calendar', highlight: false },
-  { name: 'Scheiben-Rechner', href: '/plate-calculator', icon: 'plates', highlight: false },
-  { name: 'Ernährung', href: '/nutrition', icon: 'nutrition', highlight: false },
+  { name: 'Kalender', href: '/calendar', icon: 'calendar', highlight: false },  { name: 'Ernährung', href: '/nutrition', icon: 'nutrition', highlight: false },
 ] as const;
 
 interface SidebarProps {
@@ -278,3 +271,4 @@ export function Sidebar({ mobileOpen = false, onMobileClose }: SidebarProps) {
     </>
   );
 }
+

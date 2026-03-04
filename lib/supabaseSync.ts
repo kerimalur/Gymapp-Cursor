@@ -136,13 +136,45 @@ export async function saveBodyWeightData(userId: string, bodyWeightData: any): P
 }
 
 /**
+ * Save app settings to Supabase
+ */
+export async function saveSettingsData(userId: string, settingsData: any): Promise<boolean> {
+  if (!isSupabaseReady) return false;
+
+  try {
+    const { error } = await supabase
+      .from('user_data')
+      .upsert(
+        {
+          user_id: userId,
+          settings: settingsData,
+          updated_at: new Date().toISOString(),
+        },
+        {
+          onConflict: 'user_id',
+        }
+      );
+
+    if (error) {
+      console.error('Error saving settings data:', error);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error('Error saving settings data:', error);
+    return false;
+  }
+}
+
+/**
  * Save all store data to Supabase at once
  */
 export async function saveAllData(
   userId: string,
   workoutData: any,
   nutritionData: any,
-  bodyWeightData: any
+  bodyWeightData: any,
+  settingsData: any = {}
 ): Promise<boolean> {
   if (!isSupabaseReady) return false;
 
@@ -154,6 +186,7 @@ export async function saveAllData(
         workout_data: workoutData,
         nutrition_data: nutritionData,
         body_weight_data: bodyWeightData,
+        settings: settingsData,
         updated_at: new Date().toISOString(),
       }, {
         onConflict: 'user_id',
@@ -180,6 +213,7 @@ export function debouncedSync(
     workoutData: any;
     nutritionData: any;
     bodyWeightData: any;
+    settingsData?: any;
   }
 ) {
   if (syncTimeout) {
@@ -187,8 +221,8 @@ export function debouncedSync(
   }
 
   syncTimeout = setTimeout(async () => {
-    const { workoutData, nutritionData, bodyWeightData } = getStoreData();
-    const success = await saveAllData(userId, workoutData, nutritionData, bodyWeightData);
+    const { workoutData, nutritionData, bodyWeightData, settingsData } = getStoreData();
+    const success = await saveAllData(userId, workoutData, nutritionData, bodyWeightData, settingsData ?? {});
     if (success) {
       console.log('Auto-sync to Supabase completed');
     }

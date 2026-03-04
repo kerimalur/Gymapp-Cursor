@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { format, isSameDay } from 'date-fns';
+import { format, isSameDay, startOfWeek, getDay } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { Plus, Play, FileText, CheckCircle, Clock, TrendingUp, X, Calendar } from 'lucide-react';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
+import { useNutritionStore } from '@/store/useNutritionStore';
 import { WorkoutSession } from '@/types';
 import { Modal } from '@/components/ui/Modal';
 import toast from 'react-hot-toast';
@@ -16,6 +17,7 @@ interface DayDetailModalProps {
 
 export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
   const { trainingDays, workoutSessions } = useWorkoutStore();
+  const { trackingSettings, setPlannedWorkoutDays } = useNutritionStore();
 
   // Get workouts for this specific day - sorted by time descending (newest first)
   const dayWorkouts = useMemo(() => {
@@ -31,10 +33,22 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
 
   const handlePlanWorkout = () => {
     if (!selectedTrainingDay) {
-      toast.error('Bitte wähle einen Trainingstag aus');
+      toast.error('Bitte waehle einen Trainingstag aus');
       return;
     }
-    toast.success('Training geplant!');
+
+    const weekStart = startOfWeek(date, { locale: de, weekStartsOn: 1 });
+    const weekKey = format(weekStart, 'yyyy-ww');
+    const existingDays = trackingSettings?.plannedWorkoutDays?.[weekKey] || [];
+    const rawDay = getDay(date);
+    const dayIndex = rawDay === 0 ? 6 : rawDay - 1;
+
+    if (!existingDays.includes(dayIndex)) {
+      setPlannedWorkoutDays(weekKey, [...existingDays, dayIndex].sort((a, b) => a - b));
+    }
+
+    const selectedDayName = trainingDays.find((day) => day.id === selectedTrainingDay)?.name || 'Training';
+    toast.success(`${selectedDayName} geplant`);
     setShowPlanWorkout(false);
     onClose();
   };
@@ -363,3 +377,4 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
     </>
   );
 }
+

@@ -138,12 +138,12 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
   return (
     <div className="select-none">
       {/* Week Day Headers - with space for progress circle */}
-      <div className="grid grid-cols-[40px_repeat(7,1fr)] mb-1">
+      <div className="grid grid-cols-[48px_repeat(7,1fr)] mb-2">
         <div></div>
         {weekDays.map((day) => (
           <div
             key={day}
-            className="text-center font-medium text-slate-400 py-1.5 text-[10px] uppercase tracking-wide"
+            className="text-center font-semibold text-slate-500 py-2 text-xs uppercase tracking-wide"
           >
             {day}
           </div>
@@ -153,34 +153,34 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
       {/* Calendar Grid with Weekly Progress */}
       <div className="space-y-1">
         {weekRows.map(({ weekStart, daysInWeek, progress, weekKey }, weekIndex) => (
-          <div key={weekIndex} className="grid grid-cols-[40px_repeat(7,1fr)] gap-1 items-center">
+          <div key={weekIndex} className="grid grid-cols-[48px_repeat(7,1fr)] gap-2 items-center">
             {/* Weekly Progress Circle - Clickable for settings */}
             <button
               onClick={(e) => openWeekSettings(weekStart, e)}
               className="flex items-center justify-center group relative"
               title={`${progress.completed}/${progress.target} Trainings - Klicken zum Planen`}
             >
-              <div className="relative w-8 h-8">
+              <div className="relative w-9 h-9">
                 {/* Background circle */}
-                <svg className="w-8 h-8 transform -rotate-90">
+                <svg className="w-9 h-9 transform -rotate-90">
                   <circle
-                    cx="16"
-                    cy="16"
-                    r="12"
+                    cx="18"
+                    cy="18"
+                    r="13"
                     fill="none"
                     stroke="#e2e8f0"
                     strokeWidth="3"
                   />
                   {/* Progress circle */}
                   <circle
-                    cx="16"
-                    cy="16"
-                    r="12"
+                    cx="18"
+                    cy="18"
+                    r="13"
                     fill="none"
                     stroke={progress.percentage >= 100 ? '#10b981' : '#3b82f6'}
                     strokeWidth="3"
                     strokeLinecap="round"
-                    strokeDasharray={`${(progress.percentage / 100) * 75.4} 75.4`}
+                    strokeDasharray={`${(progress.percentage / 100) * 81.7} 81.7`}
                     className="transition-all duration-500"
                   />
                 </svg>
@@ -207,7 +207,7 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
                   key={dayIndex}
                   onClick={() => onDateClick(day)}
                   className={`
-                    relative h-12 w-full flex items-center justify-center rounded-lg text-sm font-medium
+                    relative h-14 w-full flex items-center justify-center rounded-xl text-sm font-semibold
                     transition-all duration-150
                     ${!isCurrentMonth ? 'text-slate-300' : ''}
                     ${isCurrentDay 
