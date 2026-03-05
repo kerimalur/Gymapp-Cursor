@@ -110,7 +110,7 @@ export function calculateRecoveryFromWorkouts(
     const sessionTime = session.endTime ? new Date(session.endTime) : new Date(session.startTime);
 
     session.exercises.forEach((exercise) => {
-      const validSets = exercise.sets.filter((set) => set.completed && set.weight > 0);
+      const validSets = exercise.sets.filter((set) => set.completed && set.reps > 0);
       if (validSets.length === 0) return;
 
       const avgRir = validSets.reduce((sum, set) => sum + (set.rir ?? 2), 0) / validSets.length;

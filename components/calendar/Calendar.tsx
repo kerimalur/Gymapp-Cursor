@@ -207,18 +207,18 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
                   key={dayIndex}
                   onClick={() => onDateClick(day)}
                   className={`
-                    relative h-14 w-full flex items-center justify-center rounded-xl text-sm font-semibold
+                    relative h-20 w-full flex items-center justify-center rounded-xl border text-sm font-semibold
                     transition-all duration-150
                     ${!isCurrentMonth ? 'text-slate-300' : ''}
                     ${isCurrentDay 
-                      ? 'bg-blue-500 text-white shadow-sm' 
+                      ? 'border-blue-500 bg-blue-500 text-white shadow-sm' 
                       : hasWorkout && isCurrentMonth
-                        ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                        ? 'border-emerald-300 bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                         : isPlanned && isCurrentMonth
-                          ? 'bg-blue-50 text-blue-600 border-2 border-dashed border-blue-300 hover:bg-blue-100'
+                          ? 'border-2 border-dashed border-blue-300 bg-blue-50 text-blue-600 hover:bg-blue-100'
                           : isCurrentMonth
-                            ? 'text-slate-600 hover:bg-slate-100'
-                            : 'hover:bg-slate-50'
+                            ? 'border-slate-200 text-slate-600 hover:bg-slate-100'
+                            : 'border-slate-100 hover:bg-slate-50'
                     }
                   `}
                 >
