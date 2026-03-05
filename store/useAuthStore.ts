@@ -13,7 +13,7 @@ interface AuthState {
   setSyncing: (syncing: boolean) => void;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   signUpWithEmail: (email: string, password: string) => Promise<{ needsEmailConfirmation: boolean }>;
-  updateProfile: (updates: { displayName?: string }) => Promise<void>;
+  updateProfile: (updates: { displayName?: string; hasCompletedOnboarding?: boolean }) => Promise<void>;
   logout: () => Promise<void>;
   initializeAuth: () => () => void;
   syncData: (workoutStore: any, nutritionStore: any, bodyWeightStore?: any, settingsData?: any) => Promise<void>;
@@ -72,12 +72,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 
-  updateProfile: async ({ displayName }) => {
+  updateProfile: async ({ displayName, hasCompletedOnboarding }) => {
     try {
       const metadata: Record<string, any> = {};
       if (displayName !== undefined) {
         metadata.name = displayName;
         metadata.full_name = displayName;
+      }
+      if (hasCompletedOnboarding !== undefined) {
+        metadata.hasCompletedOnboarding = hasCompletedOnboarding;
       }
 
       const { data, error } = await supabase.auth.updateUser({
@@ -86,13 +89,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
       if (error) throw error;
 
-      if (displayName !== undefined) {
+      if (displayName !== undefined || hasCompletedOnboarding !== undefined) {
         const currentUser = get().user;
         if (currentUser) {
           set({
             user: {
               ...currentUser,
               displayName: displayName || currentUser.displayName,
+              hasCompletedOnboarding: hasCompletedOnboarding ?? currentUser.hasCompletedOnboarding,
             },
           });
         } else if (data.user) {

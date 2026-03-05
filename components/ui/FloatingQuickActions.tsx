@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Dumbbell, Play, Droplets, Utensils, X } from 'lucide-react';
+import { Plus, Play, Droplets, Utensils, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { useNutritionStore } from '@/store/useNutritionStore';
@@ -109,10 +109,10 @@ export function FloatingQuickActions() {
       <button
         onClick={() => setOpen((prev) => !prev)}
         className="group relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 text-white shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl"
-        title="Schnellaktionen"
-        aria-label="Schnellaktionen"
+        title="Aktionen"
+        aria-label="Aktionen"
       >
-        {open ? <X className="h-6 w-6" /> : <Dumbbell className="h-6 w-6 group-hover:scale-110 transition-transform" />}
+        {open ? <X className="h-6 w-6" /> : <Plus className="h-6 w-6 group-hover:scale-110 transition-transform" />}
       </button>
     </div>
   );

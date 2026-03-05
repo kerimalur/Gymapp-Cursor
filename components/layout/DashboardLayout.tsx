@@ -4,6 +4,7 @@ import { Sidebar } from './Sidebar';
 import { useState, useEffect } from 'react';
 import { useOfflineQueue } from '@/hooks/useOfflineQueue';
 import { FloatingQuickActions } from '@/components/ui/FloatingQuickActions';
+import { usePathname } from 'next/navigation';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children, showSidebar = true }: DashboardLayoutProps) {
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -37,6 +39,8 @@ export function DashboardLayout({ children, showSidebar = true }: DashboardLayou
       document.body.style.overflow = '';
     };
   }, [mobileMenuOpen]);
+
+  const shouldShowQuickActions = showSidebar && pathname !== '/workout';
 
   return (
     <div className="min-h-screen app-background relative overflow-hidden">
@@ -90,7 +94,7 @@ export function DashboardLayout({ children, showSidebar = true }: DashboardLayou
         </main>
       </div>
 
-      {showSidebar && <FloatingQuickActions />}
+      {shouldShowQuickActions && <FloatingQuickActions />}
     </div>
   );
 }

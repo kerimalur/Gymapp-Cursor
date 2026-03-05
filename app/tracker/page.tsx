@@ -4,14 +4,15 @@ export const dynamic = 'force-dynamic';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { CalendarDays, ChevronRight, Dumbbell, History, Plus, Sparkles } from 'lucide-react';
+import { CalendarDays, Dumbbell, History, Plus, Sparkles } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { TrainingDayList } from '@/components/tracker/TrainingDayList';
+import { TrainingPlanList } from '@/components/tracker/TrainingPlanList';
 import { WorkoutHistory } from '@/components/tracker/WorkoutHistory';
 import { CreateTrainingDayModal } from '@/components/tracker/CreateTrainingDayModal';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 
-type View = 'overview' | 'trainingDays' | 'history';
+type View = 'overview' | 'builder' | 'history';
 
 export default function TrackerPage() {
   const router = useRouter();
@@ -35,12 +36,6 @@ export default function TrackerPage() {
     return trainingDays[0] || null;
   }, [activePlan, trainingDays]);
 
-  const recentSessionsCount = useMemo(() => {
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    return workoutSessions.filter((session) => new Date(session.startTime) >= weekAgo).length;
-  }, [workoutSessions]);
-
   const handleStartWorkout = (dayId: string) => {
     if (activePlan && nextTrainingDay?.id === dayId) {
       advanceToNextDay(activePlan.id);
@@ -50,7 +45,7 @@ export default function TrackerPage() {
 
   const tabs = [
     { id: 'overview', label: 'Uebersicht' },
-    { id: 'trainingDays', label: 'Trainingstage' },
+    { id: 'builder', label: 'Training Builder' },
     { id: 'history', label: 'Historie' },
   ] as const;
 
@@ -62,7 +57,7 @@ export default function TrackerPage() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="text-3xl font-black tracking-tight text-slate-900">Tracker</h1>
-            <p className="text-sm text-slate-500">Trainingstage erstellen, einplanen und direkt starten.</p>
+            <p className="text-sm text-slate-500">Trainingstage und Plaene in einem Builder.</p>
           </div>
           <button
             onClick={() => router.push('/calendar')}
@@ -94,7 +89,7 @@ export default function TrackerPage() {
                 <p className="mb-1 text-sm text-blue-100">Naechstes Training</p>
                 <h2 className="text-3xl font-bold">{nextTrainingDay.name}</h2>
                 <p className="mt-1 text-sm text-blue-100">
-                  {nextTrainingDay.exercises.length} Uebungen ·{' '}
+                  {nextTrainingDay.exercises.length} Uebungen â€¢{' '}
                   {nextTrainingDay.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)} Saetze
                 </p>
                 <button
@@ -111,7 +106,6 @@ export default function TrackerPage() {
                   <Sparkles className="h-6 w-6" />
                 </div>
                 <p className="text-lg font-semibold text-slate-800">Noch kein Trainingstag vorhanden</p>
-                <p className="mt-1 text-sm text-slate-500">Erstelle zuerst einen Trainingstag und plane ihn dann im Kalender.</p>
                 <button
                   onClick={() => setShowCreateDayModal(true)}
                   className="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
@@ -122,11 +116,7 @@ export default function TrackerPage() {
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-              <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Diese Woche</p>
-                <p className="mt-1 text-2xl font-black text-blue-800">{recentSessionsCount}</p>
-              </div>
+            <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
               <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">Trainingstage</p>
                 <p className="mt-1 text-2xl font-black text-emerald-800">{trainingDays.length}</p>
@@ -140,53 +130,29 @@ export default function TrackerPage() {
                 <p className="mt-1 text-2xl font-black text-amber-800">{workoutSessions.length}</p>
               </div>
             </div>
-
-            {trainingDays.length > 0 && (
-              <div>
-                <div className="mb-3 flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-slate-800">Schnellstart</h3>
-                  <button
-                    onClick={() => setCurrentView('trainingDays')}
-                    className="text-sm font-semibold text-blue-600 hover:text-blue-700"
-                  >
-                    Alle Trainingstage
-                  </button>
-                </div>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-                  {trainingDays.slice(0, 6).map((day) => (
-                    <div key={day.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                      <p className="font-semibold text-slate-800">{day.name}</p>
-                      <p className="mt-1 text-xs text-slate-500">
-                        {day.exercises.length} Uebungen · {day.exercises.reduce((s, e) => s + e.sets.length, 0)} Saetze
-                      </p>
-                      <button
-                        onClick={() => handleStartWorkout(day.id)}
-                        className="mt-3 inline-flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-blue-600 hover:text-white"
-                      >
-                        Starten
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         )}
 
-        {currentView === 'trainingDays' && (
-          <div>
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-800">Trainingstage</h2>
-              <button
-                onClick={() => setShowCreateDayModal(true)}
-                className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white hover:bg-blue-700"
-              >
-                <Plus className="h-4 w-4" />
-                Neu
-              </button>
+        {currentView === 'builder' && (
+          <div className="space-y-8">
+            <div>
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-xl font-bold text-slate-800">Trainingstage</h2>
+                <button
+                  onClick={() => setShowCreateDayModal(true)}
+                  className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white hover:bg-blue-700"
+                >
+                  <Plus className="h-4 w-4" />
+                  Neu
+                </button>
+              </div>
+              <TrainingDayList />
             </div>
-            <TrainingDayList />
+
+            <div>
+              <h2 className="mb-4 text-xl font-bold text-slate-800">Plaene</h2>
+              <TrainingPlanList />
+            </div>
           </div>
         )}
 

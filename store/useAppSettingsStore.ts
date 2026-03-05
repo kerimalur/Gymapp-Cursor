@@ -17,11 +17,16 @@ export interface AppPreferenceSettings {
   calendarView: 'month' | 'week' | 'year';
   showAdvancedStats: boolean;
   showMuscleBalance: boolean;
+  startPage: 'dashboard' | 'tracker' | 'calendar';
 }
 
 export interface AppSettingsPayload {
   profileName: string;
   profileBio: string;
+  age: number | null;
+  heightCm: number | null;
+  trainingExperience: 'beginner' | 'intermediate' | 'advanced';
+  primaryGoal: string;
   notifications: AppNotificationSettings;
   preferences: AppPreferenceSettings;
 }
@@ -29,6 +34,10 @@ export interface AppSettingsPayload {
 interface AppSettingsState extends AppSettingsPayload {
   setProfileName: (name: string) => void;
   setProfileBio: (bio: string) => void;
+  setAge: (age: number | null) => void;
+  setHeightCm: (height: number | null) => void;
+  setTrainingExperience: (level: AppSettingsPayload['trainingExperience']) => void;
+  setPrimaryGoal: (goal: string) => void;
   setNotifications: (settings: AppNotificationSettings) => void;
   updateNotifications: (partial: Partial<AppNotificationSettings>) => void;
   setPreferences: (settings: AppPreferenceSettings) => void;
@@ -40,6 +49,10 @@ interface AppSettingsState extends AppSettingsPayload {
 export const DEFAULT_APP_SETTINGS: AppSettingsPayload = {
   profileName: '',
   profileBio: '',
+  age: null,
+  heightCm: null,
+  trainingExperience: 'beginner',
+  primaryGoal: '',
   notifications: {
     workoutReminders: true,
     mealReminders: true,
@@ -55,6 +68,7 @@ export const DEFAULT_APP_SETTINGS: AppSettingsPayload = {
     calendarView: 'month',
     showAdvancedStats: true,
     showMuscleBalance: true,
+    startPage: 'dashboard',
   },
 };
 
@@ -65,6 +79,10 @@ export const useAppSettingsStore = create<AppSettingsState>()(
 
       setProfileName: (profileName) => set({ profileName }),
       setProfileBio: (profileBio) => set({ profileBio }),
+      setAge: (age) => set({ age }),
+      setHeightCm: (heightCm) => set({ heightCm }),
+      setTrainingExperience: (trainingExperience) => set({ trainingExperience }),
+      setPrimaryGoal: (primaryGoal) => set({ primaryGoal }),
 
       setNotifications: (notifications) => set({ notifications }),
       updateNotifications: (partial) =>
@@ -88,6 +106,10 @@ export const useAppSettingsStore = create<AppSettingsState>()(
         set((state) => ({
           profileName: settings.profileName ?? state.profileName,
           profileBio: settings.profileBio ?? state.profileBio,
+          age: settings.age ?? state.age,
+          heightCm: settings.heightCm ?? state.heightCm,
+          trainingExperience: settings.trainingExperience ?? state.trainingExperience,
+          primaryGoal: settings.primaryGoal ?? state.primaryGoal,
           notifications: settings.notifications
             ? { ...state.notifications, ...settings.notifications }
             : state.notifications,

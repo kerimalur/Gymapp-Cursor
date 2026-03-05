@@ -11,6 +11,7 @@ import { GlobalSettingsModal } from '@/components/settings/GlobalSettingsModal';
 import { BodyHeatmap } from '@/components/statistics/BodyHeatmap';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, isWithinInterval } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { BodyWeightWidget } from '@/components/dashboard/BodyWeightWidget';
 
 // Icons
 const Icons = {
@@ -243,6 +244,12 @@ export default function StatisticsPage() {
             color="emerald"
             delay={150}
           />
+        </div>
+
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-8">
+          <h2 className="text-lg font-bold text-slate-800 mb-2">⚖️ Aktuelles Gewicht</h2>
+          <p className="text-sm text-slate-500 mb-4">Gewichtstrend und letzter Eintrag</p>
+          <BodyWeightWidget compact />
         </div>
 
         {/* Volumen pro Muskel - Kombinierte Statistik */}
