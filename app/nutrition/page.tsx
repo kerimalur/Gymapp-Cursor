@@ -2,7 +2,8 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useNutritionStore, MealTemplate, TrackedMeal } from '@/store/useNutritionStore';
 import { NutritionSettingsModal } from '@/components/nutrition/NutritionSettingsModal';
@@ -70,6 +71,7 @@ interface TrackedSupplement {
 }
 
 export default function NutritionPage() {
+  const searchParams = useSearchParams();
   const { 
     nutritionGoals, dailyTracking, updateWater, supplements, addSupplement, 
     setSupplements, setNutritionGoals, mealTemplates, addMealTemplate, removeMealTemplate,
@@ -110,9 +112,40 @@ export default function NutritionPage() {
   // Settings modal state
   const [showNutritionSettings, setShowNutritionSettings] = useState(false);
   const [hasInitializedSupplements, setHasInitializedSupplements] = useState(false);
+  const quickAddModalRef = useRef<HTMLDivElement>(null);
 
   // Get today's sleep entry (reuse todayDate from above)
   const todaySleep = sleepEntries.find(e => e.date === todayDate);
+
+  useEffect(() => {
+    const shouldOpenQuickAdd = searchParams.get('quickAdd') === '1';
+    if (shouldOpenQuickAdd) {
+      setShowQuickAdd(true);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handleOpenQuickMealModal = () => {
+      setShowQuickAdd(true);
+    };
+
+    window.addEventListener('open-quick-meal-modal', handleOpenQuickMealModal);
+    return () => window.removeEventListener('open-quick-meal-modal', handleOpenQuickMealModal);
+  }, []);
+
+  useEffect(() => {
+    if (showQuickAdd) {
+      document.body.style.overflow = 'hidden';
+      quickAddModalRef.current?.focus();
+      quickAddModalRef.current?.scrollIntoView({ block: 'center' });
+      return;
+    }
+
+    document.body.style.overflow = '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showQuickAdd]);
 
   // Auto-cleanup old meals (30 days) on first load
   useEffect(() => {
@@ -649,11 +682,18 @@ export default function NutritionPage() {
 
       {/* Quick Add Modal */}
       {showQuickAdd && (
-        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[9999] p-4 animate-fade-in">
+          <div
+            ref={quickAddModalRef}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quick-add-meal-title"
+            className="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl ring-1 ring-black/5"
+          >
             <div className="flex-shrink-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-3xl">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-900">Mahlzeit hinzufügen</h3>
+                <h3 id="quick-add-meal-title" className="text-xl font-bold text-gray-900">Mahlzeit hinzufügen</h3>
                 <button
                   onClick={() => setShowQuickAdd(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"

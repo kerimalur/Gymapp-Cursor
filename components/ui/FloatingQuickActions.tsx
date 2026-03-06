@@ -1,16 +1,15 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Plus, Play, Droplets, Utensils, X } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Dumbbell, Play, Droplets, Utensils, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { useNutritionStore } from '@/store/useNutritionStore';
-import { useAuthStore } from '@/store/useAuthStore';
 
 export function FloatingQuickActions() {
   const router = useRouter();
-  const { user } = useAuthStore();
+  const pathname = usePathname();
   const { currentWorkout, trainingPlans, trainingDays } = useWorkoutStore();
   const nutritionStore = useNutritionStore();
   const [open, setOpen] = useState(false);
@@ -47,15 +46,12 @@ export function FloatingQuickActions() {
   };
 
   const handleQuickMeal = () => {
-    nutritionStore.addTrackedMeal({
-      name: 'Quick Meal',
-      calories: 400,
-      protein: 25,
-      carbs: 35,
-      fats: 12,
-      time: 'snack',
-    });
-    toast.success('Quick Meal hinzugefuegt');
+    if (pathname === '/nutrition') {
+      window.dispatchEvent(new CustomEvent('open-quick-meal-modal'));
+    } else {
+      router.push('/nutrition?quickAdd=1');
+    }
+    toast.success('Quick-Meal Dialog geöffnet');
     setOpen(false);
   };
 
@@ -112,7 +108,7 @@ export function FloatingQuickActions() {
         title="Aktionen"
         aria-label="Aktionen"
       >
-        {open ? <X className="h-6 w-6" /> : <Plus className="h-6 w-6 group-hover:scale-110 transition-transform" />}
+        {open ? <X className="h-6 w-6" /> : <Dumbbell className="h-6 w-6 group-hover:scale-110 transition-transform" />}
       </button>
     </div>
   );
