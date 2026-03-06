@@ -13,10 +13,12 @@ import { BodyWeightWidget } from '@/components/dashboard/BodyWeightWidget';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { useNutritionStore } from '@/store/useNutritionStore';
+import { useAppSettingsStore } from '@/store/useAppSettingsStore';
 import { Meal } from '@/types';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { ALL_MUSCLES, MUSCLE_NAMES_DE, calculateRecoveryFromWorkouts } from '@/lib/recovery';
 import { SmartDashboard } from '@/components/dashboard/SmartDashboard';
+import { AchievementsPanel } from '@/components/dashboard/AchievementsPanel';
 import { QuickLogNutrition } from '@/components/nutrition/QuickLogNutrition';
 import { Utensils } from 'lucide-react';
 
@@ -52,12 +54,16 @@ function StatCard({
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user } = useAuthStore();
+  const { user, updateProfile } = useAuthStore();
   const { workoutSessions, trainingPlans, trainingDays } = useWorkoutStore();
   const { nutritionGoals, dailyTracking, meals, trackingSettings } = useNutritionStore();
+  const { profileName, setProfileName, setProfileBio } = useAppSettingsStore();
   const [mounted, setMounted] = useState(false);
   const [greeting, setGreeting] = useState('');
   const [showQuickLog, setShowQuickLog] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboardingName, setOnboardingName] = useState('');
+  const [onboardingGoal, setOnboardingGoal] = useState('');
 
   useEffect(() => {
     setMounted(true);
@@ -66,6 +72,13 @@ export default function DashboardPage() {
     else if (hour < 18) setGreeting('Guten Tag');
     else setGreeting('Guten Abend');
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    const existingName = profileName || user.displayName;
+    setOnboardingName(existingName && existingName !== 'User' ? existingName : '');
+    setShowOnboarding(!user.hasCompletedOnboarding || !existingName || existingName === 'User');
+  }, [user, profileName]);
 
   const stats = useMemo(() => {
     const now = new Date();
@@ -83,11 +96,6 @@ export default function DashboardPage() {
     const activePlan = trainingPlans.find((p) => p.isActive);
     const nextDayId = activePlan?.trainingDays[activePlan.currentDayIndex ?? 0];
     const nextTrainingDay = trainingDays.find((d) => d.id === nextDayId);
-
-    const todayIndex = (() => {
-      const day = getDay(now);
-      return day === 0 ? 6 : day - 1;
-    })();
 
     const getWeekKey = (date: Date) => format(startOfWeek(date, { weekStartsOn: 1 }), 'yyyy-ww');
     const plannedWorkoutDays = trackingSettings?.plannedWorkoutDays || {};
@@ -155,9 +163,17 @@ export default function DashboardPage() {
       readyMuscles,
       tiredMuscles,
       personalRecords,
-      todayIndex,
     };
   }, [workoutSessions, meals, nutritionGoals, dailyTracking, trainingPlans, trainingDays, trackingSettings]);
+
+  const handleCompleteOnboarding = async () => {
+    const cleaned = onboardingName.trim();
+    if (!cleaned) return;
+    setProfileName(cleaned);
+    setProfileBio(onboardingGoal.trim());
+    await updateProfile({ displayName: cleaned, hasCompletedOnboarding: true });
+    setShowOnboarding(false);
+  };
 
   if (!mounted) {
     return (
@@ -167,27 +183,26 @@ export default function DashboardPage() {
     );
   }
 
+  const displayName = profileName || user?.displayName?.split(' ')[0] || 'Athlet';
+
   return (
     <DashboardLayout>
       <div className="mx-auto max-w-6xl space-y-6">
         <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 text-white shadow-xl">
-          <p className="mb-2 text-sm text-blue-300">{greeting}</p>
-          <h1 className="text-3xl font-black tracking-tight">{user?.displayName?.split(' ')[0] || 'Athlet'}</h1>
+          <p className="mb-2 text-sm text-blue-300">{greeting}, {displayName}</p>
           <p className="mt-1 text-sm text-slate-300">{format(new Date(), 'EEEE, d. MMMM yyyy', { locale: de })}</p>
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="mb-3 flex items-center justify-between">
-            <p className="text-sm font-semibold text-slate-700">Regeneration Status</p>
-            <span
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                stats.averageRecovery >= 80
-                  ? 'bg-emerald-100 text-emerald-700'
-                  : stats.averageRecovery >= 50
-                  ? 'bg-amber-100 text-amber-700'
-                  : 'bg-red-100 text-red-700'
-              }`}
-            >
+            <p className="text-sm font-semibold text-slate-700">Regeneration</p>
+            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
+              stats.averageRecovery >= 80
+                ? 'bg-emerald-100 text-emerald-700'
+                : stats.averageRecovery >= 50
+                ? 'bg-amber-100 text-amber-700'
+                : 'bg-red-100 text-red-700'
+            }`}>
               {stats.averageRecovery}%
             </span>
           </div>
@@ -206,11 +221,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="mt-3 grid gap-2 md:grid-cols-2">
-            <p className="text-xs text-slate-600">
-              Bereit: {stats.readyMuscles.length > 0
-                ? stats.readyMuscles.slice(0, 4).map((muscle) => MUSCLE_NAMES_DE[muscle]).join(', ')
-                : 'Keine Muskelgruppe'}
-            </p>
+            <p className="text-xs text-slate-600">Bereit: {stats.readyMuscles.length} Muskelgruppen</p>
             <p className="text-xs text-slate-600 md:text-right">
               Muede: {stats.tiredMuscles.length > 0
                 ? stats.tiredMuscles.slice(0, 4).map((muscle) => MUSCLE_NAMES_DE[muscle]).join(', ')
@@ -259,27 +270,6 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {stats.nextTrainingDay && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-slate-800">Naechstes Training</h3>
-              <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
-                {stats.nextTrainingDay.exercises.length} Uebungen
-              </span>
-            </div>
-            <p className="text-lg font-semibold text-slate-900">{stats.nextTrainingDay.name}</p>
-            <p className="mt-1 text-sm text-slate-500">
-              {stats.nextTrainingDay.exercises.reduce((sum, exercise) => sum + exercise.sets.length, 0)} Saetze gesamt
-            </p>
-            <button
-              onClick={() => router.push(`/workout?id=${stats.nextTrainingDay?.id}`)}
-              className="mt-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 font-semibold text-white hover:opacity-95"
-            >
-              Training starten
-            </button>
-          </div>
-        )}
-
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center gap-2">
             <Trophy className="h-5 w-5 text-amber-500" />
@@ -302,6 +292,9 @@ export default function DashboardPage() {
         {/* Smart Dashboard - Dynamic Insights */}
         <SmartDashboard />
 
+        {/* Achievements */}
+        <AchievementsPanel />
+
         <BodyWeightWidget compact />
 
         {/* Floating Quick Log Button */}
@@ -315,6 +308,26 @@ export default function DashboardPage() {
 
         <QuickLogNutrition isOpen={showQuickLog} onClose={() => setShowQuickLog(false)} />
       </div>
+
+      {showOnboarding && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
+            <h2 className="text-2xl font-bold text-slate-900">Willkommen 👋</h2>
+            <p className="mt-1 text-sm text-slate-500">Trage ein paar Daten ein, damit dein Dashboard persoenlich wird.</p>
+            <div className="mt-5 space-y-3">
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-slate-700">Name</label>
+                <input value={onboardingName} onChange={(e) => setOnboardingName(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3" />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-slate-700">Ziel (optional)</label>
+                <input value={onboardingGoal} onChange={(e) => setOnboardingGoal(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-3" />
+              </div>
+            </div>
+            <button onClick={handleCompleteOnboarding} className="mt-5 w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700">Speichern</button>
+          </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 }

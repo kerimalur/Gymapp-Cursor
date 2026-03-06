@@ -64,14 +64,26 @@ export default function SettingsPage() {
     profileBio,
     notifications,
     preferences,
+    age,
+    heightCm,
+    trainingExperience,
+    primaryGoal,
     setProfileName,
     setProfileBio,
+    setAge,
+    setHeightCm,
+    setTrainingExperience,
+    setPrimaryGoal,
     updateNotifications,
     updatePreferences,
   } = useAppSettingsStore();
 
   const [nameInput, setNameInput] = useState('');
   const [bioInput, setBioInput] = useState('');
+  const [ageInput, setAgeInput] = useState<number | ''>('');
+  const [heightInput, setHeightInput] = useState<number | ''>('');
+  const [experienceInput, setExperienceInput] = useState<'beginner' | 'intermediate' | 'advanced'>('beginner');
+  const [goalInput, setGoalInput] = useState('');
 
   const [nutritionGoals, setNutritionGoals] = useState({
     calories: 2500,
@@ -85,7 +97,11 @@ export default function SettingsPage() {
   useEffect(() => {
     setNameInput(profileName || user?.displayName || '');
     setBioInput(profileBio || '');
-  }, [profileName, profileBio, user?.displayName]);
+    setAgeInput(age || '');
+    setHeightInput(heightCm || '');
+    setExperienceInput(trainingExperience || 'beginner');
+    setGoalInput(primaryGoal || '');
+  }, [profileName, profileBio, age, heightCm, trainingExperience, primaryGoal, user?.displayName]);
 
   useEffect(() => {
     if (!nutritionStore.nutritionGoals) return;
@@ -104,6 +120,10 @@ export default function SettingsPage() {
     () => ({
       profileName: nameInput.trim(),
       profileBio: bioInput.trim(),
+      age: ageInput === '' ? null : Number(ageInput),
+      heightCm: heightInput === '' ? null : Number(heightInput),
+      trainingExperience: experienceInput,
+      primaryGoal: goalInput.trim(),
       notifications,
       preferences,
     }),
@@ -132,6 +152,10 @@ export default function SettingsPage() {
 
     setProfileName(cleanedName);
     setProfileBio(bioInput.trim());
+    setAge(ageInput === '' ? null : Number(ageInput));
+    setHeightCm(heightInput === '' ? null : Number(heightInput));
+    setTrainingExperience(experienceInput);
+    setPrimaryGoal(goalInput.trim());
 
     if (user) {
       try {
@@ -152,6 +176,10 @@ export default function SettingsPage() {
     const cleanedName = nameInput.trim();
     setProfileName(cleanedName);
     setProfileBio(bioInput.trim());
+    setAge(ageInput === '' ? null : Number(ageInput));
+    setHeightCm(heightInput === '' ? null : Number(heightInput));
+    setTrainingExperience(experienceInput);
+    setPrimaryGoal(goalInput.trim());
 
     if (!user) {
       toast.success('Lokal gespeichert');
@@ -252,6 +280,48 @@ export default function SettingsPage() {
               placeholder="Optional: Ziele, Fokus, Hinweise"
               className="w-full resize-none rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
             />
+          </div>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="mb-1 block text-sm font-semibold text-slate-700">Alter</label>
+              <input
+                type="number"
+                value={ageInput}
+                onChange={(e) => setAgeInput(e.target.value ? parseInt(e.target.value, 10) : '')}
+                className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-semibold text-slate-700">Groesse (cm)</label>
+              <input
+                type="number"
+                value={heightInput}
+                onChange={(e) => setHeightInput(e.target.value ? parseInt(e.target.value, 10) : '')}
+                className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-semibold text-slate-700">Trainingslevel</label>
+              <select
+                value={experienceInput}
+                onChange={(e) => setExperienceInput(e.target.value as any)}
+                className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+              >
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-semibold text-slate-700">Primaeres Ziel</label>
+              <input
+                type="text"
+                value={goalInput}
+                onChange={(e) => setGoalInput(e.target.value)}
+                placeholder="z. B. Muskelaufbau"
+                className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+              />
+            </div>
           </div>
           <button
             onClick={handleSaveProfile}

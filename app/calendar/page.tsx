@@ -116,10 +116,10 @@ export default function CalendarPage() {
 
           <div className="inline-flex rounded-xl bg-slate-100 p-1">
             {[
-              ['month', 'Monat', CalendarIcon],
-              ['week', 'Woche', Timer],
-              ['year', 'Jahr', Grid3X3],
-            ].map(([key, label, Icon]) => (
+              { key: 'month', label: 'Monat', Icon: CalendarIcon },
+              { key: 'week', label: 'Woche', Icon: Timer },
+              { key: 'year', label: 'Jahr', Icon: Grid3X3 },
+            ].map(({ key, label, Icon }) => (
               <button
                 key={key}
                 onClick={() => setCalendarView(key as CalendarView)}
@@ -177,7 +177,7 @@ export default function CalendarPage() {
           </div>
 
           {calendarView === 'month' && (
-            <Calendar currentMonth={currentDate} onDateClick={(date) => setSelectedDate(date)} />
+            <Calendar currentMonth={currentDate} onDateClick={(date) => { setCurrentDate(date); setCalendarView('week'); }} />
           )}
 
           {calendarView === 'week' && (
