@@ -2,17 +2,19 @@
 
 export const dynamic = 'force-dynamic';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useNutritionStore } from '@/store/useNutritionStore';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { WorkoutSession, ExerciseSet } from '@/types';
-import { ArrowLeft, Clock, CheckCircle, X, Plus, Minus, RefreshCw, Flame, Timer, Zap } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, X, Plus, Minus, RefreshCw, Flame, Timer, Zap, TrendingUp, MessageSquare, StickyNote } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Suspense } from 'react';
+import { getProgressionSuggestion, generateWorkoutSummary, WorkoutSummaryData } from '@/lib/progressiveOverload';
+import { WorkoutSummaryModal } from '@/components/workout/WorkoutSummaryModal';
 
 function WorkoutContent() {
   const router = useRouter();
@@ -29,6 +31,11 @@ function WorkoutContent() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [showExerciseSelector, setShowExerciseSelector] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  const [summaryData, setSummaryData] = useState<WorkoutSummaryData | null>(null);
+  const [exerciseNotes, setExerciseNotes] = useState<Record<number, string>>({});
+  const [showNoteInput, setShowNoteInput] = useState<number | null>(null);
+  const [sessionNote, setSessionNote] = useState('');
   
   // Rest Timer State
   const [restTimer, setRestTimer] = useState({
@@ -371,8 +378,12 @@ function WorkoutContent() {
       }
     }
     
+    // Generate workout summary
+    const summary = generateWorkoutSummary(completedWorkout, updatedSessions);
+    setSummaryData(summary);
+    setShowSummary(true);
+    
     toast.success(`Training abgeschlossen! ${duration} Min • ${Math.round(totalVolume)} kg Volumen`);
-    router.push('/tracker');
   };
 
   const handleCancelWorkout = () => {
@@ -450,17 +461,72 @@ function WorkoutContent() {
                 transition={{ delay: exIdx * 0.1 }}
                 className="bg-white rounded-2xl shadow-lg p-6 mb-4"
               >
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-2">
                   <h3 className="text-xl font-bold text-gray-900">
                     {exercise?.name || ex.exerciseId}
                   </h3>
-                  <button
-                    onClick={() => handleRemoveExercise(exIdx)}
-                    className="p-2 hover:bg-red-50 rounded-lg transition-colors group"
-                  >
-                    <X className="w-5 h-5 text-gray-400 group-hover:text-red-600" />
-                  </button>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setShowNoteInput(showNoteInput === exIdx ? null : exIdx)}
+                      className={`p-2 rounded-lg transition-colors ${
+                        exerciseNotes[exIdx] ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100 text-gray-400'
+                      }`}
+                      title="Notiz hinzufügen"
+                    >
+                      <StickyNote className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleRemoveExercise(exIdx)}
+                      className="p-2 hover:bg-red-50 rounded-lg transition-colors group"
+                    >
+                      <X className="w-5 h-5 text-gray-400 group-hover:text-red-600" />
+                    </button>
+                  </div>
                 </div>
+
+                {/* Progression Suggestion */}
+                {(() => {
+                  const suggestion = getProgressionSuggestion(
+                    ex.exerciseId,
+                    0,
+                    workoutSessions,
+                    trainingDayId
+                  );
+                  if (suggestion.type === 'first_time') return null;
+                  return (
+                    <div className={`mb-3 px-3 py-2 rounded-lg text-xs flex items-center gap-2 ${
+                      suggestion.type === 'deload'
+                        ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                        : suggestion.type === 'increase_weight'
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        : 'bg-blue-50 text-blue-700 border border-blue-200'
+                    }`}>
+                      <TrendingUp className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span><strong>Ziel:</strong> {suggestion.message} — {suggestion.reason}</span>
+                    </div>
+                  );
+                })()}
+
+                {/* Exercise Note Input */}
+                <AnimatePresence>
+                  {showNoteInput === exIdx && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden mb-3"
+                    >
+                      <input
+                        type="text"
+                        value={exerciseNotes[exIdx] || ''}
+                        onChange={(e) => setExerciseNotes(prev => ({ ...prev, [exIdx]: e.target.value }))}
+                        placeholder="Notiz: z.B. Schulter gezwickt, Grip schwach..."
+                        className="w-full px-3 py-2 text-sm border-2 border-blue-200 rounded-lg bg-blue-50 focus:outline-none focus:border-blue-400"
+                        autoFocus
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 <div className="space-y-3">
                   {ex.sets.map((set, setIdx) => (
@@ -789,6 +855,18 @@ function WorkoutContent() {
         >
           <Timer className="w-6 h-6" />
         </button>
+      )}
+
+      {/* Workout Summary Modal */}
+      {summaryData && (
+        <WorkoutSummaryModal
+          isOpen={showSummary}
+          onClose={() => {
+            setShowSummary(false);
+            router.push('/tracker');
+          }}
+          summary={summaryData}
+        />
       )}
     </div>
   );

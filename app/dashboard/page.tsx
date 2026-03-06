@@ -16,6 +16,9 @@ import { useNutritionStore } from '@/store/useNutritionStore';
 import { Meal } from '@/types';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { ALL_MUSCLES, MUSCLE_NAMES_DE, calculateRecoveryFromWorkouts } from '@/lib/recovery';
+import { SmartDashboard } from '@/components/dashboard/SmartDashboard';
+import { QuickLogNutrition } from '@/components/nutrition/QuickLogNutrition';
+import { Utensils } from 'lucide-react';
 
 function StatCard({
   title,
@@ -54,6 +57,7 @@ export default function DashboardPage() {
   const { nutritionGoals, dailyTracking, meals, trackingSettings } = useNutritionStore();
   const [mounted, setMounted] = useState(false);
   const [greeting, setGreeting] = useState('');
+  const [showQuickLog, setShowQuickLog] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -295,8 +299,21 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+        {/* Smart Dashboard - Dynamic Insights */}
+        <SmartDashboard />
 
         <BodyWeightWidget compact />
+
+        {/* Floating Quick Log Button */}
+        <button
+          onClick={() => setShowQuickLog(true)}
+          className="fixed bottom-24 left-4 z-40 p-4 bg-gradient-to-br from-emerald-500 to-teal-500 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all hover:scale-105"
+          title="Schnell Mahlzeit loggen"
+        >
+          <Utensils className="w-6 h-6" />
+        </button>
+
+        <QuickLogNutrition isOpen={showQuickLog} onClose={() => setShowQuickLog(false)} />
       </div>
     </DashboardLayout>
   );
