@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { MouseEvent, useMemo, useState } from 'react';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { useNutritionStore } from '@/store/useNutritionStore';
 import { getMuscleInvolvement, exerciseDatabase } from '@/data/exerciseDatabase';
@@ -503,7 +503,7 @@ export function MuscleVolumeStats() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
               className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden"
             >
               {/* Modal Header */}
