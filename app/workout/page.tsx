@@ -22,7 +22,7 @@ function WorkoutContent() {
   const trainingDayId = searchParams.get('id') || '';
   
   const workoutStore = useWorkoutStore();
-  const { trainingDays, workoutSessions, addWorkoutSession, workoutSettings } = workoutStore;
+  const { trainingDays, workoutSessions, addWorkoutSession, workoutSettings, exercises, customExercises } = workoutStore;
   const { syncData, user } = useAuthStore();
   const nutritionStore = useNutritionStore();
   
@@ -44,13 +44,25 @@ function WorkoutContent() {
     targetSeconds: 90,
   });
 
+  const baseExercises = useMemo(
+    () => (exercises.length > 0 ? exercises : exerciseDatabase),
+    [exercises]
+  );
+
+  const findExercise = useCallback(
+    (exerciseId: string) =>
+      baseExercises.find((exercise) => exercise.id === exerciseId) ||
+      customExercises.find((exercise) => exercise.id === exerciseId),
+    [baseExercises, customExercises]
+  );
+
   // Check if exercise supports assisted mode
   const isAssistedExercise = useCallback((exerciseId: string) => {
     const assistedPatterns = ['klimmzug', 'klimmzüge', 'pull-up', 'chin-up', 'dip', 'muscle-up'];
-    const exercise = exerciseDatabase.find(e => e.id === exerciseId);
+    const exercise = findExercise(exerciseId);
     const name = exercise?.name?.toLowerCase() || '';
     return assistedPatterns.some(pattern => name.includes(pattern));
-  }, []);
+  }, [findExercise]);
 
   // Timer
   useEffect(() => {
@@ -303,7 +315,7 @@ function WorkoutContent() {
   };
 
   const handleAddExercise = (exerciseId: string) => {
-    const exercise = exerciseDatabase.find(e => e.id === exerciseId);
+    const exercise = findExercise(exerciseId);
     if (!exercise) return;
 
     const newWorkout = { ...workout };
@@ -450,7 +462,7 @@ function WorkoutContent() {
         {/* Exercises */}
         <AnimatePresence>
           {workout.exercises.map((ex, exIdx) => {
-            const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
+            const exercise = findExercise(ex.exerciseId);
             
             return (
               <motion.div
@@ -760,7 +772,7 @@ function WorkoutContent() {
 
             <div className="flex-1 overflow-y-auto p-6">
               <div className="grid grid-cols-1 gap-3">
-              {exerciseDatabase.map((exercise) => (
+              {baseExercises.map((exercise) => (
                 <button
                   key={exercise.id}
                   onClick={() => handleAddExercise(exercise.id)}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { Exercise, WorkoutExercise, TrainingDay, ExerciseSet } from '@/types';
@@ -20,7 +20,7 @@ interface EditTrainingDayModalProps {
 }
 
 export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: EditTrainingDayModalProps) {
-  const { customExercises } = useWorkoutStore();
+  const { customExercises, exercises } = useWorkoutStore();
   const [name, setName] = useState(trainingDay.name);
   const [selectedExercises, setSelectedExercises] = useState<WorkoutExercise[]>(trainingDay.exercises);
   const [showExerciseList, setShowExerciseList] = useState(false);
@@ -30,8 +30,17 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [showCreateExerciseModal, setShowCreateExerciseModal] = useState(false);
 
+  const baseExercises = useMemo(
+    () => (exercises.length > 0 ? exercises : exerciseDatabase),
+    [exercises]
+  );
+
   // Combine database exercises with custom exercises
-  const allExercises = [...exerciseDatabase, ...customExercises];
+  const allExercises = [...baseExercises, ...customExercises];
+
+  const findExerciseById = (exerciseId: string) =>
+    allExercises.find((exercise) => exercise.id === exerciseId) ||
+    exerciseDatabase.find((exercise) => exercise.id === exerciseId);
 
   const filteredExercises = allExercises.filter((ex) => {
     const matchesSearch = ex.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -293,7 +302,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
         ) : (
           <div className="space-y-3">
             {selectedExercises.map((exercise, index) => {
-              const exerciseData = exerciseDatabase.find(ex => ex.id === exercise.exerciseId);
+              const exerciseData = findExerciseById(exercise.exerciseId);
               const isExpanded = expandedExercise === index;
 
               return (

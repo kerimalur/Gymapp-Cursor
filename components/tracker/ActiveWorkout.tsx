@@ -8,8 +8,9 @@ import { PlateCalculatorModal } from '@/components/workout/PlateCalculatorModal'
 import toast from 'react-hot-toast';
 
 // Helper to find exercise in both database and custom exercises
-const findExercise = (exerciseId: string, customExercises: any[]) => {
-  return exerciseDatabase.find(ex => ex.id === exerciseId) || 
+const findExercise = (exerciseId: string, baseExercises: any[], customExercises: any[]) => {
+  return baseExercises.find(ex => ex.id === exerciseId) ||
+         exerciseDatabase.find(ex => ex.id === exerciseId) || 
          customExercises.find(ex => ex.id === exerciseId);
 };
 
@@ -122,6 +123,7 @@ export function ActiveWorkout() {
     addWorkoutSession,
     workoutSessions,
     customExercises,
+    exercises,
     workoutSettings,
     startRestTimer
   } = useWorkoutStore();
@@ -131,6 +133,10 @@ export function ActiveWorkout() {
   const [activeExerciseIndex, setActiveExerciseIndex] = useState(0);
   const [showPlateCalculator, setShowPlateCalculator] = useState(false);
   const [plateCalculatorWeight, setPlateCalculatorWeight] = useState(100);
+  const baseExercises = useMemo(
+    () => (exercises.length > 0 ? exercises : exerciseDatabase),
+    [exercises]
+  );
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -283,7 +289,7 @@ export function ActiveWorkout() {
   // Check if exercise supports assisted mode (like pull-ups, dips)
   const isAssistedExercise = (exerciseId: string) => {
     const assistedExercises = ['ex6', 'ex8', 'Dips', 'Klimmzüge', 'Pull-Ups', 'Chin-Ups'];
-    const exercise = findExercise(exerciseId, customExercises);
+    const exercise = findExercise(exerciseId, baseExercises, customExercises);
     return assistedExercises.includes(exerciseId) || 
            (exercise && assistedExercises.some(name => exercise.name?.toLowerCase().includes(name.toLowerCase())));
   };
@@ -525,7 +531,7 @@ export function ActiveWorkout() {
       {/* Exercises */}
       <div className="max-w-4xl mx-auto space-y-4">
         {workout.exercises.map((exercise, exIdx) => {
-          const exerciseData = findExercise(exercise.exerciseId, customExercises);
+          const exerciseData = findExercise(exercise.exerciseId, baseExercises, customExercises);
           const isActive = exIdx === activeExerciseIndex;
           const completedSets = exercise.sets.filter(s => s.completed).length;
           const totalSets = exercise.sets.length;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { WorkoutSession } from '@/types';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
@@ -11,8 +11,9 @@ import { Modal } from '@/components/ui/Modal';
 import { Dumbbell } from 'lucide-react';
 
 // Helper to find exercise in both database and custom exercises
-const findExercise = (exerciseId: string, customExercises: any[]) => {
-  return exerciseDatabase.find(ex => ex.id === exerciseId) || 
+const findExercise = (exerciseId: string, baseExercises: any[], customExercises: any[]) => {
+  return baseExercises.find(ex => ex.id === exerciseId) ||
+         exerciseDatabase.find(ex => ex.id === exerciseId) || 
          customExercises.find(ex => ex.id === exerciseId);
 };
 
@@ -61,8 +62,12 @@ interface WorkoutHistoryProps {
 }
 
 export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
-  const { workoutSessions, deleteWorkoutSession, customExercises } = useWorkoutStore();
+  const { workoutSessions, deleteWorkoutSession, customExercises, exercises } = useWorkoutStore();
   const [selectedSession, setSelectedSession] = useState<WorkoutSession | null>(null);
+  const baseExercises = useMemo(
+    () => (exercises.length > 0 ? exercises : exerciseDatabase),
+    [exercises]
+  );
 
   const handleDelete = (sessionId: string) => {
     if (confirm('Training wirklich löschen?')) {
@@ -147,7 +152,7 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
 
             <div className="flex flex-wrap gap-1.5">
               {session.exercises.slice(0, 4).map((ex, idx) => {
-                const exerciseData = findExercise(ex.exerciseId, customExercises);
+                const exerciseData = findExercise(ex.exerciseId, baseExercises, customExercises);
                 const exerciseName = exerciseData?.name || ex.exerciseId;
                 return (
                   <span
@@ -226,7 +231,7 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
             </h3>
             <div className="space-y-3 max-h-[50vh] overflow-y-auto">
               {selectedSession.exercises.map((exercise, exIdx) => {
-                const exerciseData = findExercise(exercise.exerciseId, customExercises);
+                const exerciseData = findExercise(exercise.exerciseId, baseExercises, customExercises);
                 const exerciseName = exerciseData?.name || exercise.exerciseId;
                 const completedSets = exercise.sets.filter(s => s.completed).length;
                 const totalVolume = exercise.sets.reduce((sum, set) => 

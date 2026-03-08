@@ -8,6 +8,7 @@ import { useNutritionStore } from '@/store/useNutritionStore';
 import { useBodyWeightStore } from '@/store/useBodyWeightStore';
 import { useAppSettingsStore } from '@/store/useAppSettingsStore';
 import { loadUserData, debouncedSync, cancelPendingSync } from '@/lib/supabaseSync';
+import { getExercisesForApp } from '@/lib/db/exercises';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -31,11 +32,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const loadData = async () => {
       try {
         const data = await loadUserData(user.uid);
+
+        try {
+          const dbExercises = await getExercisesForApp();
+          if (dbExercises.length > 0) {
+            useWorkoutStore.getState().setExercises(dbExercises);
+          }
+        } catch (error) {
+          console.error('Error loading exercise library from Supabase:', error);
+        }
+
         if (data) {
           // Hydrate workout store
           if (data.workout_data && Object.keys(data.workout_data).length > 0) {
             const wd = data.workout_data;
-            if (wd.exercises) useWorkoutStore.getState().setExercises(wd.exercises);
             if (wd.customExercises) useWorkoutStore.getState().setCustomExercises(wd.customExercises);
             if (wd.trainingDays) useWorkoutStore.getState().setTrainingDays(wd.trainingDays);
             if (wd.trainingPlans) useWorkoutStore.getState().setTrainingPlans(wd.trainingPlans);

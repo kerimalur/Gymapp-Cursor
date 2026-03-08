@@ -8,8 +8,9 @@ import { Modal } from '@/components/ui/Modal';
 import { Dumbbell, Target, Repeat, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 // Helper to find exercise in both database and custom exercises
-const findExercise = (exerciseId: string, customExercises: any[]) => {
-  return exerciseDatabase.find(ex => ex.id === exerciseId) || 
+const findExercise = (exerciseId: string, baseExercises: any[], customExercises: any[]) => {
+  return baseExercises.find(ex => ex.id === exerciseId) ||
+         exerciseDatabase.find(ex => ex.id === exerciseId) || 
          customExercises.find(ex => ex.id === exerciseId);
 };
 
@@ -30,7 +31,11 @@ interface ExerciseRecommendation {
 }
 
 export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }: TrainingDayDetailModalProps) {
-  const { workoutSessions, customExercises } = useWorkoutStore();
+  const { workoutSessions, customExercises, exercises } = useWorkoutStore();
+  const baseExercises = useMemo(
+    () => (exercises.length > 0 ? exercises : exerciseDatabase),
+    [exercises]
+  );
 
   // Berechne Empfehlungen für jede Übung
   const exerciseRecommendations = useMemo(() => {
@@ -130,7 +135,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
 
   // Get exercise details from database or custom exercises
   const getExerciseDetails = (exerciseId: string) => {
-    return findExercise(exerciseId, customExercises);
+    return findExercise(exerciseId, baseExercises, customExercises);
   };
 
   // Calculate total sets

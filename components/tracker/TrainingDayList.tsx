@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
@@ -11,8 +11,9 @@ import { TrainingDayDetailModal } from './TrainingDayDetailModal';
 import toast from 'react-hot-toast';
 
 // Helper to find exercise in both database and custom exercises
-const findExercise = (exerciseId: string, customExercises: any[]) => {
-  return exerciseDatabase.find(ex => ex.id === exerciseId) || 
+const findExercise = (exerciseId: string, baseExercises: any[], customExercises: any[]) => {
+  return baseExercises.find(ex => ex.id === exerciseId) ||
+         exerciseDatabase.find(ex => ex.id === exerciseId) || 
          customExercises.find(ex => ex.id === exerciseId);
 };
 
@@ -62,9 +63,14 @@ interface TrainingDayListProps {
 export function TrainingDayList({ limit }: TrainingDayListProps) {
   const router = useRouter();
   const { user } = useAuthStore();
-  const { trainingDays, setTrainingDays, customExercises } = useWorkoutStore();
+  const { trainingDays, setTrainingDays, customExercises, exercises } = useWorkoutStore();
   const [editingDay, setEditingDay] = useState<TrainingDay | null>(null);
   const [viewingDay, setViewingDay] = useState<TrainingDay | null>(null);
+
+  const baseExercises = useMemo(
+    () => (exercises.length > 0 ? exercises : exerciseDatabase),
+    [exercises]
+  );
 
   const handleStartWorkout = (day: TrainingDay) => {
     router.push(`/workout?id=${day.id}`);
@@ -92,7 +98,7 @@ export function TrainingDayList({ limit }: TrainingDayListProps) {
 
   // Get exercise name from database or custom exercises
   const getExerciseName = (exerciseId: string): string => {
-    const exercise = findExercise(exerciseId, customExercises);
+    const exercise = findExercise(exerciseId, baseExercises, customExercises);
     return exercise?.name || exerciseId;
   };
 
