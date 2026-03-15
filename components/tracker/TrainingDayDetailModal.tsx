@@ -101,7 +101,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
         if (avgRIR >= 2) {
           recommendation = 'increase';
           recommendedWeight = lastSession.weight + 2.5;
-          reason = `Stabil → +2.5kg m?glich`;
+          reason = `Stabil → +2.5kg möglich`;
         } else {
           reason = `Gewicht halten`;
         }
@@ -203,6 +203,53 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
             ))}
           </div>
         </div>
+
+        {/* Session Plan Summary */}
+        {exerciseRecommendations.size > 0 && (() => {
+          const recs = Array.from(exerciseRecommendations.values());
+          const increases = recs.filter(r => r.recommendation === 'increase').length;
+          const decreases = recs.filter(r => r.recommendation === 'decrease').length;
+          const maintains = recs.filter(r => r.recommendation === 'maintain').length;
+          const totalLastVol = recs.reduce((s, r) => s + r.lastWeight, 0);
+          const totalNextVol = recs.reduce((s, r) => s + r.recommendedWeight, 0);
+          const volDiff = totalNextVol - totalLastVol;
+          return (
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-primary-50 to-primary-100/50 border border-primary-200">
+              <p className="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                <TrendingUp className="w-3.5 h-3.5" />
+                Heutiger Progressionsplan
+              </p>
+              <div className="flex items-center gap-3">
+                {increases > 0 && (
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-100 border border-emerald-200">
+                    <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="text-sm font-bold text-emerald-700">{increases} steigern</span>
+                  </div>
+                )}
+                {maintains > 0 && (
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-100 border border-blue-200">
+                    <Minus className="w-3.5 h-3.5 text-blue-600" />
+                    <span className="text-sm font-bold text-blue-700">{maintains} halten</span>
+                  </div>
+                )}
+                {decreases > 0 && (
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-100 border border-orange-200">
+                    <TrendingDown className="w-3.5 h-3.5 text-orange-600" />
+                    <span className="text-sm font-bold text-orange-700">{decreases} reduzieren</span>
+                  </div>
+                )}
+                {volDiff !== 0 && (
+                  <div className="ml-auto text-right">
+                    <p className="text-xs text-slate-500">Gewicht ges.</p>
+                    <p className={`text-sm font-bold ${volDiff > 0 ? 'text-emerald-600' : 'text-orange-600'}`}>
+                      {volDiff > 0 ? '+' : ''}{volDiff}kg
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Exercise List */}
         <div>
