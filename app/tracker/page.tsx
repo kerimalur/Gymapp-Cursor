@@ -10,6 +10,7 @@ import { TrainingDayList } from '@/components/tracker/TrainingDayList';
 import { TrainingPlanList } from '@/components/tracker/TrainingPlanList';
 import { WorkoutHistory } from '@/components/tracker/WorkoutHistory';
 import { CreateTrainingDayModal } from '@/components/tracker/CreateTrainingDayModal';
+import { SmartWorkoutRecommendation } from '@/components/tracker/SmartWorkoutRecommendation';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 
 type View = 'overview' | 'builder' | 'history';
@@ -84,6 +85,7 @@ export default function TrackerPage() {
 
         {currentView === 'overview' && (
           <div className="space-y-6">
+            <SmartWorkoutRecommendation onStart={handleStartWorkout} />
             {nextTrainingDay ? (
               <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white shadow-xl">
                 <p className="mb-1 text-sm text-blue-100">Nächstes Training</p>

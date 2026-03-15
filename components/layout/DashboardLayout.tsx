@@ -1,6 +1,7 @@
 'use client';
 
 import { Sidebar } from './Sidebar';
+import { BottomTabNav } from './BottomTabNav';
 import { useState, useEffect } from 'react';
 import { useOfflineQueue } from '@/hooks/useOfflineQueue';
 import { FloatingQuickActions } from '@/components/ui/FloatingQuickActions';
@@ -14,7 +15,6 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children, showSidebar = true }: DashboardLayoutProps) {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Initialize offline queue processing
   useOfflineQueue();
@@ -23,24 +23,8 @@ export function DashboardLayout({ children, showSidebar = true }: DashboardLayou
     setMounted(true);
   }, []);
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [children]);
-
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mobileMenuOpen]);
-
   const shouldShowQuickActions = showSidebar && pathname !== '/workout';
+  const shouldShowBottomNav = showSidebar && pathname !== '/workout';
 
   return (
     <div className="min-h-screen app-background relative overflow-hidden">
@@ -55,9 +39,9 @@ export function DashboardLayout({ children, showSidebar = true }: DashboardLayou
       <div className="floating-orb floating-orb-2" />
       <div className="floating-orb floating-orb-3" />
 
-      {/* Mobile Header - Only visible on mobile */}
+      {/* Mobile Header - logo only; navigation handled by bottom tab bar */}
       {showSidebar && (
-        <div className="lg:hidden fixed top-0 left-0 right-0 h-14 z-40 card-glass border-b border-[hsl(var(--border-light))] flex items-center justify-between px-4">
+        <div className="lg:hidden fixed top-0 left-0 right-0 h-14 z-40 card-glass border-b border-[hsl(var(--border-light))] flex items-center px-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center shadow-md">
               <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -66,35 +50,21 @@ export function DashboardLayout({ children, showSidebar = true }: DashboardLayou
             </div>
             <span className="font-bold text-base text-primary">FitTrack</span>
           </div>
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="btn-icon p-2"
-            aria-label="Menu oeffnen"
-          >
-            {mobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
         </div>
       )}
 
-      {/* Sidebar - Desktop always visible, Mobile as overlay */}
-      {showSidebar && <Sidebar mobileOpen={mobileMenuOpen} onMobileClose={() => setMobileMenuOpen(false)} />}
+      {/* Sidebar - Desktop always visible */}
+      {showSidebar && <Sidebar />}
 
       {/* Main Content */}
       <div className={`relative z-10 transition-all duration-300 ${showSidebar ? 'lg:ml-64' : ''} ${showSidebar ? 'pt-14 lg:pt-0' : ''}`}>
-        <main className={`p-3 sm:p-4 md:p-6 lg:p-8 mobile-scroll-smooth ${mounted ? 'animate-slide-up' : 'opacity-0'}`}>
+        <main className={`p-3 sm:p-4 md:p-6 lg:p-8 mobile-scroll-smooth pb-16 lg:pb-0 ${mounted ? 'animate-slide-up' : 'opacity-0'}`}>
           {children}
         </main>
       </div>
 
       {shouldShowQuickActions && <FloatingQuickActions />}
+      {shouldShowBottomNav && <BottomTabNav />}
     </div>
   );
 }
