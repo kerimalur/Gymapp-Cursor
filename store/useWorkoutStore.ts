@@ -24,6 +24,8 @@ interface WorkoutState {
   workoutSessions: WorkoutSession[];
   currentWorkout: WorkoutSession | null;
   strengthGoals: StrengthGoal[];
+  weeklyVolumeGoalSets: number | null;
+  setWeeklyVolumeGoalSets: (goal: number | null) => void;
 
   // Rest Timer State
   restTimer: RestTimer;
@@ -73,6 +75,8 @@ export const useWorkoutStore = create<WorkoutState>()(
       workoutSessions: [],
       currentWorkout: null,
       strengthGoals: [],
+      weeklyVolumeGoalSets: null,
+      setWeeklyVolumeGoalSets: (goal) => set({ weeklyVolumeGoalSets: goal }),
 
       // Rest Timer Initial State
       restTimer: {
