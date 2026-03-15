@@ -17,6 +17,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Suspense } from 'react';
 import { getProgressionSuggestion, generateWorkoutSummary, WorkoutSummaryData } from '@/lib/progressiveOverload';
+import { gradeWorkout, WorkoutGrade } from '@/lib/coachingEngine';
 import { WorkoutSummaryModal } from '@/components/workout/WorkoutSummaryModal';
 import { normalizeSearchText } from '@/lib/text';
 
@@ -40,7 +41,7 @@ function WorkoutContent() {
   const trainingDayId = searchParams.get('id') || '';
 
   const workoutStore = useWorkoutStore();
-  const { trainingDays, workoutSessions, workoutSettings, customExercises } = workoutStore;
+  const { trainingDays, workoutSessions, workoutSettings, customExercises, trainingPlans } = workoutStore;
   const { syncData, user } = useAuthStore();
   const nutritionStore = useNutritionStore();
 
@@ -52,6 +53,7 @@ function WorkoutContent() {
   const [isSaving, setIsSaving] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [summaryData, setSummaryData] = useState<WorkoutSummaryData | null>(null);
+  const [workoutGrade, setWorkoutGrade] = useState<WorkoutGrade | null>(null);
   const [exerciseNotes, setExerciseNotes] = useState<Record<number, string>>({});
   const [showNoteInput, setShowNoteInput] = useState<number | null>(null);
   const [exerciseSearchTerm, setExerciseSearchTerm] = useState('');
@@ -268,6 +270,8 @@ function WorkoutContent() {
     }
 
     setSummaryData(generateWorkoutSummary(completed, updated));
+    const activePlan = trainingPlans.find(p => p.isActive);
+    setWorkoutGrade(gradeWorkout(completed, updated, activePlan?.sessionsPerWeek || 4));
     setShowSummary(true);
     toast.success(`Training abgeschlossen! ${duration} Min • ${Math.round(vol)} kg`);
   };
@@ -692,6 +696,7 @@ function WorkoutContent() {
           isOpen={showSummary}
           onClose={() => { setShowSummary(false); router.push('/tracker'); }}
           summary={summaryData}
+          grade={workoutGrade}
         />
       )}
     </div>

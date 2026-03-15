@@ -3,15 +3,17 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, TrendingUp, TrendingDown, Clock, Flame, Target, ArrowRight, X, Zap, Star, ChevronDown, ChevronUp } from 'lucide-react';
 import { WorkoutSummaryData } from '@/lib/progressiveOverload';
+import { WorkoutGrade } from '@/lib/coachingEngine';
 import { useState } from 'react';
 
 interface WorkoutSummaryModalProps {
   isOpen: boolean;
   onClose: () => void;
   summary: WorkoutSummaryData;
+  grade?: WorkoutGrade | null;
 }
 
-export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummaryModalProps) {
+export function WorkoutSummaryModal({ isOpen, onClose, summary, grade }: WorkoutSummaryModalProps) {
   const [showDetails, setShowDetails] = useState(false);
 
   if (!isOpen) return null;
@@ -119,10 +121,10 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="bg-orange-50 rounded-2xl p-4 text-center"
+                className="bg-orange-400/10 rounded-2xl p-4 text-center"
               >
-                <Flame className="w-5 h-5 text-orange-600 mx-auto mb-1" />
-                <p className="text-2xl font-black text-orange-700">{Math.round(summary.totalVolume).toLocaleString()}</p>
+                <Flame className="w-5 h-5 text-orange-400 mx-auto mb-1" />
+                <p className="text-2xl font-black text-orange-400">{Math.round(summary.totalVolume).toLocaleString()}</p>
                 <p className="text-xs text-orange-500">kg Volumen</p>
                 {summary.volumeChange !== 0 && (
                   <p className={`text-xs mt-1 font-semibold flex items-center justify-center gap-0.5 ${summary.volumeChange > 0 ? 'text-emerald-500' : 'text-red-500'}`}>
@@ -136,14 +138,70 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="bg-emerald-50 rounded-2xl p-4 text-center"
+                className="bg-emerald-400/10 rounded-2xl p-4 text-center"
               >
-                <Target className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-                <p className="text-2xl font-black text-emerald-700">{summary.totalSetsCompleted}</p>
+                <Target className="w-5 h-5 text-emerald-400 mx-auto mb-1" />
+                <p className="text-2xl font-black text-emerald-400">{summary.totalSetsCompleted}</p>
                 <p className="text-xs text-emerald-500">Sätze</p>
                 <p className="text-xs mt-1 text-emerald-400">{summary.totalReps} Reps</p>
               </motion.div>
             </div>
+
+            {/* Coach Grade */}
+            {grade && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.65 }}
+                className="bg-[hsl(225,12%,13%)] rounded-2xl p-4 border border-[hsl(225,10%,16%)]"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">Coach-Bewertung</span>
+                  <span className={`grade-badge grade-${grade.grade.toLowerCase()} text-xl`}>
+                    {grade.grade}
+                  </span>
+                </div>
+                <p className="text-xs text-[hsl(var(--fg-muted))] mb-3">{grade.label} – {grade.score}/100 Punkte</p>
+                <div className="space-y-1.5">
+                  {([
+                    ['Volumen', grade.factors.volumeProgression, 20],
+                    ['Intensität', grade.factors.intensityScore, 20],
+                    ['Abschluss', grade.factors.completionRate, 20],
+                    ['Vielfalt', grade.factors.exerciseVariety, 20],
+                    ['Konstanz', grade.factors.consistency, 20],
+                  ] as const).map(([label, val, max]) => (
+                    <div key={label} className="flex items-center gap-2">
+                      <span className="text-xs text-[hsl(var(--fg-subtle))] w-16">{label}</span>
+                      <div className="flex-1 h-1.5 bg-[hsl(225,12%,18%)] rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-cyan-400 to-violet-400 rounded-full transition-all"
+                          style={{ width: `${(val / max) * 100}%` }}
+                        />
+                      </div>
+                      <span className="text-xs font-semibold text-[hsl(var(--fg-muted))] w-6 text-right">{val}</span>
+                    </div>
+                  ))}
+                </div>
+                {grade.highlights.length > 0 && (
+                  <div className="mt-3 space-y-1">
+                    {grade.highlights.map((h, i) => (
+                      <p key={i} className="text-xs text-emerald-400 flex items-center gap-1">
+                        <span>✓</span> {h}
+                      </p>
+                    ))}
+                  </div>
+                )}
+                {grade.improvements.length > 0 && (
+                  <div className="mt-2 space-y-1">
+                    {grade.improvements.map((imp, i) => (
+                      <p key={i} className="text-xs text-amber-400 flex items-center gap-1">
+                        <span>→</span> {imp}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            )}
 
             {/* New PRs */}
             {summary.newPRs.length > 0 && (
@@ -151,11 +209,11 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.7 }}
-                className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl p-4"
+                className="bg-gradient-to-r from-amber-400/10 to-orange-400/10 border-2 border-amber-400/20 rounded-2xl p-4"
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <Trophy className="w-5 h-5 text-amber-600" />
-                  <h3 className="font-bold text-amber-800">Neue Persönliche Rekorde!</h3>
+                  <Trophy className="w-5 h-5 text-amber-400" />
+                  <h3 className="font-bold text-amber-300">Neue Persönliche Rekorde!</h3>
                 </div>
                 <div className="space-y-2">
                   {summary.newPRs.map((pr, i) => (
@@ -168,9 +226,9 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                     >
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4 text-amber-500" />
-                        <span className="font-semibold text-amber-900 text-sm">{pr.exercise}</span>
+                        <span className="font-semibold text-amber-300 text-sm">{pr.exercise}</span>
                       </div>
-                      <span className="font-bold text-amber-700 text-sm">{pr.value} ({pr.type})</span>
+                      <span className="font-bold text-amber-400 text-sm">{pr.value} ({pr.type})</span>
                     </motion.div>
                   ))}
                 </div>
@@ -235,7 +293,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="w-4 h-4 text-cyan-400" />
-                  <h3 className="font-bold text-blue-800 text-sm">F?r nächstes Mal</h3>
+                  <h3 className="font-bold text-cyan-300 text-sm">F?r nächstes Mal</h3>
                 </div>
                 <ul className="space-y-1">
                   {summary.nextWorkoutTips.map((tip, i) => (
@@ -251,7 +309,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="w-full py-4 bg-gradient-to-r from-slate-800 to-slate-900 text-white rounded-2xl font-bold text-lg hover:shadow-lg transition-all"
+              className="w-full py-4 bg-gradient-to-r from-cyan-500 to-violet-500 text-white rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-cyan-500/20 transition-all"
             >
               Weiter zum Tracker
             </button>

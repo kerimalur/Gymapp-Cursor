@@ -169,7 +169,7 @@ export default function DashboardPage() {
         fatsConsumed: stats.fatsConsumed,
         waterIntake: stats.waterConsumed,
         goals: nutritionGoals,
-        sleepHours: lastSleep?.hours,
+        sleepHours: lastSleep?.hoursSlept,
         sleepQuality: lastSleep?.quality,
       },
       stats.enabled,
