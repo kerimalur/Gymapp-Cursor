@@ -33,12 +33,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Firebase
-.firebase/
-.firebaserc
-.firebaseignore
-
 # IDE & Misc
 .claude/
-nul
 backup*
