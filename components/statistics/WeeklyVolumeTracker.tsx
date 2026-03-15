@@ -178,11 +178,11 @@ export function WeeklyVolumeTracker({ showComparison = false }: { showComparison
       <div className="flex items-center gap-4 mb-4 text-xs text-slate-500">
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-primary-500" />
-          <span>Prim?r-Sätze</span>
+          <span>Primär-Sätze</span>
         </div>
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-slate-300" />
-          <span>Sekund?r (×0.5)</span>
+          <span>Sekundär (×0.5)</span>
         </div>
       </div>
 

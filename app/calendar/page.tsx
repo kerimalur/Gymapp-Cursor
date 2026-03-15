@@ -144,7 +144,7 @@ export default function CalendarPage() {
             <p className="mt-1 text-2xl font-black text-emerald-800">{monthStats.planned}</p>
           </div>
           <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">Erfuellung</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">Erfüllung</p>
             <p className="mt-1 text-2xl font-black text-violet-800">{monthStats.fulfillment}%</p>
           </div>
         </div>

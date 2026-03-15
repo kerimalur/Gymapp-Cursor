@@ -127,7 +127,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
         {/* Upper Body */}
         <div>
           <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
-            Oberk?rper
+            Oberkörper
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {upperMuscles.map(muscle => (
@@ -177,7 +177,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
         {/* Lower Body */}
         <div>
           <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
-            Unterk?rper
+            Unterkörper
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {lowerMuscles.map(muscle => (

@@ -315,7 +315,7 @@ function generatePlanContent(
         <table>
           <thead>
             <tr>
-              <th>?bung</th>
+              <th>Übung</th>
               <th>Sätze</th>
               <th>Wdh</th>
               <th>Muskeln</th>
@@ -497,7 +497,7 @@ function downloadPDF(content: string, filename: string): void {
 
 // Alternative: Export to CSV for spreadsheet import
 export function exportToCSV(sessions: WorkoutSession[], exerciseDatabase: any[]): void {
-  let csv = 'Datum,Training,?bung,Satz,Gewicht (kg),Wiederholungen,RIR,Aufwärmen,Assistiert\n';
+  let csv = 'Datum,Training,Übung,Satz,Gewicht (kg),Wiederholungen,RIR,Aufwärmen,Assistiert\n';
   
   sessions.forEach(session => {
     const date = format(new Date(session.startTime), 'yyyy-MM-dd');

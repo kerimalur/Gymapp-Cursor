@@ -212,7 +212,7 @@ export function ProgressiveOverloadTracker() {
     return (
       <div className="text-center py-8">
         <AlertTriangle className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-        <p className="text-slate-500">Noch keine ?bungsdaten vorhanden</p>
+        <p className="text-slate-500">Noch keine Übungsdaten vorhanden</p>
         <p className="text-sm text-slate-400">Absolviere einige Trainings für die Progressions-Analyse</p>
       </div>
     );
@@ -248,8 +248,8 @@ export function ProgressiveOverloadTracker() {
             <div>
               <p className="font-semibold text-amber-800">Achtung: M?gliche Stagnation</p>
               <p className="text-sm text-amber-700 mt-1">
-                {statusCounts.stagnant > 0 && `${statusCounts.stagnant} ?bung(en) stagnieren. `}
-                {statusCounts.regressing > 0 && `${statusCounts.regressing} ?bung(en) zeigen Rückgang.`}
+                {statusCounts.stagnant > 0 && `${statusCounts.stagnant} Übung(en) stagnieren. `}
+                {statusCounts.regressing > 0 && `${statusCounts.regressing} Übung(en) zeigen Rückgang.`}
               </p>
             </div>
           </div>

@@ -9,23 +9,19 @@ import { useNutritionStore, MealTemplate, TrackedMeal } from '@/store/useNutriti
 import { NutritionSettingsModal } from '@/components/nutrition/NutritionSettingsModal';
 import { NutritionTrend } from '@/components/nutrition/NutritionTrend';
 import { MealTimingAnalysis } from '@/components/nutrition/MealTimingAnalysis';
-import { 
-  Plus, 
-  Utensils, 
-  Coffee, 
-  Moon, 
-  Apple, 
-  Droplets, 
-  TrendingUp, 
-  TrendingDown,
+import {
+  Plus,
+  Utensils,
+  Coffee,
+  Moon,
+  Apple,
+  Droplets,
   Check,
   X,
   Flame,
-  Target,
   Info,
   Minus,
   Pill,
-  ChevronRight,
   Search,
   Beef,
   Settings,
@@ -42,14 +38,14 @@ import { format } from 'date-fns';
 const QUICK_MEALS = [
   { id: 'light', name: 'Leichte Mahlzeit', calories: 300, protein: 15, icon: '🥗', description: 'Salat, Obst, Snack' },
   { id: 'normal', name: 'Normale Mahlzeit', calories: 500, protein: 30, icon: '🍽️', description: 'Ausgewogene Mahlzeit' },
-  { id: 'big', name: 'Grosse Mahlzeit', calories: 800, protein: 45, icon: '🍖', description: 'Reichhaltige Mahlzeit' },
+  { id: 'big', name: 'Große Mahlzeit', calories: 800, protein: 45, icon: '🍖', description: 'Reichhaltige Mahlzeit' },
   { id: 'snack', name: 'Snack', calories: 150, protein: 5, icon: '🍎', description: 'Obst, Riegel, Kleinigkeit' },
   { id: 'protein', name: 'Protein-Shake', calories: 200, protein: 30, icon: '🥤', description: 'Shake, Quark, Eier' },
-  { id: 'treat', name: 'S??igkeit', calories: 250, protein: 3, icon: '🍫', description: 'Schokolade, Kuchen, Eis' },
+  { id: 'treat', name: 'Süßigkeit', calories: 250, protein: 3, icon: '🍫', description: 'Schokolade, Kuchen, Eis' },
 ];
 
 const MEAL_TIMES = [
-  { id: 'breakfast', name: 'Fr?hst?ck', icon: Coffee, time: '6:00 - 10:00' },
+  { id: 'breakfast', name: 'Frühstück', icon: Coffee, time: '6:00 - 10:00' },
   { id: 'lunch', name: 'Mittagessen', icon: Utensils, time: '11:00 - 14:00' },
   { id: 'dinner', name: 'Abendessen', icon: Moon, time: '17:00 - 21:00' },
   { id: 'snacks', name: 'Snacks', icon: Apple, time: 'Zwischendurch' },
@@ -63,21 +59,24 @@ const DEFAULT_SUPPLEMENTS = [
   { id: 'magnesium', name: 'Magnesium', dosage: '400mg', timing: 'Abends' },
 ];
 
+type TabId = 'mahlzeiten' | 'wasser-schlaf' | 'supplements' | 'analyse';
+
 export default function NutritionPage() {
   const searchParams = useSearchParams();
-  const { 
+  const {
     nutritionGoals, dailyTracking, updateWater, supplements, addSupplement, removeSupplement,
-    toggleSupplementTaken, setNutritionGoals, mealTemplates, addMealTemplate, removeMealTemplate,
+    toggleSupplementTaken, mealTemplates, addMealTemplate, removeMealTemplate,
     sleepEntries, addSleepEntry, trackedMeals, addTrackedMeal, removeTrackedMeal,
     cleanupOldMeals, resetDailyTrackingIfNeeded
   } = useNutritionStore();
-  
+
   // Get today's date for filtering
   const todayDate = format(new Date(), 'yyyy-MM-dd');
-  
+
   // Get today's meals from store (persisted)
   const todayMeals = trackedMeals.filter(m => m.date === todayDate);
-  
+
+  const [activeTab, setActiveTab] = useState<TabId>('mahlzeiten');
   const [showQuickAdd, setShowQuickAdd] = useState(false);
   const [showDetailedAdd, setShowDetailedAdd] = useState(false);
   const [selectedMealTime, setSelectedMealTime] = useState<string>('lunch');
@@ -85,12 +84,10 @@ export default function NutritionPage() {
   const [customProtein, setCustomProtein] = useState('');
   const [customName, setCustomName] = useState('');
   const [showWaterInfo, setShowWaterInfo] = useState(false);
-  const [showSupplements, setShowSupplements] = useState(false);
   const [showAddSupplement, setShowAddSupplement] = useState(false);
   const [newSupplementName, setNewSupplementName] = useState('');
   const [newSupplementDosage, setNewSupplementDosage] = useState('');
   // New state for saved meals
-  const [showSavedMeals, setShowSavedMeals] = useState(false);
   const [showSaveMealModal, setShowSaveMealModal] = useState(false);
   const [mealToSave, setMealToSave] = useState<{ id: string; name: string; calories: number; protein: number; time: string } | null>(null);
   const [templateName, setTemplateName] = useState('');
@@ -146,7 +143,7 @@ export default function NutritionPage() {
   useEffect(() => {
     const lastCleanup = localStorage.getItem('meal-history-last-cleanup');
     const today = new Date().toISOString().split('T')[0];
-    
+
     if (lastCleanup !== today) {
       const removedCount = cleanupOldMeals(30);
       if (removedCount > 0) {
@@ -160,7 +157,7 @@ export default function NutritionPage() {
   useEffect(() => {
     // Check if we've already initialized (stored in localStorage)
     const initialized = localStorage.getItem('supplements-initialized');
-    
+
     if (!initialized && supplements.length === 0 && !hasInitializedSupplements) {
       // Add default supplements only on very first load
       DEFAULT_SUPPLEMENTS.forEach(supp => {
@@ -181,10 +178,11 @@ export default function NutritionPage() {
   // Calculate today's totals
   const totalCalories = todayMeals.reduce((sum, meal) => sum + meal.calories, 0);
   const totalProtein = todayMeals.reduce((sum, meal) => sum + meal.protein, 0);
+  const totalCarbs = todayMeals.reduce((sum, meal) => sum + (('carbs' in meal ? (meal as { carbs?: number }).carbs : undefined) || 0), 0);
+  const totalFat = todayMeals.reduce((sum, meal) => sum + (('fat' in meal ? (meal as { fat?: number }).fat : undefined) || 0), 0);
   const dailyCalorieGoal = nutritionGoals?.dailyCalories || 2500;
   const dailyProteinGoal = nutritionGoals?.dailyProtein || 150;
   const caloriesRemaining = dailyCalorieGoal - totalCalories;
-  const proteinRemaining = dailyProteinGoal - totalProtein;
   const calorieProgress = Math.min((totalCalories / dailyCalorieGoal) * 100, 100);
   const proteinProgress = Math.min((totalProtein / dailyProteinGoal) * 100, 100);
 
@@ -203,7 +201,7 @@ export default function NutritionPage() {
       time: selectedMealTime,
     });
     setShowQuickAdd(false);
-    toast.success(`${meal.name} hinzugef?gtt (+${meal.calories} kcal, +${meal.protein}g Protein)`);
+    toast.success(`${meal.name} hinzugefügt (+${meal.calories} kcal, +${meal.protein}g Protein)`);
   };
 
   // Add saved meal template to today
@@ -214,9 +212,8 @@ export default function NutritionPage() {
       protein: template.protein,
       time: template.mealTime,
     });
-    setShowSavedMeals(false);
     setShowQuickAdd(false);
-    toast.success(`${template.name} hinzugef?gtt (+${template.calories} kcal)`);
+    toast.success(`${template.name} hinzugefügt (+${template.calories} kcal)`);
   };
 
   // Save current meal as template
@@ -225,7 +222,7 @@ export default function NutritionPage() {
       toast.error('Bitte Name eingeben');
       return;
     }
-    
+
     const template: MealTemplate = {
       id: `template-${Date.now()}`,
       name: templateName.trim(),
@@ -234,12 +231,12 @@ export default function NutritionPage() {
       mealTime: mealToSave.time,
       createdAt: new Date(),
     };
-    
+
     addMealTemplate(template);
     setShowSaveMealModal(false);
     setMealToSave(null);
     setTemplateName('');
-    toast.success(`"${template.name}" als Vorlage gespeichert ⭐`);
+    toast.success(`"${template.name}" als Vorlage gespeichert`);
   };
 
   // Open save modal for a meal
@@ -252,14 +249,14 @@ export default function NutritionPage() {
   // Delete a meal template
   const handleDeleteTemplate = (templateId: string) => {
     removeMealTemplate(templateId);
-    toast.success('Vorlage gel?scht');
+    toast.success('Vorlage gelöscht');
   };
 
   // Save sleep entry
   const handleSaveSleep = () => {
     const hours = parseFloat(sleepHours);
     if (isNaN(hours) || hours < 0 || hours > 24) {
-      toast.error('Bitte g?ltige Stunden eingeben (0-24)');
+      toast.error('Bitte gültige Stunden eingeben (0-24)');
       return;
     }
 
@@ -274,7 +271,7 @@ export default function NutritionPage() {
 
     addSleepEntry(entry);
     setShowSleepTracker(false);
-    toast.success(`Schlaf gespeichert: ${hours}h, Qualit?t ${sleepQuality}/5 😴`);
+    toast.success(`Schlaf gespeichert: ${hours}h, Qualität ${sleepQuality}/5`);
   };
 
   // Get sleep quality color
@@ -292,10 +289,10 @@ export default function NutritionPage() {
 
   const handleAddCustomMeal = () => {
     if (!customCalories || parseInt(customCalories) <= 0) {
-      toast.error('Bitte gib eine g?ltige Kalorienzahl ein');
+      toast.error('Bitte gib eine gültige Kalorienzahl ein');
       return;
     }
-    
+
     addTrackedMeal({
       name: customName || 'Eigene Mahlzeit',
       calories: parseInt(customCalories),
@@ -307,7 +304,7 @@ export default function NutritionPage() {
     setCustomName('');
     setShowQuickAdd(false);
     setShowDetailedAdd(false);
-    toast.success(`Mahlzeit hinzugef?gtt (+${customCalories} kcal)`);
+    toast.success(`Mahlzeit hinzugefügt (+${customCalories} kcal)`);
   };
 
   const handleRemoveMeal = (mealId: string) => {
@@ -354,7 +351,7 @@ export default function NutritionPage() {
     setNewSupplementName('');
     setNewSupplementDosage('');
     setShowAddSupplement(false);
-    toast.success('Supplement hinzugef?gtt!');
+    toast.success('Supplement hinzugefügt!');
   };
 
   const handleOpenGoalsSettings = () => {
@@ -377,291 +374,624 @@ export default function NutritionPage() {
   ).length;
   const supplementsTotal = activeSupplements.length;
 
+  // ── Tab definitions ──────────────────────────────────────────────────────
+  const TABS: { id: TabId; label: string }[] = [
+    { id: 'mahlzeiten', label: 'Mahlzeiten' },
+    { id: 'wasser-schlaf', label: 'Wasser & Schlaf' },
+    { id: 'supplements', label: 'Supplements' },
+    { id: 'analyse', label: 'Analyse' },
+  ];
+
   return (
     <DashboardLayout>
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-1">
-              Ernährung
-            </h1>
-            <p className="text-gray-600">
-              Kalorien, Protein & Supplements tracken
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setShowNutritionSettings(true)}
-              className="p-3 hover:bg-gray-100 rounded-xl transition-colors text-gray-600 hover:text-primary-600"
-              title="Lebensmittel & Supplements verwalten"
-              aria-label="Einstellungen"
-            >
-              <Utensils className="w-6 h-6" />
-            </button>
-            <button
-              onClick={handleOpenGoalsSettings}
-              className="p-3 hover:bg-gray-100 rounded-xl transition-colors text-gray-600 hover:text-primary-600"
-              title="Ziele anpassen"
-              aria-label="Ziele anpassen"
-            >
-              <Settings className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
 
-        {/* Main Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          {/* Calories Card */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-                <Flame className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-500">Kalorien</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {totalCalories.toLocaleString()} <span className="text-base font-normal text-gray-400">/ {dailyCalorieGoal}</span>
-                </p>
-              </div>
-            </div>
-            <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
-              <div 
-                className={`h-full rounded-full bg-gradient-to-r ${getCalorieProgressColor()} transition-all duration-500`}
-                ref={(el) => { if (el) el.style.width = `${calorieProgress}%`; }}
-              />
-            </div>
-            <p className={`text-sm mt-2 ${caloriesRemaining >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-              {caloriesRemaining >= 0 ? `Noch ${caloriesRemaining} kcal übrig` : `${Math.abs(caloriesRemaining)} kcal ?ber Ziel`}
-            </p>
-          </div>
-
-          {/* Protein Card */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                <Beef className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-500">Protein</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {totalProtein}g <span className="text-base font-normal text-gray-400">/ {dailyProteinGoal}g</span>
-                </p>
-              </div>
-            </div>
-            <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
-              <div 
-                className={`h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500`}
-                ref={(el) => { if (el) el.style.width = `${proteinProgress}%`; }}
-              />
-            </div>
-            <p className={`text-sm mt-2 ${proteinRemaining > 0 ? 'text-blue-600' : 'text-emerald-600'}`}>
-              {proteinRemaining > 0 ? `Noch ${proteinRemaining}g übrig` : `Ziel erreicht! 💪`}
-            </p>
-          </div>
-        </div>
-
-        {/* Quick Add Button */}
-        <button
-          onClick={() => setShowQuickAdd(true)}
-          className="w-full mb-6 p-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
-        >
-          <Plus className="w-6 h-6" />
-          Mahlzeit hinzuf?gen
-        </button>
-
-        {/* Water & Supplements & Sleep Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {/* Water Tracker */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <Droplets className="w-6 h-6 text-blue-500" />
-                <div>
-                  <span className="font-semibold text-gray-900">Wasser</span>
-                  <p className="text-xs text-gray-500">{waterMl}ml / {waterGoalMl}ml</p>
-                </div>
-              </div>
+        {/* ── Sticky top bar: daily macro summary ─────────────────────────── */}
+        <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b border-gray-100 -mx-4 px-4 py-3 mb-6">
+          <div className="flex items-center justify-between gap-3">
+            {/* Title + settings */}
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl font-bold text-gray-900">Ernährung</h1>
               <button
-                onClick={() => setShowWaterInfo(true)}
-                className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-blue-500 transition-colors"
-                title="Info"
-                aria-label="Wasser-Info"
+                onClick={handleOpenGoalsSettings}
+                className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-gray-400"
+                title="Ziele anpassen"
+                aria-label="Ziele anpassen"
               >
-                <Info className="w-5 h-5" />
+                <Settings className="w-4 h-4" />
               </button>
             </div>
-            
-            <div className="flex items-center gap-2 mb-3">
-              {Array.from({ length: waterSegmentCount }).map((_, i) => (
+
+            {/* Macro pill badges */}
+            <div className="flex items-center gap-2 overflow-x-auto flex-shrink-0">
+              <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+                calorieProgress >= 100 ? 'bg-red-100 text-red-700' : calorieProgress >= 80 ? 'bg-amber-100 text-amber-700' : 'bg-orange-100 text-orange-700'
+              }`}>
+                <Flame className="w-3 h-3" />
+                {totalCalories} / {dailyCalorieGoal} kcal
+              </span>
+              <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+                proteinProgress >= 100 ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'
+              }`}>
+                <Beef className="w-3 h-3" />
+                {totalProtein}g P
+              </span>
+              {totalCarbs > 0 && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700 whitespace-nowrap">
+                  {totalCarbs}g K
+                </span>
+              )}
+              {totalFat > 0 && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700 whitespace-nowrap">
+                  {totalFat}g F
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Tab navigation ───────────────────────────────────────────────── */}
+        <div className="flex bg-gray-100 rounded-xl p-1 mb-6 overflow-x-auto">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                activeTab === tab.id
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ════════════════════════════════════════════════════════════════════
+            TAB: Mahlzeiten
+        ════════════════════════════════════════════════════════════════════ */}
+        {activeTab === 'mahlzeiten' && (
+          <div className="space-y-5">
+            {/* Quick-add templates – horizontal scroll */}
+            <div>
+              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Schnell hinzufügen</p>
+              <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
+                {/* Saved templates first */}
+                {mealTemplates.map(template => (
+                  <button
+                    key={template.id}
+                    onClick={() => handleAddSavedMeal(template)}
+                    className="flex-shrink-0 flex flex-col items-center gap-1.5 p-3 bg-amber-50 border-2 border-amber-200 hover:border-amber-400 rounded-2xl transition-all w-24 text-center"
+                  >
+                    <Star className="w-5 h-5 text-amber-500" />
+                    <p className="text-xs font-semibold text-gray-800 leading-tight line-clamp-2">{template.name}</p>
+                    <p className="text-xs text-gray-500">{template.calories} kcal</p>
+                  </button>
+                ))}
+                {/* Preset quick meals */}
+                {QUICK_MEALS.map(meal => (
+                  <button
+                    key={meal.id}
+                    onClick={() => {
+                      addTrackedMeal({ name: meal.name, calories: meal.calories, protein: meal.protein, time: 'snacks' });
+                      toast.success(`${meal.name} hinzugefügt`);
+                    }}
+                    className="flex-shrink-0 flex flex-col items-center gap-1.5 p-3 bg-white border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 rounded-2xl transition-all w-24 text-center"
+                  >
+                    <span className="text-2xl">{meal.icon}</span>
+                    <p className="text-xs font-semibold text-gray-800 leading-tight line-clamp-2">{meal.name}</p>
+                    <p className="text-xs text-gray-500">{meal.calories} kcal</p>
+                  </button>
+                ))}
+                {/* Custom add */}
+                <button
+                  onClick={() => setShowQuickAdd(true)}
+                  className="flex-shrink-0 flex flex-col items-center justify-center gap-1.5 p-3 bg-white border-2 border-dashed border-gray-300 hover:border-primary-400 rounded-2xl transition-all w-24 text-center"
+                >
+                  <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
+                    <Plus className="w-4 h-4 text-primary-600" />
+                  </div>
+                  <p className="text-xs font-semibold text-gray-600">Eigene</p>
+                </button>
+              </div>
+            </div>
+
+            {/* Main add button */}
+            <button
+              onClick={() => setShowQuickAdd(true)}
+              className="w-full p-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
+            >
+              <Plus className="w-5 h-5" />
+              Mahlzeit hinzufügen
+            </button>
+
+            {/* Calorie progress bar */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
+                    <Flame className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500">Kalorien heute</p>
+                    <p className="text-lg font-bold text-gray-900">
+                      {totalCalories.toLocaleString()} <span className="text-sm font-normal text-gray-400">/ {dailyCalorieGoal}</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <p className="text-xs text-gray-500">Protein</p>
+                    <p className="text-lg font-bold text-blue-600">{totalProtein}g</p>
+                  </div>
+                  <div className={`text-right px-3 py-1 rounded-xl ${caloriesRemaining >= 0 ? 'bg-emerald-50' : 'bg-red-50'}`}>
+                    <p className="text-xs text-gray-500">Verbleibend</p>
+                    <p className={`text-sm font-bold ${caloriesRemaining >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+                      {caloriesRemaining >= 0 ? `${caloriesRemaining}` : `+${Math.abs(caloriesRemaining)}`} kcal
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
                 <div
-                  key={i}
-                  className={`flex-1 h-8 rounded-lg transition-all ${
-                    i * 250 < waterMl
-                      ? 'bg-gradient-to-t from-blue-400 to-blue-500' 
-                      : 'bg-gray-100'
-                  }`}
+                  className={`h-full rounded-full bg-gradient-to-r ${getCalorieProgressColor()} transition-all duration-500`}
+                  style={{ width: `${calorieProgress}%` }}
                 />
-              ))}
+              </div>
             </div>
-            
-            <div className="flex gap-2">
-              <button
-                onClick={handleRemoveWater}
-                disabled={waterMl === 0}
-                className="flex-1 p-3 border-2 border-gray-200 text-gray-600 rounded-xl font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                title="Wasserglas entfernen"
-                aria-label="Wasserglas entfernen"
-              >
-                <Minus className="w-5 h-5" />
-              </button>
-              <button
-                onClick={handleAddWater}
-                className="flex-1 p-3 border-2 border-dashed border-blue-300 text-blue-600 rounded-xl font-medium hover:bg-blue-50 transition-colors flex items-center justify-center gap-2"
-              >
-                <Plus className="w-5 h-5" />
-                <span>250ml</span>
-              </button>
+
+            {/* Meals grouped by time */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+                <h2 className="font-semibold text-gray-900">Heutige Mahlzeiten</h2>
+                <span className="text-xs text-gray-400">{todayMeals.length} Einträge</span>
+              </div>
+
+              {todayMeals.length === 0 ? (
+                <div className="text-center py-10 px-5">
+                  <Utensils className="w-10 h-10 text-gray-200 mx-auto mb-3" />
+                  <p className="text-gray-500 font-medium">Noch keine Mahlzeiten heute</p>
+                  <p className="text-sm text-gray-400 mt-1">Füge deine erste Mahlzeit hinzu</p>
+                </div>
+              ) : (
+                <div>
+                  {MEAL_TIMES.map(mealTime => {
+                    const mealsForTime = todayMeals.filter(m => m.time === mealTime.id);
+                    if (mealsForTime.length === 0) return null;
+                    const MealIcon = mealTime.icon;
+                    return (
+                      <div key={mealTime.id} className="border-b border-gray-50 last:border-0">
+                        <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-50">
+                          <MealIcon className="w-3.5 h-3.5 text-gray-400" />
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{mealTime.name}</span>
+                          <span className="text-xs text-gray-400">{mealTime.time}</span>
+                        </div>
+                        <div className="divide-y divide-gray-50">
+                          {mealsForTime.map(meal => (
+                            <div key={meal.id} className="flex items-center justify-between px-5 py-3">
+                              <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
+                                  <Flame className="w-4 h-4 text-orange-500" />
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-900 text-sm">{meal.name}</p>
+                                  <p className="text-xs text-blue-600">{meal.protein}g Protein</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span className="text-sm font-semibold text-gray-800 mr-2">{meal.calories} kcal</span>
+                                <button
+                                  onClick={() => handleOpenSaveMealModal(meal)}
+                                  className="p-1.5 hover:bg-amber-100 text-amber-400 rounded-lg transition-colors"
+                                  title="Als Vorlage speichern"
+                                  aria-label="Als Vorlage speichern"
+                                >
+                                  <Star className="w-3.5 h-3.5" />
+                                </button>
+                                <button
+                                  onClick={() => handleRemoveMeal(meal.id)}
+                                  className="p-1.5 hover:bg-red-100 text-red-400 rounded-lg transition-colors"
+                                  title="Entfernen"
+                                  aria-label="Mahlzeit entfernen"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {/* Meals without a matching time slot */}
+                  {(() => {
+                    const knownTimeIds = MEAL_TIMES.map(t => t.id);
+                    const otherMeals = todayMeals.filter(m => !knownTimeIds.includes(m.time));
+                    if (otherMeals.length === 0) return null;
+                    return (
+                      <div className="border-t border-gray-50">
+                        <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-50">
+                          <Clock className="w-3.5 h-3.5 text-gray-400" />
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Sonstige</span>
+                        </div>
+                        <div className="divide-y divide-gray-50">
+                          {otherMeals.map(meal => (
+                            <div key={meal.id} className="flex items-center justify-between px-5 py-3">
+                              <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 rounded-lg bg-orange-100 flex items-center justify-center">
+                                  <Flame className="w-4 h-4 text-orange-500" />
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-900 text-sm">{meal.name}</p>
+                                  <p className="text-xs text-gray-400">{getMealTimeLabel(meal.time)}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span className="text-sm font-semibold text-gray-800 mr-2">{meal.calories} kcal</span>
+                                <button
+                                  onClick={() => handleRemoveMeal(meal.id)}
+                                  className="p-1.5 hover:bg-red-100 text-red-400 rounded-lg transition-colors"
+                                  aria-label="Mahlzeit entfernen"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
             </div>
           </div>
+        )}
 
-          {/* Sleep Tracker */}
-          <button
-            onClick={() => setShowSleepTracker(true)}
-            className="bg-white rounded-2xl shadow-lg p-6 text-left hover:shadow-xl transition-all group"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center">
-                  <Bed className="w-5 h-5 text-indigo-600" />
+        {/* ════════════════════════════════════════════════════════════════════
+            TAB: Wasser & Schlaf
+        ════════════════════════════════════════════════════════════════════ */}
+        {activeTab === 'wasser-schlaf' && (
+          <div className="space-y-5">
+            {/* Water Tracker */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                    <Droplets className="w-5 h-5 text-blue-500" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-gray-900">Wasserzufuhr</h2>
+                    <p className="text-sm text-gray-500">{waterMl}ml / {waterGoalMl}ml</p>
+                  </div>
                 </div>
-                <div>
-                  <span className="font-semibold text-gray-900">Schlaf</span>
-                  {todaySleep ? (
-                    <p className="text-sm text-gray-500">{todaySleep.hoursSlept}h • Qualit?t {todaySleep.quality}/5</p>
-                  ) : (
-                    <p className="text-sm text-gray-500">Noch nicht getrackt</p>
-                  )}
-                </div>
+                <button
+                  onClick={() => setShowWaterInfo(true)}
+                  className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-blue-500 transition-colors"
+                  title="Info"
+                  aria-label="Wasser-Info"
+                >
+                  <Info className="w-5 h-5" />
+                </button>
               </div>
-              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
-            </div>
-            
-            {todaySleep ? (
-              <div className="flex gap-2">
-                {[1, 2, 3, 4, 5].map((q) => (
+
+              {/* Progress bar */}
+              <div className="w-full bg-blue-50 rounded-full h-4 overflow-hidden mb-4">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500"
+                  style={{ width: `${Math.min((waterMl / waterGoalMl) * 100, 100)}%` }}
+                />
+              </div>
+
+              {/* Segment dots */}
+              <div className="flex items-center gap-1.5 mb-5">
+                {Array.from({ length: waterSegmentCount }).map((_, i) => (
                   <div
-                    key={q}
-                    className={`flex-1 h-3 rounded-full ${
-                      q <= todaySleep.quality
-                        ? 'bg-gradient-to-r from-indigo-400 to-indigo-600'
+                    key={i}
+                    className={`flex-1 h-7 rounded-lg transition-all ${
+                      i * 250 < waterMl
+                        ? 'bg-gradient-to-t from-blue-400 to-blue-500'
                         : 'bg-gray-100'
                     }`}
                   />
                 ))}
               </div>
-            ) : (
-              <div className="w-full bg-gray-100 rounded-full h-3" />
-            )}
-          </button>
 
-          {/* Supplements Summary */}
-          <button
-            onClick={() => setShowSupplements(true)}
-            className="bg-white rounded-2xl shadow-lg p-6 text-left hover:shadow-xl transition-all group"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
+              <div className="flex gap-3">
+                <button
+                  onClick={handleRemoveWater}
+                  disabled={waterMl === 0}
+                  className="flex-1 p-3 border-2 border-gray-200 text-gray-600 rounded-xl font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  aria-label="Wasserglas entfernen"
+                >
+                  <Minus className="w-5 h-5" />
+                  <span>–250ml</span>
+                </button>
+                <button
+                  onClick={handleAddWater}
+                  className="flex-1 p-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  <span>+250ml</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Sleep Tracker */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center">
+                    <Bed className="w-5 h-5 text-indigo-600" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-gray-900">Schlaf</h2>
+                    {todaySleep ? (
+                      <p className="text-sm text-gray-500">{todaySleep.hoursSlept}h · Qualität {todaySleep.quality}/5</p>
+                    ) : (
+                      <p className="text-sm text-gray-500">Noch nicht getrackt</p>
+                    )}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowSleepTracker(true)}
+                  className="px-4 py-2 bg-indigo-500 text-white rounded-xl text-sm font-medium hover:bg-indigo-600 transition-colors"
+                >
+                  {todaySleep ? 'Bearbeiten' : 'Eintragen'}
+                </button>
+              </div>
+
+              {todaySleep ? (
+                <div className="space-y-3">
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((q) => (
+                      <div
+                        key={q}
+                        className={`flex-1 h-3 rounded-full ${
+                          q <= todaySleep.quality
+                            ? 'bg-gradient-to-r from-indigo-400 to-indigo-600'
+                            : 'bg-gray-100'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="bg-indigo-50 rounded-xl p-3 text-center">
+                      <p className="text-2xl font-bold text-indigo-700">{todaySleep.hoursSlept}h</p>
+                      <p className="text-xs text-indigo-500">Schlafdauer</p>
+                    </div>
+                    <div className={`rounded-xl p-3 text-center ${getSleepQualityColor(todaySleep.quality)}`}>
+                      <p className="text-2xl font-bold">{todaySleep.quality}/5</p>
+                      <p className="text-xs opacity-70">Qualität</p>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-3 text-center">
+                      <p className="text-sm font-bold text-gray-700">{todaySleep.bedTime}</p>
+                      <p className="text-xs text-gray-500">Einschlaf</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowSleepTracker(true)}
+                  className="w-full py-4 border-2 border-dashed border-indigo-200 rounded-xl text-indigo-500 hover:bg-indigo-50 transition-colors text-sm font-medium"
+                >
+                  Schlaf für heute eintragen
+                </button>
+              )}
+            </div>
+
+            {/* Recent sleep history */}
+            {sleepEntries.length > 1 && (
+              <div className="bg-white rounded-2xl border border-gray-100 p-5">
+                <h3 className="font-semibold text-gray-900 mb-3">Letzte Einträge</h3>
+                <div className="space-y-2">
+                  {sleepEntries
+                    .filter(e => e.date !== todayDate)
+                    .sort((a, b) => b.date.localeCompare(a.date))
+                    .slice(0, 5)
+                    .map(entry => (
+                      <div key={entry.id} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                        <span className="text-sm text-gray-600">{entry.date}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-medium text-gray-900">{entry.hoursSlept}h</span>
+                          <span className={`text-xs px-2 py-0.5 rounded-full ${getSleepQualityColor(entry.quality)}`}>
+                            {getSleepQualityLabel(entry.quality)}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ════════════════════════════════════════════════════════════════════
+            TAB: Supplements
+        ════════════════════════════════════════════════════════════════════ */}
+        {activeTab === 'supplements' && (
+          <div className="space-y-5">
+            {/* Progress header */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-5">
+              <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
                   <Pill className="w-5 h-5 text-purple-600" />
                 </div>
-                <div>
-                  <span className="font-semibold text-gray-900">Supplements</span>
-                  <p className="text-sm text-gray-500">{supplementsTaken} / {supplementsTotal} eingenommen</p>
+                <div className="flex-1">
+                  <h2 className="font-semibold text-gray-900">Heutige Supplements</h2>
+                  <p className="text-sm text-gray-500">{supplementsTaken} von {supplementsTotal} eingenommen</p>
+                </div>
+                <div className="w-14 h-14 rounded-full border-4 border-purple-100 flex items-center justify-center">
+                  <span className="text-sm font-bold text-purple-700">
+                    {supplementsTotal > 0 ? Math.round((supplementsTaken / supplementsTotal) * 100) : 0}%
+                  </span>
                 </div>
               </div>
-              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
+              <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-purple-400 to-purple-600 transition-all"
+                  style={{ width: `${supplementsTotal > 0 ? (supplementsTaken / supplementsTotal) * 100 : 0}%` }}
+                />
+              </div>
             </div>
-            
-            <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
-              <div 
-                className="h-full rounded-full bg-gradient-to-r from-purple-400 to-purple-600 transition-all"
-                ref={(el) => { if (el) el.style.width = `${supplementsTotal > 0 ? (supplementsTaken / supplementsTotal) * 100 : 0}%`; }}
-              />
-            </div>
-          </button>
-        </div>
 
-        {/* Today's Meals */}
-        <div className="bg-white rounded-2xl shadow-lg p-6">
-          <h2 className="font-semibold text-gray-900 mb-4">Heutige Mahlzeiten</h2>
-          
-          {todayMeals.length === 0 ? (
-            <div className="text-center py-8 bg-gray-50 rounded-xl">
-              <Utensils className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">Noch keine Mahlzeiten heute</p>
-              <p className="text-sm text-gray-400">F?ge deine erste Mahlzeit hinzu</p>
+            {/* Supplements list */}
+            <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+              <div className="divide-y divide-gray-50">
+                {activeSupplements.map(supplement => {
+                  const isTaken = takenSupplementIds.includes(supplement.id);
+                  return (
+                    <div
+                      key={supplement.id}
+                      className={`flex items-center gap-3 px-5 py-4 transition-all ${
+                        isTaken ? 'bg-purple-50' : 'bg-white hover:bg-gray-50'
+                      }`}
+                    >
+                      <button
+                        onClick={() => handleToggleSupplement(supplement.id)}
+                        className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
+                          isTaken ? 'bg-purple-500' : 'bg-gray-200 hover:bg-gray-300'
+                        }`}
+                        aria-label={isTaken ? 'Als nicht eingenommen markieren' : 'Als eingenommen markieren'}
+                      >
+                        {isTaken && <Check className="w-4 h-4 text-white" />}
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <p className={`font-medium text-sm ${isTaken ? 'text-purple-900' : 'text-gray-900'}`}>
+                          {supplement.name}
+                        </p>
+                        <p className="text-xs text-gray-500">{supplement.dosage} · {supplement.timing}</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          removeSupplement(supplement.id);
+                          toast.success('Supplement gelöscht');
+                        }}
+                        className="p-1.5 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
+                        aria-label="Supplement löschen"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {activeSupplements.length === 0 && (
+                <div className="text-center py-10">
+                  <Pill className="w-10 h-10 text-gray-200 mx-auto mb-3" />
+                  <p className="text-gray-500 font-medium">Keine Supplements</p>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="space-y-3">
-              {todayMeals.map((meal) => (
-                <div 
-                  key={meal.id}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-xl"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center">
-                      <Flame className="w-5 h-5 text-orange-500" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900">{meal.name}</p>
-                      <p className="text-sm text-gray-500">{getMealTimeLabel(meal.time)}</p>
-                    </div>
+
+            {/* Add supplement */}
+            {!showAddSupplement ? (
+              <button
+                onClick={() => setShowAddSupplement(true)}
+                className="w-full p-4 border-2 border-dashed border-gray-200 rounded-2xl text-gray-500 hover:border-purple-300 hover:text-purple-600 transition-colors flex items-center justify-center gap-2 bg-white"
+              >
+                <Plus className="w-5 h-5" />
+                Supplement hinzufügen
+              </button>
+            ) : (
+              <div className="bg-white rounded-2xl border border-gray-200 p-5 space-y-3">
+                <h3 className="font-semibold text-gray-900">Neues Supplement</h3>
+                <input
+                  type="text"
+                  value={newSupplementName}
+                  onChange={(e) => setNewSupplementName(e.target.value)}
+                  placeholder="Name (z.B. Zink)"
+                  className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                />
+                <input
+                  type="text"
+                  value={newSupplementDosage}
+                  onChange={(e) => setNewSupplementDosage(e.target.value)}
+                  placeholder="Dosierung (z.B. 25mg)"
+                  className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => { setShowAddSupplement(false); setNewSupplementName(''); setNewSupplementDosage(''); }}
+                    className="flex-1 py-2.5 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Abbrechen
+                  </button>
+                  <button
+                    onClick={handleAddNewSupplement}
+                    disabled={!newSupplementName.trim()}
+                    className="flex-1 py-2.5 bg-purple-500 text-white rounded-xl font-medium hover:bg-purple-600 transition-colors disabled:opacity-50"
+                  >
+                    Hinzufügen
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ════════════════════════════════════════════════════════════════════
+            TAB: Analyse
+        ════════════════════════════════════════════════════════════════════ */}
+        {activeTab === 'analyse' && (
+          <div className="space-y-5">
+            {/* 7-day macro trend */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-1">7-Tage Trend</h2>
+              <p className="text-sm text-gray-500 mb-5">Kalorien- und Proteinverlauf der letzten Woche</p>
+              <NutritionTrend showGoals />
+            </div>
+
+            {/* Meal timing */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-1">Mahlzeiten-Timing</h2>
+              <p className="text-sm text-gray-500 mb-5">Wann isst du am meisten?</p>
+              <MealTimingAnalysis />
+            </div>
+
+            {/* Protein progress */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-5">
+              <h3 className="font-semibold text-gray-900 mb-4">Heutige Ziele</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-medium text-gray-700 flex items-center gap-1.5">
+                      <Flame className="w-3.5 h-3.5 text-orange-500" /> Kalorien
+                    </span>
+                    <span className="text-sm text-gray-500">{totalCalories} / {dailyCalorieGoal} kcal</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="text-right mr-2">
-                      <p className="font-semibold text-gray-900">{meal.calories} kcal</p>
-                      <p className="text-sm text-blue-600">{meal.protein}g Protein</p>
-                    </div>
-                    <button
-                      onClick={() => handleOpenSaveMealModal(meal)}
-                      className="p-2 hover:bg-amber-100 text-amber-500 rounded-lg transition-colors"
-                      title="Als Vorlage speichern"
-                      aria-label="Als Vorlage speichern"
-                    >
-                      <Star className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleRemoveMeal(meal.id)}
-                      className="p-2 hover:bg-red-100 text-red-500 rounded-lg transition-colors"
-                      title="Entfernen"
-                      aria-label="Mahlzeit entfernen"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
+                  <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                    <div
+                      className={`h-full rounded-full bg-gradient-to-r ${getCalorieProgressColor()} transition-all`}
+                      style={{ width: `${calorieProgress}%` }}
+                    />
                   </div>
                 </div>
-              ))}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-medium text-gray-700 flex items-center gap-1.5">
+                      <Beef className="w-3.5 h-3.5 text-blue-500" /> Protein
+                    </span>
+                    <span className="text-sm text-gray-500">{totalProtein}g / {dailyProteinGoal}g</span>
+                  </div>
+                  <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all"
+                      style={{ width: `${proteinProgress}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
-        {/* 7-Day Nutrition Trend */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-            📈 7-Tage Trend
-          </h2>
-          <NutritionTrend showGoals />
-        </div>
-
-        {/* Meal Timing Analysis */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-            ⏰ Mahlzeiten-Timing
-          </h2>
-          <MealTimingAnalysis />
-        </div>
       </div>
+
+      {/* ════════════════════════════════════════════════════════════════════
+          MODALS (unchanged logic – only clean up broken characters)
+      ════════════════════════════════════════════════════════════════════ */}
 
       {/* Quick Add Modal */}
       {showQuickAdd && (
@@ -676,12 +1006,11 @@ export default function NutritionPage() {
           >
             <div className="flex-shrink-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-3xl">
               <div className="flex items-center justify-between">
-                <h3 id="quick-add-meal-title" className="text-xl font-bold text-gray-900">Mahlzeit hinzuf?gen</h3>
+                <h3 id="quick-add-meal-title" className="text-xl font-bold text-gray-900">Mahlzeit hinzufügen</h3>
                 <button
                   onClick={() => setShowQuickAdd(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schlie?en"
-                  aria-label="Schlie?en"
+                  aria-label="Schließen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -705,9 +1034,7 @@ export default function NutritionPage() {
                             : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
                         }`}
                       >
-                        <Icon className={`w-5 h-5 mx-auto mb-1 ${
-                          selectedMealTime === time.id ? 'text-blue-600' : 'text-gray-400'
-                        }`} />
+                        <Icon className={`w-5 h-5 mx-auto mb-1 ${selectedMealTime === time.id ? 'text-blue-600' : 'text-gray-400'}`} />
                         <p className="text-xs font-medium text-gray-700">{time.name}</p>
                       </button>
                     );
@@ -757,14 +1084,13 @@ export default function NutritionPage() {
                         >
                           <p className="font-medium text-gray-900">{template.name}</p>
                           <p className="text-sm text-gray-500">
-                            {template.calories} kcal • {template.protein}g Protein
+                            {template.calories} kcal · {template.protein}g Protein
                           </p>
                         </button>
                         <button
                           onClick={() => handleDeleteTemplate(template.id)}
                           className="p-2 hover:bg-red-100 text-red-500 rounded-lg transition-colors ml-2"
-                          title="Vorlage l?schen"
-                          aria-label="Vorlage l?schen"
+                          aria-label="Vorlage löschen"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -814,7 +1140,7 @@ export default function NutritionPage() {
                     disabled={!customCalories}
                     className="w-full py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Hinzuf?gen
+                    Hinzufügen
                   </button>
                 </div>
               </div>
@@ -837,7 +1163,7 @@ export default function NutritionPage() {
         </div>
       )}
 
-      {/* Detailed Add Modal (for precise tracking) */}
+      {/* Detailed Add Modal */}
       {showDetailedAdd && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
           <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
@@ -847,8 +1173,7 @@ export default function NutritionPage() {
                 <button
                   onClick={() => setShowDetailedAdd(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schlie?en"
-                  aria-label="Schlie?en"
+                  aria-label="Schließen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -858,7 +1183,7 @@ export default function NutritionPage() {
             <div className="flex-1 overflow-y-auto p-6">
               <div className="bg-blue-50 rounded-xl p-4 mb-6">
                 <p className="text-sm text-blue-700">
-                  <strong>Tipp:</strong> F?r genaues Tracking kannst du die N?hrwerte von der Verpackung ablesen oder eine App wie MyFitnessPal nutzen.
+                  <strong>Tipp:</strong> Für genaues Tracking kannst du die Nährwerte von der Verpackung ablesen oder eine App wie MyFitnessPal nutzen.
                 </p>
               </div>
 
@@ -878,9 +1203,7 @@ export default function NutritionPage() {
                             : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
                         }`}
                       >
-                        <Icon className={`w-5 h-5 mx-auto mb-1 ${
-                          selectedMealTime === time.id ? 'text-blue-600' : 'text-gray-400'
-                        }`} />
+                        <Icon className={`w-5 h-5 mx-auto mb-1 ${selectedMealTime === time.id ? 'text-blue-600' : 'text-gray-400'}`} />
                         <p className="text-xs font-medium text-gray-700">{time.name}</p>
                       </button>
                     );
@@ -896,7 +1219,7 @@ export default function NutritionPage() {
                     type="text"
                     value={customName}
                     onChange={(e) => setCustomName(e.target.value)}
-                    placeholder="z.B. H?hnchenbrust mit Reis"
+                    placeholder="z.B. Hähnchenbrust mit Reis"
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
                   />
                 </div>
@@ -937,7 +1260,7 @@ export default function NutritionPage() {
                   disabled={!customCalories}
                   className="w-full py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Mahlzeit hinzuf?gen
+                  Mahlzeit hinzufügen
                 </button>
               </div>
             </div>
@@ -957,190 +1280,43 @@ export default function NutritionPage() {
               <button
                 onClick={() => setShowWaterInfo(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                title="Schlie?en"
-                aria-label="Schlie?en"
+                aria-label="Schließen"
               >
                 <X className="w-5 h-5 text-gray-500" />
               </button>
             </div>
-            
+
             <div className="p-6 space-y-4">
               <div className="bg-blue-50 rounded-xl p-4">
-                <h4 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
-                  <span>💧</span> 1 Glas = 250ml
-                </h4>
+                <h4 className="font-semibold text-blue-900 mb-2">1 Glas = 250ml</h4>
                 <p className="text-sm text-blue-700">
-                  Das entspricht etwa einem normalen Trinkglas. Ziel sind 8 Gl?ser = 2 Liter pro Tag.
+                  Das entspricht etwa einem normalen Trinkglas. Ziel sind 8 Gläser = 2 Liter pro Tag.
                 </p>
               </div>
 
               <div className="space-y-3">
                 <h4 className="font-semibold text-gray-900">Warum ist Wasser so wichtig?</h4>
                 <div className="space-y-2 text-sm text-gray-600">
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 mt-0.5">✓</span>
-                    <span><strong>Leistung:</strong> Schon 2% Dehydration reduziert die Trainingsleistung um bis zu 25%</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 mt-0.5">✓</span>
-                    <span><strong>Muskelaufbau:</strong> Wasser transportiert N?hrstoffe zu den Muskeln</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 mt-0.5">✓</span>
-                    <span><strong>Regeneration:</strong> Beschleunigt die Erholung nach dem Training</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 mt-0.5">✓</span>
-                    <span><strong>Fettverbrennung:</strong> Unterstuetzt den Stoffwechsel</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 mt-0.5">✓</span>
-                    <span><strong>Konzentration:</strong> Verhindert Muedigkeit und Kopfschmerzen</span>
-                  </div>
+                  {[
+                    ['Leistung', 'Schon 2% Dehydration reduziert die Trainingsleistung um bis zu 25%'],
+                    ['Muskelaufbau', 'Wasser transportiert Nährstoffe zu den Muskeln'],
+                    ['Regeneration', 'Beschleunigt die Erholung nach dem Training'],
+                    ['Fettverbrennung', 'Unterstützt den Stoffwechsel'],
+                    ['Konzentration', 'Verhindert Müdigkeit und Kopfschmerzen'],
+                  ].map(([title, text]) => (
+                    <div key={title} className="flex items-start gap-2">
+                      <span className="text-green-500 mt-0.5">✓</span>
+                      <span><strong>{title}:</strong> {text}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               <div className="bg-amber-50 rounded-xl p-4">
                 <p className="text-sm text-amber-700">
-                  <strong>Tipp:</strong> An Trainingstagen solltest du 0,5-1L mehr trinken. Bei Kreatin-Einnahme ebenfalls mehr!
+                  <strong>Tipp:</strong> An Trainingstagen solltest du 0,5–1L mehr trinken. Bei Kreatin-Einnahme ebenfalls mehr!
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Supplements Modal */}
-      {showSupplements && (
-        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
-            <div className="flex-shrink-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-3xl">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Pill className="w-6 h-6 text-purple-600" />
-                  <h3 className="text-xl font-bold text-gray-900">Supplements</h3>
-                </div>
-                <button
-                  onClick={() => setShowSupplements(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schlie?en"
-                  aria-label="Schlie?en"
-                >
-                  <X className="w-5 h-5 text-gray-500" />
-                </button>
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-y-auto p-6">
-              {/* Progress */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-600">Heute eingenommen</span>
-                  <span className="font-semibold text-gray-900">{supplementsTaken} / {supplementsTotal}</span>
-                </div>
-                <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
-                  <div 
-                    className="h-full rounded-full bg-gradient-to-r from-purple-400 to-purple-600 transition-all"
-                    ref={(el) => { if (el) el.style.width = `${supplementsTotal > 0 ? (supplementsTaken / supplementsTotal) * 100 : 0}%`; }}
-                  />
-                </div>
-              </div>
-
-              {/* Supplements List */}
-              <div className="space-y-2 mb-6">
-                {activeSupplements.map((supplement) => {
-                  const isTaken = takenSupplementIds.includes(supplement.id);
-
-                  return (
-                    <div
-                      key={supplement.id}
-                      className={`w-full p-4 rounded-xl transition-all flex items-center justify-between ${
-                        isTaken
-                          ? 'bg-purple-100 border-2 border-purple-300'
-                          : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
-                      }`}
-                    >
-                      <button
-                        onClick={() => handleToggleSupplement(supplement.id)}
-                        className="flex flex-1 items-center gap-3 text-left"
-                      >
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                          isTaken ? 'bg-purple-500' : 'bg-gray-200'
-                        }`}>
-                          {isTaken && <Check className="w-4 h-4 text-white" />}
-                        </div>
-                        <div className="text-left">
-                          <p className={`font-medium ${isTaken ? 'text-purple-900' : 'text-gray-900'}`}>
-                            {supplement.name}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {supplement.dosage} • {supplement.timing}
-                          </p>
-                        </div>
-                      </button>
-
-                      <button
-                        onClick={() => {
-                          removeSupplement(supplement.id);
-                          toast.success('Supplement gel?scht');
-                        }}
-                        className="ml-3 p-2 text-gray-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
-                        title="Supplement l?schen"
-                        aria-label="Supplement l?schen"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Add Supplement */}
-              {!showAddSupplement ? (
-                <button
-                  onClick={() => setShowAddSupplement(true)}
-                  className="w-full p-4 border-2 border-dashed border-gray-200 rounded-xl text-gray-500 hover:border-purple-300 hover:text-purple-600 transition-colors flex items-center justify-center gap-2"
-                >
-                  <Plus className="w-5 h-5" />
-                  Supplement hinzuf?gen
-                </button>
-              ) : (
-                <div className="bg-gray-50 rounded-xl p-4 space-y-3">
-                  <input
-                    type="text"
-                    value={newSupplementName}
-                    onChange={(e) => setNewSupplementName(e.target.value)}
-                    placeholder="Name (z.B. Zink)"
-                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none"
-                  />
-                  <input
-                    type="text"
-                    value={newSupplementDosage}
-                    onChange={(e) => setNewSupplementDosage(e.target.value)}
-                    placeholder="Dosierung (z.B. 25mg)"
-                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none"
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => {
-                        setShowAddSupplement(false);
-                        setNewSupplementName('');
-                        setNewSupplementDosage('');
-                      }}
-                      className="flex-1 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
-                    >
-                      Abbrechen
-                    </button>
-                    <button
-                      onClick={handleAddNewSupplement}
-                      disabled={!newSupplementName.trim()}
-                      className="flex-1 py-2 bg-purple-500 text-white rounded-lg font-medium hover:bg-purple-600 transition-colors disabled:opacity-50"
-                    >
-                      Hinzuf?gen
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -1159,8 +1335,7 @@ export default function NutritionPage() {
                 <button
                   onClick={() => setShowSaveMealModal(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schlie?en"
-                  aria-label="Schlie?en"
+                  aria-label="Schließen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -1170,19 +1345,17 @@ export default function NutritionPage() {
             <div className="p-6 space-y-4">
               <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
                 <p className="text-sm text-amber-800">
-                  <strong>{mealToSave.calories} kcal</strong> • {mealToSave.protein}g Protein
+                  <strong>{mealToSave.calories} kcal</strong> · {mealToSave.protein}g Protein
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Name der Vorlage
-                </label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Name der Vorlage</label>
                 <input
                   type="text"
                   value={templateName}
                   onChange={(e) => setTemplateName(e.target.value)}
-                  placeholder="z.B. Mein Fr?hst?ck"
+                  placeholder="z.B. Mein Frühstück"
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:outline-none"
                   autoFocus
                 />
@@ -1222,8 +1395,7 @@ export default function NutritionPage() {
                 <button
                   onClick={() => setShowSleepTracker(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schlie?en"
-                  aria-label="Schlie?en"
+                  aria-label="Schließen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -1233,9 +1405,7 @@ export default function NutritionPage() {
             <div className="p-6 space-y-5">
               {/* Sleep Duration */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Schlafdauer
-                </label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Schlafdauer</label>
                 <div className="relative">
                   <input
                     type="number"
@@ -1253,9 +1423,7 @@ export default function NutritionPage() {
 
               {/* Sleep Quality */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Schlafqualitaet
-                </label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Schlafqualität</label>
                 <div className="flex gap-2">
                   {[1, 2, 3, 4, 5].map((q) => (
                     <button
@@ -1271,17 +1439,13 @@ export default function NutritionPage() {
                     </button>
                   ))}
                 </div>
-                <p className="text-center text-sm text-gray-500 mt-2">
-                  {getSleepQualityLabel(sleepQuality)}
-                </p>
+                <p className="text-center text-sm text-gray-500 mt-2">{getSleepQualityLabel(sleepQuality)}</p>
               </div>
 
               {/* Times */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Einschlafzeit
-                  </label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Einschlafzeit</label>
                   <input
                     type="time"
                     value={bedTime}
@@ -1290,9 +1454,7 @@ export default function NutritionPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Aufwachzeit
-                  </label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Aufwachzeit</label>
                   <input
                     type="time"
                     value={wakeTime}
@@ -1305,8 +1467,8 @@ export default function NutritionPage() {
               {/* Info */}
               <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
                 <p className="text-xs text-indigo-700">
-                  💡 <strong>Tipp:</strong> 7-9 Stunden Schlaf sind optimal für Muskelregeneration. 
-                  Schlafqualitaet beeinflusst deine Recovery-Berechnung.
+                  <strong>Tipp:</strong> 7–9 Stunden Schlaf sind optimal für Muskelregeneration.
+                  Schlafqualität beeinflusst deine Recovery-Berechnung.
                 </p>
               </div>
 
@@ -1332,9 +1494,9 @@ export default function NutritionPage() {
       )}
 
       {/* Nutrition Settings Modal */}
-      <NutritionSettingsModal 
-        isOpen={showNutritionSettings} 
-        onClose={() => setShowNutritionSettings(false)} 
+      <NutritionSettingsModal
+        isOpen={showNutritionSettings}
+        onClose={() => setShowNutritionSettings(false)}
       />
     </DashboardLayout>
   );

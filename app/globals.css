@@ -155,7 +155,6 @@
   background-size: 24px 24px;
 }
 
-.dark .pattern-dots { opacity: 0.02; }
 
 .floating-orb {
   position: fixed;
@@ -191,9 +190,6 @@
   animation-delay: -10s;
 }
 
-.dark .floating-orb-1 { background: hsl(var(--primary) / 0.08); }
-.dark .floating-orb-2 { background: hsl(var(--secondary) / 0.06); }
-.dark .floating-orb-3 { background: hsl(var(--accent) / 0.05); }
 
 @keyframes float-orb {
   0%, 100% { transform: translate(0, 0) scale(1); }
@@ -752,9 +748,6 @@
    NEON GLOW (Dark Mode Enhancement)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.dark .glow-primary { box-shadow: 0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2); }
-.dark .glow-success { box-shadow: 0 0 20px hsl(var(--success) / 0.4), 0 0 40px hsl(var(--success) / 0.2); }
-.dark .glow-warning { box-shadow: 0 0 20px hsl(var(--warning) / 0.4), 0 0 40px hsl(var(--warning) / 0.2); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    RECOVERY PAGE SPECIFIC - RADIAL PROGRESS RINGS

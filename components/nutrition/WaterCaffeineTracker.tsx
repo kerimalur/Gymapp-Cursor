@@ -13,7 +13,7 @@ export function WaterCaffeineTracker() {
 
   const handleAddWater = (amount: number) => {
     setWater(Math.min(water + amount, waterGoal + 1000));
-    toast.success(`+${amount}ml Wasser hinzugef?gtt`);
+    toast.success(`+${amount}ml Wasser hinzugefügt`);
   };
 
   const handleRemoveWater = (amount: number) => {
@@ -22,7 +22,7 @@ export function WaterCaffeineTracker() {
 
   const handleAddCaffeine = (amount: number) => {
     setCaffeine(Math.min(caffeine + amount, caffeineGoal + 200));
-    toast.success(`+${amount}mg Koffein hinzugef?gtt`);
+    toast.success(`+${amount}mg Koffein hinzugefügt`);
   };
 
   const handleRemoveCaffeine = (amount: number) => {
@@ -142,7 +142,7 @@ export function WaterCaffeineTracker() {
           <p className="text-sm text-gray-500 mt-2">
             {caffeine > caffeineGoal ? (
               <span className="text-red-600 font-medium">
-                ⚠️ Empfohlene Menge ?berschritten
+                ⚠️ Empfohlene Menge überschritten
               </span>
             ) : caffeineGoal - caffeine > 0 ? (
               <>Noch {caffeineGoal - caffeine} mg verfuegbar</>

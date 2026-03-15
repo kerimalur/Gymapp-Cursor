@@ -58,7 +58,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
       toast.error('Bitte gib eine Notiz ein');
       return;
     }
-    toast.success('Notiz hinzugef?gtt!');
+    toast.success('Notiz hinzugefügt!');
     setNote('');
     setShowAddNote(false);
   };
@@ -115,7 +115,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                       <FileText className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg">Notiz hinzuf?gen</h3>
+                      <h3 className="font-bold text-lg">Notiz hinzufügen</h3>
                       <p className="text-purple-100 text-sm">
                         F?ge eine Notiz zu diesem Tag hinzu
                       </p>

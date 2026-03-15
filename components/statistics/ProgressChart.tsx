@@ -302,7 +302,7 @@ export function ProgressChart({ period }: ProgressChartProps) {
                 <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center text-primary-600">
                   {Icons.info}
                 </div>
-                <h3 className="font-bold text-gray-900">Trainings?bersicht</h3>
+                <h3 className="font-bold text-gray-900">TrainingsÜbersicht</h3>
               </div>
               <button
                 onClick={() => setShowInfo(false)}

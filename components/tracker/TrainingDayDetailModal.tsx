@@ -32,7 +32,7 @@ interface ExerciseRecommendation {
 export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }: TrainingDayDetailModalProps) {
   const { workoutSessions, customExercises } = useWorkoutStore();
 
-  // Berechne Empfehlungen für jede ?bung
+  // Berechne Empfehlungen für jede Übung
   const exerciseRecommendations = useMemo(() => {
     const recommendations: Map<string, ExerciseRecommendation> = new Map();
     

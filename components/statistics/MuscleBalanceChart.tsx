@@ -55,7 +55,7 @@ const muscleInfo: Record<string, { description: string; avgSetsPerWeek: string; 
     tips: ['Variiere zwischen Flach-, Schr?g- und Decline-Übungen', 'Nutze verschiedene Griffweiten', 'IsolationsÜbungen am Ende']
   },
   'Rücken': {
-    description: 'Der Rücken umfasst Latissimus, Rhomboiden und Trapez - wichtig für Zugbewegungen und K?rperhaltung.',
+    description: 'Der Rücken umfasst Latissimus, Rhomboiden und Trapez - wichtig für Zugbewegungen und Körperhaltung.',
     avgSetsPerWeek: '14-22 Sätze/Woche',
     tips: ['Horizontales + vertikales Ziehen kombinieren', 'Fokus auf Mind-Muscle-Connection', 'Schulterblaetter aktivieren']
   },
@@ -67,7 +67,7 @@ const muscleInfo: Record<string, { description: string; avgSetsPerWeek: string; 
   'Bizeps': {
     description: 'Der Bizeps beugt den Arm und supiniert den Unterarm. Besteht aus langem und kurzem Kopf.',
     avgSetsPerWeek: '6-14 Sätze/Woche',
-    tips: ['Verschiedene Griffpositionen nutzen', 'Volle ROM für maximale Dehnung', 'Negatives kontrolliert ausf?hren']
+    tips: ['Verschiedene Griffpositionen nutzen', 'Volle ROM für maximale Dehnung', 'Negatives kontrolliert ausführen']
   },
   'Trizeps': {
     description: 'Der Trizeps macht ~2/3 des Oberarms aus und ist für Streckbewegungen verantwortlich.',
@@ -80,12 +80,12 @@ const muscleInfo: Record<string, { description: string; avgSetsPerWeek: string; 
     tips: ['Farmer Walks für funktionelle Kraft', 'Curls und Reverse Curls', 'Griffvarianten beim Training']
   },
   'Beine': {
-    description: 'Quadrizeps, Beinbeuger, Waden und Gesäß - die groessten Muskelgruppen des K?rpers.',
+    description: 'Quadrizeps, Beinbeuger, Waden und Gesäß - die groessten Muskelgruppen des Körpers.',
     avgSetsPerWeek: '14-22 Sätze/Woche',
     tips: ['Compound-Übungen priorisieren', 'Volle Range of Motion', 'Isolation für Schwachstellen']
   },
   'Core': {
-    description: 'Die Rumpfmuskulatur stabilisiert die Wirbelsaeule und ?bertraegt Kraft zwischen Ober- und Unterk?rper.',
+    description: 'Die Rumpfmuskulatur stabilisiert die Wirbelsaeule und überträgt Kraft zwischen Ober- und Unterkörper.',
     avgSetsPerWeek: '6-12 Sätze/Woche',
     tips: ['Anti-Rotation und Anti-Extension', 'Planks und dynamische Übungen', 'Bei Compounds schon aktiviert']
   },
@@ -407,7 +407,7 @@ export function MuscleBalanceChart() {
             <div className="flex-shrink-0 bg-gradient-to-br from-white to-gray-50 border-b border-slate-200 p-6 flex items-center justify-between rounded-t-3xl">
               <div className="flex items-center gap-3">
                 <div className={`w-3 h-3 rounded-full ${muscleData.find(m => m.muscle === selectedMuscle)?.colors.bg}`} />
-                <h3 className="font-bold text-gray-900 text-xl">{selectedMuscle} - ?bungsdetails</h3>
+                <h3 className="font-bold text-gray-900 text-xl">{selectedMuscle} - Übungsdetails</h3>
               </div>
               <button
                 onClick={() => setSelectedMuscle(null)}

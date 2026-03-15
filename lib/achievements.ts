@@ -255,7 +255,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     {
       id: 'first-plate',
       name: 'Erste Scheibe',
-      description: 'Zum ersten Mal 60kg auf einer ?bung',
+      description: 'Zum ersten Mal 60kg auf einer Übung',
       emoji: '🏋️',
       category: 'strength',
       progress: Math.min(100, (maxWeight / 60) * 100),
@@ -266,7 +266,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     {
       id: 'heavy-lifter',
       name: 'Schweres Eisen',
-      description: '100kg auf einer ?bung',
+      description: '100kg auf einer Übung',
       emoji: '🦾',
       category: 'strength',
       progress: Math.min(100, (maxWeight / 100) * 100),

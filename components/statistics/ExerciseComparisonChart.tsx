@@ -376,7 +376,7 @@ export function ExerciseComparisonChart() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary-500 mt-0.5">•</span>
-                    Achte auf konstanten Fortschritt ?ber Zeit
+                    Achte auf konstanten Fortschritt über Zeit
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary-500 mt-0.5">•</span>

@@ -138,7 +138,7 @@ export function ModernMuscleHeatmap() {
       case 'fresh': return { text: 'Heute trainiert', color: 'text-emerald-600', bg: 'bg-emerald-500', emoji: '🔥' };
       case 'recovering': return { text: 'Regeneration', color: 'text-amber-600', bg: 'bg-amber-500', emoji: '⏳' };
       case 'ready': return { text: 'Bereit', color: 'text-blue-600', bg: 'bg-blue-500', emoji: '✅' };
-      case 'overdue': return { text: '?berfaellig', color: 'text-rose-600', bg: 'bg-rose-500', emoji: '⚠️' };
+      case 'overdue': return { text: 'Überfällig', color: 'text-rose-600', bg: 'bg-rose-500', emoji: '⚠️' };
       case 'never': return { text: 'Nie trainiert', color: 'text-slate-400', bg: 'bg-slate-300', emoji: '➖' };
     }
   };
@@ -189,7 +189,7 @@ export function ModernMuscleHeatmap() {
       <div className="space-y-4">
         {/* Upper Body */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Oberk?rper</h4>
+          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Oberkörper</h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {upperBody.map((muscle, i) => {
               const statusInfo = getStatusInfo(muscle.status);
@@ -260,7 +260,7 @@ export function ModernMuscleHeatmap() {
 
         {/* Lower Body */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Unterk?rper</h4>
+          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Unterkörper</h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {lowerBody.map((muscle, i) => {
               const statusInfo = getStatusInfo(muscle.status);

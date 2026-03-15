@@ -154,7 +154,7 @@ export function ActiveWorkout() {
       .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime());
 
     workout.exercises.forEach(ex => {
-      // Finde historische Daten für diese ?bung
+      // Finde historische Daten für diese Übung
       const exerciseHistory: Array<{
         date: Date;
         weight: number;

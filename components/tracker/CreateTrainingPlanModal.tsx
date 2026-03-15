@@ -134,7 +134,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="z.B. Push/Pull/Legs, Oberk?rper/Unterk?rper..."
+            placeholder="z.B. Push/Pull/Legs, Oberkörper/Unterkörper..."
             className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
           />
         </div>
@@ -148,7 +148,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
               </div>
               <div>
                 <p className="font-semibold text-violet-900">Trainingseinheiten pro Woche</p>
-                <p className="text-sm text-violet-600">Basierend auf deinen hinzugef?gtten Tagen</p>
+                <p className="text-sm text-violet-600">Basierend auf deinen hinzugefügten Tagen</p>
               </div>
             </div>
             <div className="text-4xl font-bold text-violet-600">{sessionsPerWeek}×</div>
@@ -190,7 +190,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
               }`}
             >
               <Plus className="w-4 h-4" />
-              Tag hinzuf?gen
+              Tag hinzufügen
             </button>
           </div>
 

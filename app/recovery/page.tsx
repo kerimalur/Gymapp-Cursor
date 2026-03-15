@@ -3,7 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import { useMemo, useState } from 'react';
-import { ChevronRight, Clock3, Sparkles } from 'lucide-react';
+import { ChevronRight, Clock3, Sparkles, X } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { MuscleMap } from '@/components/recovery/MuscleMap';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
@@ -17,6 +17,8 @@ import {
 import type { MuscleGroup } from '@/types';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 function formatDate(date: Date) {
   return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1)
     .toString()
@@ -26,388 +28,468 @@ function formatDate(date: Date) {
     .padStart(2, '0')}`;
 }
 
+// ─── Overall Recovery Ring ────────────────────────────────────────────────────
+
+function RecoveryRing({ pct }: { pct: number }) {
+  const r = 52;
+  const circ = 2 * Math.PI * r;
+  const offset = circ - (pct / 100) * circ;
+  const color =
+    pct >= 80 ? '#10b981' : pct >= 50 ? '#f59e0b' : '#f43f5e';
+
+  return (
+    <svg width="128" height="128" className="rotate-[-90deg]">
+      <circle cx="64" cy="64" r={r} fill="none" stroke="#e2e8f0" strokeWidth="10" />
+      <circle
+        cx="64" cy="64" r={r}
+        fill="none"
+        stroke={color}
+        strokeWidth="10"
+        strokeLinecap="round"
+        strokeDasharray={circ}
+        strokeDashoffset={offset}
+        style={{ transition: 'stroke-dashoffset 0.6s ease' }}
+      />
+    </svg>
+  );
+}
+
+// ─── Muscle Bar ───────────────────────────────────────────────────────────────
+
+function MuscleBar({ recovery, state }: { recovery: number; state: ReturnType<typeof getRecoveryState> }) {
+  const barColor =
+    state.key === 'ready'      ? 'bg-emerald-500'
+    : state.key === 'recovering' ? 'bg-amber-400'
+    :                              'bg-rose-500';
+  return (
+    <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+      <div
+        className={`h-full rounded-full transition-all duration-500 ${barColor}`}
+        style={{ width: `${recovery}%` }}
+      />
+    </div>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export default function RecoveryPage() {
   const { workoutSessions, trainingDays } = useWorkoutStore();
   const { trackingSettings } = useNutritionStore();
   const [selectedDayId, setSelectedDayId] = useState<string | null>(null);
 
-  const enabledMuscles = trackingSettings?.enabledMuscles?.length
+  const enabledMuscles: MuscleGroup[] = trackingSettings?.enabledMuscles?.length
     ? trackingSettings.enabledMuscles
     : ALL_MUSCLES;
 
-  const recoveryMap = useMemo(() => calculateRecoveryFromWorkouts(workoutSessions), [workoutSessions]);
+  const recoveryMap = useMemo(
+    () => calculateRecoveryFromWorkouts(workoutSessions),
+    [workoutSessions]
+  );
 
   const muscleRecoveryValues = useMemo(
     () =>
-      ALL_MUSCLES.reduce<Record<string, number>>((accumulator, muscle) => {
-        accumulator[muscle] = recoveryMap[muscle].recovery;
-        return accumulator;
+      ALL_MUSCLES.reduce<Record<string, number>>((acc, muscle) => {
+        acc[muscle] = recoveryMap[muscle].recovery;
+        return acc;
       }, {}),
     [recoveryMap]
   );
 
-  const summary = useMemo(() => {
-    const ready = enabledMuscles.filter((muscle) => recoveryMap[muscle].recovery >= 80);
-    const recovering = enabledMuscles.filter(
-      (muscle) => recoveryMap[muscle].recovery >= 50 && recoveryMap[muscle].recovery < 80
-    );
-    const fatigued = enabledMuscles.filter((muscle) => recoveryMap[muscle].recovery < 50);
+  // Overall recovery = average across enabled muscles
+  const overallRecovery = useMemo(() => {
+    if (enabledMuscles.length === 0) return 100;
+    const sum = enabledMuscles.reduce((s, m) => s + recoveryMap[m].recovery, 0);
+    return Math.round(sum / enabledMuscles.length);
+  }, [enabledMuscles, recoveryMap]);
 
+  const summary = useMemo(() => {
+    const ready     = enabledMuscles.filter((m) => recoveryMap[m].recovery >= 80);
+    const recovering = enabledMuscles.filter((m) => recoveryMap[m].recovery >= 50 && recoveryMap[m].recovery < 80);
+    const fatigued  = enabledMuscles.filter((m) => recoveryMap[m].recovery < 50);
     return { ready, recovering, fatigued };
   }, [enabledMuscles, recoveryMap]);
 
   const dayReadiness = useMemo(() => {
     return trainingDays.map((day) => {
       const muscleSet = new Set<MuscleGroup>();
-
       day.exercises.forEach((exercise) => {
-        const exerciseEntry = exerciseDatabase.find((entry) => entry.id === exercise.exerciseId);
-        exerciseEntry?.muscleGroups.forEach((muscle) => {
-          if (enabledMuscles.includes(muscle)) {
-            muscleSet.add(muscle);
-          }
+        const entry = exerciseDatabase.find((e) => e.id === exercise.exerciseId);
+        entry?.muscleGroups.forEach((muscle) => {
+          if (enabledMuscles.includes(muscle)) muscleSet.add(muscle);
         });
       });
 
       const muscles = Array.from(muscleSet);
-      const averageRecovery =
+      const avgRecovery =
         muscles.length > 0
-          ? muscles.reduce((sum, muscle) => sum + recoveryMap[muscle].recovery, 0) / muscles.length
+          ? muscles.reduce((sum, m) => sum + recoveryMap[m].recovery, 0) / muscles.length
           : 100;
-      const state = getRecoveryState(Math.round(averageRecovery));
+      const state = getRecoveryState(Math.round(avgRecovery));
       const limitingMuscles = muscles
-        .filter((muscle) => recoveryMap[muscle].recovery < 80)
-        .sort((left, right) => recoveryMap[left].hoursLeft - recoveryMap[right].hoursLeft);
+        .filter((m) => recoveryMap[m].recovery < 80)
+        .sort((a, b) => recoveryMap[a].hoursLeft - recoveryMap[b].hoursLeft);
       const nextFreeInHours =
         limitingMuscles.length > 0
-          ? Math.max(...limitingMuscles.map((muscle) => recoveryMap[muscle].hoursLeft))
+          ? Math.max(...limitingMuscles.map((m) => recoveryMap[m].hoursLeft))
           : 0;
 
       return {
         id: day.id,
         name: day.name,
         muscles,
+        avgRecovery: Math.round(avgRecovery),
         state,
         limitingMuscles,
         nextFreeInHours,
+        exerciseCount: day.exercises.length,
       };
     });
   }, [enabledMuscles, recoveryMap, trainingDays]);
 
-  const selectedDay = dayReadiness.find((day) => day.id === selectedDayId) || null;
+  // Sorted muscles by recovery % ascending (most fatigued first)
+  const sortedMuscles = useMemo(
+    () => [...enabledMuscles].sort((a, b) => recoveryMap[a].recovery - recoveryMap[b].recovery),
+    [enabledMuscles, recoveryMap]
+  );
+
+  const selectedDay = dayReadiness.find((d) => d.id === selectedDayId) ?? null;
+
+  const overallState = getRecoveryState(overallRecovery);
 
   return (
     <DashboardLayout>
-      <div className="mx-auto max-w-6xl space-y-6">
-        <div>
-          <h1 className="text-3xl font-black text-slate-950">Regeneration</h1>
-          <p className="mt-1 max-w-2xl text-sm text-slate-600">
-            Jeder Muskel fuellt sich sichtbar wieder auf. Statt Prozenten bekommst du klare
-            Zustandsbilder, freie Muskelgruppen und konkrete Hinweise für den nächsten Trainingstag.
-          </p>
-        </div>
+      <div className="mx-auto max-w-6xl space-y-8">
 
-        <div className="grid gap-6 lg:grid-cols-[1.35fr,0.65fr]">
-          <div className="rounded-[28px] border border-slate-200 bg-white/95 p-5 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
-            <div className="mb-4 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                  Muskelkarte
-                </p>
-                <h2 className="text-xl font-black text-slate-900">Dein aktuelles Recovery-Bild</h2>
-              </div>
-              <div className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
-                Tap auf einen Muskel für Details
+        {/* ── Hero Card ──────────────────────────────────────────────────── */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+            {/* Ring */}
+            <div className="relative flex-shrink-0 self-center">
+              <RecoveryRing pct={overallRecovery} />
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-2xl font-bold text-slate-900">{overallRecovery}%</span>
+                <span className="text-xs font-medium text-slate-500 mt-0.5">Gesamt</span>
               </div>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-2">
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                <p className="mb-3 text-sm font-semibold text-slate-700">Vorderseite</p>
-                <MuscleMap
-                  view="front"
-                  muscleRecovery={muscleRecoveryValues}
-                  workoutSessions={workoutSessions}
-                  enabledMuscles={enabledMuscles}
-                />
+            {/* Text + chips */}
+            <div className="flex-1 min-w-0">
+              <div className="mb-1">
+                <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">Regeneration</span>
+              </div>
+              <h1 className="text-2xl font-bold text-slate-900 mb-3">
+                Gesamtregeneration{' '}
+                <span
+                  className={
+                    overallState.key === 'ready'
+                      ? 'text-emerald-600'
+                      : overallState.key === 'recovering'
+                      ? 'text-amber-600'
+                      : 'text-rose-600'
+                  }
+                >
+                  {overallRecovery}%
+                </span>
+              </h1>
+
+              {/* Status chips */}
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-sm font-semibold text-emerald-700">
+                  <span className="text-base leading-none">✓</span>
+                  {summary.ready.length} bereit
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-sm font-semibold text-amber-700">
+                  <span className="text-base leading-none">⏱</span>
+                  {summary.recovering.length} erholen
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-50 border border-rose-200 text-sm font-semibold text-rose-700">
+                  <span className="text-base leading-none">⚠</span>
+                  {summary.fatigued.length} belastet
+                </span>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                <p className="mb-3 text-sm font-semibold text-slate-700">R?ckseite</p>
-                <MuscleMap
-                  view="back"
-                  muscleRecovery={muscleRecoveryValues}
-                  workoutSessions={workoutSessions}
-                  enabledMuscles={enabledMuscles}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="rounded-[28px] border border-emerald-200 bg-emerald-50 p-5 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
-                Frei für Arbeit
+              {/* Hint tip */}
+              <p className="mt-3 text-sm text-slate-500">
+                {overallState.key === 'ready'
+                  ? 'Dein Körper ist gut erholt. Optimale Zeit für intensives Training.'
+                  : overallState.key === 'recovering'
+                  ? 'Du erholst dich gut. Leichte bis mittlere Belastung ist ideal.'
+                  : 'Mehrere Muskeln noch unter Last. Gönn dir etwas mehr Zeit.'}
               </p>
-              <p className="mt-2 text-3xl font-black text-emerald-900">{summary.ready.length}</p>
-              <p className="mt-2 text-sm text-emerald-800">
-                {summary.ready.length > 0
-                  ? summary.ready.slice(0, 4).map((muscle) => MUSCLE_NAMES_DE[muscle]).join(', ')
-                  : 'Gerade ist noch keine Muskelgruppe komplett frei.'}
-              </p>
-            </div>
-
-            <div className="rounded-[28px] border border-amber-200 bg-amber-50 p-5 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">
-                Lädt auf
-              </p>
-              <p className="mt-2 text-3xl font-black text-amber-900">{summary.recovering.length}</p>
-              <p className="mt-2 text-sm text-amber-800">
-                Gute Zone für Technik, Pump oder lockere Belastung.
-              </p>
-            </div>
-
-            <div className="rounded-[28px] border border-rose-200 bg-rose-50 p-5 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700">
-                Noch unter Last
-              </p>
-              <p className="mt-2 text-3xl font-black text-rose-900">{summary.fatigued.length}</p>
-              <p className="mt-2 text-sm text-rose-800">
-                {summary.fatigued.length > 0
-                  ? summary.fatigued
-                      .slice(0, 4)
-                      .map((muscle) => MUSCLE_NAMES_DE[muscle])
-                      .join(', ')
-                  : 'Keine klare Bremse im System.'}
-              </p>
-            </div>
-
-            <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
-              <div className="flex items-start gap-3">
-                <div className="rounded-2xl bg-slate-100 p-3 text-slate-700">
-                  <Sparkles className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-slate-800">Interpretation</p>
-                  <p className="mt-1 text-sm text-slate-600">
-                    Mehr Sätze, mehrere Übungen für denselben Muskel und niedriger RIR verlängern
-                    die Regeneration sichtbar. Die Karte reagiert also direkt auf Trainingshaerte.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
 
-        {dayReadiness.length > 0 && (
-          <div className="space-y-3">
+        {/* ── Muskelkarte ────────────────────────────────────────────────── */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <div className="mb-5 flex items-start justify-between gap-3">
             <div>
-              <h2 className="text-xl font-black text-slate-900">Trainingstag-Freigabe</h2>
-              <p className="text-sm text-slate-600">
-                Welcher Tag passt heute am besten zu deinem aktuellen Recovery-Bild.
+              <h2 className="text-lg font-bold text-slate-900">Muskelkarte</h2>
+              <p className="text-sm text-slate-500 mt-0.5">Dein aktuelles Recovery-Bild</p>
+            </div>
+            <span className="hidden sm:block rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-500">
+              Tap auf einen Muskel für Details
+            </span>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Vorderseite</p>
+              <MuscleMap
+                view="front"
+                muscleRecovery={muscleRecoveryValues}
+                workoutSessions={workoutSessions}
+                enabledMuscles={enabledMuscles}
+              />
+            </div>
+            <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Rückseite</p>
+              <MuscleMap
+                view="back"
+                muscleRecovery={muscleRecoveryValues}
+                workoutSessions={workoutSessions}
+                enabledMuscles={enabledMuscles}
+              />
+            </div>
+          </div>
+
+          {/* Interpretation note */}
+          <div className="mt-4 flex items-start gap-3 rounded-xl bg-slate-50 border border-slate-200 p-4">
+            <div className="mt-0.5 rounded-xl bg-white p-2 shadow-sm text-slate-500 flex-shrink-0">
+              <Sparkles className="h-4 w-4" />
+            </div>
+            <p className="text-sm text-slate-600">
+              Mehr Sätze, mehrere Übungen für denselben Muskel und niedriger RIR verlängern die
+              Regeneration sichtbar. Die Karte reagiert direkt auf Trainingsintensität.
+            </p>
+          </div>
+        </div>
+
+        {/* ── Trainingstag-Freigabe ──────────────────────────────────────── */}
+        {dayReadiness.length > 0 && (
+          <section>
+            <div className="mb-4">
+              <h2 className="text-lg font-bold text-slate-900">Trainingstag-Freigabe</h2>
+              <p className="text-sm text-slate-500 mt-0.5">
+                Welcher Tag passt heute am besten zu deinem Recovery-Bild.
               </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               {dayReadiness.map((day) => (
                 <button
                   key={day.id}
                   onClick={() => setSelectedDayId(day.id)}
-                  className={`rounded-[26px] border p-5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg ${day.state.softClass}`}
+                  className={`rounded-2xl border p-4 text-left transition-all hover:-translate-y-0.5 hover:shadow-md ${day.state.softClass}`}
                 >
-                  <div className="flex items-start justify-between gap-4">
+                  {/* Top row: name + chevron */}
+                  <div className="flex items-start justify-between gap-2 mb-3">
                     <div>
-                      <p className="text-lg font-black text-slate-900">{day.name}</p>
-                      <p className="mt-1 text-sm text-slate-600">
-                        {day.muscles.length} Muskelgruppen im Fokus
+                      <p className="font-bold text-slate-900 text-base">{day.name}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        {day.exerciseCount} Übungen · {day.muscles.length} Muskelgruppen
                       </p>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-slate-400" />
+                    <ChevronRight className="h-4 w-4 text-slate-400 mt-0.5 flex-shrink-0" />
                   </div>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {day.muscles.slice(0, 4).map((muscle) => (
-                      <span
-                        key={muscle}
-                        className="rounded-full border border-white/70 bg-white/80 px-3 py-1 text-xs font-semibold text-slate-700"
-                      >
-                        {MUSCLE_NAMES_DE[muscle]}
-                      </span>
-                    ))}
-                  </div>
+                  {/* Recovery bar */}
+                  <MuscleBar recovery={day.avgRecovery} state={day.state} />
 
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className={`text-sm font-bold ${day.state.accentClass}`}>{day.state.label}</span>
-                    <span className="text-xs font-medium text-slate-600">
-                      {day.nextFreeInHours > 0 ? `Noch ca. ${day.nextFreeInHours}h` : 'Heute frei'}
+                  {/* Bottom row: status + time */}
+                  <div className="mt-3 flex items-center justify-between">
+                    <span className={`text-sm font-bold ${day.state.accentClass}`}>
+                      {day.state.label} · {day.avgRecovery}%
+                    </span>
+                    <span className="text-xs font-medium text-slate-500">
+                      {day.nextFreeInHours > 0 ? `Noch ~${day.nextFreeInHours}h` : 'Heute frei'}
                     </span>
                   </div>
+
+                  {/* Muscle chips */}
+                  {day.muscles.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {day.muscles.slice(0, 5).map((muscle) => (
+                        <span
+                          key={muscle}
+                          className="rounded-full border border-white/70 bg-white/80 px-2.5 py-0.5 text-xs font-medium text-slate-600"
+                        >
+                          {MUSCLE_NAMES_DE[muscle]}
+                        </span>
+                      ))}
+                      {day.muscles.length > 5 && (
+                        <span className="rounded-full border border-white/70 bg-white/80 px-2.5 py-0.5 text-xs font-medium text-slate-400">
+                          +{day.muscles.length - 5}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        <div className="space-y-3">
-          <div>
-            <h2 className="text-xl font-black text-slate-900">Alle Muskeln im ?berblick</h2>
-            <p className="text-sm text-slate-600">
-              Jeder Muskel zeigt seinen Status, den letzten Kontakt und den verbleibenden Abstand zur
-              vollen Freigabe.
+        {/* ── Alle Muskeln ───────────────────────────────────────────────── */}
+        <section>
+          <div className="mb-4">
+            <h2 className="text-lg font-bold text-slate-900">Alle Muskeln im Überblick</h2>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Sortiert nach Erholungsstand — müdeste Muskeln zuerst.
             </p>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {enabledMuscles.map((muscle) => {
-              const info = recoveryMap[muscle];
+          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+            {sortedMuscles.map((muscle, idx) => {
+              const info  = recoveryMap[muscle];
               const state = getRecoveryState(info.recovery);
+              const isLast = idx === sortedMuscles.length - 1;
 
               return (
                 <div
                   key={muscle}
-                  className={`rounded-[24px] border bg-white p-4 shadow-sm ${state.softClass}`}
+                  className={`px-4 py-3 flex items-center gap-4 ${!isLast ? 'border-b border-slate-100' : ''}`}
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-lg font-black text-slate-900">{MUSCLE_NAMES_DE[muscle]}</p>
-                      <p className="mt-1 text-sm text-slate-600">
-                        {info.lastTrainedAt ? `Zuletzt: ${formatDate(info.lastTrainedAt)}` : 'Noch nicht trainiert'}
-                      </p>
+                  {/* Status dot */}
+                  <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
+                    state.key === 'ready'
+                      ? 'bg-emerald-500'
+                      : state.key === 'recovering'
+                      ? 'bg-amber-400'
+                      : 'bg-rose-500'
+                  }`} />
+
+                  {/* Name + bar */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-semibold text-slate-800 truncate">
+                        {MUSCLE_NAMES_DE[muscle]}
+                      </span>
+                      <span className={`text-xs font-bold ml-3 flex-shrink-0 ${state.accentClass}`}>
+                        {info.recovery}%
+                      </span>
                     </div>
-                    <span className={`text-sm font-bold ${state.accentClass}`}>{state.label}</span>
+                    <MuscleBar recovery={info.recovery} state={state} />
                   </div>
 
-                  <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/80">
-                    <div
-                      className={`h-full rounded-full ${
-                        state.key === 'ready'
-                          ? 'bg-emerald-500'
-                          : state.key === 'recovering'
-                          ? 'bg-amber-500'
-                          : 'bg-rose-500'
-                      }`}
-                      style={{ width: `${info.recovery}%` }}
-                    />
+                  {/* Metadata */}
+                  <div className="hidden sm:flex items-center gap-4 text-xs text-slate-400 flex-shrink-0">
+                    <span className="font-medium">
+                      {info.hoursLeft > 0 ? `Frei in ${info.hoursLeft}h` : 'Jetzt frei'}
+                    </span>
+                    {info.lastTrainedAt && (
+                      <span className="hidden md:block">
+                        {formatDate(info.lastTrainedAt)}
+                      </span>
+                    )}
+                    {info.weightedSets > 0 && (
+                      <span>{info.weightedSets} Sätze</span>
+                    )}
                   </div>
 
-                  <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-2xl border border-white/70 bg-white/80 p-3">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Noch frei in</p>
-                      <p className="mt-1 font-bold text-slate-900">
-                        {info.hoursLeft > 0 ? `${info.hoursLeft}h` : 'Jetzt'}
-                      </p>
-                    </div>
-                    <div className="rounded-2xl border border-white/70 bg-white/80 p-3">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Letzte Last</p>
-                      <p className="mt-1 font-bold text-slate-900">
-                        {info.weightedSets > 0 ? `${info.weightedSets} Sätze` : 'Keine'}
-                      </p>
-                    </div>
+                  {/* Mobile: just hours */}
+                  <div className="sm:hidden text-xs text-slate-400 flex-shrink-0">
+                    {info.hoursLeft > 0 ? `${info.hoursLeft}h` : 'Frei'}
                   </div>
                 </div>
               );
             })}
           </div>
-        </div>
+        </section>
 
-        {selectedDay && (
+      </div>
+
+      {/* ── Day Detail Modal ──────────────────────────────────────────────── */}
+      {selectedDay && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm"
+          onClick={() => setSelectedDayId(null)}
+        >
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm"
-            onClick={() => setSelectedDayId(null)}
+            className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div
-              className="w-full max-w-2xl rounded-[30px] border border-slate-200 bg-white p-6 shadow-[0_30px_90px_rgba(15,23,42,0.22)]"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className="mb-5 flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
-                    Trainingstag
-                  </p>
-                  <h3 className="text-2xl font-black text-slate-950">{selectedDay.name}</h3>
-                  <p className="mt-1 text-sm text-slate-600">{selectedDay.state.description}</p>
-                </div>
-                <button
-                  onClick={() => setSelectedDayId(null)}
-                  className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-200"
-                >
-                  Schlie?en
-                </button>
+            {/* Modal header */}
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Trainingstag</p>
+                <h3 className="text-xl font-bold text-slate-900 mt-0.5">{selectedDay.name}</h3>
+                <p className="mt-1 text-sm text-slate-500">{selectedDay.state.description}</p>
               </div>
+              <button
+                onClick={() => setSelectedDayId(null)}
+                className="rounded-xl bg-slate-100 p-2 text-slate-600 hover:bg-slate-200 transition-colors flex-shrink-0"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
 
-              <div className="mb-5 rounded-[26px] border border-slate-200 bg-slate-50 p-4">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-2xl bg-white p-3 shadow-sm">
-                    <Clock3 className="h-5 w-5 text-slate-700" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-slate-800">Nächstes gutes Fenster</p>
-                    <p className="text-sm text-slate-600">
-                      {selectedDay.nextFreeInHours > 0
-                        ? `In etwa ${selectedDay.nextFreeInHours} Stunden ist der Tag frei`
-                        : 'Der Tag ist aus Recovery-Sicht bereits frei'}
-                    </p>
-                  </div>
-                </div>
+            {/* Next training window */}
+            <div className="mb-5 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <div className="rounded-xl bg-white p-2.5 shadow-sm text-slate-600 flex-shrink-0">
+                <Clock3 className="h-4 w-4" />
               </div>
-
-              <div className="space-y-3">
-                {selectedDay.muscles.map((muscle) => {
-                  const info = recoveryMap[muscle];
-                  const state = getRecoveryState(info.recovery);
-
-                  return (
-                    <div
-                      key={muscle}
-                      className={`rounded-[22px] border p-4 ${state.softClass}`}
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <div>
-                          <p className="text-lg font-bold text-slate-900">{MUSCLE_NAMES_DE[muscle]}</p>
-                          <p className="mt-1 text-sm text-slate-600">
-                            {info.lastTrainedAt ? `Zuletzt: ${formatDate(info.lastTrainedAt)}` : 'Noch nicht trainiert'}
-                          </p>
-                        </div>
-                        <span className={`text-sm font-bold ${state.accentClass}`}>{state.label}</span>
-                      </div>
-
-                      <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/80">
-                        <div
-                          className={`h-full rounded-full ${
-                            state.key === 'ready'
-                              ? 'bg-emerald-500'
-                              : state.key === 'recovering'
-                              ? 'bg-amber-500'
-                              : 'bg-rose-500'
-                          }`}
-                          style={{ width: `${info.recovery}%` }}
-                        />
-                      </div>
-
-                      <div className="mt-3 grid gap-3 sm:grid-cols-3 text-sm">
-                        <div className="rounded-2xl border border-white/70 bg-white/80 p-3">
-                          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Frei in</p>
-                          <p className="mt-1 font-bold text-slate-900">
-                            {info.hoursLeft > 0 ? `${info.hoursLeft}h` : 'Jetzt'}
-                          </p>
-                        </div>
-                        <div className="rounded-2xl border border-white/70 bg-white/80 p-3">
-                          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Letzte Last</p>
-                          <p className="mt-1 font-bold text-slate-900">{info.weightedSets} Sätze</p>
-                        </div>
-                        <div className="rounded-2xl border border-white/70 bg-white/80 p-3">
-                          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Avg. RIR</p>
-                          <p className="mt-1 font-bold text-slate-900">{info.avgRir}</p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+              <div>
+                <p className="text-sm font-semibold text-slate-800">Nächstes gutes Fenster</p>
+                <p className="text-sm text-slate-500">
+                  {selectedDay.nextFreeInHours > 0
+                    ? `In etwa ${selectedDay.nextFreeInHours} Stunden ist der Tag frei`
+                    : 'Der Tag ist aus Recovery-Sicht bereits frei'}
+                </p>
               </div>
             </div>
+
+            {/* Muscle list */}
+            <div className="space-y-2">
+              {selectedDay.muscles.map((muscle) => {
+                const info  = recoveryMap[muscle];
+                const state = getRecoveryState(info.recovery);
+
+                return (
+                  <div
+                    key={muscle}
+                    className={`rounded-xl border p-4 ${state.softClass}`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div>
+                        <p className="font-semibold text-slate-900">{MUSCLE_NAMES_DE[muscle]}</p>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          {info.lastTrainedAt ? `Zuletzt: ${formatDate(info.lastTrainedAt)}` : 'Noch nicht trainiert'}
+                        </p>
+                      </div>
+                      <span className={`text-sm font-bold ${state.accentClass}`}>
+                        {info.recovery}%
+                      </span>
+                    </div>
+
+                    <MuscleBar recovery={info.recovery} state={state} />
+
+                    <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
+                      <div className="rounded-lg border border-white/70 bg-white/80 p-2.5">
+                        <p className="font-semibold uppercase tracking-wide text-slate-400 text-[10px]">Frei in</p>
+                        <p className="mt-0.5 font-bold text-slate-900">
+                          {info.hoursLeft > 0 ? `${info.hoursLeft}h` : 'Jetzt'}
+                        </p>
+                      </div>
+                      <div className="rounded-lg border border-white/70 bg-white/80 p-2.5">
+                        <p className="font-semibold uppercase tracking-wide text-slate-400 text-[10px]">Sätze</p>
+                        <p className="mt-0.5 font-bold text-slate-900">
+                          {info.weightedSets > 0 ? info.weightedSets : '—'}
+                        </p>
+                      </div>
+                      <div className="rounded-lg border border-white/70 bg-white/80 p-2.5">
+                        <p className="font-semibold uppercase tracking-wide text-slate-400 text-[10px]">Avg. RIR</p>
+                        <p className="mt-0.5 font-bold text-slate-900">{info.avgRir}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 }

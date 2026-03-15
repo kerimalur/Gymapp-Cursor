@@ -284,7 +284,7 @@ export function MuscleVolumeStats() {
       return `+${needed} Sätze bis Minimum`;
     } else if (data.status === 'over') {
       const excess = Math.round((data.effectiveSets - data.recommendation.max) * 10) / 10;
-      return `${excess} Sätze ?ber Maximum`;
+      return `${excess} Sätze über Maximum`;
     }
     return 'Im optimalen Bereich';
   };
@@ -321,11 +321,11 @@ export function MuscleVolumeStats() {
         <div className="flex items-center gap-3 text-xs text-slate-500">
           <div className="flex items-center gap-1">
             <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-            <span>Prim?r</span>
+            <span>Primär</span>
           </div>
           <div className="flex items-center gap-1">
             <div className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-            <span>Sekund?r (×0.5)</span>
+            <span>Sekundär (×0.5)</span>
           </div>
         </div>
         <div className="flex items-center gap-1 bg-slate-100 rounded-lg p-1">
@@ -546,9 +546,9 @@ export function MuscleVolumeStats() {
                   </div>
                 </div>
                 <div className="mt-3 flex items-center justify-center gap-4 text-xs text-slate-500">
-                  <span>Prim?r: {selectedMuscle.primarySets} Sätze</span>
+                  <span>Primär: {selectedMuscle.primarySets} Sätze</span>
                   <span>•</span>
-                  <span>Sekund?r: {selectedMuscle.secondarySets} Sätze</span>
+                  <span>Sekundär: {selectedMuscle.secondarySets} Sätze</span>
                 </div>
               </div>
 
@@ -568,7 +568,7 @@ export function MuscleVolumeStats() {
                         <div className="flex items-center justify-between mb-1">
                           <span className="font-medium text-slate-800 text-sm">{exercise.name}</span>
                           <span className={`text-xs px-2 py-0.5 rounded-full ${exercise.role === 'primary' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'}`}>
-                            {exercise.role === 'primary' ? 'Prim?r' : 'Sekund?r'}
+                            {exercise.role === 'primary' ? 'Primär' : 'Sekundär'}
                           </span>
                         </div>
                         <div className="flex items-center gap-4 text-xs text-slate-500">

@@ -44,7 +44,7 @@ export default function TrackerPage() {
   };
 
   const tabs = [
-    { id: 'overview', label: '?bersicht' },
+    { id: 'overview', label: 'Übersicht' },
     { id: 'builder', label: 'Training Builder' },
     { id: 'history', label: 'Historie' },
   ] as const;
@@ -57,7 +57,7 @@ export default function TrackerPage() {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="text-3xl font-black tracking-tight text-slate-900">Tracker</h1>
-            <p className="text-sm text-slate-500">Trainingstage und Pl?ne in einem Builder.</p>
+            <p className="text-sm text-slate-500">Trainingstage und Pläne in einem Builder.</p>
           </div>
           <button
             onClick={() => router.push('/calendar')}
@@ -122,7 +122,7 @@ export default function TrackerPage() {
                 <p className="mt-1 text-2xl font-black text-emerald-800">{trainingDays.length}</p>
               </div>
               <div className="rounded-xl border border-violet-200 bg-violet-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">Pl?ne</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">Pläne</p>
                 <p className="mt-1 text-2xl font-black text-violet-800">{trainingPlans.length}</p>
               </div>
               <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
@@ -150,7 +150,7 @@ export default function TrackerPage() {
             </div>
 
             <div>
-              <h2 className="mb-4 text-xl font-bold text-slate-800">Pl?ne</h2>
+              <h2 className="mb-4 text-xl font-bold text-slate-800">Pläne</h2>
               <TrainingPlanList />
             </div>
           </div>

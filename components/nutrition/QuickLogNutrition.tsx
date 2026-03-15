@@ -154,7 +154,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
   if (!isOpen) return null;
 
   const mealTimeLabels: Record<string, string> = {
-    breakfast: '🌅 Fr?hst?ck',
+    breakfast: '🌅 Frühstück',
     lunch: '☀️ Mittagessen',
     dinner: '🌙 Abendessen',
     snacks: '🍿 Snacks',
@@ -345,7 +345,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
                   <h4 className="font-bold text-blue-800 mb-1">Von gestern kopieren</h4>
                   <p className="text-xs text-blue-600">
-                    Alle Mahlzeiten von gestern werden für heute ?bernommen.
+                    Alle Mahlzeiten von gestern werden für heute übernommen.
                   </p>
                 </div>
 

@@ -212,7 +212,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="z.B. Push Day, Oberk?rper, Beine..."
+              placeholder="z.B. Push Day, Oberkörper, Beine..."
               className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
             />
           </div>
@@ -234,7 +234,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               }`}
             >
               {showExerciseList ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-              {showExerciseList ? 'Schlie?en' : 'Übung hinzuf?gen'}
+              {showExerciseList ? 'Schlie?en' : 'Übung hinzufügen'}
             </button>
           </div>
 
@@ -337,7 +337,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                 <Dumbbell className="w-8 h-8 text-slate-400" />
               </div>
               <p className="text-slate-600 font-medium mb-1">Noch keine Übungen</p>
-              <p className="text-sm text-slate-400">Klicke auf "Übung hinzuf?gen" um zu starten</p>
+              <p className="text-sm text-slate-400">Klicke auf "Übung hinzufügen" um zu starten</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -472,7 +472,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                             className="flex-1 px-4 py-2.5 border-2 border-dashed border-slate-300 text-slate-600 rounded-xl hover:border-primary-400 hover:text-primary-600 hover:bg-primary-50 transition-all flex items-center justify-center gap-2"
                           >
                             <Plus className="w-4 h-4" />
-                            Satz hinzuf?gen
+                            Satz hinzufügen
                           </button>
                           <button
                             onClick={() => handleCopyLastSet(index)}
@@ -520,7 +520,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
             <h4 className="font-semibold text-slate-800 mb-1.5">Wiederholungen</h4>
             <p className="text-sm text-slate-600">
-              Wie oft du die Bewegung pro Satz ausf?hren willst.
+              Wie oft du die Bewegung pro Satz ausführen willst.
             </p>
           </div>
 

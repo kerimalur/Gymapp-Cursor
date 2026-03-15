@@ -299,7 +299,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
 
               {/* Macro Summary */}
               <div className="bg-slate-50 rounded-xl p-4 mt-4">
-                <h5 className="text-sm font-medium text-slate-700 mb-3">Makro-?bersicht</h5>
+                <h5 className="text-sm font-medium text-slate-700 mb-3">Makro-Übersicht</h5>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div className="bg-white rounded-lg p-3">
                     <p className="text-lg font-bold text-blue-600">{Math.round((goalsForm.dailyProtein * 4 / goalsForm.dailyCalories) * 100) || 0}%</p>
@@ -338,7 +338,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                   className="flex items-center gap-2 px-3 py-2 bg-primary-500 text-white rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
-                  Hinzuf?gen
+                  Hinzufügen
                 </button>
               </div>
 
@@ -506,7 +506,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                     className="flex items-center gap-2 px-3 py-2 bg-primary-500 text-white rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors"
                   >
                     <Plus className="w-4 h-4" />
-                    Hinzuf?gen
+                    Hinzufügen
                   </button>
                 </div>
 
@@ -624,7 +624,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h4 className="font-medium text-slate-900">Supplement-Vorlagen</h4>
-                    <p className="text-xs text-slate-500">Vorlagen für schnelles Hinzuf?gen</p>
+                    <p className="text-xs text-slate-500">Vorlagen für schnelles Hinzufügen</p>
                   </div>
                   <button
                     onClick={() => setShowAddSupplement(true)}
@@ -748,7 +748,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                             });
                           }}
                           className="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-colors"
-                          title="Zu aktiven Supplements hinzuf?gen"
+                          title="Zu aktiven Supplements hinzufügen"
                         >
                           <Plus className="w-4 h-4" />
                         </button>

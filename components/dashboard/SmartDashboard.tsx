@@ -82,7 +82,7 @@ export function SmartDashboard() {
           id: 'recovery-suggestion',
           type: 'action',
           icon: <Dumbbell className="w-5 h-5" />,
-          title: `Heute gut f?r: ${bestDay.name}`,
+          title: `Heute gut für: ${bestDay.name}`,
           description: `${bestScore} Muskelgruppen sind erholt und bereit. Perfekter Tag dafür!`,
           actionLabel: 'Training starten',
           actionHref: `/workout?id=${bestDay.id}`,
@@ -98,7 +98,7 @@ export function SmartDashboard() {
         type: 'warning',
         icon: <Shield className="w-5 h-5" />,
         title: 'Regeneration beachten',
-        description: `${tiredMuscles.slice(0, 4).map(m => MUSCLE_NAMES_DE[m]).join(', ')} sind noch erschoepft. ?berlege einen leichten Tag oder Ruhetag.`,
+        description: `${tiredMuscles.slice(0, 4).map(m => MUSCLE_NAMES_DE[m]).join(', ')} sind noch erschoepft. Überlege einen leichten Tag oder Ruhetag.`,
         priority: 3,
       });
     }
@@ -147,7 +147,7 @@ export function SmartDashboard() {
           id: 'calorie-surplus',
           type: 'info',
           icon: <Activity className="w-5 h-5" />,
-          title: `${Math.abs(Math.round(calorieDiff))} kcal ?ber dem Ziel`,
+          title: `${Math.abs(Math.round(calorieDiff))} kcal über dem Ziel`,
           description: `Du bist heute bei ${Math.round(todayCalories)} kcal. Kein Drama, aber vielleicht morgen etwas bewusster essen.`,
           priority: 7,
         });
@@ -174,7 +174,7 @@ export function SmartDashboard() {
           type: 'positive',
           icon: <BedDouble className="w-5 h-5" />,
           title: 'Perfekter Schlaf! 💤',
-          description: `${lastSleep.hoursSlept}h mit Qualit?t ${lastSleep.quality}/5. Optimale Voraussetzungen f?rs Training.`,
+          description: `${lastSleep.hoursSlept}h mit Qualität ${lastSleep.quality}/5. Optimale Voraussetzungen fürs Training.`,
           priority: 6,
         });
       }

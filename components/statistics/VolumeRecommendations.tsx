@@ -140,7 +140,7 @@ export function VolumeRecommendations() {
       return `+${needed} Sätze bis Minimum`;
     } else if (data.status === 'over') {
       const excess = data.currentSets - data.recommendation.max;
-      return `${excess} Sätze ?ber Maximum`;
+      return `${excess} Sätze über Maximum`;
     }
     return 'Im optimalen Bereich';
   };

@@ -41,13 +41,13 @@ export default function LoginPage() {
         }
 
         if (password !== confirmPassword) {
-          throw new Error('Passw?rter stimmen nicht ?berein');
+          throw new Error('Passwörter stimmen nicht überein');
         }
 
         const { needsEmailConfirmation } = await signUpWithEmail(normalizedEmail, password);
 
         if (needsEmailConfirmation) {
-          toast.success('Konto erstellt. Bitte bestaetige deine E-Mail.');
+          toast.success('Konto erstellt. Bitte bestätige deine E-Mail.');
           setIsRegisterMode(false);
           setPassword('');
           setConfirmPassword('');
@@ -138,7 +138,7 @@ export default function LoginPage() {
 
             {isRegisterMode && (
               <div>
-                <label className="mb-1 block text-sm font-semibold text-slate-700">Passwort bestaetigen</label>
+                <label className="mb-1 block text-sm font-semibold text-slate-700">Passwort bestätigen</label>
                 <input
                   type="password"
                   value={confirmPassword}

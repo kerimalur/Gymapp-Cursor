@@ -16,7 +16,7 @@ interface MealTimingData {
 }
 
 const MEAL_TIMES = [
-  { id: 'breakfast', label: 'Fr?hst?ck', icon: '🌅', idealTime: '6:00 - 10:00' },
+  { id: 'breakfast', label: 'Frühstück', icon: '🌅', idealTime: '6:00 - 10:00' },
   { id: 'lunch', label: 'Mittagessen', icon: '☀️', idealTime: '11:00 - 14:00' },
   { id: 'dinner', label: 'Abendessen', icon: '🌙', idealTime: '17:00 - 21:00' },
   { id: 'snacks', label: 'Snacks', icon: '🍎', idealTime: 'Zwischendurch' },
@@ -80,7 +80,7 @@ export function MealTimingAnalysis() {
     const dinner = timingData.find(t => t.time === 'dinner');
 
     if (breakfast && breakfast.avgProtein < proteinPerMeal * 0.5 && breakfast.mealCount > 0) {
-      tips.push('💡 Mehr Protein zum Fr?hst?ck für bessere Saettigung');
+      tips.push('💡 Mehr Protein zum Frühstück für bessere Sättigung');
     }
 
     if (dinner && dinner.percentage > 50) {
@@ -94,7 +94,7 @@ export function MealTimingAnalysis() {
 
     // Check if breakfast is skipped
     if (breakfast && breakfast.mealCount === 0) {
-      tips.push('🌅 Ein proteinreiches Fr?hst?ck kann den Stoffwechsel ankurbeln');
+      tips.push('🌅 Ein proteinreiches Frühstück kann den Stoffwechsel ankurbeln');
     }
 
     return tips;

@@ -24,10 +24,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   viewportFit: 'cover',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#3b82f6' },
-    { media: '(prefers-color-scheme: dark)', color: '#1e40af' },
-  ],
+  themeColor: '#3b82f6',
 };
 
 export default function RootLayout({
@@ -37,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de" suppressHydrationWarning>
-      <body className={`${inter.className} bg-slate-50 dark:bg-slate-900 transition-colors duration-300`}>
+      <body className={`${inter.className} bg-slate-50`}>
         <ThemeProvider>
           <AuthProvider>
             {children}
@@ -46,10 +43,9 @@ export default function RootLayout({
               toastOptions={{
                 duration: 3000,
                 style: {
-                  background: 'var(--toast-bg, #333)',
-                  color: 'var(--toast-color, #fff)',
+                  background: '#fff',
+                  color: '#1e293b',
                 },
-                className: 'dark:bg-slate-800',
                 success: {
                   iconTheme: {
                     primary: '#10b981',

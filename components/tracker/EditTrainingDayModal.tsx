@@ -204,7 +204,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="z.B. Push Day, Oberk?rper, Beine..."
+            placeholder="z.B. Push Day, Oberkörper, Beine..."
             className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
           />
         </div>
@@ -226,7 +226,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
             }`}
           >
             {showExerciseList ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-            {showExerciseList ? 'Schlie?en' : 'Übung hinzuf?gen'}
+            {showExerciseList ? 'Schlie?en' : 'Übung hinzufügen'}
           </button>
         </div>
 
@@ -466,7 +466,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                           className="flex-1 px-4 py-2.5 border-2 border-dashed border-slate-300 text-slate-600 rounded-xl hover:border-emerald-400 hover:text-emerald-600 hover:bg-emerald-50 transition-all flex items-center justify-center gap-2"
                         >
                           <Plus className="w-4 h-4" />
-                          Satz hinzuf?gen
+                          Satz hinzufügen
                         </button>
                         <button
                           onClick={() => handleCopyLastSet(index)}

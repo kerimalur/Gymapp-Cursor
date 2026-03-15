@@ -6,7 +6,7 @@ import { useBodyWeightStore } from '@/store/useBodyWeightStore';
 import { StrengthGoals } from '@/components/dashboard/StrengthGoals';
 import { format, startOfWeek } from 'date-fns';
 import { de } from 'date-fns/locale';
-import { Target, TrendingDown, TrendingUp, Dumbbell, Scale, CheckCircle2 } from 'lucide-react';
+import { Target, TrendingDown, TrendingUp, Dumbbell, Scale, CheckCircle2, Trash2 } from 'lucide-react';
 
 // ─── Body Weight Goal Card ───────────────────────────────────────────────────
 
@@ -52,12 +52,24 @@ function BodyWeightGoalCard() {
           <Scale className="w-5 h-5 text-cyan-500" />
           <h3 className="text-lg font-bold text-slate-800">Körpergewicht-Ziel</h3>
         </div>
-        <button
-          onClick={() => setEditing(!editing)}
-          className="flex items-center gap-1.5 rounded-xl bg-cyan-50 px-3 py-1.5 text-sm font-medium text-cyan-700 hover:bg-cyan-100 transition-colors"
-        >
-          {goal ? 'Ändern' : 'Ziel setzen'}
-        </button>
+        <div className="flex items-center gap-2">
+          {goal && (
+            <button
+              onClick={() => { setGoal(null); setEditing(false); }}
+              className="flex items-center gap-1 rounded-xl bg-red-50 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
+              title="Ziel löschen"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              Löschen
+            </button>
+          )}
+          <button
+            onClick={() => setEditing(!editing)}
+            className="flex items-center gap-1.5 rounded-xl bg-cyan-50 px-3 py-1.5 text-sm font-medium text-cyan-700 hover:bg-cyan-100 transition-colors"
+          >
+            {goal ? 'Ändern' : 'Ziel setzen'}
+          </button>
+        </div>
       </div>
 
       {editing && (
@@ -196,12 +208,24 @@ function WeeklyVolumeGoalCard() {
           <Dumbbell className="w-5 h-5 text-violet-500" />
           <h3 className="text-lg font-bold text-slate-800">Wöchentliches Volumen</h3>
         </div>
-        <button
-          onClick={() => setEditing(!editing)}
-          className="flex items-center gap-1.5 rounded-xl bg-violet-50 px-3 py-1.5 text-sm font-medium text-violet-700 hover:bg-violet-100 transition-colors"
-        >
-          {weeklyVolumeGoalSets ? 'Ändern' : 'Ziel setzen'}
-        </button>
+        <div className="flex items-center gap-2">
+          {weeklyVolumeGoalSets && (
+            <button
+              onClick={() => { setWeeklyVolumeGoalSets(null); setEditing(false); }}
+              className="flex items-center gap-1 rounded-xl bg-red-50 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
+              title="Ziel löschen"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              Löschen
+            </button>
+          )}
+          <button
+            onClick={() => setEditing(!editing)}
+            className="flex items-center gap-1.5 rounded-xl bg-violet-50 px-3 py-1.5 text-sm font-medium text-violet-700 hover:bg-violet-100 transition-colors"
+          >
+            {weeklyVolumeGoalSets ? 'Ändern' : 'Ziel setzen'}
+          </button>
+        </div>
       </div>
 
       {editing && (

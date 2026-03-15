@@ -337,7 +337,7 @@ function WorkoutContent() {
       ghostReps: lastSet?.ghostReps,
     });
     setWorkout(newWorkout);
-    toast.success('Satz hinzugef?gtt');
+    toast.success('Satz hinzugefügt');
   };
 
   const handleAddExercise = (exerciseId: string) => {
@@ -356,7 +356,7 @@ function WorkoutContent() {
     setWorkout(newWorkout);
     setShowExerciseSelector(false);
     setExerciseSearchTerm('');
-    toast.success(`${exercise.name} hinzugef?gtt`);
+    toast.success(`${exercise.name} hinzugefügt`);
   };
 
   const handleFinishWorkout = async () => {
@@ -510,7 +510,7 @@ function WorkoutContent() {
                       className={`p-2 rounded-lg transition-colors ${
                         exerciseNotes[exIdx] ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100 text-gray-400'
                       }`}
-                      title="Notiz hinzuf?gen"
+                      title="Notiz hinzufügen"
                     >
                       <StickyNote className="w-4 h-4" />
                     </button>
@@ -745,7 +745,7 @@ function WorkoutContent() {
                     className="w-full mt-2 p-2 border-2 border-dashed border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all text-gray-500 hover:text-blue-600 text-sm font-medium"
                   >
                     <Plus className="w-4 h-4 inline mr-1" />
-                    Satz hinzuf?gen
+                    Satz hinzufügen
                   </button>
                 </div>
               </motion.div>
@@ -761,7 +761,7 @@ function WorkoutContent() {
           className="w-full p-4 border-2 border-dashed border-gray-300 rounded-2xl hover:border-primary-500 hover:bg-primary-50 transition-all text-gray-600 hover:text-primary-600 font-medium mb-6"
         >
           <Plus className="w-5 h-5 inline mr-2" />
-          Übung hinzuf?gen
+          Übung hinzufügen
         </motion.button>
 
         {/* Finish Button */}
@@ -794,7 +794,7 @@ function WorkoutContent() {
             className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl"
           >
             <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900">Übung hinzuf?gen</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Übung hinzufügen</h2>
               <button
                 onClick={() => {
                   setShowExerciseSelector(false);

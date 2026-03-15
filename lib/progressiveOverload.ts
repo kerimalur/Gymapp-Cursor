@@ -136,7 +136,7 @@ export function getProgressionSuggestion(
       suggestedWeight: 0,
       suggestedReps: 8,
       message: 'Neue Übung. Starte mit einem moderaten Gewicht.',
-      reason: 'Keine vorherigen Satzdaten für diese ?bung',
+      reason: 'Keine vorherigen Satzdaten für diese Übung',
       confidence: 'low',
     };
   }

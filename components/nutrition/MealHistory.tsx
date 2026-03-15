@@ -38,7 +38,7 @@ export function MealHistory() {
   const getMealName = (type: string) => {
     switch (type) {
       case 'breakfast':
-        return 'Fr?hst?ck';
+        return 'Frühstück';
       case 'lunch':
         return 'Mittagessen';
       case 'dinner':
