@@ -19,8 +19,7 @@ import { useAppSettingsStore } from '@/store/useAppSettingsStore';
 import { useBodyWeightStore } from '@/store/useBodyWeightStore';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { ALL_MUSCLES, MUSCLE_NAMES_DE, calculateRecoveryFromWorkouts } from '@/lib/recovery';
-import { SmartDashboard } from '@/components/dashboard/SmartDashboard';
-import { AchievementsPanel } from '@/components/dashboard/AchievementsPanel';
+
 
 // ─── Mini Stat Card ───────────────────────────────────────────────────────────
 
@@ -299,11 +298,7 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* ── Smart Insights (top 3 only) ───────────────────────────── */}
-        <SmartDashboard />
 
-        {/* ── Achievements ─────────────────────────────────────────── */}
-        <AchievementsPanel />
 
       </div>
 

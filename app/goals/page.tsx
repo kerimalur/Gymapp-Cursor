@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { useBodyWeightStore } from '@/store/useBodyWeightStore';
 import { StrengthGoals } from '@/components/dashboard/StrengthGoals';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { format, startOfWeek } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { Target, TrendingDown, TrendingUp, Dumbbell, Scale, CheckCircle2, Trash2 } from 'lucide-react';
@@ -314,7 +315,8 @@ function WeeklyVolumeGoalCard() {
 
 export default function GoalsPage() {
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-8">
+    <DashboardLayout>
+    <div className="max-w-3xl mx-auto space-y-8">
       <div>
         <div className="flex items-center gap-3 mb-1">
           <Target className="w-7 h-7 text-primary-500" />
@@ -331,5 +333,6 @@ export default function GoalsPage() {
         <WeeklyVolumeGoalCard />
       </div>
     </div>
+    </DashboardLayout>
   );
 }
