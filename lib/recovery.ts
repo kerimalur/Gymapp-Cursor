@@ -43,7 +43,7 @@ export const ALL_MUSCLES: MuscleGroup[] = [
 
 export const MUSCLE_NAMES_DE: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'R?cken',
+  back: 'Rücken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -52,12 +52,12 @@ export const MUSCLE_NAMES_DE: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Ges??',
+  glutes: 'Gesäß',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer R?cken',
+  lower_back: 'Unterer Rücken',
   neck: 'Nacken',
 };
 
@@ -108,8 +108,8 @@ export function getRecoveryState(recovery: number): RecoveryStateMeta {
   if (recovery >= 50) {
     return {
       key: 'recovering',
-      label: 'L?dt auf',
-      description: 'Noch etwas Zeit f?r volle Frische.',
+      label: 'Lädt auf',
+      description: 'Noch etwas Zeit für volle Frische.',
       accentClass: 'text-amber-700',
       softClass: 'bg-amber-50 border-amber-200',
     };

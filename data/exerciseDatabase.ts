@@ -8,7 +8,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ BRUST ============
   { 
     id: 'ex1', 
-    name: 'Bankdr?cken', 
+    name: 'Bankdrücken',
     muscleGroups: ['chest', 'triceps', 'shoulders'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },
@@ -19,7 +19,7 @@ export const exerciseDatabase: Exercise[] = [
   },
   { 
     id: 'ex2', 
-    name: 'Schr?gbankdr?cken', 
+    name: 'Schrägbankdrücken',
     muscleGroups: ['chest', 'shoulders', 'triceps'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },
@@ -75,7 +75,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ RUeCKEN ============
   { 
     id: 'ex8', 
-    name: 'Klimmz?ge', 
+    name: 'Klimmzüge',
     muscleGroups: ['lats', 'back', 'biceps'], 
     muscles: [
       { muscle: 'lats', role: 'primary' },
@@ -165,7 +165,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ SCHULTERN ============
   { 
     id: 'ex16', 
-    name: 'Schulterdr?cken', 
+    name: 'Schulterdrücken',
     muscleGroups: ['shoulders', 'triceps'], 
     muscles: [
       { muscle: 'shoulders', role: 'primary' },
@@ -268,7 +268,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ ARME - TRIZEPS ============
   { 
     id: 'ex28', 
-    name: 'Trizeps Dr?cken', 
+    name: 'Trizeps Drücken',
     muscleGroups: ['triceps'], 
     muscles: [{ muscle: 'triceps', role: 'primary' }],
     category: 'push' 
@@ -282,7 +282,7 @@ export const exerciseDatabase: Exercise[] = [
   },
   { 
     id: 'ex30', 
-    name: '?berkopf Trizepsdr?cken', 
+    name: 'Überkopf Trizepsdrücken',
     muscleGroups: ['triceps'], 
     muscles: [{ muscle: 'triceps', role: 'primary' }],
     category: 'push' 
@@ -690,7 +690,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ BRUST (WEITERE) ============
   { 
     id: 'ex74', 
-    name: 'Decline Bankdr?cken', 
+    name: 'Decline Bankdrücken',
     muscleGroups: ['chest', 'triceps'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },

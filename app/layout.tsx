@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'GymApp Pro - Dein Fitness Tracker',
-  description: 'Professionelle Gym- und Ern?hrungs-Tracking Software',
+  description: 'Professionelle Gym- und Ernährungs-Tracking Software',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
