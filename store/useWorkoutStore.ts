@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { supabase } from '@/lib/supabase';
-import { Exercise, TrainingDay, WorkoutSession, TrainingPlan } from '@/types';
+import { Exercise, TrainingDay, WorkoutSession, TrainingPlan, StrengthGoal } from '@/types';
 
 interface RestTimer {
   isActive: boolean;
@@ -23,6 +23,7 @@ interface WorkoutState {
   trainingPlans: TrainingPlan[];
   workoutSessions: WorkoutSession[];
   currentWorkout: WorkoutSession | null;
+  strengthGoals: StrengthGoal[];
 
   // Rest Timer State
   restTimer: RestTimer;
@@ -49,6 +50,9 @@ interface WorkoutState {
   updateWorkoutSession: (session: WorkoutSession) => void;
   deleteWorkoutSession: (sessionId: string) => void;
   setCurrentWorkout: (workout: WorkoutSession | null) => void;
+  addStrengthGoal: (goal: StrengthGoal) => void;
+  updateStrengthGoal: (goal: StrengthGoal) => void;
+  deleteStrengthGoal: (goalId: string) => void;
 
   // Rest Timer Actions
   startRestTimer: (seconds?: number) => void;
@@ -68,6 +72,7 @@ export const useWorkoutStore = create<WorkoutState>()(
       trainingPlans: [],
       workoutSessions: [],
       currentWorkout: null,
+      strengthGoals: [],
 
       // Rest Timer Initial State
       restTimer: {
@@ -135,6 +140,13 @@ export const useWorkoutStore = create<WorkoutState>()(
         workoutSessions: state.workoutSessions.filter(s => s.id !== sessionId)
       })),
       setCurrentWorkout: (currentWorkout) => set({ currentWorkout }),
+      addStrengthGoal: (goal) => set((state) => ({ strengthGoals: [...state.strengthGoals, goal] })),
+      updateStrengthGoal: (goal) => set((state) => ({
+        strengthGoals: state.strengthGoals.map(g => g.id === goal.id ? goal : g)
+      })),
+      deleteStrengthGoal: (goalId) => set((state) => ({
+        strengthGoals: state.strengthGoals.filter(g => g.id !== goalId)
+      })),
 
       // Rest Timer Actions
       startRestTimer: (seconds) => set((state) => ({

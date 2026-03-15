@@ -24,7 +24,7 @@ const Icons = {
 // All available muscle groups with German labels
 const ALL_MUSCLES: { id: MuscleGroup; label: string; category: 'upper' | 'core' | 'lower' }[] = [
   { id: 'chest', label: 'Brust', category: 'upper' },
-  { id: 'back', label: 'R?cken', category: 'upper' },
+  { id: 'back', label: 'Rücken', category: 'upper' },
   { id: 'lats', label: 'Latissimus', category: 'upper' },
   { id: 'shoulders', label: 'Schultern', category: 'upper' },
   { id: 'traps', label: 'Trapezius', category: 'upper' },
@@ -34,7 +34,7 @@ const ALL_MUSCLES: { id: MuscleGroup; label: string; category: 'upper' | 'core' 
   { id: 'abs', label: 'Bauch', category: 'core' },
   { id: 'quadriceps', label: 'Quadrizeps', category: 'lower' },
   { id: 'hamstrings', label: 'Beinbizeps', category: 'lower' },
-  { id: 'glutes', label: 'Ges??', category: 'lower' },
+  { id: 'glutes', label: 'Gesäß', category: 'lower' },
   { id: 'calves', label: 'Waden', category: 'lower' },
 ];
 
@@ -104,7 +104,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
         {/* Info Text */}
         <div className="bg-violet-50 border border-violet-200 rounded-xl p-4">
           <p className="text-sm text-violet-700">
-            Diese Einstellungen gelten f?r die gesamte App: Statistiken, Regeneration und Trainingsfrequenz-Analysen.
+            Diese Einstellungen gelten für die gesamte App: Statistiken, Regeneration und Trainingsfrequenz-Analysen.
           </p>
         </div>
 

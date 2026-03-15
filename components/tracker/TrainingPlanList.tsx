@@ -173,7 +173,7 @@ export function TrainingPlanList() {
                           <div>
                             <p className="font-medium text-gray-900">{day?.name || 'Unbekannt'}</p>
                             <p className="text-sm text-gray-500">
-                              {day?.exercises.length || 0} ?bungen
+                              {day?.exercises.length || 0} Übungen
                             </p>
                           </div>
                         </div>

@@ -83,7 +83,7 @@ export function SmartDashboard() {
           type: 'action',
           icon: <Dumbbell className="w-5 h-5" />,
           title: `Heute gut f?r: ${bestDay.name}`,
-          description: `${bestScore} Muskelgruppen sind erholt und bereit. Perfekter Tag daf?r!`,
+          description: `${bestScore} Muskelgruppen sind erholt und bereit. Perfekter Tag dafür!`,
           actionLabel: 'Training starten',
           actionHref: `/workout?id=${bestDay.id}`,
           priority: 1,
@@ -91,7 +91,7 @@ export function SmartDashboard() {
       }
     }
 
-    // --- M?de Muskeln Warnung ---
+    // --- Müde Muskeln Warnung ---
     if (tiredMuscles.length >= 3) {
       allInsights.push({
         id: 'tired-muscles',
@@ -185,7 +185,7 @@ export function SmartDashboard() {
         type: 'info',
         icon: <Moon className="w-5 h-5" />,
         title: 'Schlaf nicht getrackt',
-        description: 'Tracke deinen Schlaf f?r bessere Regenerations-Empfehlungen.',
+        description: 'Tracke deinen Schlaf für bessere Regenerations-Empfehlungen.',
         actionLabel: 'Schlaf eintragen',
         actionHref: '/nutrition',
         priority: 9,
@@ -245,7 +245,7 @@ export function SmartDashboard() {
         type: 'action',
         icon: <Target className="w-5 h-5" />,
         title: `Noch ${trainingsNeeded}/${weeklyGoal} Trainings diese Woche`,
-        description: `${daysLeft} Tage ?brig. ${trainingsNeeded <= daysLeft ? 'Du schaffst das!' : 'Wird eng, aber jedes Training z?hlt!'}`,
+        description: `${daysLeft} Tage übrig. ${trainingsNeeded <= daysLeft ? 'Du schaffst das!' : 'Wird eng, aber jedes Training zählt!'}`,
         actionLabel: 'Training starten',
         actionHref: '/tracker',
         priority: 2,
@@ -284,7 +284,7 @@ export function SmartDashboard() {
         type: 'info',
         icon: <TrendingUp className="w-5 h-5" />,
         title: `${Math.abs(weightChange).toFixed(1)}kg ${direction} (2 Wo)`,
-        description: `Aktuell: ${latestWeight.toFixed(1)}kg. ${Math.abs(weightChange) > 1.5 ? 'Grosse Ver?nderung – Ern?hrung checken.' : 'Im normalen Bereich.'}`,
+        description: `Aktuell: ${latestWeight.toFixed(1)}kg. ${Math.abs(weightChange) > 1.5 ? 'Grosse Ver?nderung – Ernährung checken.' : 'Im normalen Bereich.'}`,
         priority: 7,
       });
     }

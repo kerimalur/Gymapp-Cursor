@@ -103,7 +103,7 @@ export default function RecoveryPage() {
           <h1 className="text-3xl font-black text-slate-950">Regeneration</h1>
           <p className="mt-1 max-w-2xl text-sm text-slate-600">
             Jeder Muskel fuellt sich sichtbar wieder auf. Statt Prozenten bekommst du klare
-            Zustandsbilder, freie Muskelgruppen und konkrete Hinweise f?r den n?chsten Trainingstag.
+            Zustandsbilder, freie Muskelgruppen und konkrete Hinweise für den nächsten Trainingstag.
           </p>
         </div>
 
@@ -117,7 +117,7 @@ export default function RecoveryPage() {
                 <h2 className="text-xl font-black text-slate-900">Dein aktuelles Recovery-Bild</h2>
               </div>
               <div className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
-                Tap auf einen Muskel f?r Details
+                Tap auf einen Muskel für Details
               </div>
             </div>
 
@@ -147,7 +147,7 @@ export default function RecoveryPage() {
           <div className="space-y-4">
             <div className="rounded-[28px] border border-emerald-200 bg-emerald-50 p-5 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
-                Frei f?r Arbeit
+                Frei für Arbeit
               </p>
               <p className="mt-2 text-3xl font-black text-emerald-900">{summary.ready.length}</p>
               <p className="mt-2 text-sm text-emerald-800">
@@ -159,11 +159,11 @@ export default function RecoveryPage() {
 
             <div className="rounded-[28px] border border-amber-200 bg-amber-50 p-5 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">
-                L?dt auf
+                Lädt auf
               </p>
               <p className="mt-2 text-3xl font-black text-amber-900">{summary.recovering.length}</p>
               <p className="mt-2 text-sm text-amber-800">
-                Gute Zone f?r Technik, Pump oder lockere Belastung.
+                Gute Zone für Technik, Pump oder lockere Belastung.
               </p>
             </div>
 
@@ -190,7 +190,7 @@ export default function RecoveryPage() {
                 <div>
                   <p className="text-sm font-semibold text-slate-800">Interpretation</p>
                   <p className="mt-1 text-sm text-slate-600">
-                    Mehr S?tze, mehrere ?bungen f?r denselben Muskel und niedriger RIR verlaengern
+                    Mehr Sätze, mehrere Übungen für denselben Muskel und niedriger RIR verlängern
                     die Regeneration sichtbar. Die Karte reagiert also direkt auf Trainingshaerte.
                   </p>
                 </div>
@@ -300,7 +300,7 @@ export default function RecoveryPage() {
                     <div className="rounded-2xl border border-white/70 bg-white/80 p-3">
                       <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Letzte Last</p>
                       <p className="mt-1 font-bold text-slate-900">
-                        {info.weightedSets > 0 ? `${info.weightedSets} S?tze` : 'Keine'}
+                        {info.weightedSets > 0 ? `${info.weightedSets} Sätze` : 'Keine'}
                       </p>
                     </div>
                   </div>
@@ -341,7 +341,7 @@ export default function RecoveryPage() {
                     <Clock3 className="h-5 w-5 text-slate-700" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-slate-800">N?chstes gutes Fenster</p>
+                    <p className="text-sm font-semibold text-slate-800">Nächstes gutes Fenster</p>
                     <p className="text-sm text-slate-600">
                       {selectedDay.nextFreeInHours > 0
                         ? `In etwa ${selectedDay.nextFreeInHours} Stunden ist der Tag frei`
@@ -393,7 +393,7 @@ export default function RecoveryPage() {
                         </div>
                         <div className="rounded-2xl border border-white/70 bg-white/80 p-3">
                           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Letzte Last</p>
-                          <p className="mt-1 font-bold text-slate-900">{info.weightedSets} S?tze</p>
+                          <p className="mt-1 font-bold text-slate-900">{info.weightedSets} Sätze</p>
                         </div>
                         <div className="rounded-2xl border border-white/70 bg-white/80 p-3">
                           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Avg. RIR</p>

@@ -80,7 +80,7 @@ export function MealTimingAnalysis() {
     const dinner = timingData.find(t => t.time === 'dinner');
 
     if (breakfast && breakfast.avgProtein < proteinPerMeal * 0.5 && breakfast.mealCount > 0) {
-      tips.push('💡 Mehr Protein zum Fr?hst?ck f?r bessere Saettigung');
+      tips.push('💡 Mehr Protein zum Fr?hst?ck für bessere Saettigung');
     }
 
     if (dinner && dinner.percentage > 50) {

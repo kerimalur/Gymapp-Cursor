@@ -18,6 +18,9 @@ import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { ALL_MUSCLES, MUSCLE_NAMES_DE, calculateRecoveryFromWorkouts } from '@/lib/recovery';
 import { SmartDashboard } from '@/components/dashboard/SmartDashboard';
 import { AchievementsPanel } from '@/components/dashboard/AchievementsPanel';
+import { StrengthGoals } from '@/components/dashboard/StrengthGoals';
+import { WeeklySummary } from '@/components/dashboard/WeeklySummary';
+import { NutritionInsight } from '@/components/dashboard/NutritionInsight';
 
 function StatCard({
   title,
@@ -224,7 +227,7 @@ export default function DashboardPage() {
           <div className="mt-3 grid gap-2 md:grid-cols-2">
             <p className="text-xs text-slate-600">Bereit: {stats.readyMuscles.length} Muskelgruppen</p>
             <p className="text-xs text-slate-600 md:text-right">
-              M?de: {stats.tiredMuscles.length > 0
+              Müde: {stats.tiredMuscles.length > 0
                 ? stats.tiredMuscles.slice(0, 4).map((muscle) => MUSCLE_NAMES_DE[muscle]).join(', ')
                 : 'Keine'}
             </p>
@@ -274,7 +277,7 @@ export default function DashboardPage() {
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center gap-2">
             <Trophy className="h-5 w-5 text-amber-500" />
-            <h3 className="text-lg font-bold text-slate-800">Pers?nliche Rekorde</h3>
+            <h3 className="text-lg font-bold text-slate-800">Persönliche Rekorde</h3>
           </div>
 
           {stats.personalRecords.length === 0 ? (
@@ -290,6 +293,12 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+        <WeeklySummary />
+
+        <NutritionInsight />
+
+        <StrengthGoals />
+
         {/* Smart Dashboard - Dynamic Insights */}
         <SmartDashboard />
 

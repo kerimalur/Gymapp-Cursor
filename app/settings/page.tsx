@@ -140,7 +140,7 @@ export default function SettingsPage() {
       waterGoal: Number.isFinite(nutritionGoals.water) ? nutritionGoals.water : 3000,
       caffeineGoal: Number.isFinite(nutritionGoals.caffeine) ? nutritionGoals.caffeine : 400,
     });
-    toast.success('Ern?hrungsziele gespeichert');
+    toast.success('Ernährungsziele gespeichert');
   };
 
   const handleSaveProfile = async () => {
@@ -233,7 +233,7 @@ export default function SettingsPage() {
       <div className="mx-auto max-w-5xl space-y-6">
         <div className="rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 p-6 text-white shadow-xl">
           <h1 className="text-3xl font-bold">Einstellungen</h1>
-          <p className="mt-1 text-sm text-blue-100">Pers?nlich, trainingsspezifisch und cloud-synchron.</p>
+          <p className="mt-1 text-sm text-blue-100">Persönlich, trainingsspezifisch und cloud-synchron.</p>
           <div className="mt-4 flex flex-wrap gap-3">
             <button
               onClick={handleSaveAll}
@@ -331,7 +331,7 @@ export default function SettingsPage() {
           </button>
         </Section>
 
-        <Section title="Ern?hrung" subtitle="Ziele f?r Kalorien und Makros" icon={<Apple className="h-5 w-5" />}>
+        <Section title="Ernährung" subtitle="Ziele für Kalorien und Makros" icon={<Apple className="h-5 w-5" />}>
           <div className="grid gap-4 md:grid-cols-2">
             {[
               { key: 'calories', label: 'Kalorien (kcal)' },
@@ -361,7 +361,7 @@ export default function SettingsPage() {
             onClick={handleSaveNutrition}
             className="mt-4 rounded-xl bg-emerald-600 px-5 py-2.5 font-medium text-white hover:bg-emerald-700"
           >
-            Ern?hrung speichern
+            Ernährung speichern
           </button>
         </Section>
 
@@ -435,7 +435,7 @@ export default function SettingsPage() {
 
         <Section
           title="App Praeferenzen"
-          subtitle="Mehr Individualisierung f?r deine eigene Nutzung"
+          subtitle="Mehr Individualisierung für deine eigene Nutzung"
           icon={<SlidersHorizontal className="h-5 w-5" />}
         >
           <div className="grid gap-4 md:grid-cols-2">

@@ -144,7 +144,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
 
   // Find bench press max
   const benchIds = exerciseDatabase
-    .filter(e => e.name.toLowerCase().includes('bankdr?cken') || e.name.toLowerCase().includes('bench'))
+    .filter(e => e.name.toLowerCase().includes('bankdrücken') || e.name.toLowerCase().includes('bench'))
     .map(e => e.id);
   const benchMax = Math.max(...benchIds.map(id => getMaxWeightForExercise(sessions, id)), 0);
 
@@ -276,7 +276,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     },
     {
       id: 'bench-60',
-      name: 'Bankdr?cken 60kg',
+      name: 'Bankdrücken 60kg',
       description: '60kg auf der Flachbank',
       emoji: '🪑',
       category: 'strength',
@@ -287,7 +287,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     },
     {
       id: 'bench-100',
-      name: 'Bankdr?cken 100kg',
+      name: 'Bankdrücken 100kg',
       description: '100kg auf der Flachbank – Respekt!',
       emoji: '👑',
       category: 'strength',
@@ -355,49 +355,49 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     },
     {
       id: 'sets-500',
-      name: '500 S?tze',
-      description: '500 Arbeitss?tze abgeschlossen',
+      name: '500 Sätze',
+      description: '500 Arbeitssätze abgeschlossen',
       emoji: '🎯',
       category: 'volume',
       progress: Math.min(100, (totalSets / 500) * 100),
       target: 500,
       current: totalSets,
-      unit: 'S?tze',
+      unit: 'Sätze',
     },
     {
       id: 'sets-2000',
-      name: '2000 S?tze',
-      description: '2000 Arbeitss?tze – Maschine!',
+      name: '2000 Sätze',
+      description: '2000 Arbeitssätze – Maschine!',
       emoji: '⚙️',
       category: 'volume',
       progress: Math.min(100, (totalSets / 2000) * 100),
       target: 2000,
       current: totalSets,
-      unit: 'S?tze',
+      unit: 'Sätze',
     },
 
     // === MILESTONES ===
     {
       id: 'variety-10',
       name: 'Vielfaeltig',
-      description: '10 verschiedene ?bungen trainiert',
+      description: '10 verschiedene Übungen trainiert',
       emoji: '🎨',
       category: 'milestone',
       progress: Math.min(100, (uniqueExercises / 10) * 100),
       target: 10,
       current: uniqueExercises,
-      unit: '?bungen',
+      unit: 'Übungen',
     },
     {
       id: 'variety-25',
       name: 'Allrounder',
-      description: '25 verschiedene ?bungen trainiert',
+      description: '25 verschiedene Übungen trainiert',
       emoji: '🌈',
       category: 'milestone',
       progress: Math.min(100, (uniqueExercises / 25) * 100),
       target: 25,
       current: uniqueExercises,
-      unit: '?bungen',
+      unit: 'Übungen',
     },
     {
       id: 'early-bird-5',

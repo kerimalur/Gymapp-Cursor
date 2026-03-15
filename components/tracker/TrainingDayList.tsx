@@ -134,7 +134,7 @@ export function TrainingDayList({ limit }: TrainingDayListProps) {
                   <h3 className="text-lg font-bold text-gray-900">{day.name}</h3>
                   <div className="flex items-center gap-1.5 text-sm text-gray-500">
                     <span className="text-gray-400">{Icons.exercises}</span>
-                    {day.exercises.length} ?bungen
+                    {day.exercises.length} Übungen
                   </div>
                 </div>
               </div>

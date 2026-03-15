@@ -95,7 +95,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                     <div>
                       <h3 className="font-bold text-lg">Training planen</h3>
                       <p className="text-blue-100 text-sm">
-                        Plane ein Workout f?r diesen Tag
+                        Plane ein Workout für diesen Tag
                       </p>
                     </div>
                   </div>
@@ -273,7 +273,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs text-slate-500 mt-2">Klicken f?r Details</p>
+                            <p className="text-xs text-slate-500 mt-2">Klicken für Details</p>
                           </div>
                         </div>
                       </div>
@@ -327,7 +327,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
             {/* Exercises */}
             <div>
               <h3 className="text-lg font-bold text-slate-800 mb-4">
-                ?bungen ({selectedWorkout.exercises.length})
+                Übungen ({selectedWorkout.exercises.length})
               </h3>
               <div className="space-y-4 max-h-[40vh] overflow-y-auto">
                 {selectedWorkout.exercises.map((ex, exIdx) => (

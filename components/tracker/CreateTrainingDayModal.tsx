@@ -61,7 +61,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
 
   const categories = [
     { id: 'all', name: 'Alle', icon: <Target className="w-4 h-4" /> },
-    { id: 'push', name: 'Dr?cken', icon: <Dumbbell className="w-4 h-4" /> },
+    { id: 'push', name: 'Drücken', icon: <Dumbbell className="w-4 h-4" /> },
     { id: 'pull', name: 'Ziehen', icon: <Dumbbell className="w-4 h-4" /> },
     { id: 'legs', name: 'Beine', icon: <Dumbbell className="w-4 h-4" /> },
     { id: 'core', name: 'Core', icon: <Target className="w-4 h-4" /> },
@@ -146,7 +146,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
 
   const handleSave = () => {
     if (!user || !name.trim() || selectedExercises.length === 0) {
-      toast.error('Bitte gib einen Namen ein und f?ge mindestens eine ?bung hinzu');
+      toast.error('Bitte gib einen Namen ein und f?ge mindestens eine Übung hinzu');
       return;
     }
 
@@ -180,7 +180,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
         onClose={handleClose}
         size="full"
         title="Neuer Trainingstag"
-        subtitle="Erstelle einen neuen Trainingstag mit ?bungen"
+        subtitle="Erstelle einen neuen Trainingstag mit Übungen"
         icon={<Plus className="w-6 h-6" />}
         iconColor="primary"
         footer={
@@ -221,9 +221,9 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-semibold text-slate-700">
-                ?bungen ({selectedExercises.length})
+                Übungen ({selectedExercises.length})
               </h3>
-              <p className="text-xs text-slate-500">F?ge ?bungen zu deinem Trainingstag hinzu</p>
+              <p className="text-xs text-slate-500">F?ge Übungen zu deinem Trainingstag hinzu</p>
             </div>
             <button
               onClick={() => setShowExerciseList(!showExerciseList)}
@@ -234,7 +234,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               }`}
             >
               {showExerciseList ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-              {showExerciseList ? 'Schlie?en' : '?bung hinzuf?gen'}
+              {showExerciseList ? 'Schlie?en' : 'Übung hinzuf?gen'}
             </button>
           </div>
 
@@ -249,7 +249,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="?bung oder Muskelgruppe suchen..."
+                    placeholder="Übung oder Muskelgruppe suchen..."
                     className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none"
                     autoFocus
                   />
@@ -280,7 +280,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                   className="w-full mb-3 p-3 rounded-xl border-2 border-dashed border-violet-300 bg-violet-50 hover:bg-violet-100 hover:border-violet-400 transition-all flex items-center justify-center gap-2 text-violet-600 font-medium"
                 >
                   <Sparkles className="w-5 h-5" />
-                  Eigene ?bung erstellen
+                  Eigene Übung erstellen
                 </button>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -323,7 +323,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                 </div>
                 {filteredExercises.length === 0 && (
                   <div className="text-center py-8 text-slate-500">
-                    Keine ?bungen gefunden
+                    Keine Übungen gefunden
                   </div>
                 )}
               </div>
@@ -336,8 +336,8 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4">
                 <Dumbbell className="w-8 h-8 text-slate-400" />
               </div>
-              <p className="text-slate-600 font-medium mb-1">Noch keine ?bungen</p>
-              <p className="text-sm text-slate-400">Klicke auf "?bung hinzuf?gen" um zu starten</p>
+              <p className="text-slate-600 font-medium mb-1">Noch keine Übungen</p>
+              <p className="text-sm text-slate-400">Klicke auf "Übung hinzuf?gen" um zu starten</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -381,7 +381,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                       <div className="flex-1">
                         <p className="font-semibold text-slate-800">{exerciseData?.name}</p>
                         <p className="text-sm text-slate-500">
-                          {exercise.sets.length} S?tze
+                          {exercise.sets.length} Sätze
                           {exercise.notes && ' • Notiz vorhanden'}
                         </p>
                       </div>
@@ -527,14 +527,14 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
             <h4 className="font-semibold text-slate-800 mb-1.5">Gewicht (kg)</h4>
             <p className="text-sm text-slate-600">
-              Das Gewicht f?r den Satz. Lass es auf 0, um es spaeter einzutragen.
+              Das Gewicht für den Satz. Lass es auf 0, um es spaeter einzutragen.
             </p>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
             <h4 className="font-semibold text-slate-800 mb-1.5">RIR (Reps in Reserve)</h4>
             <p className="text-sm text-slate-600">
-              Wie viele Wiederholungen du noch ?brig haben sollst. 0 = Muskelversagen.
+              Wie viele Wiederholungen du noch übrig haben sollst. 0 = Muskelversagen.
             </p>
           </div>
 
@@ -543,7 +543,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               💡 Tipps
             </h4>
             <ul className="text-sm text-primary-700 space-y-1">
-              <li>• Klicke auf eine ?bung um sie zu bearbeiten</li>
+              <li>• Klicke auf eine Übung um sie zu bearbeiten</li>
               <li>• Nutze die Pfeile um die Reihenfolge zu aendern</li>
               <li>• Notizen helfen dir, Details zu merken</li>
             </ul>

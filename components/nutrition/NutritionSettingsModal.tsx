@@ -162,7 +162,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
       isOpen={isOpen}
       onClose={onClose}
       size="lg"
-      title="Ern?hrungs-Einstellungen"
+      title="Ernährungs-Einstellungen"
       icon={<Settings className="w-6 h-6" />}
       iconColor="primary"
     >
@@ -222,7 +222,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                 </div>
                 <div>
                   <h4 className="font-medium text-slate-800">Deine Tagesziele</h4>
-                  <p className="text-sm text-slate-500">Passe deine t?glichen Ern?hrungsziele an</p>
+                  <p className="text-sm text-slate-500">Passe deine täglichen Ernährungsziele an</p>
                 </div>
               </div>
 
@@ -499,7 +499,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h4 className="font-medium text-slate-900">Aktive Supplements</h4>
-                    <p className="text-xs text-slate-500">Diese erscheinen in deinem t?glichen Tracking</p>
+                    <p className="text-xs text-slate-500">Diese erscheinen in deinem täglichen Tracking</p>
                   </div>
                   <button
                     onClick={() => setShowAddActiveSupplement(true)}
@@ -561,7 +561,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                             userId: 'user-1',
                             name: newSupplement.name,
                             dosage: newSupplement.dosage || '',
-                            timing: newSupplement.timing || 'T?glich',
+                            timing: newSupplement.timing || 'Täglich',
                             isActive: true,
                           });
                           setNewSupplement({ name: '', dosage: '', timing: 'morning', notes: '' });
@@ -624,7 +624,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h4 className="font-medium text-slate-900">Supplement-Vorlagen</h4>
-                    <p className="text-xs text-slate-500">Vorlagen f?r schnelles Hinzuf?gen</p>
+                    <p className="text-xs text-slate-500">Vorlagen für schnelles Hinzuf?gen</p>
                   </div>
                   <button
                     onClick={() => setShowAddSupplement(true)}
@@ -771,7 +771,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
           {activeTab === 'templates' && (
             <div>
               <p className="text-sm text-slate-500 mb-4">
-                Hier siehst du alle gespeicherten Mahlzeiten. Du kannst sie im Ern?hrungs-Tab beim Quick-Add verwenden.
+                Hier siehst du alle gespeicherten Mahlzeiten. Du kannst sie im Ernährungs-Tab beim Quick-Add verwenden.
               </p>
 
               {mealTemplates.length === 0 ? (

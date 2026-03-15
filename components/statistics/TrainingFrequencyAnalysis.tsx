@@ -32,7 +32,7 @@ const RECOMMENDED_FREQUENCY: Record<MuscleGroup, number> = {
 
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'R?cken',
+  back: 'Rücken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -41,12 +41,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Ges??',
+  glutes: 'Gesäß',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer R?cken',
+  lower_back: 'Unterer Rücken',
   neck: 'Nacken',
 };
 
@@ -268,7 +268,7 @@ export function TrainingFrequencyAnalysis() {
             
             <div className="p-4 overflow-y-auto max-h-[60vh]">
               <p className="text-sm text-gray-500 mb-4">
-                W?hle aus, welche Muskelgruppen in der Frequenzanalyse ber?cksichtigt werden sollen.
+                W?hle aus, welche Muskelgruppen in der Frequenzanalyse berücksichtigt werden sollen.
                 Deaktiviere Muskeln, die du nicht direkt trainierst.
               </p>
               

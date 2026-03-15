@@ -86,11 +86,11 @@ export default function TrackerPage() {
           <div className="space-y-6">
             {nextTrainingDay ? (
               <div className="rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white shadow-xl">
-                <p className="mb-1 text-sm text-blue-100">N?chstes Training</p>
+                <p className="mb-1 text-sm text-blue-100">Nächstes Training</p>
                 <h2 className="text-3xl font-bold">{nextTrainingDay.name}</h2>
                 <p className="mt-1 text-sm text-blue-100">
-                  {nextTrainingDay.exercises.length} ?bungen •{' '}
-                  {nextTrainingDay.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)} S?tze
+                  {nextTrainingDay.exercises.length} Übungen •{' '}
+                  {nextTrainingDay.exercises.reduce((sum, ex) => sum + ex.sets.length, 0)} Sätze
                 </p>
                 <button
                   onClick={() => handleStartWorkout(nextTrainingDay.id)}

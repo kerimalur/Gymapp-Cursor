@@ -38,7 +38,7 @@ const VOLUME_RECOMMENDATIONS: Record<MuscleGroup, { min: number; optimal: number
 
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'R?cken',
+  back: 'Rücken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -47,12 +47,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Ges??',
+  glutes: 'Gesäß',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer R?cken',
+  lower_back: 'Unterer Rücken',
   neck: 'Nacken',
 };
 
@@ -281,10 +281,10 @@ export function MuscleVolumeStats() {
   const getRecommendationText = (data: MuscleVolumeData) => {
     if (data.status === 'under') {
       const needed = Math.round((data.recommendation.min - data.effectiveSets) * 10) / 10;
-      return `+${needed} S?tze bis Minimum`;
+      return `+${needed} Sätze bis Minimum`;
     } else if (data.status === 'over') {
       const excess = Math.round((data.effectiveSets - data.recommendation.max) * 10) / 10;
-      return `${excess} S?tze ?ber Maximum`;
+      return `${excess} Sätze ?ber Maximum`;
     }
     return 'Im optimalen Bereich';
   };
@@ -532,7 +532,7 @@ export function MuscleVolumeStats() {
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center">
                     <p className="text-2xl font-bold text-slate-800">{selectedMuscle.effectiveSets}</p>
-                    <p className="text-xs text-slate-500">Effektive S?tze</p>
+                    <p className="text-xs text-slate-500">Effektive Sätze</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-bold text-slate-800">{selectedMuscle.recommendation.optimal}</p>
@@ -546,9 +546,9 @@ export function MuscleVolumeStats() {
                   </div>
                 </div>
                 <div className="mt-3 flex items-center justify-center gap-4 text-xs text-slate-500">
-                  <span>Prim?r: {selectedMuscle.primarySets} S?tze</span>
+                  <span>Prim?r: {selectedMuscle.primarySets} Sätze</span>
                   <span>•</span>
-                  <span>Sekund?r: {selectedMuscle.secondarySets} S?tze</span>
+                  <span>Sekund?r: {selectedMuscle.secondarySets} Sätze</span>
                 </div>
               </div>
 
@@ -556,7 +556,7 @@ export function MuscleVolumeStats() {
               <div className="p-4 overflow-y-auto max-h-[40vh]">
                 <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
                   <Dumbbell className="w-4 h-4" />
-                  ?bungen diese Woche
+                  Übungen diese Woche
                 </h4>
                 {selectedMuscle.exercises.length > 0 ? (
                   <div className="space-y-2">
@@ -578,7 +578,7 @@ export function MuscleVolumeStats() {
                           </span>
                           <span className="flex items-center gap-1">
                             <Hash className="w-3 h-3" />
-                            {exercise.sets} S?tze
+                            {exercise.sets} Sätze
                           </span>
                           <span className="flex items-center gap-1">
                             <Weight className="w-3 h-3" />
@@ -591,7 +591,7 @@ export function MuscleVolumeStats() {
                 ) : (
                   <div className="text-center py-8 text-slate-400">
                     <Dumbbell className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm">Keine ?bungen diese Woche</p>
+                    <p className="text-sm">Keine Übungen diese Woche</p>
                   </div>
                 )}
               </div>
@@ -601,7 +601,7 @@ export function MuscleVolumeStats() {
                 <div className="flex items-center gap-2 text-sm text-slate-600">
                   <Target className="w-4 h-4" />
                   <span>
-                    Empfehlung: {selectedMuscle.recommendation.min}-{selectedMuscle.recommendation.max} S?tze/Woche
+                    Empfehlung: {selectedMuscle.recommendation.min}-{selectedMuscle.recommendation.max} Sätze/Woche
                   </span>
                 </div>
               </div>

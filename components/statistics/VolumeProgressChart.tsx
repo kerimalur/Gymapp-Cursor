@@ -132,7 +132,7 @@ export function VolumeProgressChart() {
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-xs text-gray-500">S?tze:</span>
+              <span className="text-xs text-gray-500">Sätze:</span>
               <span className="text-sm font-semibold text-gray-700">{data.sets}</span>
             </div>
             <div className="flex justify-between">
@@ -172,7 +172,7 @@ export function VolumeProgressChart() {
               : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
           }`}
         >
-          Alle ?bungen
+          Alle Übungen
         </button>
         {availableExercises.slice(0, 5).map(ex => (
           <button

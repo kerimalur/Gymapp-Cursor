@@ -89,7 +89,7 @@ export interface TrainingPlan {
   sessionsPerWeek: number;
   trainingDays: string[]; // IDs of TrainingDay
   isActive: boolean;
-  currentDayIndex: number; // Index des n?chsten Trainingstags
+  currentDayIndex: number; // Index des nächsten Trainingstags
   createdAt: Date;
 }
 
@@ -139,6 +139,18 @@ export interface CalendarEvent {
   workoutSession?: WorkoutSession;
   scheduledWorkout?: ScheduledWorkout;
   notes?: string;
+}
+
+// Strength Goal Types
+export interface StrengthGoal {
+  id: string;
+  exerciseId: string;
+  exerciseName: string;
+  targetWeight: number;
+  targetReps: number;
+  startWeight: number;
+  startDate: string; // ISO date string
+  deadline?: string; // ISO date string
 }
 
 // Nutrition Types

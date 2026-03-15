@@ -54,7 +54,7 @@ function calculatePlates(targetWeight: number, barbellWeight: number = BARBELL_W
   return plates;
 }
 
-// IPF/IWF Standard Farben f?r olympische Hantelscheiben
+// IPF/IWF Standard Farben für olympische Hantelscheiben
 function getPlateColor(weight: number): string {
   switch (weight) {
     case 25: return 'bg-red-500';

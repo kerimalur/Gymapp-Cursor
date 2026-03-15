@@ -39,7 +39,7 @@ export function QuickStartWidget() {
           </div>
           <div className="flex items-center gap-1">
             <Zap className="w-4 h-4" />
-            <span>{currentWorkout.exercises.length} ?bungen</span>
+            <span>{currentWorkout.exercises.length} Übungen</span>
           </div>
         </div>
 
@@ -90,7 +90,7 @@ export function QuickStartWidget() {
             <Dumbbell className="w-6 h-6" />
           </div>
           <div className="flex-1">
-            <p className="text-sm text-white/80">N?chstes Training</p>
+            <p className="text-sm text-white/80">Nächstes Training</p>
             <h3 className="font-bold text-lg">{nextTrainingDay.name}</h3>
           </div>
           <button
@@ -105,7 +105,7 @@ export function QuickStartWidget() {
         <div className="flex items-center gap-3 mb-4 text-sm text-white/90">
           <div className="flex items-center gap-1">
             <Zap className="w-4 h-4" />
-            <span>{exerciseCount} ?bungen</span>
+            <span>{exerciseCount} Übungen</span>
           </div>
           <span className="text-white/50">•</span>
           <span>{activePlan.name}</span>

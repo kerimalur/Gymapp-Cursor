@@ -129,21 +129,21 @@ export function ProgressiveOverloadTracker() {
 
       if (sortedSessions.length < 3) {
         status = 'new';
-        suggestion = 'Noch zu wenig Daten f?r eine Analyse';
+        suggestion = 'Noch zu wenig Daten für eine Analyse';
       } else if (percentChange > 2) {
         status = 'progressing';
         suggestion = 'Weiter so! Gute Progression 💪';
       } else if (percentChange < -5) {
         status = 'regressing';
-        suggestion = '?berpr?fe Schlaf, Ern?hrung und Recovery. Eventuell Deload einplanen.';
+        suggestion = '?berpr?fe Schlaf, Ernährung und Recovery. Eventuell Deload einplanen.';
       } else if (weeksSinceProgress >= 3) {
         status = 'stagnant';
         if (volumeTrend < -10) {
-          suggestion = 'Versuche das Volumen zu erhoehen (mehr S?tze)';
+          suggestion = 'Versuche das Volumen zu erhöhen (mehr Sätze)';
         } else if (volumeTrend > 10) {
-          suggestion = 'Volumen ist hoch, versuche Gewicht zu steigern statt mehr S?tze';
+          suggestion = 'Volumen ist hoch, versuche Gewicht zu steigern statt mehr Sätze';
         } else {
-          suggestion = 'Probiere eine Variation der ?bung oder aendere Rep-Range';
+          suggestion = 'Probiere eine Variation der Übung oder aendere Rep-Range';
         }
       } else {
         status = 'progressing';
@@ -213,7 +213,7 @@ export function ProgressiveOverloadTracker() {
       <div className="text-center py-8">
         <AlertTriangle className="w-12 h-12 text-slate-300 mx-auto mb-3" />
         <p className="text-slate-500">Noch keine ?bungsdaten vorhanden</p>
-        <p className="text-sm text-slate-400">Absolviere einige Trainings f?r die Progressions-Analyse</p>
+        <p className="text-sm text-slate-400">Absolviere einige Trainings für die Progressions-Analyse</p>
       </div>
     );
   }
@@ -232,7 +232,7 @@ export function ProgressiveOverloadTracker() {
         </div>
         <div className="text-center p-3 bg-rose-50 rounded-xl">
           <p className="text-2xl font-bold text-rose-600">{statusCounts.regressing}</p>
-          <p className="text-xs text-rose-700">R?ckgang</p>
+          <p className="text-xs text-rose-700">Rückgang</p>
         </div>
         <div className="text-center p-3 bg-slate-50 rounded-xl">
           <p className="text-2xl font-bold text-slate-600">{statusCounts.new}</p>
@@ -249,7 +249,7 @@ export function ProgressiveOverloadTracker() {
               <p className="font-semibold text-amber-800">Achtung: M?gliche Stagnation</p>
               <p className="text-sm text-amber-700 mt-1">
                 {statusCounts.stagnant > 0 && `${statusCounts.stagnant} ?bung(en) stagnieren. `}
-                {statusCounts.regressing > 0 && `${statusCounts.regressing} ?bung(en) zeigen R?ckgang.`}
+                {statusCounts.regressing > 0 && `${statusCounts.regressing} ?bung(en) zeigen Rückgang.`}
               </p>
             </div>
           </div>

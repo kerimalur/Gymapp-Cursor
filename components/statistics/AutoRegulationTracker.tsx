@@ -113,7 +113,7 @@ export function AutoRegulationTracker() {
         if (recommendedWeight === latestSession.weight) {
           recommendedWeight = latestSession.weight + 2.5;
         }
-        reason = `RIR ${lastRIR.toFixed(1)} - Du hast noch Reserven! Zeit f?r mehr Gewicht.`;
+        reason = `RIR ${lastRIR.toFixed(1)} - Du hast noch Reserven! Zeit für mehr Gewicht.`;
         confidence = lastRIR >= 4 ? 'high' : 'medium';
       } else if (lastRIR >= 1.5) {
         // RIR 1.5-3 = Sweet spot, maintain or slight increase
@@ -124,7 +124,7 @@ export function AutoRegulationTracker() {
         if (allRIRs.length >= 3 && avgRIR >= 2) {
           recommendation = 'increase';
           recommendedWeight = latestSession.weight + 2.5;
-          reason = `RIR ${lastRIR.toFixed(1)} - Stabile Performance. N?chste Steigerung m?glich.`;
+          reason = `RIR ${lastRIR.toFixed(1)} - Stabile Performance. Nächste Steigerung m?glich.`;
         } else {
           reason = `RIR ${lastRIR.toFixed(1)} - Optimale Intensit?t. Gewicht beibehalten.`;
         }
@@ -133,7 +133,7 @@ export function AutoRegulationTracker() {
         // RIR 0.5-1.5 = Hard, maintain weight
         recommendation = 'maintain';
         recommendedWeight = latestSession.weight;
-        reason = `RIR ${lastRIR.toFixed(1)} - Hohe Intensit?t. Gewicht beibehalten f?r Anpassung.`;
+        reason = `RIR ${lastRIR.toFixed(1)} - Hohe Intensit?t. Gewicht beibehalten für Anpassung.`;
         confidence = 'high';
       } else {
         // RIR < 0.5 = Too hard, might need deload
@@ -211,8 +211,8 @@ export function AutoRegulationTracker() {
         </div>
         <div className="text-center py-8">
           <Info className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500">Trainiere mit RIR-Tracking f?r automatische Empfehlungen.</p>
-          <p className="text-sm text-slate-400 mt-1">Mindestens 2 Sessions pro ?bung benoetigt.</p>
+          <p className="text-slate-500">Trainiere mit RIR-Tracking für automatische Empfehlungen.</p>
+          <p className="text-sm text-slate-400 mt-1">Mindestens 2 Sessions pro Übung benoetigt.</p>
         </div>
       </div>
     );

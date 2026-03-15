@@ -182,7 +182,7 @@ export function Modal({
                     transition-all duration-200
                     focus:outline-none focus:ring-2 focus:ring-primary-500/50
                   "
-                  aria-label="Modal schlie?en"
+                  aria-label="Modal schließen"
                 >
                   {Icons.close}
                 </button>

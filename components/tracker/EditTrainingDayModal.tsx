@@ -64,7 +64,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
 
   const categories = [
     { id: 'all', name: 'Alle' },
-    { id: 'push', name: 'Dr?cken' },
+    { id: 'push', name: 'Drücken' },
     { id: 'pull', name: 'Ziehen' },
     { id: 'legs', name: 'Beine' },
     { id: 'core', name: 'Core' },
@@ -149,7 +149,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
 
   const handleSave = () => {
     if (!name.trim() || selectedExercises.length === 0) {
-      toast.error('Bitte gib einen Namen ein und f?ge mindestens eine ?bung hinzu');
+      toast.error('Bitte gib einen Namen ein und f?ge mindestens eine Übung hinzu');
       return;
     }
 
@@ -213,9 +213,9 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-semibold text-slate-700">
-              ?bungen ({selectedExercises.length})
+              Übungen ({selectedExercises.length})
             </h3>
-            <p className="text-xs text-slate-500">Bearbeite deine ?bungen</p>
+            <p className="text-xs text-slate-500">Bearbeite deine Übungen</p>
           </div>
           <button
             onClick={() => setShowExerciseList(!showExerciseList)}
@@ -226,7 +226,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
             }`}
           >
             {showExerciseList ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-            {showExerciseList ? 'Schlie?en' : '?bung hinzuf?gen'}
+            {showExerciseList ? 'Schlie?en' : 'Übung hinzuf?gen'}
           </button>
         </div>
 
@@ -240,7 +240,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="?bung oder Muskelgruppe suchen..."
+                  placeholder="Übung oder Muskelgruppe suchen..."
                   className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none"
                   autoFocus
                 />
@@ -268,7 +268,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                 className="w-full mb-3 p-3 rounded-xl border-2 border-dashed border-violet-300 bg-violet-50 hover:bg-violet-100 hover:border-violet-400 transition-all flex items-center justify-center gap-2 text-violet-600 font-medium"
               >
                 <Sparkles className="w-5 h-5" />
-                Eigene ?bung erstellen
+                Eigene Übung erstellen
               </button>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -319,7 +319,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
               </div>
               {filteredExercises.length === 0 && (
                 <div className="text-center py-8 text-slate-500">
-                  Keine ?bungen gefunden
+                  Keine Übungen gefunden
                 </div>
               )}
             </div>
@@ -332,8 +332,8 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
             <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4">
               <Dumbbell className="w-8 h-8 text-slate-400" />
             </div>
-            <p className="text-slate-600 font-medium mb-1">Keine ?bungen</p>
-            <p className="text-sm text-slate-400">F?ge ?bungen hinzu</p>
+            <p className="text-slate-600 font-medium mb-1">Keine Übungen</p>
+            <p className="text-sm text-slate-400">F?ge Übungen hinzu</p>
           </div>
           ) : (
             <div className="space-y-3">
@@ -377,7 +377,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                     <div className="flex-1">
                       <p className="font-semibold text-slate-800">{exerciseData?.name}</p>
                       <p className="text-sm text-slate-500">
-                        {exercise.sets.length} S?tze
+                        {exercise.sets.length} Sätze
                         {exercise.notes && ' • Notiz vorhanden'}
                       </p>
                     </div>

@@ -135,8 +135,8 @@ export function getProgressionSuggestion(
       type: 'first_time',
       suggestedWeight: 0,
       suggestedReps: 8,
-      message: 'Neue ?bung. Starte mit einem moderaten Gewicht.',
-      reason: 'Keine vorherigen Satzdaten f?r diese ?bung',
+      message: 'Neue Übung. Starte mit einem moderaten Gewicht.',
+      reason: 'Keine vorherigen Satzdaten für diese ?bung',
       confidence: 'low',
     };
   }
@@ -164,7 +164,7 @@ export function getProgressionSuggestion(
       suggestedReps: nextReps,
       message: `${lastWeight + weightIncrement}kg x ${nextReps}`,
       reason:
-        '3 Einheiten gleiche Last mit steigenden Wiederholungen. Bei 12+ und RIR 1-0 jetzt Gewicht erhoehen.',
+        '3 Einheiten gleiche Last mit steigenden Wiederholungen. Bei 12+ und RIR 1-0 jetzt Gewicht erhöhen.',
       confidence: 'high',
     };
   }
@@ -381,15 +381,15 @@ export function generateWorkoutSummary(
 
     let suggestion = '';
     if (avgRIR !== undefined && avgRIR >= 3) {
-      suggestion = 'N?chstes Mal Gewicht steigern.';
+      suggestion = 'Nächstes Mal Gewicht steigern.';
     } else if (avgRIR !== undefined && avgRIR <= 0) {
-      suggestion = 'Starke Einheit. Eventuell minimal leichter f?r bessere Technik.';
+      suggestion = 'Starke Einheit. Eventuell minimal leichter für bessere Technik.';
     } else if (exerciseVolumeChange > 10) {
       suggestion = 'Saubere Steigerung. Genau so weitermachen.';
     } else if (exerciseVolumeChange < -10) {
-      suggestion = 'Weniger Volumen als sonst. Erholung oder Deload pr?fen.';
+      suggestion = 'Weniger Volumen als sonst. Erholung oder Deload prüfen.';
     } else {
-      suggestion = 'Solide Leistung. Beim n?chsten Mal 1 Wiederholung mehr anpeilen.';
+      suggestion = 'Solide Leistung. Beim nächsten Mal 1 Wiederholung mehr anpeilen.';
     }
 
     return {
@@ -419,7 +419,7 @@ export function generateWorkoutSummary(
   const motivationalMessages = {
     excellent: [
       'Absolut stark. Neue PRs und mehr Volumen.',
-      '?berragend. Heute war richtig Zug drin.',
+      'Überragend. Heute war richtig Zug drin.',
       'Starkes Training. Genau so fuehlen sich Fortschritte an.',
     ],
     good: [
@@ -429,11 +429,11 @@ export function generateWorkoutSummary(
     ],
     average: [
       'Training erledigt. Konstanz gewinnt am Ende.',
-      'Dranbleiben. Jede Einheit z?hlt.',
+      'Dranbleiben. Jede Einheit zählt.',
       'Durchgezogen. Auch normale Einheiten bauen etwas auf.',
     ],
     below_average: [
-      'Nicht der beste Tag, aber du warst da. Das z?hlt.',
+      'Nicht der beste Tag, aber du warst da. Das zählt.',
       'Schlechtere Tage gehoeren dazu. Morgen sieht oft schon anders aus.',
       'Einheit abgehakt. Erholung mitnehmen und weiter.',
     ],
@@ -461,16 +461,16 @@ export function generateWorkoutSummary(
   );
   if (lowRIRExercises.length > 0) {
     nextWorkoutTips.push(
-      `Technik pr?fen bei: ${lowRIRExercises.map((entry) => entry.exerciseName).join(', ')}`
+      `Technik prüfen bei: ${lowRIRExercises.map((entry) => entry.exerciseName).join(', ')}`
     );
   }
 
   if (durationDiff > 15) {
-    nextWorkoutTips.push(`Training war ${durationDiff} Minuten laenger als ueblich. Pausen pr?fen.`);
+    nextWorkoutTips.push(`Training war ${durationDiff} Minuten länger als üblich. Pausen prüfen.`);
   }
 
   if (nextWorkoutTips.length === 0) {
-    nextWorkoutTips.push('Versuche beim n?chsten Mal 1 Wiederholung oder 2.5kg mehr.');
+    nextWorkoutTips.push('Versuche beim nächsten Mal 1 Wiederholung oder 2.5kg mehr.');
   }
 
   return {
@@ -549,7 +549,7 @@ export function detectStagnation(
       lastReps,
       suggestion:
         lastReps >= 12
-          ? `N?chstes Mal ${recent[0].weight + weightIncrement}kg mit ${Math.max(6, lastReps - 4)} Wiederholungen testen.`
+          ? `Nächstes Mal ${recent[0].weight + weightIncrement}kg mit ${Math.max(6, lastReps - 4)} Wiederholungen testen.`
           : `Alarm: Seit 2 Einheiten keine echte Steigerung. Plane ${recent[0].weight}kg x ${lastReps + 1} oder ${recent[0].weight + weightIncrement}kg.`,
     });
   });

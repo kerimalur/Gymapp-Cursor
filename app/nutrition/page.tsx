@@ -57,7 +57,7 @@ const MEAL_TIMES = [
 
 // Default supplements
 const DEFAULT_SUPPLEMENTS = [
-  { id: 'creatine', name: 'Kreatin', dosage: '5g', timing: 'T?glich' },
+  { id: 'creatine', name: 'Kreatin', dosage: '5g', timing: 'Täglich' },
   { id: 'omega3', name: 'Omega-3', dosage: '2 Kapseln', timing: 'Zum Essen' },
   { id: 'vitd', name: 'Vitamin D3', dosage: '2000 IE', timing: 'Morgens' },
   { id: 'magnesium', name: 'Magnesium', dosage: '400mg', timing: 'Abends' },
@@ -347,7 +347,7 @@ export default function NutritionPage() {
       userId: 'user-1',
       name: newSupplementName.trim(),
       dosage: newSupplementDosage.trim() || '-',
-      timing: 'T?glich',
+      timing: 'Täglich',
       isActive: true,
     };
     addSupplement(newSupp);
@@ -384,7 +384,7 @@ export default function NutritionPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-1">
-              Ern?hrung
+              Ernährung
             </h1>
             <p className="text-gray-600">
               Kalorien, Protein & Supplements tracken
@@ -432,7 +432,7 @@ export default function NutritionPage() {
               />
             </div>
             <p className={`text-sm mt-2 ${caloriesRemaining >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-              {caloriesRemaining >= 0 ? `Noch ${caloriesRemaining} kcal ?brig` : `${Math.abs(caloriesRemaining)} kcal ?ber Ziel`}
+              {caloriesRemaining >= 0 ? `Noch ${caloriesRemaining} kcal übrig` : `${Math.abs(caloriesRemaining)} kcal ?ber Ziel`}
             </p>
           </div>
 
@@ -456,7 +456,7 @@ export default function NutritionPage() {
               />
             </div>
             <p className={`text-sm mt-2 ${proteinRemaining > 0 ? 'text-blue-600' : 'text-emerald-600'}`}>
-              {proteinRemaining > 0 ? `Noch ${proteinRemaining}g ?brig` : `Ziel erreicht! 💪`}
+              {proteinRemaining > 0 ? `Noch ${proteinRemaining}g übrig` : `Ziel erreicht! 💪`}
             </p>
           </div>
         </div>
@@ -1305,7 +1305,7 @@ export default function NutritionPage() {
               {/* Info */}
               <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
                 <p className="text-xs text-indigo-700">
-                  💡 <strong>Tipp:</strong> 7-9 Stunden Schlaf sind optimal f?r Muskelregeneration. 
+                  💡 <strong>Tipp:</strong> 7-9 Stunden Schlaf sind optimal für Muskelregeneration. 
                   Schlafqualitaet beeinflusst deine Recovery-Berechnung.
                 </p>
               </div>

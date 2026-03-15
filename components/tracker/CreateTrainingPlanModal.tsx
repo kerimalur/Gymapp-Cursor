@@ -64,7 +64,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
     }
     
     if (!name.trim()) {
-      toast.error('Bitte gib einen Namen f?r den Plan ein');
+      toast.error('Bitte gib einen Namen für den Plan ein');
       return;
     }
     
@@ -159,7 +159,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
         <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
           <div>
             <p className="font-semibold text-slate-700">Als aktiven Plan setzen</p>
-            <p className="text-sm text-slate-500">Dieser Plan wird f?r dein Training verwendet</p>
+            <p className="text-sm text-slate-500">Dieser Plan wird für dein Training verwendet</p>
           </div>
           <button
             onClick={() => setIsActive(!isActive)}
@@ -218,7 +218,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
                           </div>
                           <div>
                             <p className="font-medium text-slate-800">{day.name}</p>
-                            <p className="text-xs text-slate-500">{day.exercises.length} ?bungen</p>
+                            <p className="text-xs text-slate-500">{day.exercises.length} Übungen</p>
                           </div>
                         </div>
                         {count > 0 && (
@@ -275,7 +275,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
 
                     <div className="flex-1">
                       <p className="font-semibold text-slate-800">{dayData?.name || 'Unbekannt'}</p>
-                      <p className="text-sm text-slate-500">{dayData?.exercises.length || 0} ?bungen</p>
+                      <p className="text-sm text-slate-500">{dayData?.exercises.length || 0} Übungen</p>
                     </div>
 
                     <button

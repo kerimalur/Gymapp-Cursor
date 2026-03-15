@@ -38,7 +38,7 @@ const Icons = {
 // Color scheme for muscle groups
 const muscleColors: Record<string, { bg: string; gradient: string; border: string; text: string }> = {
   'Brust': { bg: 'bg-blue-500', gradient: 'from-blue-500 to-blue-600', border: 'border-blue-200', text: 'text-blue-600' },
-  'R?cken': { bg: 'bg-emerald-500', gradient: 'from-emerald-500 to-emerald-600', border: 'border-emerald-200', text: 'text-emerald-600' },
+  'Rücken': { bg: 'bg-emerald-500', gradient: 'from-emerald-500 to-emerald-600', border: 'border-emerald-200', text: 'text-emerald-600' },
   'Schultern': { bg: 'bg-amber-500', gradient: 'from-amber-500 to-amber-600', border: 'border-amber-200', text: 'text-amber-600' },
   'Bizeps': { bg: 'bg-violet-500', gradient: 'from-violet-500 to-violet-600', border: 'border-violet-200', text: 'text-violet-600' },
   'Trizeps': { bg: 'bg-purple-500', gradient: 'from-purple-500 to-purple-600', border: 'border-purple-200', text: 'text-purple-600' },
@@ -50,44 +50,44 @@ const muscleColors: Record<string, { bg: string; gradient: string; border: strin
 // Info content for each muscle group
 const muscleInfo: Record<string, { description: string; avgSetsPerWeek: string; tips: string[] }> = {
   'Brust': {
-    description: 'Die Brustmuskulatur (Pectoralis major/minor) ist verantwortlich f?r Drueckbewegungen und das Heranfuehren der Arme.',
-    avgSetsPerWeek: '10-20 S?tze/Woche',
-    tips: ['Variiere zwischen Flach-, Schr?g- und Decline-?bungen', 'Nutze verschiedene Griffweiten', 'Isolations?bungen am Ende']
+    description: 'Die Brustmuskulatur (Pectoralis major/minor) ist verantwortlich für Drueckbewegungen und das Heranfuehren der Arme.',
+    avgSetsPerWeek: '10-20 Sätze/Woche',
+    tips: ['Variiere zwischen Flach-, Schr?g- und Decline-Übungen', 'Nutze verschiedene Griffweiten', 'IsolationsÜbungen am Ende']
   },
-  'R?cken': {
-    description: 'Der R?cken umfasst Latissimus, Rhomboiden und Trapez - wichtig f?r Zugbewegungen und K?rperhaltung.',
-    avgSetsPerWeek: '14-22 S?tze/Woche',
+  'Rücken': {
+    description: 'Der Rücken umfasst Latissimus, Rhomboiden und Trapez - wichtig für Zugbewegungen und K?rperhaltung.',
+    avgSetsPerWeek: '14-22 Sätze/Woche',
     tips: ['Horizontales + vertikales Ziehen kombinieren', 'Fokus auf Mind-Muscle-Connection', 'Schulterblaetter aktivieren']
   },
   'Schultern': {
-    description: 'Die Deltamuskeln bestehen aus vorderem, seitlichem und hinterem Anteil f?r volle Beweglichkeit.',
-    avgSetsPerWeek: '8-16 S?tze/Woche',
-    tips: ['Alle drei K?pfe trainieren', 'Seitliches Heben f?r Breite', 'Hintere Schulter nicht vergessen']
+    description: 'Die Deltamuskeln bestehen aus vorderem, seitlichem und hinterem Anteil für volle Beweglichkeit.',
+    avgSetsPerWeek: '8-16 Sätze/Woche',
+    tips: ['Alle drei K?pfe trainieren', 'Seitliches Heben für Breite', 'Hintere Schulter nicht vergessen']
   },
   'Bizeps': {
     description: 'Der Bizeps beugt den Arm und supiniert den Unterarm. Besteht aus langem und kurzem Kopf.',
-    avgSetsPerWeek: '6-14 S?tze/Woche',
-    tips: ['Verschiedene Griffpositionen nutzen', 'Volle ROM f?r maximale Dehnung', 'Negatives kontrolliert ausf?hren']
+    avgSetsPerWeek: '6-14 Sätze/Woche',
+    tips: ['Verschiedene Griffpositionen nutzen', 'Volle ROM für maximale Dehnung', 'Negatives kontrolliert ausf?hren']
   },
   'Trizeps': {
-    description: 'Der Trizeps macht ~2/3 des Oberarms aus und ist f?r Streckbewegungen verantwortlich.',
-    avgSetsPerWeek: '6-14 S?tze/Woche',
-    tips: ['Alle drei K?pfe trainieren', 'Overhead-?bungen f?r langen Kopf', 'Compound-?bungen z?hlen mit']
+    description: 'Der Trizeps macht ~2/3 des Oberarms aus und ist für Streckbewegungen verantwortlich.',
+    avgSetsPerWeek: '6-14 Sätze/Woche',
+    tips: ['Alle drei K?pfe trainieren', 'Overhead-Übungen für langen Kopf', 'Compound-Übungen zählen mit']
   },
   'Unterarme': {
     description: 'Die Unterarmmuskulatur kontrolliert Griffkraft und Handgelenkbewegungen.',
-    avgSetsPerWeek: '4-10 S?tze/Woche',
-    tips: ['Farmer Walks f?r funktionelle Kraft', 'Curls und Reverse Curls', 'Griffvarianten beim Training']
+    avgSetsPerWeek: '4-10 Sätze/Woche',
+    tips: ['Farmer Walks für funktionelle Kraft', 'Curls und Reverse Curls', 'Griffvarianten beim Training']
   },
   'Beine': {
-    description: 'Quadrizeps, Beinbeuger, Waden und Ges?? - die groessten Muskelgruppen des K?rpers.',
-    avgSetsPerWeek: '14-22 S?tze/Woche',
-    tips: ['Compound-?bungen priorisieren', 'Volle Range of Motion', 'Isolation f?r Schwachstellen']
+    description: 'Quadrizeps, Beinbeuger, Waden und Gesäß - die groessten Muskelgruppen des K?rpers.',
+    avgSetsPerWeek: '14-22 Sätze/Woche',
+    tips: ['Compound-Übungen priorisieren', 'Volle Range of Motion', 'Isolation für Schwachstellen']
   },
   'Core': {
     description: 'Die Rumpfmuskulatur stabilisiert die Wirbelsaeule und ?bertraegt Kraft zwischen Ober- und Unterk?rper.',
-    avgSetsPerWeek: '6-12 S?tze/Woche',
-    tips: ['Anti-Rotation und Anti-Extension', 'Planks und dynamische ?bungen', 'Bei Compounds schon aktiviert']
+    avgSetsPerWeek: '6-12 Sätze/Woche',
+    tips: ['Anti-Rotation und Anti-Extension', 'Planks und dynamische Übungen', 'Bei Compounds schon aktiviert']
   },
 };
 
@@ -100,7 +100,7 @@ export function MuscleBalanceChart() {
   const muscleData = useMemo(() => {
     const muscleSets: Record<string, number> = {
       'Brust': 0,
-      'R?cken': 0,
+      'Rücken': 0,
       'Schultern': 0,
       'Bizeps': 0,
       'Trizeps': 0,
@@ -112,7 +112,7 @@ export function MuscleBalanceChart() {
     // Track which exercises contribute to each muscle
     const muscleExercises: Record<string, Array<{ exerciseName: string; sets: number; muscleGroup: MuscleGroup }>> = {
       'Brust': [],
-      'R?cken': [],
+      'Rücken': [],
       'Schultern': [],
       'Bizeps': [],
       'Trizeps': [],
@@ -123,9 +123,9 @@ export function MuscleBalanceChart() {
 
     const muscleGroupMap: Record<MuscleGroup, string> = {
       chest: 'Brust',
-      back: 'R?cken',
-      lats: 'R?cken',
-      traps: 'R?cken',
+      back: 'Rücken',
+      lats: 'Rücken',
+      traps: 'Rücken',
       shoulders: 'Schultern',
       biceps: 'Bizeps',
       triceps: 'Trizeps',
@@ -137,7 +137,7 @@ export function MuscleBalanceChart() {
       abs: 'Core',
       adductors: 'Beine',
       abductors: 'Beine',
-      lower_back: 'R?cken',
+      lower_back: 'Rücken',
       neck: 'Schultern',
     };
 
@@ -253,7 +253,7 @@ export function MuscleBalanceChart() {
                 </div>
               </div>
               <span className={`text-sm font-bold ${item.colors.text}`}>
-                {item.actualSets % 1 === 0 ? Math.round(item.actualSets) : item.actualSets.toFixed(1)} S?tze
+                {item.actualSets % 1 === 0 ? Math.round(item.actualSets) : item.actualSets.toFixed(1)} Sätze
               </span>
             </div>
             <div className="relative h-3 bg-gray-100 rounded-full overflow-hidden">
@@ -352,7 +352,7 @@ export function MuscleBalanceChart() {
                 <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
                   <h4 className="font-semibold text-gray-900 mb-2">Berechnung</h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Wir z?hlen die abgeschlossenen S?tze (nur mit Gewicht &gt; 0) pro Muskelgruppe 
+                    Wir zählen die abgeschlossenen Sätze (nur mit Gewicht &gt; 0) pro Muskelgruppe 
                     und berechnen die Varianz. Je gleichm??iger verteilt, desto h?her der Score.
                   </p>
                 </div>
@@ -385,7 +385,7 @@ export function MuscleBalanceChart() {
                           <span className={`w-2 h-2 rounded-full ${item.colors.bg}`} />
                           <span className="text-gray-700">{item.muscle}</span>
                         </div>
-                        <span className="font-medium text-gray-900">{item.actualSets} S?tze</span>
+                        <span className="font-medium text-gray-900">{item.actualSets} Sätze</span>
                       </div>
                     ))}
                   </div>
@@ -423,7 +423,7 @@ export function MuscleBalanceChart() {
                 if (!muscleInfo || muscleInfo.exercises.length === 0) {
                   return (
                     <div className="text-center py-12">
-                      <p className="text-gray-500">Keine ?bungen gefunden</p>
+                      <p className="text-gray-500">Keine Übungen gefunden</p>
                     </div>
                   );
                 }
@@ -435,7 +435,7 @@ export function MuscleBalanceChart() {
                         <div>
                           <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-1">Gesamt</p>
                           <p className={`text-3xl font-bold ${muscleInfo.colors.text}`}>
-                            {muscleInfo.actualSets % 1 === 0 ? Math.round(muscleInfo.actualSets) : muscleInfo.actualSets.toFixed(1)} S?tze
+                            {muscleInfo.actualSets % 1 === 0 ? Math.round(muscleInfo.actualSets) : muscleInfo.actualSets.toFixed(1)} Sätze
                           </p>
                         </div>
                         <div className={`w-16 h-16 rounded-2xl ${muscleInfo.colors.bg} bg-opacity-20 flex items-center justify-center`}>
@@ -447,7 +447,7 @@ export function MuscleBalanceChart() {
                     <div>
                       <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3 flex items-center gap-2">
                         {Icons.dumbbell}
-                        ?bungen ({muscleInfo.exercises.length})
+                        Übungen ({muscleInfo.exercises.length})
                       </h4>
                       <div className="space-y-3">
                         {muscleInfo.exercises.map((exercise, idx) => (
@@ -465,7 +465,7 @@ export function MuscleBalanceChart() {
                                 <p className={`text-2xl font-bold ${muscleInfo.colors.text}`}>
                                   {exercise.sets % 1 === 0 ? Math.round(exercise.sets) : exercise.sets.toFixed(1)}
                                 </p>
-                                <p className="text-xs text-gray-500">S?tze</p>
+                                <p className="text-xs text-gray-500">Sätze</p>
                               </div>
                             </div>
                             <div className="mt-3 pt-3 border-t border-gray-100">
@@ -476,7 +476,7 @@ export function MuscleBalanceChart() {
                                 />
                               </div>
                               <p className="text-xs text-gray-500 mt-1">
-                                {Math.round((exercise.sets / muscleInfo.actualSets) * 100)}% der {selectedMuscle}-S?tze
+                                {Math.round((exercise.sets / muscleInfo.actualSets) * 100)}% der {selectedMuscle}-Sätze
                               </p>
                             </div>
                           </div>
@@ -486,8 +486,8 @@ export function MuscleBalanceChart() {
 
                     <div className="p-4 rounded-xl bg-blue-50 border border-blue-200">
                       <p className="text-sm text-blue-800">
-                        💡 <strong>Hinweis:</strong> Nur der primaere Muskel (erster in der Liste) wird gez?hlt. 
-                        Bankdr?cken mit 2 S?tzen = 2 S?tze f?r Brust. Hilfsmuskeln wie Schultern und Arme werden nicht mitgez?hlt.
+                        💡 <strong>Hinweis:</strong> Nur der primaere Muskel (erster in der Liste) wird gezählt. 
+                        Bankdrücken mit 2 Sätzen = 2 Sätze für Brust. Hilfsmuskeln wie Schultern und Arme werden nicht mitgezählt.
                       </p>
                     </div>
                   </div>
@@ -538,7 +538,7 @@ export function MuscleBalanceChart() {
                     <p className={`text-2xl font-bold ${muscleColors[showMuscleInfo]?.text || 'text-primary-600'}`}>
                       {muscleInfo[showMuscleInfo].avgSetsPerWeek}
                     </p>
-                    <p className="text-xs text-gray-500 mt-1">f?r optimales Muskelwachstum</p>
+                    <p className="text-xs text-gray-500 mt-1">für optimales Muskelwachstum</p>
                   </div>
 
                   {/* Tips */}
@@ -562,13 +562,13 @@ export function MuscleBalanceChart() {
                         <div className="p-4 rounded-xl bg-blue-50 border border-blue-200">
                           <h4 className="font-semibold text-blue-800 mb-2">📈 Deine Statistik</h4>
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-blue-700">Getrackte S?tze (gesamt)</span>
+                            <span className="text-sm text-blue-700">Getrackte Sätze (gesamt)</span>
                             <span className="text-xl font-bold text-blue-800">
                               {currentData.actualSets % 1 === 0 ? Math.round(currentData.actualSets) : currentData.actualSets.toFixed(1)}
                             </span>
                           </div>
                           <p className="text-xs text-blue-600 mt-1">
-                            Nur abgeschlossene S?tze mit Gewicht &gt; 0
+                            Nur abgeschlossene Sätze mit Gewicht &gt; 0
                           </p>
                         </div>
                       );

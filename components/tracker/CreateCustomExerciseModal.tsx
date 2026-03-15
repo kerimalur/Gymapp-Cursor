@@ -15,7 +15,7 @@ interface CreateCustomExerciseModalProps {
 
 const MUSCLE_GROUPS: { id: MuscleGroup; name: string }[] = [
   { id: 'chest', name: 'Brust' },
-  { id: 'back', name: 'R?cken' },
+  { id: 'back', name: 'Rücken' },
   { id: 'lats', name: 'Latissimus' },
   { id: 'shoulders', name: 'Schultern' },
   { id: 'biceps', name: 'Bizeps' },
@@ -24,17 +24,17 @@ const MUSCLE_GROUPS: { id: MuscleGroup; name: string }[] = [
   { id: 'abs', name: 'Bauch' },
   { id: 'quadriceps', name: 'Quadrizeps' },
   { id: 'hamstrings', name: 'Beinbeuger' },
-  { id: 'glutes', name: 'Ges??' },
+  { id: 'glutes', name: 'Gesäß' },
   { id: 'calves', name: 'Waden' },
   { id: 'traps', name: 'Trapez' },
   { id: 'adductors', name: 'Adduktoren' },
   { id: 'abductors', name: 'Abduktoren' },
-  { id: 'lower_back', name: 'Unterer R?cken' },
+  { id: 'lower_back', name: 'Unterer Rücken' },
   { id: 'neck', name: 'Nacken' },
 ];
 
 const CATEGORIES: { id: ExerciseCategory; name: string }[] = [
-  { id: 'push', name: 'Dr?cken (Push)' },
+  { id: 'push', name: 'Drücken (Push)' },
   { id: 'pull', name: 'Ziehen (Pull)' },
   { id: 'legs', name: 'Beine' },
   { id: 'core', name: 'Core' },
@@ -96,7 +96,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
       onExerciseCreated(newExercise);
     }
     
-    toast.success('?bung erfolgreich erstellt!');
+    toast.success('Übung erfolgreich erstellt!');
     handleClose();
     setLoading(false);
   };
@@ -115,8 +115,8 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
       isOpen={isOpen}
       onClose={handleClose}
       size="lg"
-      title="Eigene ?bung erstellen"
-      subtitle="F?ge eine neue ?bung zu deiner Bibliothek hinzu"
+      title="Eigene Übung erstellen"
+      subtitle="F?ge eine neue Übung zu deiner Bibliothek hinzu"
       icon={<Dumbbell className="w-6 h-6" />}
       iconColor="violet"
       footer={
@@ -133,7 +133,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
             disabled={loading || !name.trim() || !primaryMuscle}
             className="px-6 py-2.5 rounded-xl font-medium text-white bg-gradient-to-r from-violet-500 to-violet-600 hover:from-violet-600 hover:to-violet-700 shadow-lg shadow-violet-500/25 transition-all disabled:opacity-50 disabled:shadow-none"
           >
-            {loading ? 'Speichern...' : '?bung erstellen'}
+            {loading ? 'Speichern...' : 'Übung erstellen'}
           </button>
         </div>
       }
@@ -143,9 +143,9 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
           <div className="text-sm text-blue-700">
-            <p className="font-medium mb-1">Wichtig f?r die Regeneration</p>
+            <p className="font-medium mb-1">Wichtig für die Regeneration</p>
             <p className="text-blue-600">
-              Der Hauptmuskel wird f?r die Erholungszeit voll ber?cksichtigt. 
+              Der Hauptmuskel wird für die Erholungszeit voll berücksichtigt. 
               Nebenmuskeln erholen sich schneller (ca. 40% der normalen Zeit).
             </p>
           </div>
@@ -154,7 +154,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
         {/* Name */}
         <div>
           <label className="block text-sm font-semibold text-slate-700 mb-2">
-            Name der ?bung *
+            Name der Übung *
           </label>
           <input
             type="text"
@@ -193,7 +193,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
             Hauptmuskel (Primary) *
           </label>
           <p className="text-xs text-slate-500 mb-3">
-            Der Muskel, der bei dieser ?bung am meisten beansprucht wird
+            Der Muskel, der bei dieser Übung am meisten beansprucht wird
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             {MUSCLE_GROUPS.map((muscle) => (

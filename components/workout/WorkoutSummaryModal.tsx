@@ -20,7 +20,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
     excellent: {
       gradient: 'from-amber-400 via-orange-500 to-red-500',
       emoji: '🏆',
-      label: '?berragend!',
+      label: 'Überragend!',
       bgGlow: 'shadow-orange-500/30',
     },
     good: {
@@ -140,7 +140,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
               >
                 <Target className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
                 <p className="text-2xl font-black text-emerald-700">{summary.totalSetsCompleted}</p>
-                <p className="text-xs text-emerald-500">S?tze</p>
+                <p className="text-xs text-emerald-500">Sätze</p>
                 <p className="text-xs mt-1 text-emerald-400">{summary.totalReps} Reps</p>
               </motion.div>
             </div>
@@ -155,7 +155,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
               >
                 <div className="flex items-center gap-2 mb-3">
                   <Trophy className="w-5 h-5 text-amber-600" />
-                  <h3 className="font-bold text-amber-800">Neue Pers?nliche Rekorde!</h3>
+                  <h3 className="font-bold text-amber-800">Neue Persönliche Rekorde!</h3>
                 </div>
                 <div className="space-y-2">
                   {summary.newPRs.map((pr, i) => (
@@ -183,7 +183,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                 onClick={() => setShowDetails(!showDetails)}
                 className="flex items-center justify-between w-full p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors"
               >
-                <span className="font-semibold text-slate-700 text-sm">?bungen im Detail</span>
+                <span className="font-semibold text-slate-700 text-sm">Übungen im Detail</span>
                 {showDetails ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
               </button>
 
@@ -203,7 +203,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                               {insight.newPR && <Star className="w-4 h-4 text-amber-500" />}
                               <span className="font-semibold text-slate-800 text-sm">{insight.exerciseName}</span>
                             </div>
-                            <span className="text-xs text-slate-500">{insight.setsCompleted} S?tze</span>
+                            <span className="text-xs text-slate-500">{insight.setsCompleted} Sätze</span>
                           </div>
                           <div className="flex items-center gap-3 mt-1">
                             <span className="text-xs text-slate-600">{insight.currentVolume}kg Volumen</span>
@@ -235,7 +235,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="w-4 h-4 text-blue-600" />
-                  <h3 className="font-bold text-blue-800 text-sm">F?r n?chstes Mal</h3>
+                  <h3 className="font-bold text-blue-800 text-sm">F?r nächstes Mal</h3>
                 </div>
                 <ul className="space-y-1">
                   {summary.nextWorkoutTips.map((tip, i) => (

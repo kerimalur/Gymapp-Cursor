@@ -82,7 +82,7 @@ export function MealHistory() {
             Noch keine Mahlzeiten
           </h3>
           <p className="text-gray-600">
-            F?ge deine erste Mahlzeit hinzu, um deine Ern?hrung zu tracken
+            F?ge deine erste Mahlzeit hinzu, um deine Ernährung zu tracken
           </p>
         </div>
       ) : (

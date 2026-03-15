@@ -239,7 +239,7 @@ export default function StatisticsPage() {
           />
           <StatCard
             icon={Icons.muscle}
-            label="S?tze diesen Monat"
+            label="Sätze diesen Monat"
             value={stats.totalSets}
             color="emerald"
             delay={150}
@@ -255,7 +255,7 @@ export default function StatisticsPage() {
         {/* Volumen pro Muskel - Kombinierte Statistik */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-8">
           <h2 className="text-lg font-bold text-slate-800 mb-2">🔥 Volumen pro Muskel</h2>
-          <p className="text-sm text-slate-500 mb-4">Woechentliche S?tze mit Empfehlungen</p>
+          <p className="text-sm text-slate-500 mb-4">Woechentliche Sätze mit Empfehlungen</p>
           <MuscleVolumeStats />
         </div>
 

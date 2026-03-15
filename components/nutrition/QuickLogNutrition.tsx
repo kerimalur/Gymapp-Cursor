@@ -345,7 +345,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
                   <h4 className="font-bold text-blue-800 mb-1">Von gestern kopieren</h4>
                   <p className="text-xs text-blue-600">
-                    Alle Mahlzeiten von gestern werden f?r heute ?bernommen.
+                    Alle Mahlzeiten von gestern werden für heute ?bernommen.
                   </p>
                 </div>
 
@@ -395,7 +395,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                     <Star className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                     <p className="text-gray-500 font-medium">Keine Vorlagen gespeichert</p>
                     <p className="text-sm text-gray-400 mt-1">
-                      Speichere Mahlzeiten als Vorlagen in der Ern?hrungs-Seite.
+                      Speichere Mahlzeiten als Vorlagen in der Ernährungs-Seite.
                     </p>
                   </div>
                 ) : (

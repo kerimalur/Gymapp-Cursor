@@ -90,9 +90,9 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
   };
 
   const handleResetProgress = () => {
-    if (confirm('Fortschritt wirklich zur?cksetzen? Du startest wieder bei Tag 1.')) {
+    if (confirm('Fortschritt wirklich zurücksetzen? Du startest wieder bei Tag 1.')) {
       setCurrentDayIndex(0);
-      toast.success('Fortschritt zur?ckgesetzt');
+      toast.success('Fortschritt zurückgesetzt');
     }
   };
 
@@ -100,7 +100,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
     if (!plan) return;
     
     if (!name.trim()) {
-      toast.error('Bitte gib einen Namen f?r den Plan ein');
+      toast.error('Bitte gib einen Namen für den Plan ein');
       return;
     }
     
@@ -257,7 +257,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                 <button
                   onClick={handleResetProgress}
                   className="p-2 text-violet-600 hover:bg-violet-100 rounded-lg transition-colors"
-                  title="Fortschritt zur?cksetzen"
+                  title="Fortschritt zurücksetzen"
                 >
                   <RotateCcw className="w-5 h-5" />
                 </button>
@@ -302,7 +302,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                             <Target className="w-4 h-4 text-violet-500" />
                             <div>
                               <p className="font-medium text-slate-800 text-sm">{day.name}</p>
-                              <p className="text-xs text-slate-500">{day.exercises.length} ?bungen</p>
+                              <p className="text-xs text-slate-500">{day.exercises.length} Übungen</p>
                             </div>
                           </div>
                           {count > 0 && (
@@ -367,9 +367,9 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-slate-800 text-sm truncate">
                           {dayData?.name || 'Unbekannt'}
-                          {isCurrentDay && <span className="ml-2 text-violet-600">(N?chstes)</span>}
+                          {isCurrentDay && <span className="ml-2 text-violet-600">(Nächstes)</span>}
                         </p>
-                        <p className="text-xs text-slate-500">{dayData?.exercises.length || 0} ?bungen</p>
+                        <p className="text-xs text-slate-500">{dayData?.exercises.length || 0} Übungen</p>
                       </div>
 
                       <button
@@ -379,7 +379,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                             ? 'bg-violet-200 text-violet-700' 
                             : 'text-slate-400 hover:text-violet-600 hover:bg-violet-50 opacity-0 group-hover:opacity-100'
                         }`}
-                        title="Als n?chsten Tag setzen"
+                        title="Als nächsten Tag setzen"
                       >
                         <Star className="w-4 h-4" />
                       </button>
@@ -405,7 +405,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
               <div>
                 <p className="font-semibold text-slate-700">Als aktiven Plan setzen</p>
-                <p className="text-sm text-slate-500">Dieser Plan wird f?r dein Training verwendet</p>
+                <p className="text-sm text-slate-500">Dieser Plan wird für dein Training verwendet</p>
               </div>
               <button
                 onClick={() => setIsActive(!isActive)}
@@ -423,7 +423,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
               <div>
                 <p className="font-semibold text-slate-700">Automatisch weiterschalten</p>
-                <p className="text-sm text-slate-500">Nach jedem Training zum n?chsten Tag wechseln</p>
+                <p className="text-sm text-slate-500">Nach jedem Training zum nächsten Tag wechseln</p>
               </div>
               <button
                 onClick={() => setAutoAdvance(!autoAdvance)}
@@ -457,7 +457,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                 })}
               </select>
               <p className="text-xs text-slate-500 mt-2">
-                W?hle den Tag, mit dem dein n?chstes Training beginnt
+                W?hle den Tag, mit dem dein nächstes Training beginnt
               </p>
             </div>
           </div>

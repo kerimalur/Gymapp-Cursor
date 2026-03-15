@@ -192,7 +192,7 @@ export function SupplementsTracker() {
       {supplements.length > 0 && takenCount === totalCount && (
         <div className="mt-4 p-4 bg-green-50 border-2 border-green-200 rounded-xl text-center">
           <p className="text-green-900 font-semibold">
-            🎉 Alle Supplements f?r heute genommen!
+            🎉 Alle Supplements für heute genommen!
           </p>
         </div>
       )}

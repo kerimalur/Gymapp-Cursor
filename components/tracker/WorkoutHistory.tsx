@@ -212,7 +212,7 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
               <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-4 border border-amber-200">
                 <div className="flex items-center gap-2 mb-2">
                   {Icons.dumbbell}
-                  <p className="text-xs text-amber-700 font-semibold uppercase tracking-wide">?bungen</p>
+                  <p className="text-xs text-amber-700 font-semibold uppercase tracking-wide">Übungen</p>
                 </div>
                 <p className="text-lg font-bold text-amber-900">
                   {selectedSession.exercises.length}
@@ -222,7 +222,7 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
 
             {/* Exercises */}
             <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
-              ?bungen ({selectedSession.exercises.length})
+              Übungen ({selectedSession.exercises.length})
             </h3>
             <div className="space-y-3 max-h-[50vh] overflow-y-auto">
               {selectedSession.exercises.map((exercise, exIdx) => {
@@ -241,7 +241,7 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
                       </h4>
                       <div className="text-right">
                         <p className="text-sm font-semibold text-slate-700">
-                          {completedSets}/{exercise.sets.length} S?tze
+                          {completedSets}/{exercise.sets.length} Sätze
                         </p>
                         <p className="text-xs text-slate-500">
                           {Math.round(totalVolume)} kg Volumen
