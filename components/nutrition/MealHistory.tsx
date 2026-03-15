@@ -74,14 +74,14 @@ export function MealHistory() {
   return (
     <>
       {meals.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Utensils className="w-8 h-8 text-gray-400" />
+        <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg p-12 text-center">
+          <div className="w-16 h-16 bg-[hsl(225,12%,15%)] rounded-full flex items-center justify-center mx-auto mb-4">
+            <Utensils className="w-8 h-8 text-[hsl(var(--fg-subtle))]" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          <h3 className="text-xl font-semibold text-[hsl(var(--fg-primary))] mb-2">
             Noch keine Mahlzeiten
           </h3>
-          <p className="text-gray-600">
+          <p className="text-[hsl(var(--fg-secondary))]">
             F?ge deine erste Mahlzeit hinzu, um deine Ernährung zu tracken
           </p>
         </div>
@@ -92,13 +92,13 @@ export function MealHistory() {
           const totalCalories = dayMeals.reduce((sum, m) => sum + m.calories, 0);
 
           return (
-            <div key={dateKey} className="bg-white rounded-2xl shadow-lg p-6">
+            <div key={dateKey} className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900">
+                  <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">
                     {format(date, 'EEEE, d. MMMM', { locale: de })}
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-[hsl(var(--fg-secondary))]">
                     {dayMeals.length} Mahlzeiten • {totalCalories} kcal
                   </p>
                 </div>
@@ -108,7 +108,7 @@ export function MealHistory() {
                 {dayMeals.map((meal) => (
                   <div
                     key={meal.id}
-                    className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors"
+                    className="bg-[hsl(225,12%,13%)] rounded-xl p-4 hover:bg-[hsl(225,12%,18%)] transition-colors"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-3 flex-1">
@@ -116,14 +116,14 @@ export function MealHistory() {
                           {getMealIcon(meal.type)}
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 mb-1">
+                          <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-1">
                             {getMealName(meal.type)}
                           </h4>
-                          <p className="text-sm text-gray-600 mb-2">
+                          <p className="text-sm text-[hsl(var(--fg-secondary))] mb-2">
                             {meal.items.join(', ')}
                           </p>
                           <div className="flex gap-4 text-sm">
-                            <span className="text-gray-700">
+                            <span className="text-[hsl(var(--fg-secondary))]">
                               <strong>{meal.calories}</strong> kcal
                             </span>
                             <span className="text-blue-600">
@@ -166,14 +166,14 @@ export function MealHistory() {
       {/* Meal Detail Modal */}
       {selectedMeal && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-8 shadow-2xl">
+          <div className="bg-[hsl(225,14%,10%)] rounded-3xl max-w-2xl w-full p-8 shadow-2xl">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
                 {getMealName(selectedMeal.type)}
               </h2>
               <button
                 onClick={() => setSelectedMeal(null)}
-                className="p-2 hover:bg-gray-100 rounded-lg"
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-lg"
               >
                 ✕
               </button>
@@ -181,7 +181,7 @@ export function MealHistory() {
 
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold text-gray-700 mb-2">Lebensmittel</h3>
+                <h3 className="font-semibold text-[hsl(var(--fg-secondary))] mb-2">Lebensmittel</h3>
                 <ul className="space-y-2">
                   {selectedMeal.items.map((item, idx) => (
                     <li key={idx} className="flex items-center gap-2">
@@ -193,9 +193,9 @@ export function MealHistory() {
               </div>
 
               <div className="grid grid-cols-2 gap-4 pt-4 border-t">
-                <div className="bg-gray-50 rounded-xl p-4">
-                  <p className="text-sm text-gray-600 mb-1">Kalorien</p>
-                  <p className="text-2xl font-bold text-gray-900">
+                <div className="bg-[hsl(225,12%,13%)] rounded-xl p-4">
+                  <p className="text-sm text-[hsl(var(--fg-secondary))] mb-1">Kalorien</p>
+                  <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
                     {selectedMeal.calories}
                   </p>
                 </div>

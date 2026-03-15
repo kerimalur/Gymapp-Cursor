@@ -83,13 +83,13 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
   if (displaySessions.length === 0) {
     return (
       <div className="card-elevated p-12 text-center">
-        <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4 text-slate-300">
+        <div className="w-16 h-16 rounded-2xl bg-[hsl(225,12%,15%)] flex items-center justify-center mx-auto mb-4 text-[hsl(var(--fg-subtle))]">
           {Icons.dumbbell}
         </div>
-        <h3 className="text-lg font-semibold text-slate-800 mb-2">
+        <h3 className="text-lg font-semibold text-[hsl(var(--fg-primary))] mb-2">
           Noch keine Trainings
         </h3>
-        <p className="text-slate-500 text-sm">
+        <p className="text-[hsl(var(--fg-muted))] text-sm">
           Starte dein erstes Training, um deine Historie zu sehen
         </p>
       </div>
@@ -107,10 +107,10 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
           >
             <div className="flex items-start justify-between mb-3">
               <div>
-                <h3 className="font-semibold text-slate-800 mb-2">
+                <h3 className="font-semibold text-[hsl(var(--fg-primary))] mb-2">
                   {session.trainingDayName}
                 </h3>
-                <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+                <div className="flex flex-wrap items-center gap-3 text-sm text-[hsl(var(--fg-muted))]">
                   <span className="flex items-center gap-1.5">
                     {Icons.calendar}
                     {format(new Date(session.startTime), 'dd. MMM yyyy', { locale: de })}
@@ -130,14 +130,14 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
               <div className="flex gap-1.5">
                 <button
                   onClick={() => setSelectedSession(session)}
-                  className="btn-icon !p-2 text-slate-400"
+                  className="btn-icon !p-2 text-[hsl(var(--fg-subtle))]"
                   title="Ansehen"
                 >
                   {Icons.eye}
                 </button>
                 <button 
                   onClick={() => handleDelete(session.id)}
-                  className="btn-icon !p-2 text-slate-400 hover:text-red-500 hover:bg-red-50"
+                  className="btn-icon !p-2 text-[hsl(var(--fg-subtle))] hover:text-red-500 hover:bg-red-400/10"
                   title="L?schen"
                 >
                   {Icons.trash}
@@ -152,14 +152,14 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
                 return (
                   <span
                     key={idx}
-                    className="text-xs px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full"
+                    className="text-xs px-2.5 py-1 bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] rounded-full"
                   >
                     {exerciseName}
                   </span>
                 );
               })}
               {session.exercises.length > 4 && (
-                <span className="text-xs px-2.5 py-1 bg-slate-50 text-slate-400 rounded-full">
+                <span className="text-xs px-2.5 py-1 bg-[hsl(225,12%,13%)] text-[hsl(var(--fg-subtle))] rounded-full">
                   +{session.exercises.length - 4}
                 </span>
               )}
@@ -221,7 +221,7 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
             </div>
 
             {/* Exercises */}
-            <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+            <h3 className="text-sm font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wider mb-3">
               Übungen ({selectedSession.exercises.length})
             </h3>
             <div className="space-y-3 max-h-[50vh] overflow-y-auto">
@@ -234,16 +234,16 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
                 );
                 
                 return (
-                  <div key={exIdx} className="bg-white rounded-xl p-4 border-2 border-slate-200 hover:border-slate-300 transition-all">
+                  <div key={exIdx} className="bg-[hsl(225,14%,10%)] rounded-xl p-4 border-2 border-[hsl(225,10%,16%)] hover:border-[hsl(225,10%,22%)] transition-all">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-bold text-slate-900">
+                      <h4 className="font-bold text-[hsl(var(--fg-primary))]">
                         {exerciseName}
                       </h4>
                       <div className="text-right">
-                        <p className="text-sm font-semibold text-slate-700">
+                        <p className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">
                           {completedSets}/{exercise.sets.length} Sätze
                         </p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-[hsl(var(--fg-muted))]">
                           {Math.round(totalVolume)} kg Volumen
                         </p>
                       </div>
@@ -255,23 +255,23 @@ export function WorkoutHistory({ limit: limitProp }: WorkoutHistoryProps) {
                           className={`flex items-center justify-between px-3 py-2 rounded-lg border ${
                             set.completed
                               ? 'bg-emerald-50 border-emerald-200'
-                              : 'bg-slate-50 border-slate-200'
+                              : 'bg-[hsl(225,12%,13%)] border-[hsl(225,10%,16%)]'
                           }`}
                         >
                           <span className={`font-medium text-sm ${
-                            set.completed ? 'text-emerald-800' : 'text-slate-500'
+                            set.completed ? 'text-emerald-800' : 'text-[hsl(var(--fg-muted))]'
                           }`}>
                             Satz {setIdx + 1}
                           </span>
                           <div className="flex items-center gap-3">
                             <span className={`font-bold text-sm ${
-                              set.completed ? 'text-emerald-700' : 'text-slate-600'
+                              set.completed ? 'text-emerald-700' : 'text-[hsl(var(--fg-secondary))]'
                             }`}>
                               {set.weight} kg × {set.reps}
                             </span>
                             {set.rir !== undefined && (
                               <span className={`text-xs px-2 py-0.5 rounded font-medium ${
-                                set.completed ? 'bg-emerald-200 text-emerald-800' : 'bg-slate-200 text-slate-600'
+                                set.completed ? 'bg-emerald-200 text-emerald-800' : 'bg-[hsl(225,12%,18%)] text-[hsl(var(--fg-secondary))]'
                               }`}>
                                 RIR {set.rir}
                               </span>

@@ -159,7 +159,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
           <button
             onClick={handleClose}
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all disabled:opacity-50"
+            className="px-6 py-2.5 rounded-xl font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,18%)] transition-all disabled:opacity-50"
           >
             Abbrechen
           </button>
@@ -176,7 +176,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
       <div className="p-6 space-y-6">
         {/* Name Input */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Name des Trainingsplans
           </label>
           <input
@@ -184,13 +184,13 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="z.B. Push/Pull/Legs, Oberkörper/Unterkörper..."
-            className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
+            className="w-full px-4 py-3.5 bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)] rounded-xl focus:bg-[hsl(225,14%,12%)] focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-subtle))]"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Beschreibung (optional)
           </label>
           <textarea
@@ -198,18 +198,18 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Notizen zum Plan, Ziele, besondere Hinweise..."
             rows={2}
-            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400 resize-none"
+            className="w-full px-4 py-3 bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)] rounded-xl focus:bg-[hsl(225,14%,12%)] focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-subtle))] resize-none"
           />
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-1 p-1 bg-slate-100 rounded-xl">
+        <div className="flex gap-1 p-1 bg-[hsl(225,12%,15%)] rounded-xl">
           <button
             onClick={() => setActiveTab('days')}
             className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-all flex items-center justify-center gap-2 ${
               activeTab === 'days'
-                ? 'bg-white text-slate-800 shadow-sm'
-                : 'text-slate-500 hover:text-slate-700'
+                ? 'bg-[hsl(225,14%,10%)] text-[hsl(var(--fg-primary))] shadow-sm'
+                : 'text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))]'
             }`}
           >
             <Calendar className="w-4 h-4" />
@@ -219,8 +219,8 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             onClick={() => setActiveTab('settings')}
             className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-all flex items-center justify-center gap-2 ${
               activeTab === 'settings'
-                ? 'bg-white text-slate-800 shadow-sm'
-                : 'text-slate-500 hover:text-slate-700'
+                ? 'bg-[hsl(225,14%,10%)] text-[hsl(var(--fg-primary))] shadow-sm'
+                : 'text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))]'
             }`}
           >
             <Settings className="w-4 h-4" />
@@ -230,8 +230,8 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             onClick={() => setActiveTab('advanced')}
             className={`flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-all flex items-center justify-center gap-2 ${
               activeTab === 'advanced'
-                ? 'bg-white text-slate-800 shadow-sm'
-                : 'text-slate-500 hover:text-slate-700'
+                ? 'bg-[hsl(225,14%,10%)] text-[hsl(var(--fg-primary))] shadow-sm'
+                : 'text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))]'
             }`}
           >
             <Zap className="w-4 h-4" />
@@ -266,7 +266,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
 
             {/* Day Selector Button */}
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-slate-600">{planDays.length} Trainingstage</p>
+              <p className="text-sm font-medium text-[hsl(var(--fg-secondary))]">{planDays.length} Trainingstage</p>
               <button
                 onClick={() => setShowDaySelector(!showDaySelector)}
                 disabled={trainingDays.length === 0}
@@ -283,9 +283,9 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
 
             {/* Day Selector */}
             {showDaySelector && (
-              <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 animate-slide-up">
+              <div className="bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)] p-4 animate-slide-up">
                 {trainingDays.length === 0 ? (
-                  <div className="text-center py-6 text-slate-500">
+                  <div className="text-center py-6 text-[hsl(var(--fg-muted))]">
                     <p>Keine Trainingstage vorhanden</p>
                   </div>
                 ) : (
@@ -296,13 +296,13 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                         <button
                           key={day.id}
                           onClick={() => handleAddDay(day.id)}
-                          className="p-3 bg-white rounded-lg border border-slate-200 hover:border-violet-300 transition-all text-left flex items-center justify-between"
+                          className="p-3 bg-[hsl(225,14%,10%)] rounded-lg border border-[hsl(225,10%,16%)] hover:border-violet-300 transition-all text-left flex items-center justify-between"
                         >
                           <div className="flex items-center gap-2">
                             <Target className="w-4 h-4 text-violet-500" />
                             <div>
-                              <p className="font-medium text-slate-800 text-sm">{day.name}</p>
-                              <p className="text-xs text-slate-500">{day.exercises.length} Übungen</p>
+                              <p className="font-medium text-[hsl(var(--fg-primary))] text-sm">{day.name}</p>
+                              <p className="text-xs text-[hsl(var(--fg-muted))]">{day.exercises.length} Übungen</p>
                             </div>
                           </div>
                           {count > 0 && (
@@ -320,10 +320,10 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
 
             {/* Selected Days */}
             {planDays.length === 0 ? (
-              <div className="bg-slate-50 rounded-xl p-8 text-center border-2 border-dashed border-slate-200">
-                <Calendar className="w-10 h-10 text-slate-400 mx-auto mb-2" />
-                <p className="text-slate-600 font-medium">Keine Trainingstage</p>
-                <p className="text-sm text-slate-400">F?ge Trainingstage hinzu</p>
+              <div className="bg-[hsl(225,12%,13%)] rounded-xl p-8 text-center border-2 border-dashed border-[hsl(225,10%,16%)]">
+                <Calendar className="w-10 h-10 text-[hsl(var(--fg-subtle))] mx-auto mb-2" />
+                <p className="text-[hsl(var(--fg-secondary))] font-medium">Keine Trainingstage</p>
+                <p className="text-sm text-[hsl(var(--fg-subtle))]">F?ge Trainingstage hinzu</p>
               </div>
             ) : (
               <div className="space-y-2 max-h-[250px] overflow-y-auto">
@@ -336,40 +336,40 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                       className={`p-3 rounded-xl border flex items-center gap-3 group transition-all ${
                         isCurrentDay 
                           ? 'bg-violet-50 border-violet-300' 
-                          : 'bg-white border-slate-200 hover:border-slate-300'
+                          : 'bg-[hsl(225,14%,10%)] border-[hsl(225,10%,16%)] hover:border-[hsl(225,10%,22%)]'
                       }`}
                     >
                       <div className="flex flex-col gap-0.5">
                         <button
                           onClick={() => handleMoveDayUp(index)}
                           disabled={index === 0}
-                          className="p-0.5 hover:bg-slate-100 rounded disabled:opacity-30 transition-colors"
+                          className="p-0.5 hover:bg-[hsl(225,12%,18%)] rounded disabled:opacity-30 transition-colors"
                         >
-                          <ChevronUp className="w-3 h-3 text-slate-500" />
+                          <ChevronUp className="w-3 h-3 text-[hsl(var(--fg-muted))]" />
                         </button>
                         <button
                           onClick={() => handleMoveDayDown(index)}
                           disabled={index === planDays.length - 1}
-                          className="p-0.5 hover:bg-slate-100 rounded disabled:opacity-30 transition-colors"
+                          className="p-0.5 hover:bg-[hsl(225,12%,18%)] rounded disabled:opacity-30 transition-colors"
                         >
-                          <ChevronDown className="w-3 h-3 text-slate-500" />
+                          <ChevronDown className="w-3 h-3 text-[hsl(var(--fg-muted))]" />
                         </button>
                       </div>
 
                       <div className={`w-8 h-8 rounded-lg font-bold text-sm flex items-center justify-center ${
                         isCurrentDay 
                           ? 'bg-violet-500 text-white' 
-                          : 'bg-slate-100 text-slate-600'
+                          : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))]'
                       }`}>
                         {index + 1}
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-slate-800 text-sm truncate">
+                        <p className="font-medium text-[hsl(var(--fg-primary))] text-sm truncate">
                           {dayData?.name || 'Unbekannt'}
                           {isCurrentDay && <span className="ml-2 text-violet-600">(Nächstes)</span>}
                         </p>
-                        <p className="text-xs text-slate-500">{dayData?.exercises.length || 0} Übungen</p>
+                        <p className="text-xs text-[hsl(var(--fg-muted))]">{dayData?.exercises.length || 0} Übungen</p>
                       </div>
 
                       <button
@@ -377,7 +377,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                         className={`p-1.5 rounded-lg transition-all ${
                           isCurrentDay 
                             ? 'bg-violet-200 text-violet-700' 
-                            : 'text-slate-400 hover:text-violet-600 hover:bg-violet-50 opacity-0 group-hover:opacity-100'
+                            : 'text-[hsl(var(--fg-subtle))] hover:text-violet-600 hover:bg-violet-50 opacity-0 group-hover:opacity-100'
                         }`}
                         title="Als nächsten Tag setzen"
                       >
@@ -386,7 +386,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
 
                       <button
                         onClick={() => handleRemoveDay(planDay.id)}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all opacity-0 group-hover:opacity-100"
+                        className="p-1.5 rounded-lg text-[hsl(var(--fg-subtle))] hover:text-rose-500 hover:bg-rose-50 transition-all opacity-0 group-hover:opacity-100"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -402,10 +402,10 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
         {activeTab === 'settings' && (
           <div className="space-y-4">
             {/* Active Toggle */}
-            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <div className="flex items-center justify-between p-4 bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)]">
               <div>
-                <p className="font-semibold text-slate-700">Als aktiven Plan setzen</p>
-                <p className="text-sm text-slate-500">Dieser Plan wird für dein Training verwendet</p>
+                <p className="font-semibold text-[hsl(var(--fg-secondary))]">Als aktiven Plan setzen</p>
+                <p className="text-sm text-[hsl(var(--fg-muted))]">Dieser Plan wird für dein Training verwendet</p>
               </div>
               <button
                 onClick={() => setIsActive(!isActive)}
@@ -420,10 +420,10 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             </div>
 
             {/* Auto Advance */}
-            <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <div className="flex items-center justify-between p-4 bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)]">
               <div>
-                <p className="font-semibold text-slate-700">Automatisch weiterschalten</p>
-                <p className="text-sm text-slate-500">Nach jedem Training zum nächsten Tag wechseln</p>
+                <p className="font-semibold text-[hsl(var(--fg-secondary))]">Automatisch weiterschalten</p>
+                <p className="text-sm text-[hsl(var(--fg-muted))]">Nach jedem Training zum nächsten Tag wechseln</p>
               </div>
               <button
                 onClick={() => setAutoAdvance(!autoAdvance)}
@@ -438,14 +438,14 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             </div>
 
             {/* Current Day Selection */}
-            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-              <label className="block font-semibold text-slate-700 mb-2">
+            <div className="p-4 bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)]">
+              <label className="block font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                 Aktueller Trainingstag
               </label>
               <select
                 value={currentDayIndex}
                 onChange={(e) => setCurrentDayIndex(parseInt(e.target.value))}
-                className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all outline-none"
+                className="w-full px-4 py-3 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all outline-none"
               >
                 {planDays.map((planDay, index) => {
                   const dayData = trainingDays.find(d => d.id === planDay.trainingDayId);
@@ -456,7 +456,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                   );
                 })}
               </select>
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-xs text-[hsl(var(--fg-muted))] mt-2">
                 W?hle den Tag, mit dem dein nächstes Training beginnt
               </p>
             </div>
@@ -467,8 +467,8 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
         {activeTab === 'advanced' && (
           <div className="space-y-4">
             {/* Rest Days */}
-            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-              <label className="block font-semibold text-slate-700 mb-2">
+            <div className="p-4 bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)]">
+              <label className="block font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                 <Clock className="w-4 h-4 inline mr-2" />
                 Empfohlene Ruhetage zwischen Einheiten
               </label>
@@ -485,7 +485,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                   {restDaysBetweenSessions} {restDaysBetweenSessions === 1 ? 'Tag' : 'Tage'}
                 </span>
               </div>
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-xs text-[hsl(var(--fg-muted))] mt-2">
                 {restDaysBetweenSessions === 0 && 'Training an aufeinanderfolgenden Tagen'}
                 {restDaysBetweenSessions === 1 && 'z.B. Mo-Mi-Fr Training'}
                 {restDaysBetweenSessions === 2 && 'z.B. Mo-Do Training'}
@@ -494,15 +494,15 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             </div>
 
             {/* Deload Week */}
-            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-              <label className="block font-semibold text-slate-700 mb-2">
+            <div className="p-4 bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)]">
+              <label className="block font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                 <RefreshCw className="w-4 h-4 inline mr-2" />
                 Deload-Woche (Erholungswoche)
               </label>
               <select
                 value={deloadWeek}
                 onChange={(e) => setDeloadWeek(parseInt(e.target.value))}
-                className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all outline-none"
+                className="w-full px-4 py-3 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all outline-none"
               >
                 <option value={0}>Keine automatische Deload-Woche</option>
                 <option value={3}>Alle 3 Wochen</option>
@@ -511,21 +511,21 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                 <option value={6}>Alle 6 Wochen</option>
                 <option value={8}>Alle 8 Wochen</option>
               </select>
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-xs text-[hsl(var(--fg-muted))] mt-2">
                 Eine Deload-Woche hilft bei der Regeneration und beugt ?bertraining vor
               </p>
             </div>
 
             {/* Plan Duration */}
-            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-              <label className="block font-semibold text-slate-700 mb-2">
+            <div className="p-4 bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)]">
+              <label className="block font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                 <Calendar className="w-4 h-4 inline mr-2" />
                 Plandauer
               </label>
               <select
                 value={planDuration}
                 onChange={(e) => setPlanDuration(parseInt(e.target.value))}
-                className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all outline-none"
+                className="w-full px-4 py-3 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all outline-none"
               >
                 <option value={0}>Unbegrenzt</option>
                 <option value={4}>4 Wochen</option>
@@ -534,13 +534,13 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
                 <option value={12}>12 Wochen (3 Monate)</option>
                 <option value={16}>16 Wochen (4 Monate)</option>
               </select>
-              <p className="text-xs text-slate-500 mt-2">
+              <p className="text-xs text-[hsl(var(--fg-muted))] mt-2">
                 Nach Ablauf bekommst du eine Erinnerung, den Plan zu wechseln oder anzupassen
               </p>
             </div>
 
             {/* Info Box */}
-            <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
+            <div className="p-4 bg-cyan-400/10 rounded-xl border border-cyan-400/20">
               <p className="text-sm text-blue-800">
                 <strong>💡 Tipp:</strong> Wechsle deinen Trainingsplan alle 8-12 Wochen, 
                 um Plateaus zu vermeiden und neue Reize zu setzen.

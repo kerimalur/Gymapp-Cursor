@@ -57,19 +57,19 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="glass-card p-3 min-w-[140px] animate-scale-in">
-        <p className="text-sm font-semibold text-gray-900 mb-2">{label}</p>
+        <p className="text-sm font-semibold text-[hsl(var(--fg-primary))] mb-2">{label}</p>
         <div className="space-y-1.5">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-primary-500" />
-              <span className="text-xs text-gray-600">Trainings</span>
+              <span className="text-xs text-[hsl(var(--fg-secondary))]">Trainings</span>
             </div>
             <span className="text-sm font-bold text-primary-600">{payload[0]?.value || 0}</span>
           </div>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-              <span className="text-xs text-gray-600">Sätze</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/100" />
+              <span className="text-xs text-[hsl(var(--fg-secondary))]">SÃƒÂ¤tze</span>
             </div>
             <span className="text-sm font-bold text-emerald-600">{payload[1]?.value || 0}</span>
           </div>
@@ -177,8 +177,8 @@ export function ProgressChart({ period }: ProgressChartProps) {
           <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center text-gray-300">
             {Icons.barChart}
           </div>
-          <p className="text-lg font-semibold text-gray-900 mb-1">Noch keine Daten</p>
-          <p className="text-sm text-gray-500">Starte dein erstes Training</p>
+          <p className="text-lg font-semibold text-[hsl(var(--fg-primary))] mb-1">Noch keine Daten</p>
+          <p className="text-sm text-[hsl(var(--fg-muted))]">Starte dein erstes Training</p>
         </div>
       </div>
     );
@@ -193,10 +193,10 @@ export function ProgressChart({ period }: ProgressChartProps) {
           className={`flex-1 p-4 rounded-2xl transition-all duration-300 ${
             activeMetric === 'trainings'
               ? 'bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-glow'
-              : 'bg-white/60 hover:bg-white/80 border border-gray-100'
+              : 'bg-[hsl(225,14%,10%)]/60 hover:bg-[hsl(225,14%,12%)] border border-[hsl(225,10%,14%)]'
           }`}
         >
-          <p className={`text-xs font-medium mb-1 ${activeMetric === 'trainings' ? 'text-primary-100' : 'text-gray-500'}`}>
+          <p className={`text-xs font-medium mb-1 ${activeMetric === 'trainings' ? 'text-primary-100' : 'text-[hsl(var(--fg-muted))]'}`}>
             Trainings
           </p>
           <p className="text-2xl font-bold">{totals.trainings}</p>
@@ -207,18 +207,18 @@ export function ProgressChart({ period }: ProgressChartProps) {
           className={`flex-1 p-4 rounded-2xl transition-all duration-300 ${
             activeMetric === 'sets'
               ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/25'
-              : 'bg-white/60 hover:bg-white/80 border border-gray-100'
+              : 'bg-[hsl(225,14%,10%)]/60 hover:bg-[hsl(225,14%,12%)] border border-[hsl(225,10%,14%)]'
           }`}
         >
-          <p className={`text-xs font-medium mb-1 ${activeMetric === 'sets' ? 'text-emerald-100' : 'text-gray-500'}`}>
-            Sätze
+          <p className={`text-xs font-medium mb-1 ${activeMetric === 'sets' ? 'text-emerald-100' : 'text-[hsl(var(--fg-muted))]'}`}>
+            SÃƒÂ¤tze
           </p>
           <p className="text-2xl font-bold">{totals.sets}</p>
         </button>
 
         <button
           onClick={() => setShowInfo(true)}
-          className="p-3 rounded-xl bg-white/60 border border-gray-100 text-gray-400 hover:text-primary-500 hover:border-primary-200 transition-all"
+          className="p-3 rounded-xl bg-[hsl(225,14%,10%)]/60 border border-[hsl(225,10%,14%)] text-[hsl(var(--fg-subtle))] hover:text-primary-500 hover:border-primary-200 transition-all"
           title="Info"
         >
           {Icons.info}
@@ -282,11 +282,11 @@ export function ProgressChart({ period }: ProgressChartProps) {
       <div className="flex items-center justify-center gap-6">
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-primary-500" />
-          <span className="text-sm text-gray-600">Trainings</span>
+          <span className="text-sm text-[hsl(var(--fg-secondary))]">Trainings</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-emerald-500" />
-          <span className="text-sm text-gray-600">Sätze</span>
+          <span className="w-3 h-3 rounded-full bg-emerald-400/100" />
+          <span className="text-sm text-[hsl(var(--fg-secondary))]">SÃƒÂ¤tze</span>
         </div>
       </div>
 
@@ -296,17 +296,17 @@ export function ProgressChart({ period }: ProgressChartProps) {
           className="fixed inset-0 bg-black/30 flex items-center justify-center z-[9999] p-4 animate-fade-in"
           onClick={(e) => e.target === e.currentTarget && setShowInfo(false)}
         >
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
-            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-gray-100 bg-white">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
+            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-[hsl(225,10%,14%)] bg-[hsl(225,14%,10%)]">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center text-primary-600">
                   {Icons.info}
                 </div>
-                <h3 className="font-bold text-gray-900">TrainingsÜbersicht</h3>
+                <h3 className="font-bold text-[hsl(var(--fg-primary))]">TrainingsÃƒÅ“bersicht</h3>
               </div>
               <button
                 onClick={() => setShowInfo(false)}
-                className="p-2 hover:bg-gray-100 rounded-xl transition-colors text-gray-400 hover:text-gray-600"
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-xl transition-colors text-[hsl(var(--fg-subtle))] hover:text-[hsl(var(--fg-secondary))]"
               >
                 {Icons.close}
               </button>
@@ -314,29 +314,29 @@ export function ProgressChart({ period }: ProgressChartProps) {
             
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
               <div className="p-4 rounded-xl bg-gradient-to-br from-primary-50 to-indigo-50 border border-primary-100">
-                <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-2 flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-primary-500" />
                   Trainings
                 </h4>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-[hsl(var(--fg-secondary))] leading-relaxed">
                   Die Anzahl der absolvierten Trainingseinheiten im gew?hlten Zeitraum.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-100">
-                <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-emerald-500" />
-                  Sätze (mit Gewicht)
+                <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-2 flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-emerald-400/100" />
+                  SÃƒÂ¤tze (mit Gewicht)
                 </h4>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Nur Sätze, die tats?chlich mit Gewicht abgeschlossen wurden. 
-                  Sätze mit 0 kg werden nicht berücksichtigt.
+                <p className="text-sm text-[hsl(var(--fg-secondary))] leading-relaxed">
+                  Nur SÃƒÂ¤tze, die tats?chlich mit Gewicht abgeschlossen wurden. 
+                  SÃƒÂ¤tze mit 0 kg werden nicht berÃƒÂ¼cksichtigt.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
-                <h4 className="font-medium text-gray-900 mb-2">💡 Tipp</h4>
-                <p className="text-sm text-gray-600 leading-relaxed">
+              <div className="p-4 rounded-xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,14%)]">
+                <h4 className="font-medium text-[hsl(var(--fg-primary))] mb-2">Ã°Å¸â€™Â¡ Tipp</h4>
+                <p className="text-sm text-[hsl(var(--fg-secondary))] leading-relaxed">
                   Tippe auf die Karten oben, um zwischen den Metriken zu wechseln 
                   und die Datenpunkte im Chart hervorzuheben.
                 </p>

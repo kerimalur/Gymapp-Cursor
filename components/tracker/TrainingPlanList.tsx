@@ -70,14 +70,14 @@ export function TrainingPlanList() {
 
   if (trainingPlans.length === 0) {
     return (
-      <div className="bg-white rounded-2xl p-12 shadow-lg text-center">
-        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <Calendar className="w-8 h-8 text-gray-400" />
+      <div className="bg-[hsl(225,14%,10%)] rounded-2xl p-12 shadow-lg text-center">
+        <div className="w-16 h-16 bg-[hsl(225,12%,15%)] rounded-full flex items-center justify-center mx-auto mb-4">
+          <Calendar className="w-8 h-8 text-[hsl(var(--fg-subtle))]" />
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+        <h3 className="text-xl font-semibold text-[hsl(var(--fg-primary))] mb-2">
           Noch keine Trainingsplaene
         </h3>
-        <p className="text-gray-600">
+        <p className="text-[hsl(var(--fg-secondary))]">
           Erstelle deinen ersten Trainingsplan, um strukturiert zu trainieren
         </p>
       </div>
@@ -95,13 +95,13 @@ export function TrainingPlanList() {
         return (
           <div
             key={plan.id}
-            className={`bg-white rounded-2xl shadow-lg overflow-hidden transition-all ${
+            className={`bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg overflow-hidden transition-all ${
               plan.isActive ? 'ring-2 ring-blue-500' : ''
             }`}
           >
             {/* Plan Header */}
             <div 
-              className="p-6 cursor-pointer hover:bg-gray-50 transition-colors"
+              className="p-6 cursor-pointer hover:bg-[hsl(225,12%,13%)] transition-colors"
               onClick={() => setExpandedPlan(isExpanded ? null : plan.id)}
             >
               <div className="flex items-start justify-between">
@@ -115,7 +115,7 @@ export function TrainingPlanList() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="text-lg font-bold text-gray-900">{plan.name}</h3>
+                      <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">{plan.name}</h3>
                       {plan.isActive && (
                         <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full text-xs font-medium flex items-center gap-1">
                           <Star className="w-3 h-3" />
@@ -123,7 +123,7 @@ export function TrainingPlanList() {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-4 mt-1 text-sm text-gray-500">
+                    <div className="flex items-center gap-4 mt-1 text-sm text-[hsl(var(--fg-muted))]">
                       <span className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
                         {plan.sessionsPerWeek}× pro Woche
@@ -140,15 +140,15 @@ export function TrainingPlanList() {
                   {!plan.isActive && (
                     <button
                       onClick={(e) => { e.stopPropagation(); handleSetActive(plan.id); }}
-                      className="px-3 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="px-3 py-2 text-sm font-medium text-cyan-400 hover:bg-cyan-400/10 rounded-lg transition-colors"
                     >
                       Aktivieren
                     </button>
                   )}
                   {isExpanded ? (
-                    <ChevronUp className="w-5 h-5 text-gray-400" />
+                    <ChevronUp className="w-5 h-5 text-[hsl(var(--fg-subtle))]" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                    <ChevronDown className="w-5 h-5 text-[hsl(var(--fg-subtle))]" />
                   )}
                 </div>
               </div>
@@ -156,23 +156,23 @@ export function TrainingPlanList() {
 
             {/* Expanded Content */}
             {isExpanded && (
-              <div className="border-t border-gray-100">
+              <div className="border-t border-[hsl(225,10%,14%)]">
                 {/* Training Days */}
                 <div className="p-6">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3">Trainingstage</h4>
+                  <h4 className="text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-3">Trainingstage</h4>
                   <div className="space-y-2">
                     {planDays.map((day, index) => (
                       <div
                         key={day?.id || index}
-                        className="flex items-center justify-between bg-gray-50 rounded-xl p-4"
+                        className="flex items-center justify-between bg-[hsl(225,12%,13%)] rounded-xl p-4"
                       >
                         <div className="flex items-center gap-3">
                           <span className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm">
                             {index + 1}
                           </span>
                           <div>
-                            <p className="font-medium text-gray-900">{day?.name || 'Unbekannt'}</p>
-                            <p className="text-sm text-gray-500">
+                            <p className="font-medium text-[hsl(var(--fg-primary))]">{day?.name || 'Unbekannt'}</p>
+                            <p className="text-sm text-[hsl(var(--fg-muted))]">
                               {day?.exercises.length || 0} Übungen
                             </p>
                           </div>
@@ -211,7 +211,7 @@ export function TrainingPlanList() {
                   {!plan.isActive && (
                     <button
                       onClick={() => handleSetActive(plan.id)}
-                      className="flex-1 px-4 py-3 bg-blue-50 text-blue-700 rounded-xl font-medium hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 bg-cyan-400/10 text-cyan-400 rounded-xl font-medium hover:bg-cyan-400/20 transition-colors flex items-center justify-center gap-2"
                     >
                       <Star className="w-4 h-4" />
                       Aktivieren
@@ -228,7 +228,7 @@ export function TrainingPlanList() {
                       </button>
                       <button
                         onClick={() => setConfirmDelete(null)}
-                        className="px-4 py-3 border-2 border-gray-200 text-gray-700 rounded-xl font-medium hover:border-gray-300 transition-colors"
+                        className="px-4 py-3 border-2 border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] rounded-xl font-medium hover:border-[hsl(225,10%,22%)] transition-colors"
                       >
                         Abbrechen
                       </button>
@@ -236,7 +236,7 @@ export function TrainingPlanList() {
                   ) : (
                     <button
                       onClick={() => setConfirmDelete(plan.id)}
-                      className="p-3 border-2 border-gray-200 text-gray-600 rounded-xl hover:border-red-300 hover:text-red-600 transition-colors"
+                      className="p-3 border-2 border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] rounded-xl hover:border-red-300 hover:text-red-600 transition-colors"
                       title="L?schen"
                       aria-label="Plan l?schen"
                     >

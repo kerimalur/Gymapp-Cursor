@@ -104,8 +104,8 @@ export function MealTimingAnalysis() {
     return (
       <div className="text-center py-8">
         <div className="text-4xl mb-3">⏰</div>
-        <p className="text-slate-600 font-medium">Keine Daten</p>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-[hsl(var(--fg-secondary))] font-medium">Keine Daten</p>
+        <p className="text-sm text-[hsl(var(--fg-subtle))] mt-1">
           Tracke deine Mahlzeiten mit Zeitangabe
         </p>
       </div>
@@ -117,11 +117,11 @@ export function MealTimingAnalysis() {
   return (
     <div className="space-y-6">
       {/* Distribution Overview */}
-      <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-4 border border-slate-200">
-        <h4 className="font-semibold text-slate-800 mb-4">Kalorienverteilung</h4>
+      <div className="bg-gradient-to-br from-[hsl(225,12%,13%)] to-[hsl(225,12%,15%)] rounded-xl p-4 border border-[hsl(225,10%,16%)]">
+        <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-4">Kalorienverteilung</h4>
         
         {/* Visual Bar Distribution */}
-        <div className="h-8 rounded-full overflow-hidden flex bg-white mb-4">
+        <div className="h-8 rounded-full overflow-hidden flex bg-[hsl(225,14%,10%)] mb-4">
           {timingData.map((time, idx) => {
             const colors = [
               'bg-amber-400',
@@ -152,8 +152,8 @@ export function MealTimingAnalysis() {
             return (
               <div key={time.time} className="text-center">
                 <div className={`w-3 h-3 ${colors[idx]} rounded-full mx-auto mb-1`} />
-                <p className="text-xs text-slate-600">{time.label}</p>
-                <p className="text-sm font-bold text-slate-800">{time.percentage}%</p>
+                <p className="text-xs text-[hsl(var(--fg-secondary))]">{time.label}</p>
+                <p className="text-sm font-bold text-[hsl(var(--fg-primary))]">{time.percentage}%</p>
               </div>
             );
           })}
@@ -165,13 +165,13 @@ export function MealTimingAnalysis() {
         {timingData.map(time => (
           <div
             key={time.time}
-            className="bg-white rounded-xl p-4 border border-slate-200 hover:border-slate-300 transition-colors"
+            className="bg-[hsl(225,14%,10%)] rounded-xl p-4 border border-[hsl(225,10%,16%)] hover:border-[hsl(225,10%,22%)] transition-colors"
           >
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl">{time.icon}</span>
               <div>
-                <p className="font-semibold text-slate-800">{time.label}</p>
-                <p className="text-xs text-slate-500">
+                <p className="font-semibold text-[hsl(var(--fg-primary))]">{time.label}</p>
+                <p className="text-xs text-[hsl(var(--fg-muted))]">
                   {time.mealCount} Mahlzeiten
                 </p>
               </div>
@@ -179,18 +179,18 @@ export function MealTimingAnalysis() {
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">Ø Kalorien</span>
-                <span className="font-bold text-slate-800">{time.avgCalories}</span>
+                <span className="text-sm text-[hsl(var(--fg-secondary))]">Ø Kalorien</span>
+                <span className="font-bold text-[hsl(var(--fg-primary))]">{time.avgCalories}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">Ø Protein</span>
+                <span className="text-sm text-[hsl(var(--fg-secondary))]">Ø Protein</span>
                 <span className="font-bold text-blue-600">{time.avgProtein}g</span>
               </div>
             </div>
 
             {/* Mini progress indicator */}
-            <div className="mt-3 pt-3 border-t border-slate-100">
-              <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+            <div className="mt-3 pt-3 border-t border-[hsl(225,10%,14%)]">
+              <div className="h-1.5 bg-[hsl(225,12%,15%)] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-primary-500 rounded-full"
                   style={{ width: `${time.percentage}%` }}
@@ -216,7 +216,7 @@ export function MealTimingAnalysis() {
       )}
 
       {/* Summary */}
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-sm text-[hsl(var(--fg-muted))]">
         Basierend auf {totalMeals} Mahlzeiten der letzten 7 Tage
       </p>
     </div>

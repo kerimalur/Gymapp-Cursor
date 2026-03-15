@@ -143,7 +143,7 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
         {weekDays.map((day) => (
           <div
             key={day}
-            className="text-center font-semibold text-slate-500 py-2 text-xs uppercase tracking-wide"
+            className="text-center font-semibold text-[hsl(var(--fg-muted))] py-2 text-xs uppercase tracking-wide"
           >
             {day}
           </div>
@@ -186,10 +186,10 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
                 </svg>
                 {/* Center text / Settings icon on hover */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className={`text-[10px] font-bold group-hover:hidden ${progress.percentage >= 100 ? 'text-emerald-600' : 'text-blue-600'}`}>
+                  <span className={`text-[10px] font-bold group-hover:hidden ${progress.percentage >= 100 ? 'text-emerald-600' : 'text-cyan-400'}`}>
                     {progress.completed}
                   </span>
-                  <Settings className="w-3 h-3 text-slate-400 hidden group-hover:block" />
+                  <Settings className="w-3 h-3 text-[hsl(var(--fg-subtle))] hidden group-hover:block" />
                 </div>
               </div>
             </button>
@@ -211,14 +211,14 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
                     transition-all duration-150
                     ${!isCurrentMonth ? 'text-slate-300' : ''}
                     ${isCurrentDay 
-                      ? 'border-blue-500 bg-blue-500 text-white shadow-sm' 
+                      ? 'border-cyan-500 bg-cyan-500 text-white shadow-sm' 
                       : hasWorkout && isCurrentMonth
                         ? 'border-emerald-300 bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                         : isPlanned && isCurrentMonth
-                          ? 'border-2 border-dashed border-blue-300 bg-blue-50 text-blue-600 hover:bg-blue-100'
+                          ? 'border-2 border-dashed border-cyan-400/30 bg-cyan-400/10 text-cyan-400 hover:bg-cyan-400/15'
                           : isCurrentMonth
-                            ? 'border-slate-200 text-slate-600 hover:bg-slate-100'
-                            : 'border-slate-100 hover:bg-slate-50'
+                            ? 'border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,18%)]'
+                            : 'border-[hsl(225,10%,14%)] hover:bg-[hsl(225,12%,13%)]'
                     }
                   `}
                 >
@@ -229,7 +229,7 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
                   )}
                   {/* Planned indicator */}
                   {isPlanned && !hasWorkout && !isCurrentDay && (
-                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400" />
                   )}
                 </button>
               );
@@ -239,22 +239,22 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
       </div>
 
       {/* Legend */}
-      <div className="flex items-center justify-center gap-4 mt-3 pt-2 border-t border-slate-100 flex-wrap">
+      <div className="flex items-center justify-center gap-4 mt-3 pt-2 border-t border-[hsl(225,10%,14%)] flex-wrap">
         <div className="flex items-center gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-[10px] text-slate-500">Absolviert</span>
+          <span className="text-[10px] text-[hsl(var(--fg-muted))]">Absolviert</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-blue-400" />
-          <span className="text-[10px] text-slate-500">Geplant</span>
+          <div className="w-2 h-2 rounded-full bg-cyan-400" />
+          <span className="text-[10px] text-[hsl(var(--fg-muted))]">Geplant</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-blue-500" />
-          <span className="text-[10px] text-slate-500">Heute</span>
+          <div className="w-2 h-2 rounded-full bg-cyan-500" />
+          <span className="text-[10px] text-[hsl(var(--fg-muted))]">Heute</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <Settings className="w-3 h-3 text-slate-400" />
-          <span className="text-[10px] text-slate-500">Kreis = Planen</span>
+          <Settings className="w-3 h-3 text-[hsl(var(--fg-subtle))]" />
+          <span className="text-[10px] text-[hsl(var(--fg-muted))]">Kreis = Planen</span>
         </div>
       </div>
 
@@ -265,20 +265,20 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
           onClick={() => setShowWeekSettings(null)}
         >
           <div 
-            className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-5"
+            className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-xl max-w-sm w-full p-5"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-slate-800">Trainingstage planen</h3>
+              <h3 className="font-bold text-[hsl(var(--fg-primary))]">Trainingstage planen</h3>
               <button
                 onClick={() => setShowWeekSettings(null)}
-                className="p-1 hover:bg-slate-100 rounded-lg"
+                className="p-1 hover:bg-[hsl(225,12%,18%)] rounded-lg"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-[hsl(var(--fg-subtle))]" />
               </button>
             </div>
             
-            <p className="text-sm text-slate-500 mb-4">
+            <p className="text-sm text-[hsl(var(--fg-muted))] mb-4">
               W?hle die Tage aus, an denen du trainieren m?chtest:
             </p>
             
@@ -291,8 +291,8 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
                   className={`
                     h-12 rounded-lg text-sm font-medium transition-all
                     ${tempSelectedDays.includes(index)
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? 'bg-cyan-500 text-white'
+                      : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
                     }
                   `}
                 >
@@ -301,7 +301,7 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
               ))}
             </div>
             
-            <p className="text-xs text-slate-400 text-center mb-4">
+            <p className="text-xs text-[hsl(var(--fg-subtle))] text-center mb-4">
               {tempSelectedDays.length} Trainingstage ausgew?hlt
             </p>
             
@@ -309,13 +309,13 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
             <div className="flex gap-2">
               <button
                 onClick={() => setShowWeekSettings(null)}
-                className="flex-1 py-2 px-4 rounded-lg bg-slate-100 text-slate-600 font-medium hover:bg-slate-200 transition-colors"
+                className="flex-1 py-2 px-4 rounded-lg bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] font-medium hover:bg-[hsl(225,12%,20%)] transition-colors"
               >
                 Abbrechen
               </button>
               <button
                 onClick={saveWeekSettings}
-                className="flex-1 py-2 px-4 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+                className="flex-1 py-2 px-4 rounded-lg bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors flex items-center justify-center gap-2"
               >
                 <Check className="w-4 h-4" />
                 Speichern

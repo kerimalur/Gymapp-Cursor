@@ -38,7 +38,7 @@ const VOLUME_RECOMMENDATIONS: Record<MuscleGroup, { min: number; optimal: number
 
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'RÃƒÂ¼cken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -47,12 +47,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'GesÃƒÂ¤ÃƒÅ¸',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Rücken',
+  lower_back: 'Unterer RÃƒÂ¼cken',
   neck: 'Nacken',
 };
 
@@ -281,10 +281,10 @@ export function MuscleVolumeStats() {
   const getRecommendationText = (data: MuscleVolumeData) => {
     if (data.status === 'under') {
       const needed = Math.round((data.recommendation.min - data.effectiveSets) * 10) / 10;
-      return `+${needed} Sätze bis Minimum`;
+      return `+${needed} SÃƒÂ¤tze bis Minimum`;
     } else if (data.status === 'over') {
       const excess = Math.round((data.effectiveSets - data.recommendation.max) * 10) / 10;
-      return `${excess} Sätze über Maximum`;
+      return `${excess} SÃƒÂ¤tze ÃƒÂ¼ber Maximum`;
     }
     return 'Im optimalen Bereich';
   };
@@ -318,30 +318,30 @@ export function MuscleVolumeStats() {
 
       {/* View Toggle */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3 text-xs text-slate-500">
+        <div className="flex items-center gap-3 text-xs text-[hsl(var(--fg-muted))]">
           <div className="flex items-center gap-1">
-            <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-            <span>Primär</span>
+            <div className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
+            <span>PrimÃƒÂ¤r</span>
           </div>
           <div className="flex items-center gap-1">
             <div className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-            <span>Sekundär (×0.5)</span>
+            <span>SekundÃƒÂ¤r (Ãƒâ€”0.5)</span>
           </div>
         </div>
-        <div className="flex items-center gap-1 bg-slate-100 rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-[hsl(225,12%,15%)] rounded-lg p-1">
           <button
             onClick={() => setViewMode('modern')}
-            className={`p-1.5 rounded-md transition-all ${viewMode === 'modern' ? 'bg-white shadow-sm' : 'hover:bg-slate-200'}`}
+            className={`p-1.5 rounded-md transition-all ${viewMode === 'modern' ? 'bg-[hsl(225,14%,10%)] shadow-sm' : 'hover:bg-[hsl(225,12%,20%)]'}`}
             title="Moderne Ansicht"
           >
-            <LayoutGrid className="w-4 h-4 text-slate-600" />
+            <LayoutGrid className="w-4 h-4 text-[hsl(var(--fg-secondary))]" />
           </button>
           <button
             onClick={() => setViewMode('compact')}
-            className={`p-1.5 rounded-md transition-all ${viewMode === 'compact' ? 'bg-white shadow-sm' : 'hover:bg-slate-200'}`}
+            className={`p-1.5 rounded-md transition-all ${viewMode === 'compact' ? 'bg-[hsl(225,14%,10%)] shadow-sm' : 'hover:bg-[hsl(225,12%,20%)]'}`}
             title="Kompakte Ansicht"
           >
-            <BarChart3 className="w-4 h-4 text-slate-600" />
+            <BarChart3 className="w-4 h-4 text-[hsl(var(--fg-secondary))]" />
           </button>
         </div>
       </div>
@@ -366,10 +366,10 @@ export function MuscleVolumeStats() {
 
                 {/* Icon & Label */}
                 <div className="flex items-center gap-2 mb-3">
-                  <div className={`p-1.5 rounded-lg ${colors.text} bg-white/60`}>
+                  <div className={`p-1.5 rounded-lg ${colors.text} bg-[hsl(225,14%,10%)]/60`}>
                     {getMuscleIcon(data.muscle, 'w-5 h-5')}
                   </div>
-                  <span className="font-semibold text-slate-700 text-sm">{data.label}</span>
+                  <span className="font-semibold text-[hsl(var(--fg-secondary))] text-sm">{data.label}</span>
                 </div>
 
                 {/* Progress Circle */}
@@ -397,13 +397,13 @@ export function MuscleVolumeStats() {
                     />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-lg font-bold text-slate-800">{data.effectiveSets}</span>
+                    <span className="text-lg font-bold text-[hsl(var(--fg-primary))]">{data.effectiveSets}</span>
                   </div>
                 </div>
 
                 {/* Stats Row */}
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-500">
+                  <span className="text-[hsl(var(--fg-muted))]">
                     Ziel: {data.recommendation.optimal}
                   </span>
                   {data.trend !== 0 && (
@@ -416,7 +416,7 @@ export function MuscleVolumeStats() {
 
                 {/* Exercise Count Indicator */}
                 {data.exercises.length > 0 && (
-                  <div className="absolute bottom-2 right-2 flex items-center gap-1 text-xs text-slate-400">
+                  <div className="absolute bottom-2 right-2 flex items-center gap-1 text-xs text-[hsl(var(--fg-subtle))]">
                     <Dumbbell className="w-3 h-3" />
                     <span>{data.exercises.length}</span>
                   </div>
@@ -436,7 +436,7 @@ export function MuscleVolumeStats() {
 
             return (
               <div key={data.muscle} className="group" onClick={() => setSelectedMuscle(data)}>
-                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer">
+                <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-[hsl(225,12%,16%)] transition-colors cursor-pointer">
                   {/* Icon */}
                   <div className={`p-1.5 rounded-lg ${colors.text} ${colors.bg} w-8 h-8 flex items-center justify-center`}>
                     {getMuscleIcon(data.muscle, 'w-4 h-4')}
@@ -445,7 +445,7 @@ export function MuscleVolumeStats() {
                   {/* Label & Progress */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-slate-700 truncate">{data.label}</span>
+                      <span className="text-sm font-medium text-[hsl(var(--fg-secondary))] truncate">{data.label}</span>
                       <div className="flex items-center gap-2">
                         {data.trend !== 0 && (
                           <span className={`text-xs font-medium flex items-center gap-0.5 ${data.trend > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
@@ -460,14 +460,14 @@ export function MuscleVolumeStats() {
                     </div>
                     
                     {/* Progress Bar */}
-                    <div className="relative h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="relative h-2 bg-[hsl(225,12%,15%)] rounded-full overflow-hidden">
                       {/* Markers */}
                       <div 
                         className="absolute top-0 bottom-0 w-0.5 bg-amber-400 z-10"
                         style={{ left: `${minMark}%` }}
                       />
                       <div 
-                        className="absolute top-0 bottom-0 w-0.5 bg-emerald-500 z-10"
+                        className="absolute top-0 bottom-0 w-0.5 bg-emerald-400/100 z-10"
                         style={{ left: `${optimalMark}%` }}
                       />
                       {/* Progress */}
@@ -504,81 +504,81 @@ export function MuscleVolumeStats() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
-              className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden"
+              className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden"
             >
               {/* Modal Header */}
               <div className={`p-4 ${getStatusColor(selectedMuscle.status).bg} border-b`}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-xl bg-white/70 ${getStatusColor(selectedMuscle.status).text}`}>
+                    <div className={`p-2 rounded-xl bg-[hsl(225,14%,10%)]/70 ${getStatusColor(selectedMuscle.status).text}`}>
                       {getMuscleIcon(selectedMuscle.muscle, 'w-6 h-6')}
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-slate-800">{selectedMuscle.label}</h3>
-                      <p className="text-sm text-slate-600">{getRecommendationText(selectedMuscle)}</p>
+                      <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">{selectedMuscle.label}</h3>
+                      <p className="text-sm text-[hsl(var(--fg-secondary))]">{getRecommendationText(selectedMuscle)}</p>
                     </div>
                   </div>
                   <button
                     onClick={() => setSelectedMuscle(null)}
-                    className="p-2 hover:bg-white/50 rounded-xl transition-colors"
+                    className="p-2 hover:bg-[hsl(225,14%,12%)] rounded-xl transition-colors"
                   >
-                    <X className="w-5 h-5 text-slate-600" />
+                    <X className="w-5 h-5 text-[hsl(var(--fg-secondary))]" />
                   </button>
                 </div>
               </div>
 
               {/* Modal Stats */}
-              <div className="p-4 border-b bg-slate-50">
+              <div className="p-4 border-b bg-[hsl(225,12%,13%)]">
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-slate-800">{selectedMuscle.effectiveSets}</p>
-                    <p className="text-xs text-slate-500">Effektive Sätze</p>
+                    <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{selectedMuscle.effectiveSets}</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Effektive SÃƒÂ¤tze</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-slate-800">{selectedMuscle.recommendation.optimal}</p>
-                    <p className="text-xs text-slate-500">Optimal</p>
+                    <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{selectedMuscle.recommendation.optimal}</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Optimal</p>
                   </div>
                   <div className="text-center">
                     <p className={`text-2xl font-bold ${selectedMuscle.trend >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
                       {selectedMuscle.trend >= 0 ? '+' : ''}{selectedMuscle.trend}
                     </p>
-                    <p className="text-xs text-slate-500">vs. letzte Woche</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">vs. letzte Woche</p>
                   </div>
                 </div>
-                <div className="mt-3 flex items-center justify-center gap-4 text-xs text-slate-500">
-                  <span>Primär: {selectedMuscle.primarySets} Sätze</span>
-                  <span>•</span>
-                  <span>Sekundär: {selectedMuscle.secondarySets} Sätze</span>
+                <div className="mt-3 flex items-center justify-center gap-4 text-xs text-[hsl(var(--fg-muted))]">
+                  <span>PrimÃƒÂ¤r: {selectedMuscle.primarySets} SÃƒÂ¤tze</span>
+                  <span>Ã¢â‚¬Â¢</span>
+                  <span>SekundÃƒÂ¤r: {selectedMuscle.secondarySets} SÃƒÂ¤tze</span>
                 </div>
               </div>
 
               {/* Exercise List */}
               <div className="p-4 overflow-y-auto max-h-[40vh]">
-                <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                <h4 className="text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-3 flex items-center gap-2">
                   <Dumbbell className="w-4 h-4" />
-                  Übungen diese Woche
+                  ÃƒÅ“bungen diese Woche
                 </h4>
                 {selectedMuscle.exercises.length > 0 ? (
                   <div className="space-y-2">
                     {selectedMuscle.exercises.map((exercise, idx) => (
                       <div 
                         key={`${exercise.name}-${idx}`}
-                        className="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors"
+                        className="p-3 bg-[hsl(225,12%,13%)] rounded-xl hover:bg-[hsl(225,12%,18%)] transition-colors"
                       >
                         <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium text-slate-800 text-sm">{exercise.name}</span>
-                          <span className={`text-xs px-2 py-0.5 rounded-full ${exercise.role === 'primary' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'}`}>
-                            {exercise.role === 'primary' ? 'Primär' : 'Sekundär'}
+                          <span className="font-medium text-[hsl(var(--fg-primary))] text-sm">{exercise.name}</span>
+                          <span className={`text-xs px-2 py-0.5 rounded-full ${exercise.role === 'primary' ? 'bg-blue-100 text-cyan-400' : 'bg-slate-200 text-[hsl(var(--fg-secondary))]'}`}>
+                            {exercise.role === 'primary' ? 'PrimÃƒÂ¤r' : 'SekundÃƒÂ¤r'}
                           </span>
                         </div>
-                        <div className="flex items-center gap-4 text-xs text-slate-500">
+                        <div className="flex items-center gap-4 text-xs text-[hsl(var(--fg-muted))]">
                           <span className="flex items-center gap-1">
                             <Calendar className="w-3 h-3" />
                             {format(exercise.date, 'EEE, d. MMM', { locale: de })}
                           </span>
                           <span className="flex items-center gap-1">
                             <Hash className="w-3 h-3" />
-                            {exercise.sets} Sätze
+                            {exercise.sets} SÃƒÂ¤tze
                           </span>
                           <span className="flex items-center gap-1">
                             <Weight className="w-3 h-3" />
@@ -589,19 +589,19 @@ export function MuscleVolumeStats() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-8 text-slate-400">
+                  <div className="text-center py-8 text-[hsl(var(--fg-subtle))]">
                     <Dumbbell className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm">Keine Übungen diese Woche</p>
+                    <p className="text-sm">Keine ÃƒÅ“bungen diese Woche</p>
                   </div>
                 )}
               </div>
 
               {/* Recommendation Footer */}
-              <div className="p-4 bg-slate-50 border-t">
-                <div className="flex items-center gap-2 text-sm text-slate-600">
+              <div className="p-4 bg-[hsl(225,12%,13%)] border-t">
+                <div className="flex items-center gap-2 text-sm text-[hsl(var(--fg-secondary))]">
                   <Target className="w-4 h-4" />
                   <span>
-                    Empfehlung: {selectedMuscle.recommendation.min}-{selectedMuscle.recommendation.max} Sätze/Woche
+                    Empfehlung: {selectedMuscle.recommendation.min}-{selectedMuscle.recommendation.max} SÃƒÂ¤tze/Woche
                   </span>
                 </div>
               </div>
@@ -614,7 +614,7 @@ export function MuscleVolumeStats() {
       {volumeData.length > 8 && (
         <button
           onClick={() => setShowAll(!showAll)}
-          className="w-full py-2.5 text-sm font-medium text-slate-600 hover:text-slate-800 bg-slate-50 hover:bg-slate-100 rounded-xl transition-all flex items-center justify-center gap-2"
+          className="w-full py-2.5 text-sm font-medium text-[hsl(var(--fg-secondary))] hover:text-[hsl(var(--fg-primary))] bg-[hsl(225,12%,13%)] hover:bg-[hsl(225,12%,18%)] rounded-xl transition-all flex items-center justify-center gap-2"
         >
           {showAll ? (
             <>

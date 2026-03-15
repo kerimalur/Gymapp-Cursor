@@ -172,7 +172,7 @@ export function AutoRegulationTracker() {
   const getRecommendationIcon = (rec: 'increase' | 'maintain' | 'decrease' | 'deload') => {
     switch (rec) {
       case 'increase': return <TrendingUp className="w-5 h-5 text-emerald-500" />;
-      case 'maintain': return <Minus className="w-5 h-5 text-blue-500" />;
+      case 'maintain': return <Minus className="w-5 h-5 text-cyan-500" />;
       case 'decrease': return <TrendingDown className="w-5 h-5 text-orange-500" />;
       case 'deload': return <AlertTriangle className="w-5 h-5 text-red-500" />;
     }
@@ -181,7 +181,7 @@ export function AutoRegulationTracker() {
   const getRecommendationColor = (rec: 'increase' | 'maintain' | 'decrease' | 'deload') => {
     switch (rec) {
       case 'increase': return 'bg-emerald-50 border-emerald-200';
-      case 'maintain': return 'bg-blue-50 border-blue-200';
+      case 'maintain': return 'bg-cyan-400/10 border-cyan-400/20';
       case 'decrease': return 'bg-orange-50 border-orange-200';
       case 'deload': return 'bg-red-50 border-red-200';
     }
@@ -191,7 +191,7 @@ export function AutoRegulationTracker() {
     switch (confidence) {
       case 'high': return <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">Hohe Konfidenz</span>;
       case 'medium': return <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Mittlere Konfidenz</span>;
-      case 'low': return <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Niedrige Konfidenz</span>;
+      case 'low': return <span className="text-xs bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] px-2 py-0.5 rounded-full">Niedrige Konfidenz</span>;
     }
   };
   
@@ -202,31 +202,31 @@ export function AutoRegulationTracker() {
   
   if (recommendations.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-6">
+      <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg p-6">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white">
             <TrendingUp className="w-5 h-5" />
           </div>
-          <h3 className="text-xl font-bold text-slate-800">Auto-Regulation</h3>
+          <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Auto-Regulation</h3>
         </div>
         <div className="text-center py-8">
           <Info className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500">Trainiere mit RIR-Tracking für automatische Empfehlungen.</p>
-          <p className="text-sm text-slate-400 mt-1">Mindestens 2 Sessions pro Übung benoetigt.</p>
+          <p className="text-[hsl(var(--fg-muted))]">Trainiere mit RIR-Tracking für automatische Empfehlungen.</p>
+          <p className="text-sm text-[hsl(var(--fg-subtle))] mt-1">Mindestens 2 Sessions pro Übung benoetigt.</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
+    <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg p-6">
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white">
           <TrendingUp className="w-5 h-5" />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-slate-800">Auto-Regulation Empfehlungen</h3>
-          <p className="text-sm text-slate-500">Basierend auf deinem RIR der letzten 4 Wochen</p>
+          <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Auto-Regulation Empfehlungen</h3>
+          <p className="text-sm text-[hsl(var(--fg-muted))]">Basierend auf deinem RIR der letzten 4 Wochen</p>
         </div>
       </div>
       
@@ -236,9 +236,9 @@ export function AutoRegulationTracker() {
           <p className="text-2xl font-bold text-emerald-600">{increaseRecs.length}</p>
           <p className="text-sm text-emerald-700">Steigern</p>
         </div>
-        <div className="bg-blue-50 rounded-xl p-4 text-center">
-          <p className="text-2xl font-bold text-blue-600">{maintainRecs.length}</p>
-          <p className="text-sm text-blue-700">Beibehalten</p>
+        <div className="bg-cyan-400/10 rounded-xl p-4 text-center">
+          <p className="text-2xl font-bold text-cyan-400">{maintainRecs.length}</p>
+          <p className="text-sm text-cyan-400">Beibehalten</p>
         </div>
         <div className="bg-orange-50 rounded-xl p-4 text-center">
           <p className="text-2xl font-bold text-orange-600">{decreaseRecs.length}</p>
@@ -257,8 +257,8 @@ export function AutoRegulationTracker() {
               <div className="flex items-center gap-3">
                 {getRecommendationIcon(rec.recommendation)}
                 <div>
-                  <h4 className="font-semibold text-slate-800">{rec.exerciseName}</h4>
-                  <p className="text-sm text-slate-600">
+                  <h4 className="font-semibold text-[hsl(var(--fg-primary))]">{rec.exerciseName}</h4>
+                  <p className="text-sm text-[hsl(var(--fg-secondary))]">
                     Letztes Training: {rec.lastWeight}kg × {rec.lastReps} 
                     {rec.lastRIR !== undefined && ` (RIR ${rec.lastRIR.toFixed(1)})`}
                   </p>
@@ -268,10 +268,10 @@ export function AutoRegulationTracker() {
             </div>
             
             <div className="mt-3 flex items-center justify-between">
-              <p className="text-sm text-slate-600">{rec.reason}</p>
+              <p className="text-sm text-[hsl(var(--fg-secondary))]">{rec.reason}</p>
               <div className="text-right">
-                <p className="text-xs text-slate-500">Empfohlen</p>
-                <p className="text-lg font-bold text-slate-800">{rec.recommendedWeight} kg</p>
+                <p className="text-xs text-[hsl(var(--fg-muted))]">Empfohlen</p>
+                <p className="text-lg font-bold text-[hsl(var(--fg-primary))]">{rec.recommendedWeight} kg</p>
               </div>
             </div>
           </div>

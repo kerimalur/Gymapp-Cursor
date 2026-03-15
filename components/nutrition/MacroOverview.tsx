@@ -56,7 +56,7 @@ export function MacroOverview() {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8">
+    <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg p-8">
       {/* Calories - Main Display */}
       <div className="mb-8">
         <div className="text-center mb-6">
@@ -66,10 +66,10 @@ export function MacroOverview() {
               <p className="text-3xl font-bold">{consumed.calories}</p>
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl font-bold text-[hsl(var(--fg-primary))] mb-2">
             Kalorien heute
           </h2>
-          <p className="text-gray-600">
+          <p className="text-[hsl(var(--fg-secondary))]">
             {goals.calories - consumed.calories} kcal verbleibend von {goals.calories} kcal
           </p>
         </div>
@@ -91,12 +91,12 @@ export function MacroOverview() {
           const remaining = macro.goal - macro.consumed;
 
           return (
-            <div key={index} className="bg-gray-50 rounded-xl p-6">
+            <div key={index} className="bg-[hsl(225,12%,13%)] rounded-xl p-6">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-3xl">{macro.icon}</span>
                 <div className="flex-1">
-                  <h3 className="font-bold text-gray-900">{macro.name}</h3>
-                  <p className="text-sm text-gray-600">
+                  <h3 className="font-bold text-[hsl(var(--fg-primary))]">{macro.name}</h3>
+                  <p className="text-sm text-[hsl(var(--fg-secondary))]">
                     {macro.consumed} / {macro.goal} {macro.unit}
                   </p>
                 </div>
@@ -111,7 +111,7 @@ export function MacroOverview() {
                 </div>
               </div>
 
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-[hsl(var(--fg-muted))]">
                 {remaining > 0 ? (
                   <>Noch {remaining} {macro.unit}</>
                 ) : (
@@ -124,30 +124,30 @@ export function MacroOverview() {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-gray-200">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-[hsl(225,10%,16%)]">
         <div className="text-center">
-          <p className="text-2xl font-bold text-gray-900">
+          <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
             {Math.round((consumed.protein * 4 / consumed.calories) * 100)}%
           </p>
-          <p className="text-sm text-gray-600">Protein</p>
+          <p className="text-sm text-[hsl(var(--fg-secondary))]">Protein</p>
         </div>
         <div className="text-center">
-          <p className="text-2xl font-bold text-gray-900">
+          <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
             {Math.round((consumed.carbs * 4 / consumed.calories) * 100)}%
           </p>
-          <p className="text-sm text-gray-600">Carbs</p>
+          <p className="text-sm text-[hsl(var(--fg-secondary))]">Carbs</p>
         </div>
         <div className="text-center">
-          <p className="text-2xl font-bold text-gray-900">
+          <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
             {Math.round((consumed.fats * 9 / consumed.calories) * 100)}%
           </p>
-          <p className="text-sm text-gray-600">Fette</p>
+          <p className="text-sm text-[hsl(var(--fg-secondary))]">Fette</p>
         </div>
         <div className="text-center">
-          <p className="text-2xl font-bold text-gray-900">
+          <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
             {Math.round((consumed.calories / goals.calories) * 100)}%
           </p>
-          <p className="text-sm text-gray-600">Ziel</p>
+          <p className="text-sm text-[hsl(var(--fg-secondary))]">Ziel</p>
         </div>
       </div>
     </div>

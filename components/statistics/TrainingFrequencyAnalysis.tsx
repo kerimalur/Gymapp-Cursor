@@ -32,7 +32,7 @@ const RECOMMENDED_FREQUENCY: Record<MuscleGroup, number> = {
 
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'RÃƒÂ¼cken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -41,12 +41,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'GesÃƒÂ¤ÃƒÅ¸',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Rücken',
+  lower_back: 'Unterer RÃƒÂ¼cken',
   neck: 'Nacken',
 };
 
@@ -180,9 +180,9 @@ export function TrainingFrequencyAnalysis() {
 
   const getStatusBg = (status: FrequencyData['status']) => {
     switch (status) {
-      case 'optimal': return 'bg-emerald-50 border-emerald-200';
+      case 'optimal': return 'bg-emerald-400/10 border-emerald-200';
       case 'low': return 'bg-amber-50 border-amber-200';
-      case 'undertrained': return 'bg-rose-50 border-rose-200';
+      case 'undertrained': return 'bg-rose-400/10 border-rose-200';
     }
   };
 
@@ -190,31 +190,31 @@ export function TrainingFrequencyAnalysis() {
     <div>
       {/* Header with Settings Button */}
       <div className="flex items-center justify-between mb-4">
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-[hsl(var(--fg-muted))]">
           {enabledMuscles.length} von {ALL_MUSCLES.length} Muskeln aktiv
         </div>
         <button
           onClick={() => setShowSettings(true)}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-lg transition-colors"
           title="Einstellungen"
         >
-          <Settings className="w-5 h-5 text-gray-500" />
+          <Settings className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
         </button>
       </div>
 
       {/* Summary */}
       <div className="grid grid-cols-3 gap-3 mb-6">
-        <div className="text-center p-3 bg-emerald-50 rounded-xl">
+        <div className="text-center p-3 bg-emerald-400/10 rounded-xl">
           <p className="text-2xl font-bold text-emerald-600">{statusCounts.optimal}</p>
-          <p className="text-xs text-emerald-700">Optimal (≥2×)</p>
+          <p className="text-xs text-emerald-700">Optimal (Ã¢â€°Â¥2Ãƒâ€”)</p>
         </div>
         <div className="text-center p-3 bg-amber-50 rounded-xl">
           <p className="text-2xl font-bold text-amber-600">{statusCounts.low}</p>
-          <p className="text-xs text-amber-700">Niedrig (1×)</p>
+          <p className="text-xs text-amber-700">Niedrig (1Ãƒâ€”)</p>
         </div>
-        <div className="text-center p-3 bg-rose-50 rounded-xl">
+        <div className="text-center p-3 bg-rose-400/10 rounded-xl">
           <p className="text-2xl font-bold text-rose-600">{statusCounts.undertrained}</p>
-          <p className="text-xs text-rose-700">Untrainiert (0×)</p>
+          <p className="text-xs text-rose-700">Untrainiert (0Ãƒâ€”)</p>
         </div>
       </div>
 
@@ -226,16 +226,16 @@ export function TrainingFrequencyAnalysis() {
             className={`p-3 rounded-xl border ${getStatusBg(data.status)} transition-all`}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-slate-700">{data.label}</span>
+              <span className="text-sm font-medium text-[hsl(var(--fg-secondary))]">{data.label}</span>
               {getStatusIcon(data.status)}
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-bold text-slate-800">{data.thisWeek}</span>
-              <span className="text-sm text-slate-500">/ {data.recommended}×</span>
+              <span className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{data.thisWeek}</span>
+              <span className="text-sm text-[hsl(var(--fg-muted))]">/ {data.recommended}Ãƒâ€”</span>
             </div>
             {data.lastWeek !== data.thisWeek && (
               <p className={`text-xs mt-1 ${data.trend === 'up' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                {data.trend === 'up' ? '↑' : '↓'} Letzte Woche: {data.lastWeek}×
+                {data.trend === 'up' ? 'Ã¢â€ â€˜' : 'Ã¢â€ â€œ'} Letzte Woche: {data.lastWeek}Ãƒâ€”
               </p>
             )}
           </div>
@@ -244,10 +244,10 @@ export function TrainingFrequencyAnalysis() {
 
       {/* Tips */}
       {statusCounts.undertrained > 0 && (
-        <div className="mt-4 p-3 bg-rose-50 rounded-lg border border-rose-200">
+        <div className="mt-4 p-3 bg-rose-400/10 rounded-lg border border-rose-200">
           <p className="text-sm text-rose-700">
             <strong>{statusCounts.undertrained} Muskelgruppe(n)</strong> wurden diese Woche noch nicht trainiert. 
-            F?r optimale Ergebnisse trainiere jede Muskelgruppe mindestens 2× pro Woche.
+            F?r optimale Ergebnisse trainiere jede Muskelgruppe mindestens 2Ãƒâ€” pro Woche.
           </p>
         </div>
       )}
@@ -255,20 +255,20 @@ export function TrainingFrequencyAnalysis() {
       {/* Settings Modal */}
       {showSettings && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-hidden">
-            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-gray-900">Muskelgruppen ausw?hlen</h3>
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl w-full max-w-md max-h-[90vh] overflow-hidden">
+            <div className="p-4 border-b border-[hsl(225,10%,16%)] flex items-center justify-between">
+              <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Muskelgruppen ausw?hlen</h3>
               <button
                 onClick={() => setShowSettings(false)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
               </button>
             </div>
             
             <div className="p-4 overflow-y-auto max-h-[60vh]">
-              <p className="text-sm text-gray-500 mb-4">
-                W?hle aus, welche Muskelgruppen in der Frequenzanalyse berücksichtigt werden sollen.
+              <p className="text-sm text-[hsl(var(--fg-muted))] mb-4">
+                W?hle aus, welche Muskelgruppen in der Frequenzanalyse berÃƒÂ¼cksichtigt werden sollen.
                 Deaktiviere Muskeln, die du nicht direkt trainierst.
               </p>
               
@@ -282,10 +282,10 @@ export function TrainingFrequencyAnalysis() {
                       className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
                         isEnabled 
                           ? 'bg-primary-50 border-primary-300' 
-                          : 'bg-gray-50 border-gray-200'
+                          : 'bg-[hsl(225,12%,13%)] border-[hsl(225,10%,16%)]'
                       }`}
                     >
-                      <span className={`font-medium ${isEnabled ? 'text-primary-700' : 'text-gray-500'}`}>
+                      <span className={`font-medium ${isEnabled ? 'text-primary-700' : 'text-[hsl(var(--fg-muted))]'}`}>
                         {MUSCLE_LABELS[muscle]}
                       </span>
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
@@ -305,14 +305,14 @@ export function TrainingFrequencyAnalysis() {
               </div>
             </div>
 
-            <div className="p-4 border-t border-gray-200 flex gap-3">
+            <div className="p-4 border-t border-[hsl(225,10%,16%)] flex gap-3">
               <button
                 onClick={() => {
                   ALL_MUSCLES.forEach(m => {
                     if (!enabledMuscles.includes(m)) toggleMuscle(m);
                   });
                 }}
-                className="flex-1 py-2 px-4 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                className="flex-1 py-2 px-4 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] rounded-lg hover:bg-[hsl(225,12%,20%)] transition-colors"
               >
                 Alle aktivieren
               </button>

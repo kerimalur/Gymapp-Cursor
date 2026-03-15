@@ -148,16 +148,16 @@ export function SmartWorkoutRecommendation({ onStart }: Props) {
   };
 
   return (
-    <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 p-5 shadow-sm">
+    <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-gradient-to-br from-cyan-400/10 to-indigo-400/10 p-5 shadow-sm">
       {/* Header row */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-blue-600" />
-          <span className="font-bold text-slate-800">Smart Empfehlung</span>
+          <Zap className="h-5 w-5 text-cyan-400" />
+          <span className="font-bold text-[hsl(var(--fg-primary))]">Smart Empfehlung</span>
         </div>
         <button
           onClick={handleStart}
-          className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
+          className="inline-flex items-center gap-1 rounded-lg bg-cyan-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-cyan-600 transition-colors"
         >
           Heute starten
           <ChevronRight className="h-3.5 w-3.5" />
@@ -165,10 +165,10 @@ export function SmartWorkoutRecommendation({ onStart }: Props) {
       </div>
 
       {/* Day name */}
-      <p className="text-xl font-bold text-slate-800">{dayName}</p>
+      <p className="text-xl font-bold text-[hsl(var(--fg-primary))]">{dayName}</p>
 
       {/* Last session info */}
-      <p className="mt-0.5 text-sm text-slate-500">
+      <p className="mt-0.5 text-sm text-[hsl(var(--fg-muted))]">
         Letzte Session:{' '}
         <span className="font-medium">{lastSessionLabel}</span>
       </p>
@@ -176,29 +176,29 @@ export function SmartWorkoutRecommendation({ onStart }: Props) {
       {/* Muscle readiness bars */}
       {musclesToShow.length > 0 && (
         <div className="mt-4">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[hsl(var(--fg-muted))]">
             Muskelbereitschaft
           </p>
           <div className="flex flex-wrap gap-2">
             {musclesToShow.map(({ muscle, recovery }) => (
               <div
                 key={muscle}
-                className="flex min-w-[110px] flex-1 items-center gap-2 rounded-xl border border-white/80 bg-white/60 px-3 py-2"
+                className="flex min-w-[110px] flex-1 items-center gap-2 rounded-xl border border-[hsl(225,10%,20%)] bg-[hsl(225,14%,10%)]/40 px-3 py-2"
               >
                 <span
                   className={`h-2 w-2 flex-shrink-0 rounded-full ${getMuscleDotColor(recovery)}`}
                 />
-                <span className="flex-1 text-xs font-medium text-slate-700">
+                <span className="flex-1 text-xs font-medium text-[hsl(var(--fg-secondary))]">
                   {MUSCLE_NAMES_DE[muscle]}
                 </span>
                 <div className="flex items-center gap-1.5">
-                  <div className="h-1.5 w-14 overflow-hidden rounded-full bg-slate-200">
+                  <div className="h-1.5 w-14 overflow-hidden rounded-full bg-[hsl(225,12%,18%)]">
                     <div
                       className={`h-full rounded-full transition-all ${getMuscleBarColor(recovery)}`}
                       style={{ width: `${recovery}%` }}
                     />
                   </div>
-                  <span className="w-8 text-right text-xs font-semibold text-slate-600">
+                  <span className="w-8 text-right text-xs font-semibold text-[hsl(var(--fg-secondary))]">
                     {recovery}%
                   </span>
                 </div>

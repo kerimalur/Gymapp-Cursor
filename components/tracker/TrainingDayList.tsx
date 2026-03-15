@@ -101,13 +101,13 @@ export function TrainingDayList({ limit }: TrainingDayListProps) {
   if (displayDays.length === 0) {
     return (
       <div className="glass-card p-12 text-center animate-fade-in">
-        <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center text-gray-300">
+        <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[hsl(225,12%,15%)] to-[hsl(225,12%,13%)] flex items-center justify-center text-[hsl(var(--fg-subtle))]">
           {Icons.empty}
         </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2">
+        <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))] mb-2">
           Noch keine Trainingstage
         </h3>
-        <p className="text-gray-500">
+        <p className="text-[hsl(var(--fg-muted))]">
           Erstelle deinen ersten Trainingstag, um loszulegen
         </p>
       </div>
@@ -131,16 +131,16 @@ export function TrainingDayList({ limit }: TrainingDayListProps) {
                   {Icons.dumbbell}
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900">{day.name}</h3>
-                  <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                    <span className="text-gray-400">{Icons.exercises}</span>
+                  <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">{day.name}</h3>
+                  <div className="flex items-center gap-1.5 text-sm text-[hsl(var(--fg-muted))]">
+                    <span className="text-[hsl(var(--fg-subtle))]">{Icons.exercises}</span>
                     {day.exercises.length} Übungen
                   </div>
                 </div>
               </div>
               <button
                 onClick={(e) => { e.stopPropagation(); handleViewDetails(day); }}
-                className="p-2 rounded-xl text-gray-400 hover:text-primary-500 hover:bg-primary-50 transition-all"
+                className="p-2 rounded-xl text-[hsl(var(--fg-subtle))] hover:text-primary-500 hover:bg-primary-50 transition-all"
                 title="Details anzeigen"
               >
                 {Icons.info}
@@ -177,14 +177,14 @@ export function TrainingDayList({ limit }: TrainingDayListProps) {
               </button>
               <button 
                 onClick={() => handleEdit(day)}
-                className="p-3 rounded-xl bg-white/60 border border-gray-100 text-gray-500 hover:text-primary-600 hover:border-primary-200 hover:bg-primary-50/50 transition-all"
+                className="p-3 rounded-xl bg-[hsl(225,14%,10%)]/40 border border-[hsl(225,10%,14%)] text-[hsl(var(--fg-muted))] hover:text-primary-600 hover:border-primary-200 hover:bg-primary-50/50 transition-all"
                 title="Bearbeiten"
               >
                 {Icons.edit}
               </button>
               <button 
                 onClick={() => handleDelete(day.id)}
-                className="p-3 rounded-xl bg-white/60 border border-gray-100 text-gray-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50/50 transition-all"
+                className="p-3 rounded-xl bg-[hsl(225,14%,10%)]/40 border border-[hsl(225,10%,14%)] text-[hsl(var(--fg-muted))] hover:text-red-600 hover:border-red-200 hover:bg-red-50/50 transition-all"
                 title="L?schen"
               >
                 {Icons.trash}

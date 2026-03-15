@@ -60,11 +60,11 @@ export function QuickStartWidget() {
       <div className="bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl p-6 shadow-lg">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-2 bg-slate-300 rounded-xl">
-            <Dumbbell className="w-6 h-6 text-slate-600" />
+            <Dumbbell className="w-6 h-6 text-[hsl(var(--fg-secondary))]" />
           </div>
           <div>
-            <p className="text-sm text-slate-500">Kein aktiver Plan</p>
-            <h3 className="font-bold text-lg text-slate-800">Training starten</h3>
+            <p className="text-sm text-[hsl(var(--fg-muted))]">Kein aktiver Plan</p>
+            <h3 className="font-bold text-lg text-[hsl(var(--fg-primary))]">Training starten</h3>
           </div>
         </div>
         

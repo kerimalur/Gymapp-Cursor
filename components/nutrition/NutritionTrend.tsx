@@ -24,8 +24,8 @@ interface NutritionTrendProps {
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-3 min-w-[160px]">
-        <p className="text-sm font-semibold text-slate-800 mb-2">{label}</p>
+      <div className="bg-[hsl(225,14%,10%)] rounded-xl shadow-lg border border-[hsl(225,10%,16%)] p-3 min-w-[160px]">
+        <p className="text-sm font-semibold text-[hsl(var(--fg-primary))] mb-2">{label}</p>
         <div className="space-y-1.5">
           {payload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center justify-between gap-4">
@@ -34,7 +34,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                   className="w-2.5 h-2.5 rounded-full" 
                   style={{ backgroundColor: entry.color }}
                 />
-                <span className="text-xs text-slate-600">{entry.name}</span>
+                <span className="text-xs text-[hsl(var(--fg-secondary))]">{entry.name}</span>
               </div>
               <span className="text-sm font-bold" style={{ color: entry.color }}>
                 {entry.value}{entry.name === 'Kalorien' ? '' : 'g'}
@@ -118,8 +118,8 @@ export function NutritionTrend({ showGoals = true }: NutritionTrendProps) {
     return (
       <div className="text-center py-8">
         <div className="text-4xl mb-3">📊</div>
-        <p className="text-slate-600 font-medium">Noch keine Daten</p>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-[hsl(var(--fg-secondary))] font-medium">Noch keine Daten</p>
+        <p className="text-sm text-[hsl(var(--fg-subtle))] mt-1">
           Tracke deine Mahlzeiten, um Trends zu sehen
         </p>
       </div>
@@ -184,8 +184,8 @@ export function NutritionTrend({ showGoals = true }: NutritionTrendProps) {
       </div>
 
       {/* Calorie Chart */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
-        <h4 className="font-semibold text-slate-800 mb-4">Kalorien-Trend (7 Tage)</h4>
+      <div className="bg-[hsl(225,14%,10%)] rounded-xl border border-[hsl(225,10%,16%)] p-4">
+        <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-4">Kalorien-Trend (7 Tage)</h4>
         <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={trendData}>
@@ -230,8 +230,8 @@ export function NutritionTrend({ showGoals = true }: NutritionTrendProps) {
       </div>
 
       {/* Protein Chart */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
-        <h4 className="font-semibold text-slate-800 mb-4">Protein-Trend (7 Tage)</h4>
+      <div className="bg-[hsl(225,14%,10%)] rounded-xl border border-[hsl(225,10%,16%)] p-4">
+        <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-4">Protein-Trend (7 Tage)</h4>
         <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={trendData}>
@@ -276,7 +276,7 @@ export function NutritionTrend({ showGoals = true }: NutritionTrendProps) {
       </div>
 
       {/* Days tracked info */}
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-sm text-[hsl(var(--fg-muted))]">
         {stats.daysTracked} von 7 Tagen getrackt
       </p>
     </div>

@@ -88,7 +88,7 @@ export function SkeletonExerciseCard() {
       </div>
       <div className="space-y-2">
         {[1, 2, 3].map(i => (
-          <div key={i} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+          <div key={i} className="flex items-center justify-between p-3 bg-[hsl(225,12%,13%)] rounded-lg">
             <Skeleton className="h-4 w-16" />
             <Skeleton className="h-4 w-24" />
           </div>

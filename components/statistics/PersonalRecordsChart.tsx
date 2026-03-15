@@ -93,8 +93,8 @@ export function PersonalRecordsChart() {
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-50 flex items-center justify-center">
             <Trophy className="w-8 h-8 text-amber-400" />
           </div>
-          <p className="text-lg font-semibold text-gray-900 mb-1">Keine Rekorde</p>
-          <p className="text-sm text-gray-500">Trainiere um deine PRs zu setzen</p>
+          <p className="text-lg font-semibold text-[hsl(var(--fg-primary))] mb-1">Keine Rekorde</p>
+          <p className="text-sm text-[hsl(var(--fg-muted))]">Trainiere um deine PRs zu setzen</p>
         </div>
       </div>
     );
@@ -108,18 +108,18 @@ export function PersonalRecordsChart() {
           <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-4 border border-amber-100">
             <div className="flex items-center gap-2 mb-2">
               <Trophy className="w-4 h-4 text-amber-600" />
-              <span className="text-xs font-medium text-amber-600">St?rkste Übung</span>
+              <span className="text-xs font-medium text-amber-600">St?rkste ÃƒÅ“bung</span>
             </div>
-            <p className="font-bold text-gray-900 truncate">{stats.topExercise?.exerciseName}</p>
-            <p className="text-sm text-gray-500">{stats.topExercise?.estimated1RM} kg 1RM</p>
+            <p className="font-bold text-[hsl(var(--fg-primary))] truncate">{stats.topExercise?.exerciseName}</p>
+            <p className="text-sm text-[hsl(var(--fg-muted))]">{stats.topExercise?.estimated1RM} kg 1RM</p>
           </div>
           <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 border border-emerald-100">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="w-4 h-4 text-emerald-600" />
               <span className="text-xs font-medium text-emerald-600">Beste Entwicklung</span>
             </div>
-            <p className="font-bold text-gray-900 truncate">{stats.mostImproved?.exerciseName}</p>
-            <p className="text-sm text-gray-500">+{stats.mostImproved?.improvement}% Steigerung</p>
+            <p className="font-bold text-[hsl(var(--fg-primary))] truncate">{stats.mostImproved?.exerciseName}</p>
+            <p className="text-sm text-[hsl(var(--fg-muted))]">+{stats.mostImproved?.improvement}% Steigerung</p>
           </div>
         </div>
       )}
@@ -129,35 +129,35 @@ export function PersonalRecordsChart() {
         {personalRecords.map((record, index) => (
           <div
             key={record.exerciseId}
-            className="flex items-center gap-4 p-4 bg-white/60 rounded-xl border border-gray-100 hover:border-gray-200 transition-all group"
+            className="flex items-center gap-4 p-4 bg-[hsl(225,14%,10%)]/60 rounded-xl border border-[hsl(225,10%,14%)] hover:border-[hsl(225,10%,22%)] transition-all group"
           >
             {/* Rank */}
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${
               index === 0 ? 'bg-gradient-to-br from-amber-400 to-yellow-500 text-white' :
               index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-400 text-white' :
               index === 2 ? 'bg-gradient-to-br from-orange-400 to-amber-500 text-white' :
-              'bg-gray-100 text-gray-600'
+              'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))]'
             }`}>
               #{index + 1}
             </div>
 
             {/* Exercise Info */}
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-gray-900 truncate">{record.exerciseName}</p>
-              <p className="text-sm text-gray-500">
-                {record.maxWeight} kg × {record.maxReps} Wdh
+              <p className="font-semibold text-[hsl(var(--fg-primary))] truncate">{record.exerciseName}</p>
+              <p className="text-sm text-[hsl(var(--fg-muted))]">
+                {record.maxWeight} kg Ãƒâ€” {record.maxReps} Wdh
               </p>
             </div>
 
             {/* 1RM */}
             <div className="text-right">
               <p className="font-bold text-primary-600">{record.estimated1RM} kg</p>
-              <p className="text-xs text-gray-400">1RM</p>
+              <p className="text-xs text-[hsl(var(--fg-subtle))]">1RM</p>
             </div>
 
             {/* Improvement Badge */}
             {record.improvement && record.improvement > 0 && (
-              <div className="px-2 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-semibold">
+              <div className="px-2 py-1 bg-emerald-400/10 text-emerald-600 rounded-lg text-xs font-semibold">
                 +{record.improvement}%
               </div>
             )}

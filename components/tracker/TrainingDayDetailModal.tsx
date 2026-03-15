@@ -188,7 +188,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
       <div className="p-6 space-y-6">
         {/* Muscle Groups Overview */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3 flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wide mb-3 flex items-center gap-2">
             <Target className="w-4 h-4" />
             Trainierte Muskelgruppen
           </h3>
@@ -240,7 +240,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
                 )}
                 {volDiff !== 0 && (
                   <div className="ml-auto text-right">
-                    <p className="text-xs text-slate-500">Gewicht ges.</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Gewicht ges.</p>
                     <p className={`text-sm font-bold ${volDiff > 0 ? 'text-emerald-600' : 'text-orange-600'}`}>
                       {volDiff > 0 ? '+' : ''}{volDiff}kg
                     </p>
@@ -253,7 +253,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
 
         {/* Exercise List */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3 flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wide mb-3 flex items-center gap-2">
             <Repeat className="w-4 h-4" />
             Übungen
           </h3>
@@ -264,7 +264,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
               return (
                 <div
                   key={index}
-                  className="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-primary-200 hover:bg-primary-50/30 transition-all"
+                  className="p-4 rounded-2xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,14%)] hover:border-primary-200 hover:bg-primary-50/30 transition-all"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
@@ -272,7 +272,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
                         <span className="w-6 h-6 rounded-lg bg-primary-500 text-white text-xs font-bold flex items-center justify-center">
                           {index + 1}
                         </span>
-                        <h4 className="font-semibold text-slate-800">
+                        <h4 className="font-semibold text-[hsl(var(--fg-primary))]">
                           {details?.name || ex.exerciseId}
                         </h4>
                       </div>
@@ -280,7 +280,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
                         {details?.muscleGroups.map((muscle: string) => (
                           <span
                             key={muscle}
-                            className="px-2 py-0.5 rounded-md bg-slate-200/80 text-slate-600 text-xs"
+                            className="px-2 py-0.5 rounded-md bg-[hsl(225,12%,18%)]/80 text-[hsl(var(--fg-secondary))] text-xs"
                           >
                             {muscleNames[muscle] || muscle}
                           </span>
@@ -293,7 +293,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
                             ? 'bg-emerald-50 border border-emerald-200' 
                             : recommendation.recommendation === 'decrease'
                             ? 'bg-orange-50 border border-orange-200'
-                            : 'bg-blue-50 border border-blue-200'
+                            : 'bg-cyan-400/10 border border-cyan-400/20'
                         }`}>
                           <div className="flex items-center gap-2">
                             {recommendation.recommendation === 'increase' ? (
@@ -304,23 +304,23 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
                               <Minus className="w-4 h-4 text-blue-600" />
                             )}
                             <div>
-                              <p className="text-xs text-slate-500">Ziel</p>
-                              <p className="font-bold text-sm text-slate-800">
+                              <p className="text-xs text-[hsl(var(--fg-muted))]">Ziel</p>
+                              <p className="font-bold text-sm text-[hsl(var(--fg-primary))]">
                                 {recommendation.recommendedWeight}kg × {recommendation.recommendedReps}
                               </p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="text-xs text-slate-400">Letztes Mal</p>
-                            <p className="text-xs text-slate-600">{recommendation.lastWeight}kg × {recommendation.lastReps}</p>
+                            <p className="text-xs text-[hsl(var(--fg-subtle))]">Letztes Mal</p>
+                            <p className="text-xs text-[hsl(var(--fg-secondary))]">{recommendation.lastWeight}kg × {recommendation.lastReps}</p>
                           </div>
                         </div>
                       )}
                     </div>
                     <div className="text-right shrink-0">
-                      <div className="px-3 py-1.5 rounded-xl bg-white border border-slate-200">
+                      <div className="px-3 py-1.5 rounded-xl bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)]">
                         <span className="text-lg font-bold text-primary-600">{ex.sets.length}</span>
-                        <span className="text-slate-500 text-sm ml-1">Sätze</span>
+                        <span className="text-[hsl(var(--fg-muted))] text-sm ml-1">Sätze</span>
                       </div>
                     </div>
                   </div>

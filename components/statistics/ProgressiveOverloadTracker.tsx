@@ -129,21 +129,21 @@ export function ProgressiveOverloadTracker() {
 
       if (sortedSessions.length < 3) {
         status = 'new';
-        suggestion = 'Noch zu wenig Daten für eine Analyse';
+        suggestion = 'Noch zu wenig Daten fÃƒÂ¼r eine Analyse';
       } else if (percentChange > 2) {
         status = 'progressing';
-        suggestion = 'Weiter so! Gute Progression 💪';
+        suggestion = 'Weiter so! Gute Progression Ã°Å¸â€™Âª';
       } else if (percentChange < -5) {
         status = 'regressing';
-        suggestion = '?berpr?fe Schlaf, Ernährung und Recovery. Eventuell Deload einplanen.';
+        suggestion = '?berpr?fe Schlaf, ErnÃƒÂ¤hrung und Recovery. Eventuell Deload einplanen.';
       } else if (weeksSinceProgress >= 3) {
         status = 'stagnant';
         if (volumeTrend < -10) {
-          suggestion = 'Versuche das Volumen zu erhöhen (mehr Sätze)';
+          suggestion = 'Versuche das Volumen zu erhÃƒÂ¶hen (mehr SÃƒÂ¤tze)';
         } else if (volumeTrend > 10) {
-          suggestion = 'Volumen ist hoch, versuche Gewicht zu steigern statt mehr Sätze';
+          suggestion = 'Volumen ist hoch, versuche Gewicht zu steigern statt mehr SÃƒÂ¤tze';
         } else {
-          suggestion = 'Probiere eine Variation der Übung oder aendere Rep-Range';
+          suggestion = 'Probiere eine Variation der ÃƒÅ“bung oder aendere Rep-Range';
         }
       } else {
         status = 'progressing';
@@ -191,20 +191,20 @@ export function ProgressiveOverloadTracker() {
       case 'regressing':
         return <TrendingDown className="w-5 h-5 text-rose-500" />;
       case 'new':
-        return <CheckCircle className="w-5 h-5 text-slate-400" />;
+        return <CheckCircle className="w-5 h-5 text-[hsl(var(--fg-subtle))]" />;
     }
   };
 
   const getStatusColor = (status: ExerciseProgressStatus['status']) => {
     switch (status) {
       case 'progressing':
-        return 'bg-emerald-50 border-emerald-200';
+        return 'bg-emerald-400/10 border-emerald-200';
       case 'stagnant':
         return 'bg-amber-50 border-amber-200';
       case 'regressing':
-        return 'bg-rose-50 border-rose-200';
+        return 'bg-rose-400/10 border-rose-200';
       case 'new':
-        return 'bg-slate-50 border-slate-200';
+        return 'bg-[hsl(225,12%,13%)] border-[hsl(225,10%,16%)]';
     }
   };
 
@@ -212,8 +212,8 @@ export function ProgressiveOverloadTracker() {
     return (
       <div className="text-center py-8">
         <AlertTriangle className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-        <p className="text-slate-500">Noch keine Übungsdaten vorhanden</p>
-        <p className="text-sm text-slate-400">Absolviere einige Trainings für die Progressions-Analyse</p>
+        <p className="text-[hsl(var(--fg-muted))]">Noch keine ÃƒÅ“bungsdaten vorhanden</p>
+        <p className="text-sm text-[hsl(var(--fg-subtle))]">Absolviere einige Trainings fÃƒÂ¼r die Progressions-Analyse</p>
       </div>
     );
   }
@@ -222,7 +222,7 @@ export function ProgressiveOverloadTracker() {
     <div>
       {/* Summary Stats */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        <div className="text-center p-3 bg-emerald-50 rounded-xl">
+        <div className="text-center p-3 bg-emerald-400/10 rounded-xl">
           <p className="text-2xl font-bold text-emerald-600">{statusCounts.progressing}</p>
           <p className="text-xs text-emerald-700">Progression</p>
         </div>
@@ -230,13 +230,13 @@ export function ProgressiveOverloadTracker() {
           <p className="text-2xl font-bold text-amber-600">{statusCounts.stagnant}</p>
           <p className="text-xs text-amber-700">Stagniert</p>
         </div>
-        <div className="text-center p-3 bg-rose-50 rounded-xl">
+        <div className="text-center p-3 bg-rose-400/10 rounded-xl">
           <p className="text-2xl font-bold text-rose-600">{statusCounts.regressing}</p>
-          <p className="text-xs text-rose-700">Rückgang</p>
+          <p className="text-xs text-rose-700">RÃƒÂ¼ckgang</p>
         </div>
-        <div className="text-center p-3 bg-slate-50 rounded-xl">
-          <p className="text-2xl font-bold text-slate-600">{statusCounts.new}</p>
-          <p className="text-xs text-slate-600">Neu</p>
+        <div className="text-center p-3 bg-[hsl(225,12%,13%)] rounded-xl">
+          <p className="text-2xl font-bold text-[hsl(var(--fg-secondary))]">{statusCounts.new}</p>
+          <p className="text-xs text-[hsl(var(--fg-secondary))]">Neu</p>
         </div>
       </div>
 
@@ -248,8 +248,8 @@ export function ProgressiveOverloadTracker() {
             <div>
               <p className="font-semibold text-amber-800">Achtung: M?gliche Stagnation</p>
               <p className="text-sm text-amber-700 mt-1">
-                {statusCounts.stagnant > 0 && `${statusCounts.stagnant} Übung(en) stagnieren. `}
-                {statusCounts.regressing > 0 && `${statusCounts.regressing} Übung(en) zeigen Rückgang.`}
+                {statusCounts.stagnant > 0 && `${statusCounts.stagnant} ÃƒÅ“bung(en) stagnieren. `}
+                {statusCounts.regressing > 0 && `${statusCounts.regressing} ÃƒÅ“bung(en) zeigen RÃƒÂ¼ckgang.`}
               </p>
             </div>
           </div>
@@ -267,8 +267,8 @@ export function ProgressiveOverloadTracker() {
               <div className="flex items-center gap-3">
                 {getStatusIcon(exercise.status)}
                 <div>
-                  <p className="font-semibold text-slate-800">{exercise.exerciseName}</p>
-                  <p className="text-sm text-slate-500">
+                  <p className="font-semibold text-[hsl(var(--fg-primary))]">{exercise.exerciseName}</p>
+                  <p className="text-sm text-[hsl(var(--fg-muted))]">
                     Max: {exercise.currentMax}kg
                     {exercise.percentChange !== 0 && (
                       <span className={`ml-2 ${exercise.percentChange > 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
@@ -280,7 +280,7 @@ export function ProgressiveOverloadTracker() {
               </div>
               <div className="text-right">
                 {exercise.lastTrainedDate && (
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-[hsl(var(--fg-subtle))]">
                     {format(exercise.lastTrainedDate, 'dd.MM', { locale: de })}
                   </p>
                 )}
@@ -292,8 +292,8 @@ export function ProgressiveOverloadTracker() {
               </div>
             </div>
             {exercise.suggestion && (exercise.status === 'stagnant' || exercise.status === 'regressing') && (
-              <div className="mt-3 pt-3 border-t border-slate-200/50">
-                <p className="text-sm text-slate-600 flex items-center gap-2">
+              <div className="mt-3 pt-3 border-t border-[hsl(225,10%,16%)]/50">
+                <p className="text-sm text-[hsl(var(--fg-secondary))] flex items-center gap-2">
                   <ChevronRight className="w-4 h-4" />
                   {exercise.suggestion}
                 </p>

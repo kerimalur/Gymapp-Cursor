@@ -59,7 +59,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 50 }}
           transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-          className={`bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl ${config.bgGlow}`}
+          className={`bg-[hsl(225,14%,10%)] rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl ${config.bgGlow}`}
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           {/* Hero Header */}
@@ -103,10 +103,10 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="bg-blue-50 rounded-2xl p-4 text-center"
+                className="bg-cyan-400/10 rounded-2xl p-4 text-center"
               >
-                <Clock className="w-5 h-5 text-blue-600 mx-auto mb-1" />
-                <p className="text-2xl font-black text-blue-700">{summary.duration}</p>
+                <Clock className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
+                <p className="text-2xl font-black text-cyan-400">{summary.duration}</p>
                 <p className="text-xs text-blue-500">Minuten</p>
                 {summary.durationDiff !== 0 && (
                   <p className={`text-xs mt-1 font-semibold ${summary.durationDiff > 0 ? 'text-orange-500' : 'text-emerald-500'}`}>
@@ -164,7 +164,7 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.8 + i * 0.1 }}
-                      className="flex items-center justify-between bg-white/60 rounded-xl px-3 py-2"
+                      className="flex items-center justify-between bg-[hsl(225,14%,10%)]/60 rounded-xl px-3 py-2"
                     >
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4 text-amber-500" />
@@ -181,10 +181,10 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
             <div>
               <button
                 onClick={() => setShowDetails(!showDetails)}
-                className="flex items-center justify-between w-full p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors"
+                className="flex items-center justify-between w-full p-3 rounded-xl bg-[hsl(225,12%,13%)] hover:bg-[hsl(225,12%,18%)] transition-colors"
               >
-                <span className="font-semibold text-slate-700 text-sm">Übungen im Detail</span>
-                {showDetails ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
+                <span className="font-semibold text-[hsl(var(--fg-secondary))] text-sm">Übungen im Detail</span>
+                {showDetails ? <ChevronUp className="w-4 h-4 text-[hsl(var(--fg-muted))]" /> : <ChevronDown className="w-4 h-4 text-[hsl(var(--fg-muted))]" />}
               </button>
 
               <AnimatePresence>
@@ -197,26 +197,26 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                   >
                     <div className="space-y-2 mt-3">
                       {summary.exerciseInsights.map((insight, i) => (
-                        <div key={insight.exerciseId} className="bg-slate-50 rounded-xl p-3">
+                        <div key={insight.exerciseId} className="bg-[hsl(225,12%,13%)] rounded-xl p-3">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               {insight.newPR && <Star className="w-4 h-4 text-amber-500" />}
-                              <span className="font-semibold text-slate-800 text-sm">{insight.exerciseName}</span>
+                              <span className="font-semibold text-[hsl(var(--fg-primary))] text-sm">{insight.exerciseName}</span>
                             </div>
-                            <span className="text-xs text-slate-500">{insight.setsCompleted} Sätze</span>
+                            <span className="text-xs text-[hsl(var(--fg-muted))]">{insight.setsCompleted} Sätze</span>
                           </div>
                           <div className="flex items-center gap-3 mt-1">
-                            <span className="text-xs text-slate-600">{insight.currentVolume}kg Volumen</span>
+                            <span className="text-xs text-[hsl(var(--fg-secondary))]">{insight.currentVolume}kg Volumen</span>
                             {insight.volumeChange !== 0 && (
                               <span className={`text-xs font-semibold ${insight.volumeChange > 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                                 {insight.volumeChange > 0 ? '+' : ''}{insight.volumeChange}%
                               </span>
                             )}
                             {insight.avgRIR !== undefined && (
-                              <span className="text-xs text-slate-500">∅ RIR: {insight.avgRIR}</span>
+                              <span className="text-xs text-[hsl(var(--fg-muted))]">∅ RIR: {insight.avgRIR}</span>
                             )}
                           </div>
-                          <p className="text-xs text-slate-500 mt-1">{insight.suggestion}</p>
+                          <p className="text-xs text-[hsl(var(--fg-muted))] mt-1">{insight.suggestion}</p>
                         </div>
                       ))}
                     </div>
@@ -231,15 +231,15 @@ export function WorkoutSummaryModal({ isOpen, onClose, summary }: WorkoutSummary
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.9 }}
-                className="bg-blue-50 border border-blue-200 rounded-2xl p-4"
+                className="bg-cyan-400/10 border border-cyan-400/20 rounded-2xl p-4"
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <Zap className="w-4 h-4 text-blue-600" />
+                  <Zap className="w-4 h-4 text-cyan-400" />
                   <h3 className="font-bold text-blue-800 text-sm">F?r nächstes Mal</h3>
                 </div>
                 <ul className="space-y-1">
                   {summary.nextWorkoutTips.map((tip, i) => (
-                    <li key={i} className="flex items-start gap-2 text-xs text-blue-700">
+                    <li key={i} className="flex items-start gap-2 text-xs text-cyan-400">
                       <ArrowRight className="w-3 h-3 mt-0.5 flex-shrink-0" />
                       {tip}
                     </li>

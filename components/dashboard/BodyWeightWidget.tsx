@@ -69,15 +69,15 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
 
   if (compact) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 p-4">
+      <div className="bg-[hsl(225,14%,10%)] rounded-xl border border-[hsl(225,10%,16%)] p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Scale className="w-5 h-5 text-blue-600" />
+            <div className="p-2 bg-cyan-400/15 rounded-lg">
+              <Scale className="w-5 h-5 text-cyan-400" />
             </div>
             <div>
-              <p className="text-sm text-slate-500">Aktuelles Gewicht</p>
-              <p className="text-xl font-bold text-slate-800">
+              <p className="text-sm text-[hsl(var(--fg-muted))]">Aktuelles Gewicht</p>
+              <p className="text-xl font-bold text-[hsl(var(--fg-primary))]">
                 {latestWeight ? `${latestWeight} kg` : '-- kg'}
               </p>
             </div>
@@ -88,7 +88,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
                 ? 'bg-red-100 text-red-700' 
                 : weekChange < 0 
                   ? 'bg-emerald-100 text-emerald-700'
-                  : 'bg-slate-100 text-slate-600'
+                  : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))]'
             }`}>
               {weekChange > 0 ? <TrendingUp className="w-4 h-4" /> : weekChange < 0 ? <TrendingDown className="w-4 h-4" /> : <Minus className="w-4 h-4" />}
               {weekChange > 0 ? '+' : ''}{weekChange?.toFixed(1)} kg
@@ -97,7 +97,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="w-full mt-3 py-2 bg-blue-50 text-blue-600 rounded-lg font-medium hover:bg-blue-100 transition-colors"
+          className="w-full mt-3 py-2 bg-cyan-400/10 text-cyan-400 rounded-lg font-medium hover:bg-cyan-400/15 transition-colors"
         >
           + Eintragen
         </button>
@@ -118,15 +118,15 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6">
+    <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-blue-100 rounded-xl">
-            <Scale className="w-6 h-6 text-blue-600" />
+          <div className="p-3 bg-cyan-400/15 rounded-xl">
+            <Scale className="w-6 h-6 text-cyan-400" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">Körpergewicht</h3>
-            <p className="text-sm text-slate-500">
+            <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Körpergewicht</h3>
+            <p className="text-sm text-[hsl(var(--fg-muted))]">
               {entries.length > 0 
                 ? `${entries.length} Eintraege` 
                 : 'Noch keine Eintraege'}
@@ -135,7 +135,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="p-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors"
+          className="p-2 bg-cyan-500 text-white rounded-xl hover:bg-cyan-400 transition-colors"
         >
           <Plus className="w-5 h-5" />
         </button>
@@ -143,12 +143,12 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
 
       {/* Current Weight Display */}
       <div className="text-center mb-6">
-        <p className="text-5xl font-bold text-slate-800">
+        <p className="text-5xl font-bold text-[hsl(var(--fg-primary))]">
           {latestWeight ? latestWeight.toFixed(1) : '--'}
-          <span className="text-2xl text-slate-400 ml-1">kg</span>
+          <span className="text-2xl text-[hsl(var(--fg-subtle))] ml-1">kg</span>
         </p>
         {entries[0]?.date && (
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-[hsl(var(--fg-muted))] mt-1">
             Zuletzt: {format(new Date(entries[0].date), 'dd. MMM yyyy', { locale: de })}
           </p>
         )}
@@ -157,10 +157,10 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
       {/* Change Stats */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className={`p-4 rounded-xl ${
-          weekChange === null ? 'bg-slate-50' :
-          weekChange > 0 ? 'bg-red-50' : weekChange < 0 ? 'bg-emerald-50' : 'bg-slate-50'
+          weekChange === null ? 'bg-[hsl(225,12%,13%)]' :
+          weekChange > 0 ? 'bg-red-400/10' : weekChange < 0 ? 'bg-emerald-400/10' : 'bg-[hsl(225,12%,13%)]'
         }`}>
-          <p className="text-xs text-slate-500 mb-1">7 Tage</p>
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-1">7 Tage</p>
           <div className="flex items-center gap-2">
             {weekChange !== null ? (
               <>
@@ -169,25 +169,25 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
                 ) : weekChange < 0 ? (
                   <TrendingDown className="w-4 h-4 text-emerald-500" />
                 ) : (
-                  <Minus className="w-4 h-4 text-slate-400" />
+                  <Minus className="w-4 h-4 text-[hsl(var(--fg-subtle))]" />
                 )}
                 <span className={`font-bold ${
-                  weekChange > 0 ? 'text-red-700' : weekChange < 0 ? 'text-emerald-700' : 'text-slate-600'
+                  weekChange > 0 ? 'text-red-700' : weekChange < 0 ? 'text-emerald-700' : 'text-[hsl(var(--fg-secondary))]'
                 }`}>
                   {weekChange > 0 ? '+' : ''}{weekChange.toFixed(1)} kg
                 </span>
               </>
             ) : (
-              <span className="text-slate-400">--</span>
+              <span className="text-[hsl(var(--fg-subtle))]">--</span>
             )}
           </div>
         </div>
 
         <div className={`p-4 rounded-xl ${
-          monthChange === null ? 'bg-slate-50' :
-          monthChange > 0 ? 'bg-red-50' : monthChange < 0 ? 'bg-emerald-50' : 'bg-slate-50'
+          monthChange === null ? 'bg-[hsl(225,12%,13%)]' :
+          monthChange > 0 ? 'bg-red-400/10' : monthChange < 0 ? 'bg-emerald-400/10' : 'bg-[hsl(225,12%,13%)]'
         }`}>
-          <p className="text-xs text-slate-500 mb-1">30 Tage</p>
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-1">30 Tage</p>
           <div className="flex items-center gap-2">
             {monthChange !== null ? (
               <>
@@ -196,16 +196,16 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
                 ) : monthChange < 0 ? (
                   <TrendingDown className="w-4 h-4 text-emerald-500" />
                 ) : (
-                  <Minus className="w-4 h-4 text-slate-400" />
+                  <Minus className="w-4 h-4 text-[hsl(var(--fg-subtle))]" />
                 )}
                 <span className={`font-bold ${
-                  monthChange > 0 ? 'text-red-700' : monthChange < 0 ? 'text-emerald-700' : 'text-slate-600'
+                  monthChange > 0 ? 'text-red-700' : monthChange < 0 ? 'text-emerald-700' : 'text-[hsl(var(--fg-secondary))]'
                 }`}>
                   {monthChange > 0 ? '+' : ''}{monthChange.toFixed(1)} kg
                 </span>
               </>
             ) : (
-              <span className="text-slate-400">--</span>
+              <span className="text-[hsl(var(--fg-subtle))]">--</span>
             )}
           </div>
         </div>
@@ -214,7 +214,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
       {/* Mini Chart */}
       {recentEntries.length > 1 && (
         <div className="mb-6">
-          <p className="text-xs text-slate-500 mb-2">Letzte 7 Eintraege</p>
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-2">Letzte 7 Eintraege</p>
           <div className="flex items-end gap-1 h-16">
             {recentEntries.map((entry, idx) => {
               const minWeight = Math.min(...recentEntries.map(e => e.weight));
@@ -237,28 +237,28 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
 
       {/* Goal Section */}
       {goal ? (
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-200">
+        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-4 border border-cyan-400/20">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Target className="w-4 h-4 text-blue-600" />
+              <Target className="w-4 h-4 text-cyan-400" />
               <span className="text-sm font-medium text-blue-800">Ziel: {goal.targetWeight} kg</span>
             </div>
             <button
               onClick={() => setGoal(null)}
-              className="text-slate-400 hover:text-slate-600"
+              className="text-[hsl(var(--fg-subtle))] hover:text-slate-600"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
           {progressToGoal !== null && (
             <>
-              <div className="h-2 bg-white rounded-full overflow-hidden mb-2">
+              <div className="h-2 bg-[hsl(225,14%,10%)] rounded-full overflow-hidden mb-2">
                 <div
                   className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all"
                   style={{ width: `${Math.min(100, Math.max(0, progressToGoal))}%` }}
                 />
               </div>
-              <p className="text-xs text-blue-600">
+              <p className="text-xs text-cyan-400">
                 {progressToGoal >= 100 
                   ? '🎉 Ziel erreicht!' 
                   : `${Math.abs(latestWeight! - goal.targetWeight).toFixed(1)} kg noch bis zum Ziel`}
@@ -269,7 +269,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
       ) : (
         <button
           onClick={() => setShowGoalModal(true)}
-          className="w-full py-3 border-2 border-dashed border-slate-200 rounded-xl text-slate-500 hover:border-blue-300 hover:text-blue-600 transition-colors"
+          className="w-full py-3 border-2 border-dashed border-[hsl(225,10%,16%)] rounded-xl text-[hsl(var(--fg-muted))] hover:border-blue-300 hover:text-blue-600 transition-colors"
         >
           <Target className="w-4 h-4 inline mr-2" />
           Gewichtsziel setzen
@@ -291,28 +291,28 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
       {/* Goal Modal */}
       {showGoalModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-sm p-6 animate-scale-in">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl w-full max-w-sm p-6 animate-scale-in">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-slate-800">Gewichtsziel setzen</h3>
-              <button onClick={() => setShowGoalModal(false)} className="text-slate-400 hover:text-slate-600">
+              <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Gewichtsziel setzen</h3>
+              <button onClick={() => setShowGoalModal(false)} className="text-[hsl(var(--fg-subtle))] hover:text-slate-600">
                 <X className="w-5 h-5" />
               </button>
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Zielgewicht (kg)</label>
+                <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-1">Zielgewicht (kg)</label>
                 <input
                   type="number"
                   step="0.1"
                   value={newGoalWeight}
                   onChange={(e) => setNewGoalWeight(e.target.value)}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+                  className="w-full px-4 py-3 border border-[hsl(225,10%,16%)] rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
                   placeholder="z.B. 75.0"
                 />
               </div>
               <button
                 onClick={handleSetGoal}
-                className="w-full py-3 bg-blue-500 text-white rounded-xl font-semibold hover:bg-blue-600 transition-colors"
+                className="w-full py-3 bg-cyan-500 text-white rounded-xl font-semibold hover:bg-cyan-400 transition-colors"
               >
                 Ziel speichern
               </button>
@@ -342,39 +342,39 @@ function AddWeightModal({
 }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl w-full max-w-sm p-6 animate-scale-in">
+      <div className="bg-[hsl(225,14%,10%)] rounded-2xl w-full max-w-sm p-6 animate-scale-in">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-slate-800">Gewicht eintragen</h3>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+          <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Gewicht eintragen</h3>
+          <button onClick={onClose} className="text-[hsl(var(--fg-subtle))] hover:text-slate-600">
             <X className="w-5 h-5" />
           </button>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Gewicht (kg)</label>
+            <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-1">Gewicht (kg)</label>
             <input
               type="number"
               step="0.1"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-lg font-semibold"
+              className="w-full px-4 py-3 border border-[hsl(225,10%,16%)] rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none text-lg font-semibold"
               placeholder="z.B. 80.5"
               autoFocus
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Notiz (optional)</label>
+            <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-1">Notiz (optional)</label>
             <input
               type="text"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
+              className="w-full px-4 py-2 border border-[hsl(225,10%,16%)] rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none"
               placeholder="z.B. Nach dem Training"
             />
           </div>
           <button
             onClick={onAdd}
-            className="w-full py-3 bg-blue-500 text-white rounded-xl font-semibold hover:bg-blue-600 transition-colors"
+            className="w-full py-3 bg-cyan-500 text-white rounded-xl font-semibold hover:bg-cyan-400 transition-colors"
           >
             Speichern
           </button>

@@ -112,13 +112,13 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
         <div className="flex gap-3">
           <button
             onClick={selectAll}
-            className="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
+            className="px-4 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] rounded-lg transition-colors"
           >
             Alle ausw?hlen
           </button>
           <button
             onClick={selectNone}
-            className="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
+            className="px-4 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] rounded-lg transition-colors"
           >
             Auswahl aufheben
           </button>
@@ -126,7 +126,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
 
         {/* Upper Body */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+          <h3 className="text-sm font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wider mb-3">
             Oberkörper
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -137,7 +137,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   enabledMuscles.includes(muscle.id)
                     ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
                 }`}
               >
                 {enabledMuscles.includes(muscle.id) && (
@@ -151,7 +151,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
 
         {/* Core */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+          <h3 className="text-sm font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wider mb-3">
             Core
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -162,7 +162,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   enabledMuscles.includes(muscle.id)
                     ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
                 }`}
               >
                 {enabledMuscles.includes(muscle.id) && (
@@ -176,7 +176,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
 
         {/* Lower Body */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
+          <h3 className="text-sm font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wider mb-3">
             Unterkörper
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -187,7 +187,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
                 className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   enabledMuscles.includes(muscle.id)
                     ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
                 }`}
               >
                 {enabledMuscles.includes(muscle.id) && (
@@ -200,14 +200,14 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
         </div>
 
         {/* Summary */}
-        <div className="bg-slate-50 rounded-xl p-4 flex items-center justify-between">
-          <span className="text-sm text-slate-600">
+        <div className="bg-[hsl(225,12%,13%)] rounded-xl p-4 flex items-center justify-between">
+          <span className="text-sm text-[hsl(var(--fg-secondary))]">
             {enabledMuscles.length} von {ALL_MUSCLES.length} Muskelgruppen aktiv
           </span>
           <div className="flex gap-2">
             <button
               onClick={onClose}
-              className="px-5 py-2.5 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+              className="px-5 py-2.5 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-xl hover:bg-[hsl(225,12%,13%)] transition-colors"
             >
               Abbrechen
             </button>

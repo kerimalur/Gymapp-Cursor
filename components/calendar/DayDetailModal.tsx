@@ -155,13 +155,13 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
           {showPlanWorkout && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                   Trainingstag ausw?hlen
                 </label>
                 <select
                   value={selectedTrainingDay}
                   onChange={(e) => setSelectedTrainingDay(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-primary-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-primary-500 focus:outline-none transition-colors"
                   title="Trainingstag ausw?hlen"
                   aria-label="Trainingstag ausw?hlen"
                 >
@@ -177,13 +177,13 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowPlanWorkout(false)}
-                  className="flex-1 px-6 py-3 border-2 border-slate-200 text-slate-700 rounded-xl font-medium hover:border-slate-300 transition-colors"
+                  className="flex-1 px-6 py-3 border-2 border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] rounded-xl font-medium hover:border-[hsl(225,10%,22%)] transition-colors"
                 >
                   Abbrechen
                 </button>
                 <button
                   onClick={handlePlanWorkout}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg"
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-500 to-cyan-500 text-white rounded-xl font-medium hover:from-cyan-400 hover:to-cyan-400 transition-all shadow-lg"
                 >
                   Planen
                 </button>
@@ -195,7 +195,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
           {showAddNote && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                   Notiz
                 </label>
                 <textarea
@@ -203,7 +203,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Schreibe eine Notiz..."
                   rows={4}
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-primary-500 focus:outline-none transition-colors resize-none"
+                  className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-primary-500 focus:outline-none transition-colors resize-none"
                 />
               </div>
 
@@ -213,7 +213,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                     setShowAddNote(false);
                     setNote('');
                   }}
-                  className="flex-1 px-6 py-3 border-2 border-slate-200 text-slate-700 rounded-xl font-medium hover:border-slate-300 transition-colors"
+                  className="flex-1 px-6 py-3 border-2 border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] rounded-xl font-medium hover:border-[hsl(225,10%,22%)] transition-colors"
                 >
                   Abbrechen
                 </button>
@@ -229,8 +229,8 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
 
           {/* Existing Workouts/Notes */}
           {!showPlanWorkout && !showAddNote && (
-            <div className="border-t border-slate-200 pt-6">
-              <h3 className="text-lg font-bold text-slate-800 mb-4">
+            <div className="border-t border-[hsl(225,10%,16%)] pt-6">
+              <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))] mb-4">
                 Aktivit?ten an diesem Tag
               </h3>
               {dayWorkouts.length > 0 ? (
@@ -245,10 +245,10 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                         <div className="flex items-center gap-3 flex-1">
                           <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
                           <div className="flex-1">
-                            <p className="font-semibold text-slate-800">
+                            <p className="font-semibold text-[hsl(var(--fg-primary))]">
                               {workout.trainingDayName}
                             </p>
-                            <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600 mt-1">
+                            <div className="flex flex-wrap items-center gap-3 text-sm text-[hsl(var(--fg-secondary))] mt-1">
                               <span className="flex items-center gap-1">
                                 <Clock className="w-4 h-4" />
                                 {workout.duration || 0} Min
@@ -268,12 +268,12 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                                 </span>
                               ))}
                               {workout.exercises.length > 3 && (
-                                <span className="text-xs px-2 py-1 bg-slate-100 text-slate-700 rounded-full">
+                                <span className="text-xs px-2 py-1 bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] rounded-full">
                                   +{workout.exercises.length - 3}
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs text-slate-500 mt-2">Klicken für Details</p>
+                            <p className="text-xs text-[hsl(var(--fg-muted))] mt-2">Klicken für Details</p>
                           </div>
                         </div>
                       </div>
@@ -281,7 +281,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 text-slate-500">
+                <div className="text-center py-8 text-[hsl(var(--fg-muted))]">
                   Noch keine Aktivit?ten
                 </div>
               )}
@@ -304,9 +304,9 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
           <div className="p-6">
             {/* Stats Grid */}
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 text-center border border-blue-200">
-                <p className="text-sm text-blue-700 mb-1 font-medium">Datum</p>
-                <p className="text-lg font-bold text-blue-900">
+              <div className="bg-gradient-to-br from-cyan-400/10 to-cyan-400/15 rounded-xl p-4 text-center border border-cyan-400/20">
+                <p className="text-sm text-cyan-400 mb-1 font-medium">Datum</p>
+                <p className="text-lg font-bold text-cyan-300">
                   {format(new Date(selectedWorkout.startTime), 'dd.MM.yy')}
                 </p>
               </div>
@@ -326,13 +326,13 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
 
             {/* Exercises */}
             <div>
-              <h3 className="text-lg font-bold text-slate-800 mb-4">
+              <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))] mb-4">
                 Übungen ({selectedWorkout.exercises.length})
               </h3>
               <div className="space-y-4 max-h-[40vh] overflow-y-auto">
                 {selectedWorkout.exercises.map((ex, exIdx) => (
-                  <div key={exIdx} className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                    <h4 className="font-bold text-slate-800 mb-3">{ex.exerciseId}</h4>
+                  <div key={exIdx} className="bg-[hsl(225,12%,13%)] rounded-xl p-4 border border-[hsl(225,10%,16%)]">
+                    <h4 className="font-bold text-[hsl(var(--fg-primary))] mb-3">{ex.exerciseId}</h4>
                     <div className="space-y-2">
                       {ex.sets.map((set, setIdx) => (
                         <div
@@ -340,17 +340,17 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                           className={`flex items-center justify-between px-3 py-2 rounded-lg border ${
                             set.completed
                               ? 'bg-emerald-50 border-emerald-200'
-                              : 'bg-white border-slate-200 opacity-50'
+                              : 'bg-[hsl(225,14%,10%)] border-[hsl(225,10%,16%)] opacity-50'
                           }`}
                         >
                           <span className={`font-medium text-sm ${
-                            set.completed ? 'text-emerald-800' : 'text-slate-500'
+                            set.completed ? 'text-emerald-800' : 'text-[hsl(var(--fg-muted))]'
                           }`}>
                             Satz {setIdx + 1}
                           </span>
                           <div className="flex items-center gap-2">
                             <span className={`font-bold text-sm ${
-                              set.completed ? 'text-emerald-700' : 'text-slate-600'
+                              set.completed ? 'text-emerald-700' : 'text-[hsl(var(--fg-secondary))]'
                             }`}>
                               {set.weight} kg × {set.reps}
                             </span>
@@ -358,7 +358,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                               <span className={`text-xs px-2 py-0.5 rounded font-medium ${
                                 set.completed
                                   ? 'bg-emerald-200 text-emerald-800'
-                                  : 'bg-slate-200 text-slate-600'
+                                  : 'bg-[hsl(225,12%,18%)] text-[hsl(var(--fg-secondary))]'
                               }`}>
                                 RIR {set.rir}
                               </span>

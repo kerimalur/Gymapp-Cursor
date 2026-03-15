@@ -51,7 +51,7 @@ export function AnimatedBarChart({
               {/* Value Label */}
               {showValues && (
                 <span 
-                  className={`text-xs font-semibold text-slate-600 dark:text-slate-400 transition-opacity duration-500 ${
+                  className={`text-xs font-semibold text-[hsl(var(--fg-subtle))] transition-opacity duration-500 ${
                     isVisible ? 'opacity-100' : 'opacity-0'
                   }`}
                   style={{ transitionDelay: `${index * 100 + 300}ms` }}
@@ -75,7 +75,7 @@ export function AnimatedBarChart({
               
               {/* Label */}
               {showLabels && (
-                <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 truncate w-full text-center">
+                <span className="text-xs text-[hsl(var(--fg-subtle))] mt-1 truncate w-full text-center">
                   {item.label}
                 </span>
               )}
@@ -166,7 +166,7 @@ export function AnimatedLineChart({
                 x2={100 - padding.right}
                 y2={y}
                 stroke="currentColor"
-                className="text-slate-200 dark:text-slate-700"
+                className="text-[hsl(var(--fg-secondary))]"
                 strokeWidth="0.5"
               />
               <text
@@ -316,7 +316,7 @@ export function AnimatedDonutChart({
             fill="none"
             stroke="currentColor"
             strokeWidth={thickness}
-            className="text-slate-100 dark:text-slate-800"
+            className="text-[hsl(225,12%,15%)]"
           />
           
           {/* Data Segments */}
@@ -356,13 +356,13 @@ export function AnimatedDonutChart({
         {/* Center Label */}
         {showCenter && (
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className={`text-2xl font-bold text-slate-800 dark:text-slate-100 transition-all duration-500 ${
+            <span className={`text-2xl font-bold text-[hsl(var(--fg-primary))] transition-all duration-500 ${
               isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
             }`}>
               {total}
             </span>
             {centerLabel && (
-              <span className="text-sm text-slate-500 dark:text-slate-400">{centerLabel}</span>
+              <span className="text-sm text-[hsl(var(--fg-subtle))]">{centerLabel}</span>
             )}
           </div>
         )}
@@ -383,10 +383,10 @@ export function AnimatedDonutChart({
                 className="w-3 h-3 rounded-full" 
                 style={{ backgroundColor: segment.color }}
               />
-              <span className="text-sm text-slate-600 dark:text-slate-400">
+              <span className="text-sm text-[hsl(var(--fg-subtle))]">
                 {segment.label}
               </span>
-              <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+              <span className="text-sm font-semibold text-[hsl(var(--fg-primary))]">
                 {segment.value}
               </span>
             </div>
@@ -450,15 +450,15 @@ export function AnimatedProgressBar({
     <div ref={containerRef} className="w-full">
       {(label || showValue) && (
         <div className="flex justify-between items-center mb-1.5">
-          {label && <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{label}</span>}
+          {label && <span className="text-sm font-medium text-[hsl(var(--fg-secondary))]">{label}</span>}
           {showValue && (
-            <span className="text-sm text-slate-500 dark:text-slate-400">
+            <span className="text-sm text-[hsl(var(--fg-subtle))]">
               {value} / {max}
             </span>
           )}
         </div>
       )}
-      <div className={`w-full bg-slate-100 dark:bg-slate-800 rounded-full ${sizeClasses[size]} overflow-hidden`}>
+      <div className={`w-full bg-[hsl(225,12%,15%)] rounded-full ${sizeClasses[size]} overflow-hidden`}>
         <div
           className={`${color} ${sizeClasses[size]} rounded-full transition-all duration-1000 ease-out`}
           style={{ width: isVisible ? `${percent}%` : '0%' }}

@@ -31,7 +31,7 @@ const RECOMMENDED_VOLUME: Record<MuscleGroup, { min: number; max: number; optima
 
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'RÃƒÂ¼cken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -40,12 +40,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'GesÃƒÂ¤ÃƒÅ¸',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Rücken',
+  lower_back: 'Unterer RÃƒÂ¼cken',
   neck: 'Nacken',
 };
 
@@ -159,30 +159,30 @@ export function WeeklyVolumeTracker({ showComparison = false }: { showComparison
   const getStatusColor = (status: WeeklyVolumeData['status']) => {
     switch (status) {
       case 'low': return 'text-amber-600 bg-amber-50';
-      case 'optimal': return 'text-emerald-600 bg-emerald-50';
-      case 'high': return 'text-rose-600 bg-rose-50';
+      case 'optimal': return 'text-emerald-600 bg-emerald-400/10';
+      case 'high': return 'text-rose-600 bg-rose-400/10';
     }
   };
 
   const getBarColor = (status: WeeklyVolumeData['status']) => {
     switch (status) {
       case 'low': return 'bg-amber-500';
-      case 'optimal': return 'bg-emerald-500';
-      case 'high': return 'bg-rose-500';
+      case 'optimal': return 'bg-emerald-400/100';
+      case 'high': return 'bg-rose-400/100';
     }
   };
 
   return (
     <div>
       {/* Legend */}
-      <div className="flex items-center gap-4 mb-4 text-xs text-slate-500">
+      <div className="flex items-center gap-4 mb-4 text-xs text-[hsl(var(--fg-muted))]">
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-primary-500" />
-          <span>Primär-Sätze</span>
+          <span>PrimÃƒÂ¤r-SÃƒÂ¤tze</span>
         </div>
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-slate-300" />
-          <span>Sekundär (×0.5)</span>
+          <span>SekundÃƒÂ¤r (Ãƒâ€”0.5)</span>
         </div>
       </div>
 
@@ -191,14 +191,14 @@ export function WeeklyVolumeTracker({ showComparison = false }: { showComparison
         {volumeData.map((data) => (
           <div key={data.muscle}>
             <div className="flex items-center justify-between mb-1">
-              <span className="text-sm font-medium text-slate-700">{data.label}</span>
+              <span className="text-sm font-medium text-[hsl(var(--fg-secondary))]">{data.label}</span>
               <div className="flex items-center gap-2">
                 <span className={`text-xs px-2 py-0.5 rounded-full ${getStatusColor(data.status)}`}>
                   {data.effectiveSets} / {data.recommended.optimal}
                 </span>
               </div>
             </div>
-            <div className="relative h-6 bg-slate-100 rounded-full overflow-hidden">
+            <div className="relative h-6 bg-[hsl(225,12%,15%)] rounded-full overflow-hidden">
               {/* Optimal zone indicator */}
               <div 
                 className="absolute top-0 h-full bg-emerald-100 opacity-50"
@@ -228,7 +228,7 @@ export function WeeklyVolumeTracker({ showComparison = false }: { showComparison
                 </span>
               </div>
             </div>
-            <div className="flex justify-between text-xs text-slate-400 mt-0.5">
+            <div className="flex justify-between text-xs text-[hsl(var(--fg-subtle))] mt-0.5">
               <span>{data.recommended.min} min</span>
               <span>{data.recommended.max} max</span>
             </div>

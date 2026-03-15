@@ -120,24 +120,24 @@ export function VolumeProgressChart() {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4 min-w-[160px]">
-          <p className="text-sm font-semibold text-gray-900 mb-2">
+        <div className="bg-[hsl(225,14%,10%)] rounded-xl shadow-lg border border-[hsl(225,10%,14%)] p-4 min-w-[160px]">
+          <p className="text-sm font-semibold text-[hsl(var(--fg-primary))] mb-2">
             {format(data.date, 'dd. MMM', { locale: de })}
           </p>
           <div className="space-y-1">
             <div className="flex justify-between">
-              <span className="text-xs text-gray-500">Volumen:</span>
+              <span className="text-xs text-[hsl(var(--fg-muted))]">Volumen:</span>
               <span className="text-sm font-bold text-primary-600">
                 {data.volume.toLocaleString()} kg
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-xs text-gray-500">Sätze:</span>
-              <span className="text-sm font-semibold text-gray-700">{data.sets}</span>
+              <span className="text-xs text-[hsl(var(--fg-muted))]">SÃƒÂ¤tze:</span>
+              <span className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">{data.sets}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-xs text-gray-500">Trainings:</span>
-              <span className="text-sm font-semibold text-gray-700">{data.workouts}</span>
+              <span className="text-xs text-[hsl(var(--fg-muted))]">Trainings:</span>
+              <span className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">{data.workouts}</span>
             </div>
           </div>
         </div>
@@ -153,8 +153,8 @@ export function VolumeProgressChart() {
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-50 flex items-center justify-center">
             <Dumbbell className="w-8 h-8 text-blue-400" />
           </div>
-          <p className="text-lg font-semibold text-gray-900 mb-1">Keine Daten</p>
-          <p className="text-sm text-gray-500">Starte dein erstes Training</p>
+          <p className="text-lg font-semibold text-[hsl(var(--fg-primary))] mb-1">Keine Daten</p>
+          <p className="text-sm text-[hsl(var(--fg-muted))]">Starte dein erstes Training</p>
         </div>
       </div>
     );
@@ -169,10 +169,10 @@ export function VolumeProgressChart() {
           className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
             selectedExercise === 'all'
               ? 'bg-primary-100 text-primary-700 border border-primary-200'
-              : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+              : 'bg-[hsl(225,12%,13%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,18%)]'
           }`}
         >
-          Alle Übungen
+          Alle ÃƒÅ“bungen
         </button>
         {availableExercises.slice(0, 5).map(ex => (
           <button
@@ -181,7 +181,7 @@ export function VolumeProgressChart() {
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
               selectedExercise === ex.id
                 ? 'bg-primary-100 text-primary-700 border border-primary-200'
-                : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                : 'bg-[hsl(225,12%,13%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,18%)]'
             }`}
           >
             {ex.name}
@@ -191,34 +191,34 @@ export function VolumeProgressChart() {
 
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-gray-50 rounded-xl p-4">
-          <p className="text-xs text-gray-500 mb-1">12-Wochen Volumen</p>
-          <p className="text-xl font-bold text-gray-900">
+        <div className="bg-[hsl(225,12%,13%)] rounded-xl p-4">
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-1">12-Wochen Volumen</p>
+          <p className="text-xl font-bold text-[hsl(var(--fg-primary))]">
             {(stats.totalVolume / 1000).toFixed(1)}t
           </p>
         </div>
-        <div className="bg-gray-50 rounded-xl p-4">
-          <p className="text-xs text-gray-500 mb-1">Ø Woche</p>
-          <p className="text-xl font-bold text-gray-900">
+        <div className="bg-[hsl(225,12%,13%)] rounded-xl p-4">
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-1">ÃƒËœ Woche</p>
+          <p className="text-xl font-bold text-[hsl(var(--fg-primary))]">
             {(stats.avgVolume / 1000).toFixed(1)}t
           </p>
         </div>
         <div className={`rounded-xl p-4 ${
-          trend.direction === 'up' ? 'bg-emerald-50' : 
-          trend.direction === 'down' ? 'bg-rose-50' : 'bg-gray-50'
+          trend.direction === 'up' ? 'bg-emerald-400/10' : 
+          trend.direction === 'down' ? 'bg-rose-400/10' : 'bg-[hsl(225,12%,13%)]'
         }`}>
-          <p className="text-xs text-gray-500 mb-1">Trend</p>
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-1">Trend</p>
           <div className="flex items-center gap-1">
             {trend.direction === 'up' ? (
               <TrendingUp className="w-5 h-5 text-emerald-600" />
             ) : trend.direction === 'down' ? (
               <TrendingDown className="w-5 h-5 text-rose-600" />
             ) : (
-              <Minus className="w-5 h-5 text-gray-400" />
+              <Minus className="w-5 h-5 text-[hsl(var(--fg-subtle))]" />
             )}
             <p className={`text-xl font-bold ${
               trend.direction === 'up' ? 'text-emerald-600' : 
-              trend.direction === 'down' ? 'text-rose-600' : 'text-gray-600'
+              trend.direction === 'down' ? 'text-rose-600' : 'text-[hsl(var(--fg-secondary))]'
             }`}>
               {trend.percentage}%
             </p>
@@ -254,7 +254,7 @@ export function VolumeProgressChart() {
               y={stats.avgVolume} 
               stroke="#94a3b8" 
               strokeDasharray="5 5"
-              label={{ value: 'Ø', position: 'right', fill: '#94a3b8', fontSize: 12 }}
+              label={{ value: 'ÃƒËœ', position: 'right', fill: '#94a3b8', fontSize: 12 }}
             />
             <Line
               type="monotone"

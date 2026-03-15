@@ -116,7 +116,7 @@ export function CircularTimer({
           <span className={`text-4xl font-bold ${colors.text} ${isComplete ? 'animate-success-pop' : ''}`}>
             {formatTime(timeLeft)}
           </span>
-          <span className="text-sm text-slate-500 mt-1">
+          <span className="text-sm text-[hsl(var(--fg-muted))] mt-1">
             {isComplete ? '✓ Fertig!' : isRunning ? 'Pause' : 'Bereit'}
           </span>
         </div>
@@ -128,8 +128,8 @@ export function CircularTimer({
           {/* -30s Button */}
           <button
             onClick={() => addTime(-30)}
-            className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 
-                       font-medium text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all 
+            className="w-10 h-10 rounded-full bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-subtle))] 
+                       font-medium text-sm hover:bg-[hsl(225,12%,20%)] transition-all 
                        active:scale-95 disabled:opacity-50"
             disabled={timeLeft <= 30}
           >
@@ -162,8 +162,8 @@ export function CircularTimer({
           {/* +30s Button */}
           <button
             onClick={() => addTime(30)}
-            className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 
-                       font-medium text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all active:scale-95"
+            className="w-10 h-10 rounded-full bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-subtle))] 
+                       font-medium text-sm hover:bg-[hsl(225,12%,20%)] transition-all active:scale-95"
           >
             +30
           </button>
@@ -184,7 +184,7 @@ export function CircularTimer({
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all active:scale-95
                          ${timeLeft === seconds && isRunning
                            ? `${colors.bg} ${colors.text}`
-                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                           : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-subtle))] hover:bg-[hsl(225,12%,20%)]'
                          }`}
             >
               {seconds < 60 ? `${seconds}s` : `${seconds / 60}min`}
@@ -233,7 +233,7 @@ export function MiniTimer({
       <div className="relative w-8 h-8">
         <svg className="w-8 h-8 transform -rotate-90">
           <circle
-            className="stroke-slate-200 dark:stroke-slate-700"
+            className="stroke-[hsl(225,10%,16%)]"
             fill="none"
             strokeWidth="3"
             cx="16"
@@ -253,20 +253,20 @@ export function MiniTimer({
           />
         </svg>
       </div>
-      <span className="text-sm font-medium text-slate-700 dark:text-slate-300 tabular-nums">
+      <span className="text-sm font-medium text-[hsl(var(--fg-secondary))] tabular-nums">
         {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
       </span>
       <button
         onClick={() => setIsRunning(!isRunning)}
-        className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        className="p-1 rounded hover:bg-[hsl(225,12%,18%)] transition-colors"
       >
         {isRunning ? (
-          <svg className="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-[hsl(var(--fg-muted))]" fill="currentColor" viewBox="0 0 24 24">
             <rect x="6" y="4" width="4" height="16" rx="1" />
             <rect x="14" y="4" width="4" height="16" rx="1" />
           </svg>
         ) : (
-          <svg className="w-4 h-4 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-[hsl(var(--fg-muted))]" fill="currentColor" viewBox="0 0 24 24">
             <path d="M8 5.14v14.72a1 1 0 001.5.87l11-7.36a1 1 0 000-1.74l-11-7.36a1 1 0 00-1.5.87z" />
           </svg>
         )}

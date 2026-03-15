@@ -60,12 +60,12 @@ export function RestTimer() {
 
       {/* Floating Rest Timer Overlay */}
       <div className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50 animate-in slide-in-from-bottom-5 duration-300">
-        <div className={`card-elevated p-4 sm:p-6 ${isFinished ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white' : 'bg-white dark:bg-slate-800'}`}>
+        <div className={`card-elevated p-4 sm:p-6 ${isFinished ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white' : 'bg-[hsl(225,14%,10%)]'}`}>
           <div className="flex flex-col items-center gap-4">
             {/* Close button */}
             <button
               onClick={stopRestTimer}
-              className="absolute top-2 right-2 p-1 hover:bg-black/10 dark:hover:bg-white/10 rounded-lg transition-colors"
+              className="absolute top-2 right-2 p-1 hover:bg-white/10 rounded-lg transition-colors"
               aria-label="Timer schließen"
             >
               <X className="w-4 h-4" />
@@ -79,7 +79,7 @@ export function RestTimer() {
                   cx="50%"
                   cy="50%"
                   r="54"
-                  className={isFinished ? 'stroke-white/30' : 'stroke-slate-200 dark:stroke-slate-700'}
+                  className={isFinished ? 'stroke-white/30' : 'stroke-[hsl(225,10%,16%)]'}
                   strokeWidth="8"
                   fill="none"
                 />
@@ -110,7 +110,7 @@ export function RestTimer() {
                     <div className="text-3xl sm:text-4xl font-bold font-mono">
                       {minutes}:{seconds.toString().padStart(2, '0')}
                     </div>
-                    <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+                    <div className="text-xs sm:text-sm text-[hsl(var(--fg-muted))] mt-1 flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       Pause
                     </div>
@@ -146,25 +146,25 @@ export function RestTimer() {
             <div className="flex items-center gap-2 flex-wrap justify-center">
               <button
                 onClick={() => startRestTimer(60)}
-                className="btn-sm bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-xs"
+                className="btn-sm bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] text-xs"
               >
                 60s
               </button>
               <button
                 onClick={() => startRestTimer(90)}
-                className="btn-sm bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-xs"
+                className="btn-sm bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] text-xs"
               >
                 90s
               </button>
               <button
                 onClick={() => startRestTimer(120)}
-                className="btn-sm bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-xs"
+                className="btn-sm bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] text-xs"
               >
                 2m
               </button>
               <button
                 onClick={() => startRestTimer(180)}
-                className="btn-sm bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-xs"
+                className="btn-sm bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] text-xs"
               >
                 3m
               </button>

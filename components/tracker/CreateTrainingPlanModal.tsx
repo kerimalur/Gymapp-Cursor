@@ -110,7 +110,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
           <button
             onClick={handleClose}
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all disabled:opacity-50"
+            className="px-6 py-2.5 rounded-xl font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,18%)] transition-all disabled:opacity-50"
           >
             Abbrechen
           </button>
@@ -127,7 +127,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
       <div className="p-6 space-y-6">
         {/* Name Input */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Name des Trainingsplans
           </label>
           <input
@@ -135,7 +135,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="z.B. Push/Pull/Legs, Oberkörper/Unterkörper..."
-            className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
+            className="w-full px-4 py-3.5 bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)] rounded-xl focus:bg-[hsl(225,14%,12%)] focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-subtle))]"
           />
         </div>
 
@@ -156,10 +156,10 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
         </div>
 
         {/* Active Toggle */}
-        <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
+        <div className="flex items-center justify-between p-4 bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)]">
           <div>
-            <p className="font-semibold text-slate-700">Als aktiven Plan setzen</p>
-            <p className="text-sm text-slate-500">Dieser Plan wird für dein Training verwendet</p>
+            <p className="font-semibold text-[hsl(var(--fg-secondary))]">Als aktiven Plan setzen</p>
+            <p className="text-sm text-[hsl(var(--fg-muted))]">Dieser Plan wird für dein Training verwendet</p>
           </div>
           <button
             onClick={() => setIsActive(!isActive)}
@@ -177,8 +177,8 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
         <div>
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-sm font-semibold text-slate-700">Trainingstage ({planDays.length})</h3>
-              <p className="text-xs text-slate-500">F?ge Trainingstage in der gewuenschten Reihenfolge hinzu</p>
+              <h3 className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">Trainingstage ({planDays.length})</h3>
+              <p className="text-xs text-[hsl(var(--fg-muted))]">F?ge Trainingstage in der gewuenschten Reihenfolge hinzu</p>
             </div>
             <button
               onClick={() => setShowDaySelector(!showDaySelector)}
@@ -196,9 +196,9 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
 
           {/* Day Selector */}
           {showDaySelector && (
-            <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 mb-4 animate-slide-up">
+            <div className="bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)] p-4 mb-4 animate-slide-up">
               {trainingDays.length === 0 ? (
-                <div className="text-center py-6 text-slate-500">
+                <div className="text-center py-6 text-[hsl(var(--fg-muted))]">
                   <p className="mb-2">Keine Trainingstage vorhanden</p>
                   <p className="text-sm">Erstelle zuerst einen Trainingstag</p>
                 </div>
@@ -210,15 +210,15 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
                       <button
                         key={day.id}
                         onClick={() => handleAddDay(day.id)}
-                        className="p-4 bg-white rounded-xl border border-slate-200 hover:border-violet-300 hover:shadow-sm transition-all text-left flex items-center justify-between"
+                        className="p-4 bg-[hsl(225,14%,10%)] rounded-xl border border-[hsl(225,10%,16%)] hover:border-violet-300 hover:shadow-sm transition-all text-left flex items-center justify-between"
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600">
                             <Target className="w-5 h-5" />
                           </div>
                           <div>
-                            <p className="font-medium text-slate-800">{day.name}</p>
-                            <p className="text-xs text-slate-500">{day.exercises.length} Übungen</p>
+                            <p className="font-medium text-[hsl(var(--fg-primary))]">{day.name}</p>
+                            <p className="text-xs text-[hsl(var(--fg-muted))]">{day.exercises.length} Übungen</p>
                           </div>
                         </div>
                         {count > 0 && (
@@ -236,12 +236,12 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
 
           {/* Selected Days */}
           {planDays.length === 0 ? (
-            <div className="bg-slate-50 rounded-2xl p-12 text-center border-2 border-dashed border-slate-200">
-              <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-8 h-8 text-slate-400" />
+            <div className="bg-[hsl(225,12%,13%)] rounded-2xl p-12 text-center border-2 border-dashed border-[hsl(225,10%,16%)]">
+              <div className="w-16 h-16 rounded-2xl bg-[hsl(225,12%,15%)] flex items-center justify-center mx-auto mb-4">
+                <Calendar className="w-8 h-8 text-[hsl(var(--fg-subtle))]" />
               </div>
-              <p className="text-slate-600 font-medium mb-1">Noch keine Trainingstage</p>
-              <p className="text-sm text-slate-400">F?ge Trainingstage hinzu um deinen Plan zu erstellen</p>
+              <p className="text-[hsl(var(--fg-secondary))] font-medium mb-1">Noch keine Trainingstage</p>
+              <p className="text-sm text-[hsl(var(--fg-subtle))]">F?ge Trainingstage hinzu um deinen Plan zu erstellen</p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -250,22 +250,22 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
                 return (
                   <div
                     key={planDay.id}
-                    className="p-4 bg-white rounded-xl border border-slate-200 flex items-center gap-3 group hover:border-violet-200 hover:shadow-sm transition-all"
+                    className="p-4 bg-[hsl(225,14%,10%)] rounded-xl border border-[hsl(225,10%,16%)] flex items-center gap-3 group hover:border-violet-200 hover:shadow-sm transition-all"
                   >
                     <div className="flex flex-col gap-0.5">
                       <button
                         onClick={() => handleMoveDayUp(index)}
                         disabled={index === 0}
-                        className="p-1 hover:bg-slate-100 rounded disabled:opacity-30 transition-colors"
+                        className="p-1 hover:bg-[hsl(225,12%,18%)] rounded disabled:opacity-30 transition-colors"
                       >
-                        <ChevronUp className="w-4 h-4 text-slate-500" />
+                        <ChevronUp className="w-4 h-4 text-[hsl(var(--fg-muted))]" />
                       </button>
                       <button
                         onClick={() => handleMoveDayDown(index)}
                         disabled={index === planDays.length - 1}
-                        className="p-1 hover:bg-slate-100 rounded disabled:opacity-30 transition-colors"
+                        className="p-1 hover:bg-[hsl(225,12%,18%)] rounded disabled:opacity-30 transition-colors"
                       >
-                        <ChevronDown className="w-4 h-4 text-slate-500" />
+                        <ChevronDown className="w-4 h-4 text-[hsl(var(--fg-muted))]" />
                       </button>
                     </div>
 
@@ -274,13 +274,13 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
                     </div>
 
                     <div className="flex-1">
-                      <p className="font-semibold text-slate-800">{dayData?.name || 'Unbekannt'}</p>
-                      <p className="text-sm text-slate-500">{dayData?.exercises.length || 0} Übungen</p>
+                      <p className="font-semibold text-[hsl(var(--fg-primary))]">{dayData?.name || 'Unbekannt'}</p>
+                      <p className="text-sm text-[hsl(var(--fg-muted))]">{dayData?.exercises.length || 0} Übungen</p>
                     </div>
 
                     <button
                       onClick={() => handleRemoveDay(planDay.id)}
-                      className="p-2 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all opacity-0 group-hover:opacity-100"
+                      className="p-2 rounded-lg text-[hsl(var(--fg-subtle))] hover:text-rose-500 hover:bg-rose-50 transition-all opacity-0 group-hover:opacity-100"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>

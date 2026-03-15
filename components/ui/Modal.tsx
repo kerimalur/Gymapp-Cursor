@@ -134,7 +134,7 @@ export function Modal({
         tabIndex={-1}
         className={`
           relative w-full ${sizeClasses[size]} 
-          bg-white rounded-2xl shadow-2xl 
+          bg-[hsl(225,14%,10%)] rounded-2xl shadow-2xl 
           max-h-[90vh] flex flex-col
           animate-modal-enter
           my-auto
@@ -148,7 +148,7 @@ export function Modal({
       >
         {/* Header */}
         {(title || showCloseButton) && (
-          <div className="flex-shrink-0 px-6 py-5 border-b border-slate-100">
+          <div className="flex-shrink-0 px-6 py-5 border-b border-[hsl(225,10%,14%)]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 {icon && (
@@ -163,12 +163,12 @@ export function Modal({
                 )}
                 <div>
                   {title && (
-                    <h2 id="modal-title" className="text-xl font-bold text-slate-800">
+                    <h2 id="modal-title" className="text-xl font-bold text-[hsl(var(--fg-primary))]">
                       {title}
                     </h2>
                   )}
                   {subtitle && (
-                    <p className="text-sm text-slate-500 mt-0.5">{subtitle}</p>
+                    <p className="text-sm text-[hsl(var(--fg-muted))] mt-0.5">{subtitle}</p>
                   )}
                 </div>
               </div>
@@ -177,8 +177,8 @@ export function Modal({
                   onClick={onClose}
                   className="
                     p-2.5 rounded-xl
-                    text-slate-400 hover:text-slate-600
-                    hover:bg-slate-100 
+                    text-[hsl(var(--fg-subtle))] hover:text-[hsl(var(--fg-secondary))]
+                    hover:bg-[hsl(225,12%,18%)] 
                     transition-all duration-200
                     focus:outline-none focus:ring-2 focus:ring-primary-500/50
                   "
@@ -198,7 +198,7 @@ export function Modal({
 
         {/* Footer */}
         {footer && (
-          <div className="flex-shrink-0 px-6 py-4 border-t border-slate-100 bg-slate-50/50 rounded-b-2xl">
+          <div className="flex-shrink-0 px-6 py-4 border-t border-[hsl(225,10%,14%)] bg-[hsl(225,12%,13%)]/50 rounded-b-2xl">
             {footer}
           </div>
         )}
@@ -263,8 +263,8 @@ export function ConfirmDialog({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      iconBg: 'bg-blue-100 text-blue-600',
-      button: 'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500/50',
+      iconBg: 'bg-cyan-400/15 text-cyan-400',
+      button: 'bg-cyan-500 hover:bg-cyan-400 focus:ring-cyan-500/50',
     },
   };
 
@@ -283,16 +283,16 @@ export function ConfirmDialog({
         <div className={`w-16 h-16 rounded-2xl ${iconBg} flex items-center justify-center mx-auto mb-4`}>
           {icon}
         </div>
-        <h3 className="text-xl font-bold text-slate-800 mb-2">{title}</h3>
-        <p className="text-slate-500 mb-6">{message}</p>
+        <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))] mb-2">{title}</h3>
+        <p className="text-[hsl(var(--fg-muted))] mb-6">{message}</p>
         <div className="flex gap-3 justify-center">
           <button
             onClick={onClose}
             disabled={loading}
             className="
               px-5 py-2.5 rounded-xl font-medium
-              text-slate-600 bg-slate-100 
-              hover:bg-slate-200 
+              text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] 
+              hover:bg-[hsl(225,12%,20%)] 
               transition-all duration-200
               disabled:opacity-50
             "

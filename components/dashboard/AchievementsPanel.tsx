@@ -38,7 +38,7 @@ export function AchievementsPanel() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-5 shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
@@ -46,8 +46,8 @@ export function AchievementsPanel() {
             <Trophy className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">Achievements</h3>
-            <p className="text-xs text-slate-500">
+            <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Achievements</h3>
+            <p className="text-xs text-[hsl(var(--fg-muted))]">
               {unlocked.length} / {achievements.length} freigeschaltet
             </p>
           </div>
@@ -75,7 +75,7 @@ export function AchievementsPanel() {
             </defs>
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-bold text-[hsl(var(--fg-secondary))]">
               {Math.round((unlocked.length / achievements.length) * 100)}%
             </span>
           </div>
@@ -91,7 +91,7 @@ export function AchievementsPanel() {
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
               filter === cat
                 ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300'
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-muted))] hover:bg-[hsl(225,12%,20%)]'
             }`}
           >
             {categoryLabels[cat]}
@@ -117,7 +117,7 @@ export function AchievementsPanel() {
                 className={`text-left rounded-xl p-3 border-2 transition-all ${
                   isUnlocked
                     ? 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200 hover:shadow-md'
-                    : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                    : 'bg-[hsl(225,12%,13%)] border-[hsl(225,10%,16%)] hover:border-[hsl(225,10%,22%)]'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
@@ -127,12 +127,12 @@ export function AchievementsPanel() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
                       <p className={`font-semibold text-sm truncate ${
-                        isUnlocked ? 'text-amber-900' : 'text-slate-500'
+                        isUnlocked ? 'text-amber-900' : 'text-[hsl(var(--fg-muted))]'
                       }`}>
                         {achievement.name}
                       </p>
                       {isUnlocked && <Star className="w-3 h-3 text-amber-500 flex-shrink-0" />}
-                      {!isUnlocked && <Lock className="w-3 h-3 text-slate-400 flex-shrink-0" />}
+                      {!isUnlocked && <Lock className="w-3 h-3 text-[hsl(var(--fg-subtle))] flex-shrink-0" />}
                     </div>
 
                     {/* Progress bar */}
@@ -144,7 +144,7 @@ export function AchievementsPanel() {
                             style={{ width: `${achievement.progress}%` }}
                           />
                         </div>
-                        <p className="text-[10px] text-slate-400 mt-0.5">
+                        <p className="text-[10px] text-[hsl(var(--fg-subtle))] mt-0.5">
                           {achievement.current} / {achievement.target} {achievement.unit}
                         </p>
                       </div>
@@ -170,7 +170,7 @@ export function AchievementsPanel() {
                       <p className={`text-xs mt-2 pt-2 border-t ${
                         isUnlocked
                           ? 'text-amber-700 border-amber-200'
-                          : 'text-slate-500 border-slate-200'
+                          : 'text-[hsl(var(--fg-muted))] border-[hsl(225,10%,16%)]'
                       }`}>
                         {achievement.description}
                       </p>
@@ -187,7 +187,7 @@ export function AchievementsPanel() {
       {filtered.length > 8 && (
         <button
           onClick={() => setShowAll(!showAll)}
-          className="w-full mt-3 py-2 text-xs font-semibold text-slate-500 hover:text-slate-700 flex items-center justify-center gap-1 transition-colors"
+          className="w-full mt-3 py-2 text-xs font-semibold text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))] flex items-center justify-center gap-1 transition-colors"
         >
           {showAll ? (
             <>Weniger anzeigen <ChevronUp className="w-3 h-3" /></>

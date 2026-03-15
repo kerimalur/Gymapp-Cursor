@@ -37,7 +37,7 @@ const Icons = {
 
 // Color scheme for muscle groups
 const muscleColors: Record<string, { bg: string; gradient: string; border: string; text: string }> = {
-  'Brust': { bg: 'bg-blue-500', gradient: 'from-blue-500 to-blue-600', border: 'border-blue-200', text: 'text-blue-600' },
+  'Brust': { bg: 'bg-cyan-500', gradient: 'from-cyan-500 to-cyan-600', border: 'border-cyan-400/20', text: 'text-cyan-400' },
   'Rücken': { bg: 'bg-emerald-500', gradient: 'from-emerald-500 to-emerald-600', border: 'border-emerald-200', text: 'text-emerald-600' },
   'Schultern': { bg: 'bg-amber-500', gradient: 'from-amber-500 to-amber-600', border: 'border-amber-200', text: 'text-amber-600' },
   'Bizeps': { bg: 'bg-violet-500', gradient: 'from-violet-500 to-violet-600', border: 'border-violet-200', text: 'text-violet-600' },
@@ -213,11 +213,11 @@ export function MuscleBalanceChart() {
     return (
       <div className="flex items-center justify-center h-[350px]">
         <div className="text-center animate-fade-in">
-          <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center text-gray-300">
+          <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[hsl(225,12%,15%)] to-[hsl(225,12%,13%)] flex items-center justify-center text-gray-300">
             {Icons.muscle}
           </div>
-          <p className="text-lg font-semibold text-gray-900 mb-1">Noch keine Daten</p>
-          <p className="text-sm text-gray-500">Trainiere, um deine Balance zu sehen</p>
+          <p className="text-lg font-semibold text-[hsl(var(--fg-primary))] mb-1">Noch keine Daten</p>
+          <p className="text-sm text-[hsl(var(--fg-muted))]">Trainiere, um deine Balance zu sehen</p>
         </div>
       </div>
     );
@@ -239,13 +239,13 @@ export function MuscleBalanceChart() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setSelectedMuscle(item.muscle)}
-                    className="font-medium text-gray-900 hover:text-primary-600 transition-colors"
+                    className="font-medium text-[hsl(var(--fg-primary))] hover:text-primary-600 transition-colors"
                   >
                     {item.muscle}
                   </button>
                   <button
                     onClick={() => setShowMuscleInfo(item.muscle)}
-                    className="text-gray-400 hover:text-primary-500 transition-colors"
+                    className="text-[hsl(var(--fg-subtle))] hover:text-primary-500 transition-colors"
                     title="Info zur Muskelgruppe"
                   >
                     {Icons.help}
@@ -256,7 +256,7 @@ export function MuscleBalanceChart() {
                 {item.actualSets % 1 === 0 ? Math.round(item.actualSets) : item.actualSets.toFixed(1)} Sätze
               </span>
             </div>
-            <div className="relative h-3 bg-gray-100 rounded-full overflow-hidden">
+            <div className="relative h-3 bg-[hsl(225,12%,15%)] rounded-full overflow-hidden">
               <div
                 className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${item.colors.gradient} transition-all duration-700 ease-out`}
                 style={{ width: `${item.value}%` }}
@@ -281,15 +281,15 @@ export function MuscleBalanceChart() {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-white/80 shadow-sm flex items-center justify-center">
+            <div className="w-14 h-14 rounded-2xl bg-[hsl(225,14%,10%)]/80 shadow-sm flex items-center justify-center">
               <span className={`text-2xl font-black ${getScoreColor(balanceScore)}`}>
                 {balanceScore}
               </span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h4 className="font-bold text-gray-900">Balance-Score</h4>
-                <span className="text-gray-400 group-hover:text-primary-500 transition-colors">
+                <h4 className="font-bold text-[hsl(var(--fg-primary))]">Balance-Score</h4>
+                <span className="text-[hsl(var(--fg-subtle))] group-hover:text-primary-500 transition-colors">
                   {Icons.help}
                 </span>
               </div>
@@ -298,7 +298,7 @@ export function MuscleBalanceChart() {
               </p>
             </div>
           </div>
-          <div className="w-8 h-8 rounded-full bg-white/60 flex items-center justify-center text-gray-400 group-hover:text-primary-500 transition-colors">
+          <div className="w-8 h-8 rounded-full bg-[hsl(225,14%,10%)]/60 flex items-center justify-center text-[hsl(var(--fg-subtle))] group-hover:text-primary-500 transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
@@ -312,17 +312,17 @@ export function MuscleBalanceChart() {
           className="fixed inset-0 bg-black/30 flex items-center justify-center z-[9999] p-4 animate-fade-in"
           onClick={(e) => e.target === e.currentTarget && setShowBalanceInfo(false)}
         >
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
-            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-gray-100 bg-white">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
+            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-[hsl(225,10%,14%)] bg-[hsl(225,14%,10%)]">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center text-primary-600">
                   {Icons.info}
                 </div>
-                <h3 className="font-bold text-gray-900">Balance-Score</h3>
+                <h3 className="font-bold text-[hsl(var(--fg-primary))]">Balance-Score</h3>
               </div>
               <button
                 onClick={() => setShowBalanceInfo(false)}
-                className="p-2 hover:bg-gray-100 rounded-xl transition-colors text-gray-400 hover:text-gray-600"
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-xl transition-colors text-[hsl(var(--fg-subtle))] hover:text-[hsl(var(--fg-secondary))]"
               >
                 {Icons.close}
               </button>
@@ -341,25 +341,25 @@ export function MuscleBalanceChart() {
 
               {/* Explanation Cards */}
               <div className="space-y-3">
-                <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
-                  <h4 className="font-semibold text-gray-900 mb-2">Was ist der Balance-Score?</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                <div className="p-4 rounded-xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,14%)]">
+                  <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-2">Was ist der Balance-Score?</h4>
+                  <p className="text-sm text-[hsl(var(--fg-secondary))] leading-relaxed">
                     Der Balance-Score zeigt, wie gleichm??ig du alle Muskelgruppen trainierst. 
                     Ein h?herer Score bedeutet ein ausgeglicheneres Training.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
-                  <h4 className="font-semibold text-gray-900 mb-2">Berechnung</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                <div className="p-4 rounded-xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,14%)]">
+                  <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-2">Berechnung</h4>
+                  <p className="text-sm text-[hsl(var(--fg-secondary))] leading-relaxed">
                     Wir zählen die abgeschlossenen Sätze (nur mit Gewicht &gt; 0) pro Muskelgruppe 
                     und berechnen die Varianz. Je gleichm??iger verteilt, desto h?her der Score.
                   </p>
                 </div>
 
                 {/* Score Legend */}
-                <div className="p-4 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-100">
-                  <h4 className="font-semibold text-gray-900 mb-3">Bewertung</h4>
+                <div className="p-4 rounded-xl bg-gradient-to-br from-[hsl(225,12%,13%)] to-[hsl(225,12%,15%)] border border-[hsl(225,10%,14%)]">
+                  <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-3">Bewertung</h4>
                   <div className="space-y-2">
                     {[
                       { range: '80-100%', label: 'Sehr ausgewogen', color: 'text-emerald-600' },
@@ -369,7 +369,7 @@ export function MuscleBalanceChart() {
                     ].map((item, idx) => (
                       <div key={idx} className="flex items-center justify-between text-sm">
                         <span className={`font-medium ${item.color}`}>{item.range}</span>
-                        <span className="text-gray-600">{item.label}</span>
+                        <span className="text-[hsl(var(--fg-secondary))]">{item.label}</span>
                       </div>
                     ))}
                   </div>
@@ -377,15 +377,15 @@ export function MuscleBalanceChart() {
 
                 {/* Current Distribution */}
                 <div className="p-4 rounded-xl bg-gradient-to-br from-primary-50 to-indigo-50 border border-primary-100">
-                  <h4 className="font-semibold text-gray-900 mb-3">Deine Verteilung</h4>
+                  <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-3">Deine Verteilung</h4>
                   <div className="space-y-2">
                     {muscleData.map((item, idx) => (
                       <div key={idx} className="flex items-center justify-between text-sm">
                         <div className="flex items-center gap-2">
                           <span className={`w-2 h-2 rounded-full ${item.colors.bg}`} />
-                          <span className="text-gray-700">{item.muscle}</span>
+                          <span className="text-[hsl(var(--fg-secondary))]">{item.muscle}</span>
                         </div>
-                        <span className="font-medium text-gray-900">{item.actualSets} Sätze</span>
+                        <span className="font-medium text-[hsl(var(--fg-primary))]">{item.actualSets} Sätze</span>
                       </div>
                     ))}
                   </div>
@@ -403,15 +403,15 @@ export function MuscleBalanceChart() {
           className="fixed inset-0 bg-black/30 flex items-center justify-center z-[9999] p-4 animate-fade-in"
           onClick={(e) => e.target === e.currentTarget && setSelectedMuscle(null)}
         >
-          <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
-            <div className="flex-shrink-0 bg-gradient-to-br from-white to-gray-50 border-b border-slate-200 p-6 flex items-center justify-between rounded-t-3xl">
+          <div className="bg-[hsl(225,14%,10%)] rounded-3xl max-w-3xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
+            <div className="flex-shrink-0 bg-gradient-to-br from-[hsl(225,14%,10%)] to-[hsl(225,12%,13%)] border-b border-[hsl(225,10%,16%)] p-6 flex items-center justify-between rounded-t-3xl">
               <div className="flex items-center gap-3">
                 <div className={`w-3 h-3 rounded-full ${muscleData.find(m => m.muscle === selectedMuscle)?.colors.bg}`} />
-                <h3 className="font-bold text-gray-900 text-xl">{selectedMuscle} - Übungsdetails</h3>
+                <h3 className="font-bold text-[hsl(var(--fg-primary))] text-xl">{selectedMuscle} - Übungsdetails</h3>
               </div>
               <button
                 onClick={() => setSelectedMuscle(null)}
-                className="p-2 hover:bg-gray-100 rounded-xl transition-colors text-gray-400 hover:text-gray-600"
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-xl transition-colors text-[hsl(var(--fg-subtle))] hover:text-[hsl(var(--fg-secondary))]"
               >
                 {Icons.close}
               </button>
@@ -423,7 +423,7 @@ export function MuscleBalanceChart() {
                 if (!muscleInfo || muscleInfo.exercises.length === 0) {
                   return (
                     <div className="text-center py-12">
-                      <p className="text-gray-500">Keine Übungen gefunden</p>
+                      <p className="text-[hsl(var(--fg-muted))]">Keine Übungen gefunden</p>
                     </div>
                   );
                 }
@@ -433,7 +433,7 @@ export function MuscleBalanceChart() {
                     <div className={`p-5 rounded-xl bg-gradient-to-br ${muscleInfo.colors.gradient} bg-opacity-10 border-2 ${muscleInfo.colors.border}`}>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-1">Gesamt</p>
+                          <p className="text-sm font-semibold text-[hsl(var(--fg-secondary))] uppercase tracking-wide mb-1">Gesamt</p>
                           <p className={`text-3xl font-bold ${muscleInfo.colors.text}`}>
                             {muscleInfo.actualSets % 1 === 0 ? Math.round(muscleInfo.actualSets) : muscleInfo.actualSets.toFixed(1)} Sätze
                           </p>
@@ -445,19 +445,19 @@ export function MuscleBalanceChart() {
                     </div>
 
                     <div>
-                      <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3 flex items-center gap-2">
+                      <h4 className="text-sm font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wide mb-3 flex items-center gap-2">
                         {Icons.dumbbell}
                         Übungen ({muscleInfo.exercises.length})
                       </h4>
                       <div className="space-y-3">
                         {muscleInfo.exercises.map((exercise, idx) => (
-                          <div key={idx} className="bg-white border-2 border-gray-200 rounded-xl p-4 hover:border-gray-300 transition-all">
+                          <div key={idx} className="bg-[hsl(225,14%,10%)] border-2 border-[hsl(225,10%,16%)] rounded-xl p-4 hover:border-[hsl(225,10%,22%)] transition-all">
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
-                                <h5 className="font-semibold text-gray-900 mb-1">
+                                <h5 className="font-semibold text-[hsl(var(--fg-primary))] mb-1">
                                   {exercise.exerciseName}
                                 </h5>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-[hsl(var(--fg-muted))]">
                                   Muskelgruppe: {exercise.muscleGroup}
                                 </p>
                               </div>
@@ -465,17 +465,17 @@ export function MuscleBalanceChart() {
                                 <p className={`text-2xl font-bold ${muscleInfo.colors.text}`}>
                                   {exercise.sets % 1 === 0 ? Math.round(exercise.sets) : exercise.sets.toFixed(1)}
                                 </p>
-                                <p className="text-xs text-gray-500">Sätze</p>
+                                <p className="text-xs text-[hsl(var(--fg-muted))]">Sätze</p>
                               </div>
                             </div>
-                            <div className="mt-3 pt-3 border-t border-gray-100">
-                              <div className="relative h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div className="mt-3 pt-3 border-t border-[hsl(225,10%,14%)]">
+                              <div className="relative h-2 bg-[hsl(225,12%,15%)] rounded-full overflow-hidden">
                                 <div
                                   className={`absolute inset-y-0 left-0 rounded-full bg-gradient-to-r ${muscleInfo.colors.gradient}`}
                                   style={{ width: `${(exercise.sets / muscleInfo.actualSets) * 100}%` }}
                                 />
                               </div>
-                              <p className="text-xs text-gray-500 mt-1">
+                              <p className="text-xs text-[hsl(var(--fg-muted))] mt-1">
                                 {Math.round((exercise.sets / muscleInfo.actualSets) * 100)}% der {selectedMuscle}-Sätze
                               </p>
                             </div>
@@ -484,7 +484,7 @@ export function MuscleBalanceChart() {
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-blue-50 border border-blue-200">
+                    <div className="p-4 rounded-xl bg-cyan-400/10 border border-cyan-400/20">
                       <p className="text-sm text-blue-800">
                         💡 <strong>Hinweis:</strong> Nur der primaere Muskel (erster in der Liste) wird gezählt. 
                         Bankdrücken mit 2 Sätzen = 2 Sätze für Brust. Hilfsmuskeln wie Schultern und Arme werden nicht mitgezählt.
@@ -505,17 +505,17 @@ export function MuscleBalanceChart() {
           className="fixed inset-0 bg-black/30 flex items-center justify-center z-[9999] p-4 animate-fade-in"
           onClick={(e) => e.target === e.currentTarget && setShowMuscleInfo(null)}
         >
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
-            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-gray-100 bg-gradient-to-br from-white to-gray-50">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
+            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-[hsl(225,10%,14%)] bg-gradient-to-br from-[hsl(225,14%,10%)] to-[hsl(225,12%,13%)]">
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-xl ${muscleColors[showMuscleInfo]?.bg || 'bg-primary-500'} bg-opacity-20 flex items-center justify-center`}>
                   {Icons.muscle}
                 </div>
-                <h3 className="font-bold text-gray-900">{showMuscleInfo}</h3>
+                <h3 className="font-bold text-[hsl(var(--fg-primary))]">{showMuscleInfo}</h3>
               </div>
               <button
                 onClick={() => setShowMuscleInfo(null)}
-                className="p-2 hover:bg-gray-100 rounded-xl transition-colors text-gray-400 hover:text-gray-600"
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-xl transition-colors text-[hsl(var(--fg-subtle))] hover:text-[hsl(var(--fg-secondary))]"
               >
                 {Icons.close}
               </button>
@@ -525,20 +525,20 @@ export function MuscleBalanceChart() {
               {muscleInfo[showMuscleInfo] && (
                 <>
                   {/* Description */}
-                  <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
-                    <h4 className="font-semibold text-gray-900 mb-2">📖 Beschreibung</h4>
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                  <div className="p-4 rounded-xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,14%)]">
+                    <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-2">📖 Beschreibung</h4>
+                    <p className="text-sm text-[hsl(var(--fg-secondary))] leading-relaxed">
                       {muscleInfo[showMuscleInfo].description}
                     </p>
                   </div>
 
                   {/* Recommended Volume */}
                   <div className={`p-4 rounded-xl ${muscleColors[showMuscleInfo]?.bg || 'bg-primary-500'} bg-opacity-10 border ${muscleColors[showMuscleInfo]?.border || 'border-primary-200'}`}>
-                    <h4 className="font-semibold text-gray-900 mb-2">📊 Empfohlenes Volumen</h4>
+                    <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-2">📊 Empfohlenes Volumen</h4>
                     <p className={`text-2xl font-bold ${muscleColors[showMuscleInfo]?.text || 'text-primary-600'}`}>
                       {muscleInfo[showMuscleInfo].avgSetsPerWeek}
                     </p>
-                    <p className="text-xs text-gray-500 mt-1">für optimales Muskelwachstum</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))] mt-1">für optimales Muskelwachstum</p>
                   </div>
 
                   {/* Tips */}
@@ -559,15 +559,15 @@ export function MuscleBalanceChart() {
                     const currentData = muscleData.find(m => m.muscle === showMuscleInfo);
                     if (currentData) {
                       return (
-                        <div className="p-4 rounded-xl bg-blue-50 border border-blue-200">
+                        <div className="p-4 rounded-xl bg-cyan-400/10 border border-cyan-400/20">
                           <h4 className="font-semibold text-blue-800 mb-2">📈 Deine Statistik</h4>
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-blue-700">Getrackte Sätze (gesamt)</span>
+                            <span className="text-sm text-cyan-400">Getrackte Sätze (gesamt)</span>
                             <span className="text-xl font-bold text-blue-800">
                               {currentData.actualSets % 1 === 0 ? Math.round(currentData.actualSets) : currentData.actualSets.toFixed(1)}
                             </span>
                           </div>
-                          <p className="text-xs text-blue-600 mt-1">
+                          <p className="text-xs text-cyan-400 mt-1">
                             Nur abgeschlossene Sätze mit Gewicht &gt; 0
                           </p>
                         </div>
