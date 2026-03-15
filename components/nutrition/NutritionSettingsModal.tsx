@@ -17,7 +17,7 @@ const CATEGORY_LABELS = {
   meal: 'Mahlzeit',
   snack: 'Snack',
   supplement: 'Supplement',
-  drink: 'Getraenk',
+  drink: 'Getr?nk',
 };
 
 const CATEGORY_ICONS = {
@@ -162,7 +162,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
       isOpen={isOpen}
       onClose={onClose}
       size="lg"
-      title="Ernaehrungs-Einstellungen"
+      title="Ern?hrungs-Einstellungen"
       icon={<Settings className="w-6 h-6" />}
       iconColor="primary"
     >
@@ -222,7 +222,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                 </div>
                 <div>
                   <h4 className="font-medium text-slate-800">Deine Tagesziele</h4>
-                  <p className="text-sm text-slate-500">Passe deine taeglichen Ernaehrungsziele an</p>
+                  <p className="text-sm text-slate-500">Passe deine t?glichen Ern?hrungsziele an</p>
                 </div>
               </div>
 
@@ -299,7 +299,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
 
               {/* Macro Summary */}
               <div className="bg-slate-50 rounded-xl p-4 mt-4">
-                <h5 className="text-sm font-medium text-slate-700 mb-3">Makro-Uebersicht</h5>
+                <h5 className="text-sm font-medium text-slate-700 mb-3">Makro-?bersicht</h5>
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div className="bg-white rounded-lg p-3">
                     <p className="text-lg font-bold text-blue-600">{Math.round((goalsForm.dailyProtein * 4 / goalsForm.dailyCalories) * 100) || 0}%</p>
@@ -331,14 +331,14 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
             <div>
               <div className="flex items-center justify-between mb-4">
                 <p className="text-sm text-slate-500">
-                  Fuege eigene Lebensmittel hinzu, die du regelmaessig trackst.
+                  F?ge eigene Lebensmittel hinzu, die du regelmaessig trackst.
                 </p>
                 <button
                   onClick={() => setShowAddFood(true)}
                   className="flex items-center gap-2 px-3 py-2 bg-primary-500 text-white rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors"
                 >
                   <Plus className="w-4 h-4" />
-                  Hinzufuegen
+                  Hinzuf?gen
                 </button>
               </div>
 
@@ -429,7 +429,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                       >
                         <option value="meal">Mahlzeit</option>
                         <option value="snack">Snack</option>
-                        <option value="drink">Getraenk</option>
+                        <option value="drink">Getr?nk</option>
                         <option value="supplement">Supplement</option>
                       </select>
                     </div>
@@ -499,14 +499,14 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h4 className="font-medium text-slate-900">Aktive Supplements</h4>
-                    <p className="text-xs text-slate-500">Diese erscheinen in deinem taeglichen Tracking</p>
+                    <p className="text-xs text-slate-500">Diese erscheinen in deinem t?glichen Tracking</p>
                   </div>
                   <button
                     onClick={() => setShowAddActiveSupplement(true)}
                     className="flex items-center gap-2 px-3 py-2 bg-primary-500 text-white rounded-lg text-sm font-medium hover:bg-primary-600 transition-colors"
                   >
                     <Plus className="w-4 h-4" />
-                    Hinzufuegen
+                    Hinzuf?gen
                   </button>
                 </div>
 
@@ -561,7 +561,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                             userId: 'user-1',
                             name: newSupplement.name,
                             dosage: newSupplement.dosage || '',
-                            timing: newSupplement.timing || 'Taeglich',
+                            timing: newSupplement.timing || 'T?glich',
                             isActive: true,
                           });
                           setNewSupplement({ name: '', dosage: '', timing: 'morning', notes: '' });
@@ -624,7 +624,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <h4 className="font-medium text-slate-900">Supplement-Vorlagen</h4>
-                    <p className="text-xs text-slate-500">Vorlagen fuer schnelles Hinzufuegen</p>
+                    <p className="text-xs text-slate-500">Vorlagen f?r schnelles Hinzuf?gen</p>
                   </div>
                   <button
                     onClick={() => setShowAddSupplement(true)}
@@ -748,7 +748,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                             });
                           }}
                           className="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-colors"
-                          title="Zu aktiven Supplements hinzufuegen"
+                          title="Zu aktiven Supplements hinzuf?gen"
                         >
                           <Plus className="w-4 h-4" />
                         </button>
@@ -771,7 +771,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
           {activeTab === 'templates' && (
             <div>
               <p className="text-sm text-slate-500 mb-4">
-                Hier siehst du alle gespeicherten Mahlzeiten. Du kannst sie im Ernaehrungs-Tab beim Quick-Add verwenden.
+                Hier siehst du alle gespeicherten Mahlzeiten. Du kannst sie im Ern?hrungs-Tab beim Quick-Add verwenden.
               </p>
 
               {mealTemplates.length === 0 ? (

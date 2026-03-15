@@ -66,7 +66,7 @@ const navigation = [
   { name: 'Statistiken', href: '/statistics', icon: 'statistics', highlight: false },
   { name: 'Muskelbalance', href: '/muscle-balance', icon: 'statistics', highlight: false },
   { name: 'Regeneration', href: '/recovery', icon: 'recovery', highlight: false },
-  { name: 'Kalender', href: '/calendar', icon: 'calendar', highlight: false },  { name: 'Ernaehrung', href: '/nutrition', icon: 'nutrition', highlight: false },
+  { name: 'Kalender', href: '/calendar', icon: 'calendar', highlight: false },  { name: 'Ern?hrung', href: '/nutrition', icon: 'nutrition', highlight: false },
 ] as const;
 
 interface SidebarProps {

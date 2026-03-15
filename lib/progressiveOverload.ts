@@ -135,8 +135,8 @@ export function getProgressionSuggestion(
       type: 'first_time',
       suggestedWeight: 0,
       suggestedReps: 8,
-      message: 'Neue Uebung. Starte mit einem moderaten Gewicht.',
-      reason: 'Keine vorherigen Satzdaten fuer diese Uebung',
+      message: 'Neue ?bung. Starte mit einem moderaten Gewicht.',
+      reason: 'Keine vorherigen Satzdaten f?r diese ?bung',
       confidence: 'low',
     };
   }
@@ -381,15 +381,15 @@ export function generateWorkoutSummary(
 
     let suggestion = '';
     if (avgRIR !== undefined && avgRIR >= 3) {
-      suggestion = 'Naechstes Mal Gewicht steigern.';
+      suggestion = 'N?chstes Mal Gewicht steigern.';
     } else if (avgRIR !== undefined && avgRIR <= 0) {
-      suggestion = 'Starke Einheit. Eventuell minimal leichter fuer bessere Technik.';
+      suggestion = 'Starke Einheit. Eventuell minimal leichter f?r bessere Technik.';
     } else if (exerciseVolumeChange > 10) {
       suggestion = 'Saubere Steigerung. Genau so weitermachen.';
     } else if (exerciseVolumeChange < -10) {
-      suggestion = 'Weniger Volumen als sonst. Erholung oder Deload pruefen.';
+      suggestion = 'Weniger Volumen als sonst. Erholung oder Deload pr?fen.';
     } else {
-      suggestion = 'Solide Leistung. Beim naechsten Mal 1 Wiederholung mehr anpeilen.';
+      suggestion = 'Solide Leistung. Beim n?chsten Mal 1 Wiederholung mehr anpeilen.';
     }
 
     return {
@@ -419,7 +419,7 @@ export function generateWorkoutSummary(
   const motivationalMessages = {
     excellent: [
       'Absolut stark. Neue PRs und mehr Volumen.',
-      'Ueberragend. Heute war richtig Zug drin.',
+      '?berragend. Heute war richtig Zug drin.',
       'Starkes Training. Genau so fuehlen sich Fortschritte an.',
     ],
     good: [
@@ -429,11 +429,11 @@ export function generateWorkoutSummary(
     ],
     average: [
       'Training erledigt. Konstanz gewinnt am Ende.',
-      'Dranbleiben. Jede Einheit zaehlt.',
+      'Dranbleiben. Jede Einheit z?hlt.',
       'Durchgezogen. Auch normale Einheiten bauen etwas auf.',
     ],
     below_average: [
-      'Nicht der beste Tag, aber du warst da. Das zaehlt.',
+      'Nicht der beste Tag, aber du warst da. Das z?hlt.',
       'Schlechtere Tage gehoeren dazu. Morgen sieht oft schon anders aus.',
       'Einheit abgehakt. Erholung mitnehmen und weiter.',
     ],
@@ -461,16 +461,16 @@ export function generateWorkoutSummary(
   );
   if (lowRIRExercises.length > 0) {
     nextWorkoutTips.push(
-      `Technik pruefen bei: ${lowRIRExercises.map((entry) => entry.exerciseName).join(', ')}`
+      `Technik pr?fen bei: ${lowRIRExercises.map((entry) => entry.exerciseName).join(', ')}`
     );
   }
 
   if (durationDiff > 15) {
-    nextWorkoutTips.push(`Training war ${durationDiff} Minuten laenger als ueblich. Pausen pruefen.`);
+    nextWorkoutTips.push(`Training war ${durationDiff} Minuten laenger als ueblich. Pausen pr?fen.`);
   }
 
   if (nextWorkoutTips.length === 0) {
-    nextWorkoutTips.push('Versuche beim naechsten Mal 1 Wiederholung oder 2.5kg mehr.');
+    nextWorkoutTips.push('Versuche beim n?chsten Mal 1 Wiederholung oder 2.5kg mehr.');
   }
 
   return {
@@ -549,7 +549,7 @@ export function detectStagnation(
       lastReps,
       suggestion:
         lastReps >= 12
-          ? `Naechstes Mal ${recent[0].weight + weightIncrement}kg mit ${Math.max(6, lastReps - 4)} Wiederholungen testen.`
+          ? `N?chstes Mal ${recent[0].weight + weightIncrement}kg mit ${Math.max(6, lastReps - 4)} Wiederholungen testen.`
           : `Alarm: Seit 2 Einheiten keine echte Steigerung. Plane ${recent[0].weight}kg x ${lastReps + 1} oder ${recent[0].weight + weightIncrement}kg.`,
     });
   });

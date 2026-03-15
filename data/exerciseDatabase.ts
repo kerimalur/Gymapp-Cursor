@@ -8,7 +8,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ BRUST ============
   { 
     id: 'ex1', 
-    name: 'Bankdruecken', 
+    name: 'Bankdr?cken', 
     muscleGroups: ['chest', 'triceps', 'shoulders'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },
@@ -19,7 +19,7 @@ export const exerciseDatabase: Exercise[] = [
   },
   { 
     id: 'ex2', 
-    name: 'Schraegbankdruecken', 
+    name: 'Schr?gbankdr?cken', 
     muscleGroups: ['chest', 'shoulders', 'triceps'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },
@@ -75,7 +75,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ RUeCKEN ============
   { 
     id: 'ex8', 
-    name: 'Klimmzuege', 
+    name: 'Klimmz?ge', 
     muscleGroups: ['lats', 'back', 'biceps'], 
     muscles: [
       { muscle: 'lats', role: 'primary' },
@@ -165,7 +165,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ SCHULTERN ============
   { 
     id: 'ex16', 
-    name: 'Schulterdruecken', 
+    name: 'Schulterdr?cken', 
     muscleGroups: ['shoulders', 'triceps'], 
     muscles: [
       { muscle: 'shoulders', role: 'primary' },
@@ -268,7 +268,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ ARME - TRIZEPS ============
   { 
     id: 'ex28', 
-    name: 'Trizeps Druecken', 
+    name: 'Trizeps Dr?cken', 
     muscleGroups: ['triceps'], 
     muscles: [{ muscle: 'triceps', role: 'primary' }],
     category: 'push' 
@@ -282,7 +282,7 @@ export const exerciseDatabase: Exercise[] = [
   },
   { 
     id: 'ex30', 
-    name: 'Ueberkopf Trizepsdruecken', 
+    name: '?berkopf Trizepsdr?cken', 
     muscleGroups: ['triceps'], 
     muscles: [{ muscle: 'triceps', role: 'primary' }],
     category: 'push' 
@@ -690,7 +690,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ BRUST (WEITERE) ============
   { 
     id: 'ex74', 
-    name: 'Decline Bankdruecken', 
+    name: 'Decline Bankdr?cken', 
     muscleGroups: ['chest', 'triceps'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },

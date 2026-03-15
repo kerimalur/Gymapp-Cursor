@@ -37,7 +37,7 @@ export function TrainingPlanList() {
   const handleDelete = (planId: string) => {
     deleteTrainingPlan(planId);
     setConfirmDelete(null);
-    toast.success('Trainingsplan geloescht');
+    toast.success('Trainingsplan gel?scht');
   };
 
   const handleStartWorkout = (trainingDayId: string) => {
@@ -173,7 +173,7 @@ export function TrainingPlanList() {
                           <div>
                             <p className="font-medium text-gray-900">{day?.name || 'Unbekannt'}</p>
                             <p className="text-sm text-gray-500">
-                              {day?.exercises.length || 0} Uebungen
+                              {day?.exercises.length || 0} ?bungen
                             </p>
                           </div>
                         </div>
@@ -192,7 +192,7 @@ export function TrainingPlanList() {
                     {planDays.length === 0 && (
                       <div className="text-center py-6 bg-amber-50 rounded-xl">
                         <p className="text-amber-700">Keine Trainingstage gefunden</p>
-                        <p className="text-sm text-amber-600">Die Trainingstage wurden moeglicherweise geloescht.</p>
+                        <p className="text-sm text-amber-600">Die Trainingstage wurden m?glicherweise gel?scht.</p>
                       </div>
                     )}
                   </div>
@@ -224,7 +224,7 @@ export function TrainingPlanList() {
                         onClick={() => handleDelete(plan.id)}
                         className="px-4 py-3 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600 transition-colors"
                       >
-                        Ja, loeschen
+                        Ja, l?schen
                       </button>
                       <button
                         onClick={() => setConfirmDelete(null)}
@@ -237,8 +237,8 @@ export function TrainingPlanList() {
                     <button
                       onClick={() => setConfirmDelete(plan.id)}
                       className="p-3 border-2 border-gray-200 text-gray-600 rounded-xl hover:border-red-300 hover:text-red-600 transition-colors"
-                      title="Loeschen"
-                      aria-label="Plan loeschen"
+                      title="L?schen"
+                      aria-label="Plan l?schen"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>

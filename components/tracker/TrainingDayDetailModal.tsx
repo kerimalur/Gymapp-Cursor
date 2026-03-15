@@ -32,7 +32,7 @@ interface ExerciseRecommendation {
 export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }: TrainingDayDetailModalProps) {
   const { workoutSessions, customExercises } = useWorkoutStore();
 
-  // Berechne Empfehlungen fuer jede Uebung
+  // Berechne Empfehlungen f?r jede ?bung
   const exerciseRecommendations = useMemo(() => {
     const recommendations: Map<string, ExerciseRecommendation> = new Map();
     
@@ -58,7 +58,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
         if (matchingEx) {
           const completedSets = matchingEx.sets.filter(s => s.completed && s.weight > 0);
           if (completedSets.length >= 2) {
-            // Nimm den 2. Satz als Referenz (1. Satz ist oft Aufwaermsatz)
+            // Nimm den 2. Satz als Referenz (1. Satz ist oft Aufw?rmsatz)
             const referenceSet = completedSets[1];
             
             exerciseHistory.push({
@@ -101,7 +101,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
         if (avgRIR >= 2) {
           recommendation = 'increase';
           recommendedWeight = lastSession.weight + 2.5;
-          reason = `Stabil → +2.5kg moeglich`;
+          reason = `Stabil → +2.5kg m?glich`;
         } else {
           reason = `Gewicht halten`;
         }
@@ -147,7 +147,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
   // Muscle name translations
   const muscleNames: Record<string, string> = {
     chest: 'Brust',
-    back: 'Ruecken',
+    back: 'R?cken',
     shoulders: 'Schultern',
     biceps: 'Bizeps',
     triceps: 'Trizeps',
@@ -156,12 +156,12 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
     quadriceps: 'Quadrizeps',
     hamstrings: 'Beinbizeps',
     calves: 'Waden',
-    glutes: 'Gesaess',
+    glutes: 'Ges??',
     traps: 'Trapez',
     lats: 'Latissimus',
     adductors: 'Adduktoren',
     abductors: 'Abduktoren',
-    lower_back: 'Unterer Ruecken',
+    lower_back: 'Unterer R?cken',
     neck: 'Nacken',
   };
 
@@ -171,7 +171,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
       onClose={onClose}
       size="lg"
       title={trainingDay.name}
-      subtitle={`${trainingDay.exercises.length} Uebungen • ${totalSets} Saetze`}
+      subtitle={`${trainingDay.exercises.length} ?bungen • ${totalSets} S?tze`}
       icon={<Dumbbell className="w-6 h-6" />}
       iconColor="primary"
       footer={onStart ? (
@@ -208,7 +208,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
         <div>
           <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3 flex items-center gap-2">
             <Repeat className="w-4 h-4" />
-            Uebungen
+            ?bungen
           </h3>
           <div className="space-y-3">
             {trainingDay.exercises.map((ex, index) => {
@@ -273,7 +273,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
                     <div className="text-right shrink-0">
                       <div className="px-3 py-1.5 rounded-xl bg-white border border-slate-200">
                         <span className="text-lg font-bold text-primary-600">{ex.sets.length}</span>
-                        <span className="text-slate-500 text-sm ml-1">Saetze</span>
+                        <span className="text-slate-500 text-sm ml-1">S?tze</span>
                       </div>
                     </div>
                   </div>

@@ -38,7 +38,7 @@ export function MealHistory() {
   const getMealName = (type: string) => {
     switch (type) {
       case 'breakfast':
-        return 'Fruehstueck';
+        return 'Fr?hst?ck';
       case 'lunch':
         return 'Mittagessen';
       case 'dinner':
@@ -82,7 +82,7 @@ export function MealHistory() {
             Noch keine Mahlzeiten
           </h3>
           <p className="text-gray-600">
-            Fuege deine erste Mahlzeit hinzu, um deine Ernaehrung zu tracken
+            F?ge deine erste Mahlzeit hinzu, um deine Ern?hrung zu tracken
           </p>
         </div>
       ) : (

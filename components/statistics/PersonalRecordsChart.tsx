@@ -108,7 +108,7 @@ export function PersonalRecordsChart() {
           <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-4 border border-amber-100">
             <div className="flex items-center gap-2 mb-2">
               <Trophy className="w-4 h-4 text-amber-600" />
-              <span className="text-xs font-medium text-amber-600">Staerkste Uebung</span>
+              <span className="text-xs font-medium text-amber-600">St?rkste ?bung</span>
             </div>
             <p className="font-bold text-gray-900 truncate">{stats.topExercise?.exerciseName}</p>
             <p className="text-sm text-gray-500">{stats.topExercise?.estimated1RM} kg 1RM</p>

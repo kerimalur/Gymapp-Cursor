@@ -146,7 +146,7 @@ export function WorkoutHeatMap({ year }: WorkoutHeatMapProps) {
     <div className="bg-white rounded-2xl border border-slate-200 p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-xl font-bold text-slate-800">Trainings-Aktivitaet {currentYear}</h3>
+          <h3 className="text-xl font-bold text-slate-800">Trainings-Aktivit?t {currentYear}</h3>
           <p className="text-sm text-slate-500 mt-1">
             {stats.totalWorkouts} Trainings an {stats.workoutDays} Tagen
           </p>

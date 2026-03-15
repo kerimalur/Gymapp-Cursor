@@ -24,7 +24,7 @@ const Icons = {
 // All available muscle groups with German labels
 const ALL_MUSCLES: { id: MuscleGroup; label: string; category: 'upper' | 'core' | 'lower' }[] = [
   { id: 'chest', label: 'Brust', category: 'upper' },
-  { id: 'back', label: 'Ruecken', category: 'upper' },
+  { id: 'back', label: 'R?cken', category: 'upper' },
   { id: 'lats', label: 'Latissimus', category: 'upper' },
   { id: 'shoulders', label: 'Schultern', category: 'upper' },
   { id: 'traps', label: 'Trapezius', category: 'upper' },
@@ -34,7 +34,7 @@ const ALL_MUSCLES: { id: MuscleGroup; label: string; category: 'upper' | 'core' 
   { id: 'abs', label: 'Bauch', category: 'core' },
   { id: 'quadriceps', label: 'Quadrizeps', category: 'lower' },
   { id: 'hamstrings', label: 'Beinbizeps', category: 'lower' },
-  { id: 'glutes', label: 'Gesaess', category: 'lower' },
+  { id: 'glutes', label: 'Ges??', category: 'lower' },
   { id: 'calves', label: 'Waden', category: 'lower' },
 ];
 
@@ -104,7 +104,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
         {/* Info Text */}
         <div className="bg-violet-50 border border-violet-200 rounded-xl p-4">
           <p className="text-sm text-violet-700">
-            Diese Einstellungen gelten fuer die gesamte App: Statistiken, Regeneration und Trainingsfrequenz-Analysen.
+            Diese Einstellungen gelten f?r die gesamte App: Statistiken, Regeneration und Trainingsfrequenz-Analysen.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
             onClick={selectAll}
             className="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors"
           >
-            Alle auswaehlen
+            Alle ausw?hlen
           </button>
           <button
             onClick={selectNone}
@@ -127,7 +127,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
         {/* Upper Body */}
         <div>
           <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
-            Oberkoerper
+            Oberk?rper
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {upperMuscles.map(muscle => (
@@ -177,7 +177,7 @@ export function GlobalSettingsModal({ isOpen, onClose }: GlobalSettingsModalProp
         {/* Lower Body */}
         <div>
           <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">
-            Unterkoerper
+            Unterk?rper
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {lowerMuscles.map(muscle => (

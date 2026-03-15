@@ -29,7 +29,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
   const handleAddEntry = () => {
     const weight = parseFloat(newWeight);
     if (isNaN(weight) || weight <= 0) {
-      toast.error('Bitte gib ein gueltiges Gewicht ein');
+      toast.error('Bitte gib ein g?ltiges Gewicht ein');
       return;
     }
 
@@ -48,7 +48,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
   const handleSetGoal = () => {
     const targetWeight = parseFloat(newGoalWeight);
     if (isNaN(targetWeight) || targetWeight <= 0) {
-      toast.error('Bitte gib ein gueltiges Zielgewicht ein');
+      toast.error('Bitte gib ein g?ltiges Zielgewicht ein');
       return;
     }
 
@@ -125,7 +125,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
             <Scale className="w-6 h-6 text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">Koerpergewicht</h3>
+            <h3 className="text-lg font-bold text-slate-800">K?rpergewicht</h3>
             <p className="text-sm text-slate-500">
               {entries.length > 0 
                 ? `${entries.length} Eintraege` 

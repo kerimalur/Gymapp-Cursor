@@ -198,7 +198,7 @@ export default function StatisticsPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-slate-900">📊 Statistiken</h1>
-              <p className="text-slate-500 mt-1">Dein Fortschritt im Ueberblick</p>
+              <p className="text-slate-500 mt-1">Dein Fortschritt im ?berblick</p>
             </div>
             <button
               onClick={() => setShowSettings(true)}
@@ -210,7 +210,7 @@ export default function StatisticsPage() {
           </div>
         </div>
 
-        {/* Muscle Heatmap - Prominente Uebersicht */}
+        {/* Muscle Heatmap - Prominente ?bersicht */}
         {workoutSessions.length > 0 && (
           <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-8">
             <h2 className="text-xl font-bold text-slate-800 mb-2">💪 Muskel-Heatmap</h2>
@@ -239,7 +239,7 @@ export default function StatisticsPage() {
           />
           <StatCard
             icon={Icons.muscle}
-            label="Saetze diesen Monat"
+            label="S?tze diesen Monat"
             value={stats.totalSets}
             color="emerald"
             delay={150}
@@ -255,13 +255,13 @@ export default function StatisticsPage() {
         {/* Volumen pro Muskel - Kombinierte Statistik */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-8">
           <h2 className="text-lg font-bold text-slate-800 mb-2">🔥 Volumen pro Muskel</h2>
-          <p className="text-sm text-slate-500 mb-4">Woechentliche Saetze mit Empfehlungen</p>
+          <p className="text-sm text-slate-500 mb-4">Woechentliche S?tze mit Empfehlungen</p>
           <MuscleVolumeStats />
         </div>
 
-        {/* Uebungs-Analyse */}
+        {/* ?bungs-Analyse */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6 mb-8">
-          <h2 className="text-lg font-bold text-slate-800 mb-2">🎯 Uebungs-Analyse</h2>
+          <h2 className="text-lg font-bold text-slate-800 mb-2">🎯 ?bungs-Analyse</h2>
           <p className="text-sm text-slate-500 mb-4">Detaillierte Statistiken</p>
           <ExerciseComparisonChart />
         </div>
@@ -272,7 +272,7 @@ export default function StatisticsPage() {
             <div className="text-6xl mb-4">📊</div>
             <h2 className="text-xl font-bold text-slate-800 mb-2">Keine Daten vorhanden</h2>
             <p className="text-slate-500 max-w-md mx-auto">
-              Schliesse dein erstes Training ab, um hier deine Fortschritte zu sehen.
+              Schlie?e dein erstes Training ab, um hier deine Fortschritte zu sehen.
             </p>
           </div>
         )}

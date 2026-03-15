@@ -1,5 +1,5 @@
 -- =============================================================
--- Supabase Schema fuer Gymapp
+-- Supabase Schema f?r Gymapp
 -- Run this in the Supabase SQL Editor (Dashboard → SQL Editor)
 -- =============================================================
 

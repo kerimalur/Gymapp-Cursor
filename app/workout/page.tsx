@@ -109,7 +109,7 @@ function WorkoutContent() {
           if ('vibrate' in navigator) {
             navigator.vibrate([200, 100, 200]);
           }
-          toast.success('⏱️ Pausenzeit vorbei! Naechster Satz!', { duration: 3000 });
+          toast.success('⏱️ Pausenzeit vorbei! N?chster Satz!', { duration: 3000 });
           return { ...prev, isActive: false, seconds: 0 };
         }
         return { ...prev, seconds: prev.seconds - 1 };
@@ -259,7 +259,7 @@ function WorkoutContent() {
     const set = newWorkout.exercises[exIdx].sets[setIdx];
     set.isWarmup = !set.isWarmup;
     setWorkout(newWorkout);
-    toast.success(set.isWarmup ? '🔥 Aufwaermsatz markiert' : 'Arbeitssatz', { duration: 1500 });
+    toast.success(set.isWarmup ? '🔥 Aufw?rmsatz markiert' : 'Arbeitssatz', { duration: 1500 });
   };
 
   // Toggle assisted exercise
@@ -305,11 +305,11 @@ function WorkoutContent() {
   };
 
   const handleRemoveExercise = (exIdx: number) => {
-    if (confirm('Uebung wirklich entfernen?')) {
+    if (confirm('?bung wirklich entfernen?')) {
       const newWorkout = { ...workout };
       newWorkout.exercises.splice(exIdx, 1);
       setWorkout(newWorkout);
-      toast.success('Uebung entfernt');
+      toast.success('?bung entfernt');
     }
   };
 
@@ -331,13 +331,13 @@ function WorkoutContent() {
     newWorkout.exercises[exIdx].sets.push({
       id: `set-${Date.now()}`,
       reps: 0,
-      weight: lastSet?.weight || 0, // Gewicht vom letzten Satz uebernehmen
+      weight: lastSet?.weight || 0, // Gewicht vom letzten Satz ?bernehmen
       completed: false,
       ghostWeight: lastSet?.ghostWeight,
       ghostReps: lastSet?.ghostReps,
     });
     setWorkout(newWorkout);
-    toast.success('Satz hinzugefuegt');
+    toast.success('Satz hinzugef?gtt');
   };
 
   const handleAddExercise = (exerciseId: string) => {
@@ -356,7 +356,7 @@ function WorkoutContent() {
     setWorkout(newWorkout);
     setShowExerciseSelector(false);
     setExerciseSearchTerm('');
-    toast.success(`${exercise.name} hinzugefuegt`);
+    toast.success(`${exercise.name} hinzugef?gtt`);
   };
 
   const handleFinishWorkout = async () => {
@@ -456,7 +456,7 @@ function WorkoutContent() {
               <h1 className="text-2xl font-bold text-gray-900">
                 {workout.trainingDayName}
               </h1>
-              <p className="text-gray-600">Training laeuft...</p>
+              <p className="text-gray-600">Training l?uft...</p>
             </div>
             <div className="w-10"></div>
           </div>
@@ -471,7 +471,7 @@ function WorkoutContent() {
             <div className="bg-green-50 rounded-xl p-4 text-center">
               <CheckCircle className="w-6 h-6 text-green-600 mx-auto mb-2" />
               <p className="text-2xl font-bold text-green-600">{completedSets}/{totalSets}</p>
-              <p className="text-sm text-gray-600">Saetze</p>
+              <p className="text-sm text-gray-600">S?tze</p>
             </div>
             <div className="bg-purple-50 rounded-xl p-4 text-center">
               <motion.div
@@ -481,7 +481,7 @@ function WorkoutContent() {
                 <RefreshCw className="w-6 h-6 text-purple-600 mx-auto mb-2" />
               </motion.div>
               <p className="text-2xl font-bold text-purple-600">{workout.exercises.length}</p>
-              <p className="text-sm text-gray-600">Uebungen</p>
+              <p className="text-sm text-gray-600">?bungen</p>
             </div>
           </div>
         </motion.div>
@@ -510,7 +510,7 @@ function WorkoutContent() {
                       className={`p-2 rounded-lg transition-colors ${
                         exerciseNotes[exIdx] ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100 text-gray-400'
                       }`}
-                      title="Notiz hinzufuegen"
+                      title="Notiz hinzuf?gen"
                     >
                       <StickyNote className="w-4 h-4" />
                     </button>
@@ -609,7 +609,7 @@ function WorkoutContent() {
                                 ? 'bg-orange-100 text-orange-600 ring-2 ring-orange-300' 
                                 : 'hover:bg-orange-50 text-gray-400 hover:text-orange-500'
                             }`}
-                            title="Aufwaermsatz"
+                            title="Aufw?rmsatz"
                           >
                             <Flame className="w-4 h-4" />
                           </button>
@@ -745,7 +745,7 @@ function WorkoutContent() {
                     className="w-full mt-2 p-2 border-2 border-dashed border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all text-gray-500 hover:text-blue-600 text-sm font-medium"
                   >
                     <Plus className="w-4 h-4 inline mr-1" />
-                    Satz hinzufuegen
+                    Satz hinzuf?gen
                   </button>
                 </div>
               </motion.div>
@@ -761,7 +761,7 @@ function WorkoutContent() {
           className="w-full p-4 border-2 border-dashed border-gray-300 rounded-2xl hover:border-primary-500 hover:bg-primary-50 transition-all text-gray-600 hover:text-primary-600 font-medium mb-6"
         >
           <Plus className="w-5 h-5 inline mr-2" />
-          Uebung hinzufuegen
+          ?bung hinzuf?gen
         </motion.button>
 
         {/* Finish Button */}
@@ -780,7 +780,7 @@ function WorkoutContent() {
             onClick={handleFinishWorkout}
             className="px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
           >
-            Training abschliessen
+            Training abschlie?en
           </button>
         </motion.div>
       </div>
@@ -794,7 +794,7 @@ function WorkoutContent() {
             className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl"
           >
             <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900">Uebung hinzufuegen</h2>
+              <h2 className="text-2xl font-bold text-gray-900">?bung hinzuf?gen</h2>
               <button
                 onClick={() => {
                   setShowExerciseSelector(false);
@@ -813,7 +813,7 @@ function WorkoutContent() {
                   type="text"
                   value={exerciseSearchTerm}
                   onChange={(event) => setExerciseSearchTerm(event.target.value)}
-                  placeholder="Uebung oder Muskelgruppe suchen..."
+                  placeholder="?bung oder Muskelgruppe suchen..."
                   className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary-500"
                   autoFocus
                 />
@@ -843,7 +843,7 @@ function WorkoutContent() {
 
               {filteredExercises.length === 0 && (
                 <div className="py-10 text-center text-gray-500">
-                  Keine passende Uebung gefunden.
+                  Keine passende ?bung gefunden.
                 </div>
               )}
             </div>

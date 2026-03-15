@@ -144,7 +144,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
 
   // Find bench press max
   const benchIds = exerciseDatabase
-    .filter(e => e.name.toLowerCase().includes('bankdruecken') || e.name.toLowerCase().includes('bench'))
+    .filter(e => e.name.toLowerCase().includes('bankdr?cken') || e.name.toLowerCase().includes('bench'))
     .map(e => e.id);
   const benchMax = Math.max(...benchIds.map(id => getMaxWeightForExercise(sessions, id)), 0);
 
@@ -255,7 +255,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     {
       id: 'first-plate',
       name: 'Erste Scheibe',
-      description: 'Zum ersten Mal 60kg auf einer Uebung',
+      description: 'Zum ersten Mal 60kg auf einer ?bung',
       emoji: '🏋️',
       category: 'strength',
       progress: Math.min(100, (maxWeight / 60) * 100),
@@ -266,7 +266,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     {
       id: 'heavy-lifter',
       name: 'Schweres Eisen',
-      description: '100kg auf einer Uebung',
+      description: '100kg auf einer ?bung',
       emoji: '🦾',
       category: 'strength',
       progress: Math.min(100, (maxWeight / 100) * 100),
@@ -276,7 +276,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     },
     {
       id: 'bench-60',
-      name: 'Bankdruecken 60kg',
+      name: 'Bankdr?cken 60kg',
       description: '60kg auf der Flachbank',
       emoji: '🪑',
       category: 'strength',
@@ -287,7 +287,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     },
     {
       id: 'bench-100',
-      name: 'Bankdruecken 100kg',
+      name: 'Bankdr?cken 100kg',
       description: '100kg auf der Flachbank – Respekt!',
       emoji: '👑',
       category: 'strength',
@@ -355,49 +355,49 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     },
     {
       id: 'sets-500',
-      name: '500 Saetze',
-      description: '500 Arbeitssaetze abgeschlossen',
+      name: '500 S?tze',
+      description: '500 Arbeitss?tze abgeschlossen',
       emoji: '🎯',
       category: 'volume',
       progress: Math.min(100, (totalSets / 500) * 100),
       target: 500,
       current: totalSets,
-      unit: 'Saetze',
+      unit: 'S?tze',
     },
     {
       id: 'sets-2000',
-      name: '2000 Saetze',
-      description: '2000 Arbeitssaetze – Maschine!',
+      name: '2000 S?tze',
+      description: '2000 Arbeitss?tze – Maschine!',
       emoji: '⚙️',
       category: 'volume',
       progress: Math.min(100, (totalSets / 2000) * 100),
       target: 2000,
       current: totalSets,
-      unit: 'Saetze',
+      unit: 'S?tze',
     },
 
     // === MILESTONES ===
     {
       id: 'variety-10',
       name: 'Vielfaeltig',
-      description: '10 verschiedene Uebungen trainiert',
+      description: '10 verschiedene ?bungen trainiert',
       emoji: '🎨',
       category: 'milestone',
       progress: Math.min(100, (uniqueExercises / 10) * 100),
       target: 10,
       current: uniqueExercises,
-      unit: 'Uebungen',
+      unit: '?bungen',
     },
     {
       id: 'variety-25',
       name: 'Allrounder',
-      description: '25 verschiedene Uebungen trainiert',
+      description: '25 verschiedene ?bungen trainiert',
       emoji: '🌈',
       category: 'milestone',
       progress: Math.min(100, (uniqueExercises / 25) * 100),
       target: 25,
       current: uniqueExercises,
-      unit: 'Uebungen',
+      unit: '?bungen',
     },
     {
       id: 'early-bird-5',
@@ -424,7 +424,7 @@ export function calculateAchievements(sessions: WorkoutSession[]): Achievement[]
     {
       id: 'iron-will',
       name: 'Eiserner Wille',
-      description: '5 Trainings ueber 90 Minuten',
+      description: '5 Trainings ?ber 90 Minuten',
       emoji: '⏳',
       category: 'milestone',
       progress: Math.min(100, (longWorkouts / 5) * 100),

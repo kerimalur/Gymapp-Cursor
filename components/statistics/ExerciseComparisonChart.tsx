@@ -80,7 +80,7 @@ const CustomTooltip = ({ active, payload, label, metricType }: any) => {
           ))}
         </div>
         <p className="text-xs text-gray-400 mt-2 pt-2 border-t border-gray-100">
-          {metricType === '1rm' ? 'Geschaetztes 1RM' : 'Max. Gewicht'}
+          {metricType === '1rm' ? 'Gesch?tztes 1RM' : 'Max. Gewicht'}
         </p>
       </div>
     );
@@ -169,7 +169,7 @@ export function ExerciseComparisonChart() {
             {Icons.chart}
           </div>
           <p className="text-lg font-semibold text-gray-900 mb-1">Noch keine Daten</p>
-          <p className="text-sm text-gray-500">Trainiere Uebungen, um Fortschritte zu sehen</p>
+          <p className="text-sm text-gray-500">Trainiere ?bungen, um Fortschritte zu sehen</p>
         </div>
       </div>
     );
@@ -198,7 +198,7 @@ export function ExerciseComparisonChart() {
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
-            Geschaetztes 1RM
+            Gesch?tztes 1RM
           </button>
         </div>
         <button
@@ -213,7 +213,7 @@ export function ExerciseComparisonChart() {
       {/* Exercise Selector */}
       <div>
         <p className="text-sm font-medium text-gray-600 mb-3">
-          Uebungen auswaehlen <span className="text-gray-400">(max. 3)</span>
+          ?bungen ausw?hlen <span className="text-gray-400">(max. 3)</span>
         </p>
         <div className="flex flex-wrap gap-2">
           {trainedExercises.map((exercise, index) => {
@@ -290,7 +290,7 @@ export function ExerciseComparisonChart() {
             </ResponsiveContainer>
           ) : (
             <div className="h-full flex items-center justify-center rounded-2xl bg-gray-50 border border-gray-100">
-              <p className="text-gray-500">Nicht genug Daten fuer ausgewaehlte Uebungen</p>
+              <p className="text-gray-500">Nicht genug Daten f?r ausgew?hlte ?bungen</p>
             </div>
           )
         ) : (
@@ -301,7 +301,7 @@ export function ExerciseComparisonChart() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                 </svg>
               </div>
-              <p className="text-gray-500">Waehle mindestens eine Uebung aus</p>
+              <p className="text-gray-500">W?hle mindestens eine ?bung aus</p>
             </div>
           </div>
         )}
@@ -348,22 +348,22 @@ export function ExerciseComparisonChart() {
               <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
                 <h4 className="font-semibold text-gray-900 mb-2">📊 Max. Gewicht</h4>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Zeigt das hoechste Gewicht, das du bei jeder Trainingseinheit fuer diese Uebung 
+                  Zeigt das hoechste Gewicht, das du bei jeder Trainingseinheit f?r diese ?bung 
                   verwendet hast. Ideal um deinen Kraftfortschritt zu tracken.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
-                <h4 className="font-semibold text-gray-900 mb-2">💪 Geschaetztes 1RM</h4>
+                <h4 className="font-semibold text-gray-900 mb-2">💪 Gesch?tztes 1RM</h4>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Das 1RM (One-Rep-Maximum) ist das geschaetzte Maximalgewicht, das du einmal 
+                  Das 1RM (One-Rep-Maximum) ist das gesch?tzte Maximalgewicht, das du einmal 
                   heben koenntest. Berechnung mit Epley-Formel:
                 </p>
                 <div className="mt-3 p-3 rounded-lg bg-primary-50 border border-primary-100 text-center">
                   <code className="text-sm font-mono text-primary-700">1RM = Gewicht × (1 + Wdh / 30)</code>
                 </div>
                 <p className="text-sm text-gray-600 mt-3">
-                  Das 1RM ist aussagekraeftiger, da es Gewicht UND Wiederholungen beruecksichtigt.
+                  Das 1RM ist aussagekraeftiger, da es Gewicht UND Wiederholungen ber?cksichtigt.
                 </p>
               </div>
 
@@ -372,15 +372,15 @@ export function ExerciseComparisonChart() {
                 <ul className="text-sm text-gray-600 space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-primary-500 mt-0.5">•</span>
-                    Vergleiche aehnliche Uebungen (z.B. alle Drueckuebungen)
+                    Vergleiche ?hnliche ?bungen (z.B. alle Drueck?bungen)
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary-500 mt-0.5">•</span>
-                    Achte auf konstanten Fortschritt ueber Zeit
+                    Achte auf konstanten Fortschritt ?ber Zeit
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary-500 mt-0.5">•</span>
-                    Saetze mit 0 kg werden ignoriert
+                    S?tze mit 0 kg werden ignoriert
                   </li>
                 </ul>
               </div>

@@ -187,7 +187,7 @@ export function PredictivePRCalculator() {
         </div>
         <div className="text-center py-8">
           <Award className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500">Trainiere mindestens 3 Sessions fuer Prognosen.</p>
+          <p className="text-slate-500">Trainiere mindestens 3 Sessions f?r Prognosen.</p>
           <p className="text-sm text-slate-400 mt-1">Je mehr Daten, desto genauer die Vorhersagen.</p>
         </div>
       </div>

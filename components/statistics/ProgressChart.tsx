@@ -69,7 +69,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-              <span className="text-xs text-gray-600">Saetze</span>
+              <span className="text-xs text-gray-600">S?tze</span>
             </div>
             <span className="text-sm font-bold text-emerald-600">{payload[1]?.value || 0}</span>
           </div>
@@ -211,7 +211,7 @@ export function ProgressChart({ period }: ProgressChartProps) {
           }`}
         >
           <p className={`text-xs font-medium mb-1 ${activeMetric === 'sets' ? 'text-emerald-100' : 'text-gray-500'}`}>
-            Saetze
+            S?tze
           </p>
           <p className="text-2xl font-bold">{totals.sets}</p>
         </button>
@@ -286,7 +286,7 @@ export function ProgressChart({ period }: ProgressChartProps) {
         </div>
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-emerald-500" />
-          <span className="text-sm text-gray-600">Saetze</span>
+          <span className="text-sm text-gray-600">S?tze</span>
         </div>
       </div>
 
@@ -302,7 +302,7 @@ export function ProgressChart({ period }: ProgressChartProps) {
                 <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center text-primary-600">
                   {Icons.info}
                 </div>
-                <h3 className="font-bold text-gray-900">Trainingsuebersicht</h3>
+                <h3 className="font-bold text-gray-900">Trainings?bersicht</h3>
               </div>
               <button
                 onClick={() => setShowInfo(false)}
@@ -319,18 +319,18 @@ export function ProgressChart({ period }: ProgressChartProps) {
                   Trainings
                 </h4>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Die Anzahl der absolvierten Trainingseinheiten im gewaehlten Zeitraum.
+                  Die Anzahl der absolvierten Trainingseinheiten im gew?hlten Zeitraum.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-100">
                 <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-emerald-500" />
-                  Saetze (mit Gewicht)
+                  S?tze (mit Gewicht)
                 </h4>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Nur Saetze, die tatsaechlich mit Gewicht abgeschlossen wurden. 
-                  Saetze mit 0 kg werden nicht beruecksichtigt.
+                  Nur S?tze, die tats?chlich mit Gewicht abgeschlossen wurden. 
+                  S?tze mit 0 kg werden nicht ber?cksichtigt.
                 </p>
               </div>
 

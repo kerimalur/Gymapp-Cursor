@@ -64,7 +64,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
     }
     
     if (!name.trim()) {
-      toast.error('Bitte gib einen Namen fuer den Plan ein');
+      toast.error('Bitte gib einen Namen f?r den Plan ein');
       return;
     }
     
@@ -134,7 +134,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="z.B. Push/Pull/Legs, Oberkoerper/Unterkoerper..."
+            placeholder="z.B. Push/Pull/Legs, Oberk?rper/Unterk?rper..."
             className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
           />
         </div>
@@ -148,7 +148,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
               </div>
               <div>
                 <p className="font-semibold text-violet-900">Trainingseinheiten pro Woche</p>
-                <p className="text-sm text-violet-600">Basierend auf deinen hinzugefuegten Tagen</p>
+                <p className="text-sm text-violet-600">Basierend auf deinen hinzugef?gtten Tagen</p>
               </div>
             </div>
             <div className="text-4xl font-bold text-violet-600">{sessionsPerWeek}×</div>
@@ -159,7 +159,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
         <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
           <div>
             <p className="font-semibold text-slate-700">Als aktiven Plan setzen</p>
-            <p className="text-sm text-slate-500">Dieser Plan wird fuer dein Training verwendet</p>
+            <p className="text-sm text-slate-500">Dieser Plan wird f?r dein Training verwendet</p>
           </div>
           <button
             onClick={() => setIsActive(!isActive)}
@@ -178,7 +178,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
           <div className="flex items-center justify-between mb-3">
             <div>
               <h3 className="text-sm font-semibold text-slate-700">Trainingstage ({planDays.length})</h3>
-              <p className="text-xs text-slate-500">Fuege Trainingstage in der gewuenschten Reihenfolge hinzu</p>
+              <p className="text-xs text-slate-500">F?ge Trainingstage in der gewuenschten Reihenfolge hinzu</p>
             </div>
             <button
               onClick={() => setShowDaySelector(!showDaySelector)}
@@ -190,7 +190,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
               }`}
             >
               <Plus className="w-4 h-4" />
-              Tag hinzufuegen
+              Tag hinzuf?gen
             </button>
           </div>
 
@@ -218,7 +218,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
                           </div>
                           <div>
                             <p className="font-medium text-slate-800">{day.name}</p>
-                            <p className="text-xs text-slate-500">{day.exercises.length} Uebungen</p>
+                            <p className="text-xs text-slate-500">{day.exercises.length} ?bungen</p>
                           </div>
                         </div>
                         {count > 0 && (
@@ -241,7 +241,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
                 <Calendar className="w-8 h-8 text-slate-400" />
               </div>
               <p className="text-slate-600 font-medium mb-1">Noch keine Trainingstage</p>
-              <p className="text-sm text-slate-400">Fuege Trainingstage hinzu um deinen Plan zu erstellen</p>
+              <p className="text-sm text-slate-400">F?ge Trainingstage hinzu um deinen Plan zu erstellen</p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -275,7 +275,7 @@ export function CreateTrainingPlanModal({ isOpen, onClose }: CreateTrainingPlanM
 
                     <div className="flex-1">
                       <p className="font-semibold text-slate-800">{dayData?.name || 'Unbekannt'}</p>
-                      <p className="text-sm text-slate-500">{dayData?.exercises.length || 0} Uebungen</p>
+                      <p className="text-sm text-slate-500">{dayData?.exercises.length || 0} ?bungen</p>
                     </div>
 
                     <button

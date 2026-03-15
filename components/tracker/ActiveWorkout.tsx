@@ -13,7 +13,7 @@ const findExercise = (exerciseId: string, customExercises: any[]) => {
          customExercises.find(ex => ex.id === exerciseId);
 };
 
-// Typen fuer Empfehlungen
+// Typen f?r Empfehlungen
 interface ExerciseRecommendation {
   exerciseId: string;
   recommendedWeight: number;
@@ -154,7 +154,7 @@ export function ActiveWorkout() {
       .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime());
 
     workout.exercises.forEach(ex => {
-      // Finde historische Daten fuer diese Uebung
+      // Finde historische Daten f?r diese ?bung
       const exerciseHistory: Array<{
         date: Date;
         weight: number;
@@ -167,7 +167,7 @@ export function ActiveWorkout() {
         if (matchingEx) {
           const completedSets = matchingEx.sets.filter(s => s.completed && s.weight > 0);
           if (completedSets.length >= 2) {
-            // Nimm den 2. Satz als Referenz (1. Satz ist oft Aufwaermsatz)
+            // Nimm den 2. Satz als Referenz (1. Satz ist oft Aufw?rmsatz)
             const referenceSet = completedSets[1];
             
             exerciseHistory.push({
@@ -220,7 +220,7 @@ export function ActiveWorkout() {
         if (avgRIR >= 2) {
           recommendation = 'increase';
           recommendedWeight = lastSession.weight + 2.5;
-          reason = `Stabil bei RIR ${lastRIR.toFixed(1)} → Zeit fuer +2.5kg`;
+          reason = `Stabil bei RIR ${lastRIR.toFixed(1)} → Zeit f?r +2.5kg`;
         } else {
           recommendation = 'maintain';
           reason = `RIR ${lastRIR.toFixed(1)} - Gewicht halten`;
@@ -282,7 +282,7 @@ export function ActiveWorkout() {
 
   // Check if exercise supports assisted mode (like pull-ups, dips)
   const isAssistedExercise = (exerciseId: string) => {
-    const assistedExercises = ['ex6', 'ex8', 'Dips', 'Klimmzuege', 'Pull-Ups', 'Chin-Ups'];
+    const assistedExercises = ['ex6', 'ex8', 'Dips', 'Klimmz?ge', 'Pull-Ups', 'Chin-Ups'];
     const exercise = findExercise(exerciseId, customExercises);
     return assistedExercises.includes(exerciseId) || 
            (exercise && assistedExercises.some(name => exercise.name?.toLowerCase().includes(name.toLowerCase())));
@@ -362,7 +362,7 @@ export function ActiveWorkout() {
       // Reset completion for warmup sets - they can still be tracked but won't count for volume
     }
     setWorkout(newWorkout);
-    toast.success(isCurrentlyWarmup ? 'Arbeitssatz' : 'Aufwaermsatz markiert', { duration: 1500 });
+    toast.success(isCurrentlyWarmup ? 'Arbeitssatz' : 'Aufw?rmsatz markiert', { duration: 1500 });
   };
 
   const handleToggleAssisted = (exIdx: number, setIdx: number) => {
@@ -389,7 +389,7 @@ export function ActiveWorkout() {
       // Satz abgeschlossen - Timer starten
       toast.success('Satz abgeschlossen! 💪', { duration: 1500 });
 
-      // Pruefen ob noch weitere Saetze uebrig sind
+      // Pr?fen ob noch weitere S?tze ?brig sind
       const exercise = newWorkout.exercises[exIdx];
       const remainingSets = exercise.sets.filter((s, i) => i > setIdx && !s.completed).length;
 
@@ -514,7 +514,7 @@ export function ActiveWorkout() {
                   {isComplete && !isActive && (
                     <span className="text-emerald-500">{Icons.check}</span>
                   )}
-                  Uebung {idx + 1}
+                  ?bung {idx + 1}
                 </span>
               </button>
             );
@@ -563,7 +563,7 @@ export function ActiveWorkout() {
                   <p className="text-sm font-semibold text-slate-600">
                     {completedSets}/{totalSets}
                   </p>
-                  <p className="text-xs text-slate-400">Saetze</p>
+                  <p className="text-xs text-slate-400">S?tze</p>
                 </div>
               </div>
 
@@ -633,7 +633,7 @@ export function ActiveWorkout() {
                             ? 'bg-orange-100 text-orange-600' 
                             : 'hover:bg-slate-100 text-slate-400'
                         }`}
-                        title="Aufwaermsatz"
+                        title="Aufw?rmsatz"
                       >
                         {Icons.warmup}
                       </button>
@@ -783,12 +783,12 @@ export function ActiveWorkout() {
                 {filledProgress === 100 ? (
                   <span className="flex items-center justify-center gap-2">
                     {Icons.trophy}
-                    Training abschliessen
+                    Training abschlie?en
                   </span>
                 ) : hasFilledSets ? (
-                  `Training beenden (${filledSetsCount}/${totalSetsCount} Saetze)`
+                  `Training beenden (${filledSetsCount}/${totalSetsCount} S?tze)`
                 ) : (
-                  'Fuelle Gewicht & Reps fuer mindestens einen Satz'
+                  'Fuelle Gewicht & Reps f?r mindestens einen Satz'
                 )}
               </button>
             );

@@ -61,7 +61,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
 
   const categories = [
     { id: 'all', name: 'Alle', icon: <Target className="w-4 h-4" /> },
-    { id: 'push', name: 'Druecken', icon: <Dumbbell className="w-4 h-4" /> },
+    { id: 'push', name: 'Dr?cken', icon: <Dumbbell className="w-4 h-4" /> },
     { id: 'pull', name: 'Ziehen', icon: <Dumbbell className="w-4 h-4" /> },
     { id: 'legs', name: 'Beine', icon: <Dumbbell className="w-4 h-4" /> },
     { id: 'core', name: 'Core', icon: <Target className="w-4 h-4" /> },
@@ -146,7 +146,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
 
   const handleSave = () => {
     if (!user || !name.trim() || selectedExercises.length === 0) {
-      toast.error('Bitte gib einen Namen ein und fuege mindestens eine Uebung hinzu');
+      toast.error('Bitte gib einen Namen ein und f?ge mindestens eine ?bung hinzu');
       return;
     }
 
@@ -180,7 +180,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
         onClose={handleClose}
         size="full"
         title="Neuer Trainingstag"
-        subtitle="Erstelle einen neuen Trainingstag mit Uebungen"
+        subtitle="Erstelle einen neuen Trainingstag mit ?bungen"
         icon={<Plus className="w-6 h-6" />}
         iconColor="primary"
         footer={
@@ -212,7 +212,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="z.B. Push Day, Oberkoerper, Beine..."
+              placeholder="z.B. Push Day, Oberk?rper, Beine..."
               className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
             />
           </div>
@@ -221,9 +221,9 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-semibold text-slate-700">
-                Uebungen ({selectedExercises.length})
+                ?bungen ({selectedExercises.length})
               </h3>
-              <p className="text-xs text-slate-500">Fuege Uebungen zu deinem Trainingstag hinzu</p>
+              <p className="text-xs text-slate-500">F?ge ?bungen zu deinem Trainingstag hinzu</p>
             </div>
             <button
               onClick={() => setShowExerciseList(!showExerciseList)}
@@ -234,7 +234,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               }`}
             >
               {showExerciseList ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-              {showExerciseList ? 'Schliessen' : 'Uebung hinzufuegen'}
+              {showExerciseList ? 'Schlie?en' : '?bung hinzuf?gen'}
             </button>
           </div>
 
@@ -249,7 +249,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Uebung oder Muskelgruppe suchen..."
+                    placeholder="?bung oder Muskelgruppe suchen..."
                     className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all outline-none"
                     autoFocus
                   />
@@ -280,7 +280,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                   className="w-full mb-3 p-3 rounded-xl border-2 border-dashed border-violet-300 bg-violet-50 hover:bg-violet-100 hover:border-violet-400 transition-all flex items-center justify-center gap-2 text-violet-600 font-medium"
                 >
                   <Sparkles className="w-5 h-5" />
-                  Eigene Uebung erstellen
+                  Eigene ?bung erstellen
                 </button>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -323,7 +323,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                 </div>
                 {filteredExercises.length === 0 && (
                   <div className="text-center py-8 text-slate-500">
-                    Keine Uebungen gefunden
+                    Keine ?bungen gefunden
                   </div>
                 )}
               </div>
@@ -336,8 +336,8 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4">
                 <Dumbbell className="w-8 h-8 text-slate-400" />
               </div>
-              <p className="text-slate-600 font-medium mb-1">Noch keine Uebungen</p>
-              <p className="text-sm text-slate-400">Klicke auf "Uebung hinzufuegen" um zu starten</p>
+              <p className="text-slate-600 font-medium mb-1">Noch keine ?bungen</p>
+              <p className="text-sm text-slate-400">Klicke auf "?bung hinzuf?gen" um zu starten</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -381,7 +381,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                       <div className="flex-1">
                         <p className="font-semibold text-slate-800">{exerciseData?.name}</p>
                         <p className="text-sm text-slate-500">
-                          {exercise.sets.length} Saetze
+                          {exercise.sets.length} S?tze
                           {exercise.notes && ' • Notiz vorhanden'}
                         </p>
                       </div>
@@ -472,7 +472,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
                             className="flex-1 px-4 py-2.5 border-2 border-dashed border-slate-300 text-slate-600 rounded-xl hover:border-primary-400 hover:text-primary-600 hover:bg-primary-50 transition-all flex items-center justify-center gap-2"
                           >
                             <Plus className="w-4 h-4" />
-                            Satz hinzufuegen
+                            Satz hinzuf?gen
                           </button>
                           <button
                             onClick={() => handleCopyLastSet(index)}
@@ -520,21 +520,21 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
             <h4 className="font-semibold text-slate-800 mb-1.5">Wiederholungen</h4>
             <p className="text-sm text-slate-600">
-              Wie oft du die Bewegung pro Satz ausfuehren willst.
+              Wie oft du die Bewegung pro Satz ausf?hren willst.
             </p>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
             <h4 className="font-semibold text-slate-800 mb-1.5">Gewicht (kg)</h4>
             <p className="text-sm text-slate-600">
-              Das Gewicht fuer den Satz. Lass es auf 0, um es spaeter einzutragen.
+              Das Gewicht f?r den Satz. Lass es auf 0, um es spaeter einzutragen.
             </p>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
             <h4 className="font-semibold text-slate-800 mb-1.5">RIR (Reps in Reserve)</h4>
             <p className="text-sm text-slate-600">
-              Wie viele Wiederholungen du noch uebrig haben sollst. 0 = Muskelversagen.
+              Wie viele Wiederholungen du noch ?brig haben sollst. 0 = Muskelversagen.
             </p>
           </div>
 
@@ -543,7 +543,7 @@ export function CreateTrainingDayModal({ isOpen, onClose }: CreateTrainingDayMod
               💡 Tipps
             </h4>
             <ul className="text-sm text-primary-700 space-y-1">
-              <li>• Klicke auf eine Uebung um sie zu bearbeiten</li>
+              <li>• Klicke auf eine ?bung um sie zu bearbeiten</li>
               <li>• Nutze die Pfeile um die Reihenfolge zu aendern</li>
               <li>• Notizen helfen dir, Details zu merken</li>
             </ul>

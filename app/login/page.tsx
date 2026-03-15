@@ -41,7 +41,7 @@ export default function LoginPage() {
         }
 
         if (password !== confirmPassword) {
-          throw new Error('Passwoerter stimmen nicht ueberein');
+          throw new Error('Passw?rter stimmen nicht ?berein');
         }
 
         const { needsEmailConfirmation } = await signUpWithEmail(normalizedEmail, password);

@@ -162,7 +162,7 @@ export default function CalendarPage() {
               <button
                 onClick={moveBackward}
                 className="rounded-lg bg-slate-100 p-2 text-slate-700 hover:bg-slate-200"
-                title="Zurueck"
+                title="Zur?ck"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>

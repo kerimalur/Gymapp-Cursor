@@ -10,7 +10,7 @@ import { de } from 'date-fns/locale';
 // Muscle labels in German
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Ruecken',
+  back: 'R?cken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -19,12 +19,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesaess',
+  glutes: 'Ges??',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Ruecken',
+  lower_back: 'Unterer R?cken',
   neck: 'Nacken',
 };
 
@@ -551,7 +551,7 @@ export function BodyHeatmap() {
         <div className="space-y-4">
           {/* Legend */}
           <div className="p-4 bg-slate-50 rounded-xl">
-            <h4 className="text-sm font-semibold text-slate-700 mb-3">Intensitaet (Saetze)</h4>
+            <h4 className="text-sm font-semibold text-slate-700 mb-3">Intensit?t (S?tze)</h4>
             <div className="flex items-center gap-1">
               <div className="flex-1 h-3 rounded-l-full bg-slate-200" />
               <div className="flex-1 h-3 bg-lime-300" />
@@ -562,7 +562,7 @@ export function BodyHeatmap() {
             </div>
             <div className="flex justify-between mt-1 text-xs text-slate-500">
               <span>0</span>
-              <span>Mehr Saetze →</span>
+              <span>Mehr S?tze →</span>
             </div>
           </div>
 
@@ -584,7 +584,7 @@ export function BodyHeatmap() {
               </div>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between p-2 bg-white/60 rounded-lg">
-                  <span className="text-slate-600">Saetze (7 Tage)</span>
+                  <span className="text-slate-600">S?tze (7 Tage)</span>
                   <span className="font-bold text-slate-800">{selectedData.sets}</span>
                 </div>
                 <div className="flex justify-between p-2 bg-white/60 rounded-lg">
@@ -610,7 +610,7 @@ export function BodyHeatmap() {
           ) : (
             <div className="p-4 bg-slate-50 rounded-xl text-center">
               <p className="text-slate-500 text-sm">
-                👆 Klicke auf einen Muskel fuer Details
+                👆 Klicke auf einen Muskel f?r Details
               </p>
             </div>
           )}

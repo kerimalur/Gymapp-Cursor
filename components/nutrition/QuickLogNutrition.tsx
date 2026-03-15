@@ -154,7 +154,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
   if (!isOpen) return null;
 
   const mealTimeLabels: Record<string, string> = {
-    breakfast: '🌅 Fruehstueck',
+    breakfast: '🌅 Fr?hst?ck',
     lunch: '☀️ Mittagessen',
     dinner: '🌙 Abendessen',
     snacks: '🍿 Snacks',
@@ -231,7 +231,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                     type="text"
                     value={quickName}
                     onChange={e => setQuickName(e.target.value)}
-                    placeholder="z.B. Haehnchen mit Reis"
+                    placeholder="z.B. H?hnchen mit Reis"
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:outline-none"
                   />
                 </div>
@@ -345,7 +345,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
                   <h4 className="font-bold text-blue-800 mb-1">Von gestern kopieren</h4>
                   <p className="text-xs text-blue-600">
-                    Alle Mahlzeiten von gestern werden fuer heute uebernommen.
+                    Alle Mahlzeiten von gestern werden f?r heute ?bernommen.
                   </p>
                 </div>
 
@@ -395,7 +395,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                     <Star className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                     <p className="text-gray-500 font-medium">Keine Vorlagen gespeichert</p>
                     <p className="text-sm text-gray-400 mt-1">
-                      Speichere Mahlzeiten als Vorlagen in der Ernaehrungs-Seite.
+                      Speichere Mahlzeiten als Vorlagen in der Ern?hrungs-Seite.
                     </p>
                   </div>
                 ) : (

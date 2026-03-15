@@ -17,7 +17,7 @@ interface RecoveryTimelineProps {
 
 const muscleTranslations: Record<string, string> = {
   chest: 'Brust',
-  back: 'Ruecken',
+  back: 'R?cken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -26,12 +26,12 @@ const muscleTranslations: Record<string, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesaess',
+  glutes: 'Ges??',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Ruecken',
+  lower_back: 'Unterer R?cken',
   neck: 'Nacken',
 };
 
@@ -177,7 +177,7 @@ export function RecoveryTimeline({
       role,
       isSecondary,
       color: getColor(recovery),
-      status: recovery >= 80 ? 'Bereit' : recovery >= 50 ? 'Regeneriert' : 'Muede',
+      status: recovery >= 80 ? 'Bereit' : recovery >= 50 ? 'Regeneriert' : 'M?de',
     };
   })() : null;
 
@@ -297,7 +297,7 @@ export function RecoveryTimeline({
                     : 'bg-red-100 text-red-700'
                 }`}
               >
-                {isReady ? 'Bereit' : isRecovering ? 'Regeneriert' : 'Muede'}
+                {isReady ? 'Bereit' : isRecovering ? 'Regeneriert' : 'M?de'}
               </div>
             </div>
           );
@@ -313,7 +313,7 @@ export function RecoveryTimeline({
               Regenerations-Hinweis
             </p>
             <p className="text-sm text-blue-700">
-              Klicke auf einen Muskel, um Details zu sehen. Nur Saetze mit Gewicht werden beruecksichtigt.
+              Klicke auf einen Muskel, um Details zu sehen. Nur S?tze mit Gewicht werden ber?cksichtigt.
             </p>
           </div>
         </div>
@@ -338,8 +338,8 @@ export function RecoveryTimeline({
               <button
                 onClick={() => setSelectedMuscle(null)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                title="Schliessen"
-                aria-label="Schliessen"
+                title="Schlie?en"
+                aria-label="Schlie?en"
               >
                 <X className="w-5 h-5 text-gray-500" />
               </button>
@@ -395,7 +395,7 @@ export function RecoveryTimeline({
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <Dumbbell className="w-5 h-5 text-gray-400" />
-                  <h3 className="font-semibold text-gray-900">Letzte Uebungen</h3>
+                  <h3 className="font-semibold text-gray-900">Letzte ?bungen</h3>
                 </div>
                 
                 {muscleExercises.length > 0 ? (
@@ -406,7 +406,7 @@ export function RecoveryTimeline({
                           <div>
                             <p className="font-medium text-gray-900">{exercise.exerciseName}</p>
                             <div className="flex items-center gap-3 mt-1 text-sm text-gray-500">
-                              <span>{exercise.sets} Saetze</span>
+                              <span>{exercise.sets} S?tze</span>
                               <span>•</span>
                               <span>{exercise.totalVolume.toLocaleString()} kg</span>
                             </div>
@@ -423,7 +423,7 @@ export function RecoveryTimeline({
                   </div>
                 ) : (
                   <div className="text-center py-6 bg-gray-50 rounded-xl">
-                    <p className="text-gray-500">Noch keine Uebungen fuer diesen Muskel</p>
+                    <p className="text-gray-500">Noch keine ?bungen f?r diesen Muskel</p>
                   </div>
                 )}
               </div>
@@ -432,7 +432,7 @@ export function RecoveryTimeline({
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4">
                 <h4 className="font-medium text-gray-900 mb-2">Regenerationszeit</h4>
                 <p className="text-sm text-gray-600">
-                  Dieser Muskel benoetigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> fuer vollstaendige Regeneration.
+                  Dieser Muskel benoetigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> f?r vollst?ndige Regeneration.
                 </p>
               </div>
             </div>

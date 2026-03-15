@@ -32,7 +32,7 @@ const RECOMMENDED_FREQUENCY: Record<MuscleGroup, number> = {
 
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Ruecken',
+  back: 'R?cken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -41,12 +41,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesaess',
+  glutes: 'Ges??',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Ruecken',
+  lower_back: 'Unterer R?cken',
   neck: 'Nacken',
 };
 
@@ -247,7 +247,7 @@ export function TrainingFrequencyAnalysis() {
         <div className="mt-4 p-3 bg-rose-50 rounded-lg border border-rose-200">
           <p className="text-sm text-rose-700">
             <strong>{statusCounts.undertrained} Muskelgruppe(n)</strong> wurden diese Woche noch nicht trainiert. 
-            Fuer optimale Ergebnisse trainiere jede Muskelgruppe mindestens 2× pro Woche.
+            F?r optimale Ergebnisse trainiere jede Muskelgruppe mindestens 2× pro Woche.
           </p>
         </div>
       )}
@@ -257,7 +257,7 @@ export function TrainingFrequencyAnalysis() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-hidden">
             <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-gray-900">Muskelgruppen auswaehlen</h3>
+              <h3 className="text-lg font-bold text-gray-900">Muskelgruppen ausw?hlen</h3>
               <button
                 onClick={() => setShowSettings(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -268,7 +268,7 @@ export function TrainingFrequencyAnalysis() {
             
             <div className="p-4 overflow-y-auto max-h-[60vh]">
               <p className="text-sm text-gray-500 mb-4">
-                Waehle aus, welche Muskelgruppen in der Frequenzanalyse beruecksichtigt werden sollen.
+                W?hle aus, welche Muskelgruppen in der Frequenzanalyse ber?cksichtigt werden sollen.
                 Deaktiviere Muskeln, die du nicht direkt trainierst.
               </p>
               
