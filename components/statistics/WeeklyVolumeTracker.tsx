@@ -31,7 +31,7 @@ const RECOMMENDED_VOLUME: Record<MuscleGroup, { min: number; max: number; optima
 
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'Ruecken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -40,12 +40,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'Gesaess',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Rücken',
+  lower_back: 'Unterer Ruecken',
   neck: 'Nacken',
 };
 
@@ -178,11 +178,11 @@ export function WeeklyVolumeTracker({ showComparison = false }: { showComparison
       <div className="flex items-center gap-4 mb-4 text-xs text-slate-500">
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-primary-500" />
-          <span>Primär-Sätze</span>
+          <span>Primaer-Saetze</span>
         </div>
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 rounded-full bg-slate-300" />
-          <span>Sekundär (×0.5)</span>
+          <span>Sekundaer (×0.5)</span>
         </div>
       </div>
 

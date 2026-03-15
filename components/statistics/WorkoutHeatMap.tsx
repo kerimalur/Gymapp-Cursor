@@ -127,7 +127,7 @@ export function WorkoutHeatMap({ year }: WorkoutHeatMapProps) {
     return result;
   }, [heatMapData, currentYear]);
   
-  const months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+  const months = ['Jan', 'Feb', 'Maer', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
   const dayLabels = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
   
   const getLevelColor = (level: number) => {
@@ -146,7 +146,7 @@ export function WorkoutHeatMap({ year }: WorkoutHeatMapProps) {
     <div className="bg-white rounded-2xl border border-slate-200 p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-xl font-bold text-slate-800">Trainings-Aktivität {currentYear}</h3>
+          <h3 className="text-xl font-bold text-slate-800">Trainings-Aktivitaet {currentYear}</h3>
           <p className="text-sm text-slate-500 mt-1">
             {stats.totalWorkouts} Trainings an {stats.workoutDays} Tagen
           </p>

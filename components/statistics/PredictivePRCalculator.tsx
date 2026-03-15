@@ -187,7 +187,7 @@ export function PredictivePRCalculator() {
         </div>
         <div className="text-center py-8">
           <Award className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-500">Trainiere mindestens 3 Sessions für Prognosen.</p>
+          <p className="text-slate-500">Trainiere mindestens 3 Sessions fuer Prognosen.</p>
           <p className="text-sm text-slate-400 mt-1">Je mehr Daten, desto genauer die Vorhersagen.</p>
         </div>
       </div>
@@ -336,7 +336,7 @@ export function PredictivePRCalculator() {
           <TrendingUp className="w-4 h-4 mt-0.5 flex-shrink-0" />
           <span>
             Prognosen basieren auf deinem bisherigen Fortschritt. 
-            Regelmäßiges Training und progressive Overload verbessern die Genauigkeit.
+            Regelmaessiges Training und progressive Overload verbessern die Genauigkeit.
           </span>
         </p>
       </div>

@@ -1,10 +1,14 @@
-import { WorkoutSession, ExerciseSet } from '@/types';
+import { WorkoutSession } from '@/types';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 
-// --- Types ---
-
 export interface ProgressionSuggestion {
-  type: 'increase_weight' | 'increase_reps' | 'maintain' | 'deload' | 'first_time';
+  type:
+    | 'increase_weight'
+    | 'increase_reps'
+    | 'maintain'
+    | 'deload'
+    | 'first_time'
+    | 'stagnation_alert';
   suggestedWeight: number;
   suggestedReps: number;
   message: string;
@@ -17,7 +21,7 @@ export interface ExerciseInsight {
   exerciseName: string;
   currentVolume: number;
   previousVolume: number;
-  volumeChange: number; // percentage
+  volumeChange: number;
   newPR: boolean;
   prType?: 'weight' | 'reps' | 'volume';
   prValue?: string;
@@ -29,10 +33,10 @@ export interface ExerciseInsight {
 export interface WorkoutSummaryData {
   duration: number;
   avgDuration: number;
-  durationDiff: number; // minutes faster/slower
+  durationDiff: number;
   totalVolume: number;
   previousVolume: number;
-  volumeChange: number; // percentage
+  volumeChange: number;
   exerciseInsights: ExerciseInsight[];
   newPRs: { exercise: string; value: string; type: string }[];
   totalSetsCompleted: number;
@@ -51,20 +55,65 @@ export interface StagnationInfo {
   suggestion: string;
 }
 
-// --- Progressive Overload Engine ---
+interface PerformanceSnapshot {
+  weight: number;
+  reps: number;
+  rir?: number;
+}
 
-/**
- * Get a progression suggestion for a specific exercise based on history
- */
+function getWeightIncrement(exerciseId: string) {
+  const exercise = exerciseDatabase.find((entry) => entry.id === exerciseId);
+  const isCompound =
+    exercise?.category === 'push' || exercise?.category === 'pull' || exercise?.category === 'legs';
+
+  return isCompound ? 2.5 : 1.25;
+}
+
+function hasMeaningfulProgress(current: PerformanceSnapshot, previous: PerformanceSnapshot) {
+  const higherWeight = current.weight > previous.weight;
+  const moreRepsAtSameOrHigherWeight =
+    current.weight >= previous.weight && current.reps > previous.reps;
+  const betterRirAtSameLoad =
+    current.weight === previous.weight &&
+    current.reps === previous.reps &&
+    current.rir !== undefined &&
+    previous.rir !== undefined &&
+    current.rir > previous.rir;
+
+  return higherWeight || moreRepsAtSameOrHigherWeight || betterRirAtSameLoad;
+}
+
+function getSetPerformanceHistory(
+  exerciseId: string,
+  setIndex: number,
+  sessions: WorkoutSession[]
+): PerformanceSnapshot[] {
+  return sessions
+    .map((session) => {
+      const exercise = session.exercises.find((entry) => entry.exerciseId === exerciseId);
+      const set = exercise?.sets[setIndex];
+
+      if (!set || set.weight <= 0 || set.reps <= 0) {
+        return null;
+      }
+
+      return {
+        weight: set.weight,
+        reps: set.reps,
+        rir: set.rir,
+      };
+    })
+    .filter(Boolean) as PerformanceSnapshot[];
+}
+
 export function getProgressionSuggestion(
   exerciseId: string,
   setIndex: number,
   workoutSessions: WorkoutSession[],
   trainingDayId: string
 ): ProgressionSuggestion {
-  // Find all previous sessions for this training day
   const previousSessions = workoutSessions
-    .filter(s => s.trainingDayId === trainingDayId)
+    .filter((session) => session.trainingDayId === trainingDayId)
     .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime());
 
   if (previousSessions.length === 0) {
@@ -72,106 +121,130 @@ export function getProgressionSuggestion(
       type: 'first_time',
       suggestedWeight: 0,
       suggestedReps: 8,
-      message: 'Erstes Training! Starte mit einem leichten Gewicht.',
+      message: 'Erstes Training. Starte mit einem leichten Gewicht.',
       reason: 'Keine vorherigen Daten',
       confidence: 'low',
     };
   }
 
-  // Get the last completed session's data for this exercise
-  const lastSession = previousSessions[0];
-  const lastExercise = lastSession.exercises.find(e => e.exerciseId === exerciseId);
+  const performanceHistory = getSetPerformanceHistory(exerciseId, setIndex, previousSessions);
+  const lastPerformance = performanceHistory[0];
 
-  if (!lastExercise || !lastExercise.sets[setIndex]) {
+  if (!lastPerformance) {
     return {
       type: 'first_time',
       suggestedWeight: 0,
       suggestedReps: 8,
-      message: 'Neue Übung! Starte mit einem moderaten Gewicht.',
-      reason: 'Keine vorherigen Daten für diese Übung',
+      message: 'Neue Uebung. Starte mit einem moderaten Gewicht.',
+      reason: 'Keine vorherigen Satzdaten fuer diese Uebung',
       confidence: 'low',
     };
   }
 
-  const lastSet = lastExercise.sets[setIndex];
-  const lastWeight = lastSet.weight;
-  const lastReps = lastSet.reps;
-  const lastRIR = lastSet.rir;
+  const lastWeight = lastPerformance.weight;
+  const lastReps = lastPerformance.reps;
+  const lastRIR = lastPerformance.rir;
+  const weightIncrement = getWeightIncrement(exerciseId);
+  const recentThree = performanceHistory.slice(0, 3);
+  const recentFour = performanceHistory.slice(0, 4);
 
-  // Check for stagnation (same weight for 3+ sessions)
-  const recentWeights = previousSessions
-    .slice(0, 4)
-    .map(s => {
-      const ex = s.exercises.find(e => e.exerciseId === exerciseId);
-      return ex?.sets[setIndex]?.weight || 0;
-    })
-    .filter(w => w > 0);
+  const hitTopRepWave =
+    recentThree.length >= 3 &&
+    recentThree.every((entry) => entry.weight === recentThree[0].weight) &&
+    recentThree[0].reps > recentThree[1].reps &&
+    recentThree[1].reps > recentThree[2].reps &&
+    recentThree[0].reps >= 12 &&
+    (recentThree[0].rir ?? 99) <= 1;
 
-  const isStagnating = recentWeights.length >= 3 && 
-    recentWeights.every(w => w === recentWeights[0]);
+  if (hitTopRepWave) {
+    const nextReps = Math.max(6, recentThree[0].reps - 4);
+    return {
+      type: 'increase_weight',
+      suggestedWeight: lastWeight + weightIncrement,
+      suggestedReps: nextReps,
+      message: `${lastWeight + weightIncrement}kg x ${nextReps}`,
+      reason:
+        '3 Einheiten gleiche Last mit steigenden Wiederholungen. Bei 12+ und RIR 1-0 jetzt Gewicht erhoehen.',
+      confidence: 'high',
+    };
+  }
 
-  // Determine exercise type for weight increment
-  const exercise = exerciseDatabase.find(e => e.id === exerciseId);
-  const isCompound = exercise?.category === 'push' || exercise?.category === 'pull' || exercise?.category === 'legs';
-  const weightIncrement = isCompound ? 2.5 : 1.25;
+  const hardStall =
+    recentFour.length >= 4 &&
+    recentFour.every((entry) => entry.weight === recentFour[0].weight) &&
+    recentFour.every((entry) => entry.reps <= recentFour[0].reps) &&
+    (lastRIR ?? 99) <= 1;
 
-  // Decision logic
-  if (isStagnating && recentWeights.length >= 3) {
-    // Suggest a deload if stagnating
+  if (hardStall) {
+    const deloadWeight = Math.round(lastWeight * 0.85 * 4) / 4;
     return {
       type: 'deload',
-      suggestedWeight: Math.round(lastWeight * 0.85 * 4) / 4,
+      suggestedWeight: deloadWeight,
       suggestedReps: lastReps + 2,
-      message: `Seit ${recentWeights.length} Trainings bei ${lastWeight}kg. Deload und neu aufbauen.`,
-      reason: `Stagnation seit ${recentWeights.length} Sessions`,
+      message: `Deload auf ${deloadWeight}kg und sauber neu aufbauen`,
+      reason: '4 harte Einheiten ohne echte Bewegung',
+      confidence: 'high',
+    };
+  }
+
+  const noProgressTwice =
+    recentThree.length >= 3 &&
+    !hasMeaningfulProgress(recentThree[0], recentThree[1]) &&
+    !hasMeaningfulProgress(recentThree[1], recentThree[2]);
+
+  if (noProgressTwice) {
+    return {
+      type: 'stagnation_alert',
+      suggestedWeight: lastWeight,
+      suggestedReps: Math.max(lastReps + 1, 8),
+      message: `Alarm: ${lastWeight}kg muessen wieder vorwaerts gehen`,
+      reason:
+        '2 Einheiten nacheinander ohne mehr Gewicht, mehr Wiederholungen oder besseren RIR',
       confidence: 'high',
     };
   }
 
   if (lastRIR !== undefined && lastRIR >= 3) {
-    // Had lots of reps in reserve → increase weight
     return {
       type: 'increase_weight',
       suggestedWeight: lastWeight + weightIncrement,
       suggestedReps: lastReps,
-      message: `${lastWeight + weightIncrement}kg × ${lastReps}`,
-      reason: `Letztes Mal ${lastRIR} RIR – da geht mehr!`,
+      message: `${lastWeight + weightIncrement}kg x ${lastReps}`,
+      reason: `Letztes Mal ${lastRIR} RIR. Da geht mehr.`,
       confidence: 'high',
     };
   }
 
   if (lastRIR !== undefined && lastRIR >= 1 && lastReps < 12) {
-    // Some reserves, try more reps first
     return {
       type: 'increase_reps',
       suggestedWeight: lastWeight,
       suggestedReps: lastReps + 1,
-      message: `${lastWeight}kg × ${lastReps + 1}`,
-      reason: `Letztes Mal ${lastRIR} RIR – versuch 1 Rep mehr`,
+      message: `${lastWeight}kg x ${lastReps + 1}`,
+      reason: `Letztes Mal ${lastRIR} RIR. Versuche 1 Wiederholung mehr.`,
       confidence: 'high',
     };
   }
 
   if (lastReps >= 12) {
-    // Max reps reached, increase weight and reset reps
+    const nextReps = Math.max(6, lastReps - 4);
     return {
       type: 'increase_weight',
       suggestedWeight: lastWeight + weightIncrement,
-      suggestedReps: Math.max(6, lastReps - 4),
-      message: `${lastWeight + weightIncrement}kg × ${Math.max(6, lastReps - 4)}`,
-      reason: `${lastReps} Reps erreicht – steigere das Gewicht!`,
+      suggestedReps: nextReps,
+      message: `${lastWeight + weightIncrement}kg x ${nextReps}`,
+      reason: `${lastReps} Wiederholungen erreicht. Steigere das Gewicht.`,
       confidence: 'high',
     };
   }
 
   if (lastReps > 0 && lastWeight > 0) {
-    // Default: try one more rep
     return {
       type: 'increase_reps',
       suggestedWeight: lastWeight,
       suggestedReps: lastReps + 1,
-      message: `${lastWeight}kg × ${lastReps + 1}`,
-      reason: 'Versuch eine Wiederholung mehr!',
+      message: `${lastWeight}kg x ${lastReps + 1}`,
+      reason: 'Versuche eine Wiederholung mehr.',
       confidence: 'medium',
     };
   }
@@ -180,92 +253,83 @@ export function getProgressionSuggestion(
     type: 'maintain',
     suggestedWeight: lastWeight,
     suggestedReps: lastReps,
-    message: `${lastWeight}kg × ${lastReps}`,
+    message: `${lastWeight}kg x ${lastReps}`,
     reason: 'Gleiches Ziel wie letztes Mal',
     confidence: 'medium',
   };
 }
 
-/**
- * Generate a workout summary comparing current to previous workout
- */
 export function generateWorkoutSummary(
   currentWorkout: WorkoutSession,
   allSessions: WorkoutSession[]
 ): WorkoutSummaryData {
-  // Find previous session for same training day
   const previousSessions = allSessions
-    .filter(s => s.trainingDayId === currentWorkout.trainingDayId && s.id !== currentWorkout.id)
+    .filter((session) => session.trainingDayId === currentWorkout.trainingDayId && session.id !== currentWorkout.id)
     .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime());
 
   const previousSession = previousSessions[0];
-
-  // Calculate durations
   const duration = currentWorkout.duration || 0;
   const allDurations = allSessions
-    .filter(s => s.trainingDayId === currentWorkout.trainingDayId && s.duration)
-    .map(s => s.duration || 0);
-  const avgDuration = allDurations.length > 0
-    ? Math.round(allDurations.reduce((s, d) => s + d, 0) / allDurations.length)
-    : duration;
+    .filter((session) => session.trainingDayId === currentWorkout.trainingDayId && session.duration)
+    .map((session) => session.duration || 0);
+  const avgDuration =
+    allDurations.length > 0
+      ? Math.round(allDurations.reduce((sum, value) => sum + value, 0) / allDurations.length)
+      : duration;
   const durationDiff = duration - avgDuration;
-
-  // Calculate volumes
   const totalVolume = currentWorkout.totalVolume || 0;
   const previousVolume = previousSession?.totalVolume || 0;
-  const volumeChange = previousVolume > 0
-    ? Math.round(((totalVolume - previousVolume) / previousVolume) * 100)
-    : 0;
+  const volumeChange =
+    previousVolume > 0 ? Math.round(((totalVolume - previousVolume) / previousVolume) * 100) : 0;
 
-  // Count completed sets and reps
   let totalSetsCompleted = 0;
   let totalReps = 0;
-  currentWorkout.exercises.forEach(ex => {
-    ex.sets.forEach(set => {
+
+  currentWorkout.exercises.forEach((exercise) => {
+    exercise.sets.forEach((set) => {
       if (set.completed && !set.isWarmup) {
-        totalSetsCompleted++;
+        totalSetsCompleted += 1;
         totalReps += set.reps;
       }
     });
   });
 
-  // Generate exercise insights and find PRs
   const newPRs: { exercise: string; value: string; type: string }[] = [];
-  const exerciseInsights: ExerciseInsight[] = currentWorkout.exercises.map(ex => {
-    const exerciseData = exerciseDatabase.find(e => e.id === ex.exerciseId);
-    const exerciseName = exerciseData?.name || ex.exerciseId;
+  const exerciseInsights: ExerciseInsight[] = currentWorkout.exercises.map((exercise) => {
+    const exerciseData = exerciseDatabase.find((entry) => entry.id === exercise.exerciseId);
+    const exerciseName = exerciseData?.name || exercise.exerciseId;
 
-    // Current exercise volume
-    const currentExVolume = ex.sets
-      .filter(s => s.completed && !s.isWarmup)
-      .reduce((sum, s) => sum + s.weight * s.reps, 0);
+    const currentExerciseVolume = exercise.sets
+      .filter((set) => set.completed && !set.isWarmup)
+      .reduce((sum, set) => sum + set.weight * set.reps, 0);
 
-    // Previous exercise volume
-    const prevEx = previousSession?.exercises.find(e => e.exerciseId === ex.exerciseId);
-    const prevExVolume = prevEx
-      ? prevEx.sets
-        .filter(s => s.completed && !s.isWarmup)
-        .reduce((sum, s) => sum + s.weight * s.reps, 0)
+    const previousExercise = previousSession?.exercises.find(
+      (entry) => entry.exerciseId === exercise.exerciseId
+    );
+    const previousExerciseVolume = previousExercise
+      ? previousExercise.sets
+          .filter((set) => set.completed && !set.isWarmup)
+          .reduce((sum, set) => sum + set.weight * set.reps, 0)
       : 0;
 
-    const volChange = prevExVolume > 0
-      ? Math.round(((currentExVolume - prevExVolume) / prevExVolume) * 100)
-      : 0;
+    const exerciseVolumeChange =
+      previousExerciseVolume > 0
+        ? Math.round(((currentExerciseVolume - previousExerciseVolume) / previousExerciseVolume) * 100)
+        : 0;
 
-    // Check for new PR (best weight)
     const currentMaxWeight = Math.max(
-      ...ex.sets.filter(s => s.completed && !s.isWarmup).map(s => s.weight),
+      ...exercise.sets.filter((set) => set.completed && !set.isWarmup).map((set) => set.weight),
       0
     );
 
-    const allTimePrevMax = Math.max(
+    const allTimePreviousMaxWeight = Math.max(
       ...allSessions
-        .filter(s => s.id !== currentWorkout.id)
-        .flatMap(s => s.exercises)
-        .filter(e => e.exerciseId === ex.exerciseId)
-        .flatMap(e => e.sets)
-        .filter(s => s.completed && !s.isWarmup)
-        .map(s => s.weight),
+        .filter((session) => session.id !== currentWorkout.id)
+        .flatMap((session) => session.exercises)
+        .filter((entry) => entry.exerciseId === exercise.exerciseId)
+        .flatMap((entry) => entry.sets)
+        .filter((set) => set.completed && !set.isWarmup)
+        .map((set) => set.weight),
       0
     );
 
@@ -273,71 +337,76 @@ export function generateWorkoutSummary(
     let prType: 'weight' | 'reps' | 'volume' | undefined;
     let prValue: string | undefined;
 
-    if (currentMaxWeight > allTimePrevMax && currentMaxWeight > 0) {
+    if (currentMaxWeight > allTimePreviousMaxWeight && currentMaxWeight > 0) {
       newPR = true;
       prType = 'weight';
       prValue = `${currentMaxWeight}kg`;
       newPRs.push({ exercise: exerciseName, value: `${currentMaxWeight}kg`, type: 'Gewicht' });
     }
 
-    // Check for volume PR
     const allTimeMaxVolume = Math.max(
       ...allSessions
-        .filter(s => s.id !== currentWorkout.id)
-        .map(s => {
-          const e = s.exercises.find(e => e.exerciseId === ex.exerciseId);
-          return e
-            ? e.sets.filter(s => s.completed && !s.isWarmup).reduce((sum, s) => sum + s.weight * s.reps, 0)
+        .filter((session) => session.id !== currentWorkout.id)
+        .map((session) => {
+          const sessionExercise = session.exercises.find(
+            (entry) => entry.exerciseId === exercise.exerciseId
+          );
+          return sessionExercise
+            ? sessionExercise.sets
+                .filter((set) => set.completed && !set.isWarmup)
+                .reduce((sum, set) => sum + set.weight * set.reps, 0)
             : 0;
         }),
       0
     );
 
-    if (currentExVolume > allTimeMaxVolume && currentExVolume > 0 && !newPR) {
+    if (currentExerciseVolume > allTimeMaxVolume && currentExerciseVolume > 0 && !newPR) {
       newPR = true;
       prType = 'volume';
-      prValue = `${Math.round(currentExVolume)}kg Volumen`;
-      newPRs.push({ exercise: exerciseName, value: `${Math.round(currentExVolume)}kg`, type: 'Volumen' });
+      prValue = `${Math.round(currentExerciseVolume)}kg Volumen`;
+      newPRs.push({
+        exercise: exerciseName,
+        value: `${Math.round(currentExerciseVolume)}kg`,
+        type: 'Volumen',
+      });
     }
 
-    // Calculate avg RIR
-    const rirValues = ex.sets
-      .filter(s => s.completed && s.rir !== undefined)
-      .map(s => s.rir!);
-    const avgRIR = rirValues.length > 0
-      ? Math.round((rirValues.reduce((s, r) => s + r, 0) / rirValues.length) * 10) / 10
-      : undefined;
+    const rirValues = exercise.sets
+      .filter((set) => set.completed && set.rir !== undefined)
+      .map((set) => set.rir as number);
+    const avgRIR =
+      rirValues.length > 0
+        ? Math.round((rirValues.reduce((sum, value) => sum + value, 0) / rirValues.length) * 10) / 10
+        : undefined;
 
-    // Suggestion for next time
     let suggestion = '';
     if (avgRIR !== undefined && avgRIR >= 3) {
-      suggestion = 'Nächstes Mal Gewicht steigern!';
+      suggestion = 'Naechstes Mal Gewicht steigern.';
     } else if (avgRIR !== undefined && avgRIR <= 0) {
-      suggestion = 'Guter Einsatz! Vielleicht etwas weniger für bessere Form.';
-    } else if (volChange > 10) {
-      suggestion = 'Super Steigerung! Weiter so.';
-    } else if (volChange < -10) {
-      suggestion = 'Etwas weniger Volumen. Eventuell Erholung oder Deload nötig.';
+      suggestion = 'Starke Einheit. Eventuell minimal leichter fuer bessere Technik.';
+    } else if (exerciseVolumeChange > 10) {
+      suggestion = 'Saubere Steigerung. Genau so weitermachen.';
+    } else if (exerciseVolumeChange < -10) {
+      suggestion = 'Weniger Volumen als sonst. Erholung oder Deload pruefen.';
     } else {
-      suggestion = 'Solide Leistung. Nächstes Mal einen Rep mehr probieren.';
+      suggestion = 'Solide Leistung. Beim naechsten Mal 1 Wiederholung mehr anpeilen.';
     }
 
     return {
-      exerciseId: ex.exerciseId,
+      exerciseId: exercise.exerciseId,
       exerciseName,
-      currentVolume: Math.round(currentExVolume),
-      previousVolume: Math.round(prevExVolume),
-      volumeChange: volChange,
+      currentVolume: Math.round(currentExerciseVolume),
+      previousVolume: Math.round(previousExerciseVolume),
+      volumeChange: exerciseVolumeChange,
       newPR,
       prType,
       prValue,
-      setsCompleted: ex.sets.filter(s => s.completed && !s.isWarmup).length,
+      setsCompleted: exercise.sets.filter((set) => set.completed && !set.isWarmup).length,
       avgRIR,
       suggestion,
     };
   });
 
-  // Overall rating
   let overallRating: WorkoutSummaryData['overallRating'] = 'average';
   if (newPRs.length >= 2 || volumeChange >= 10) {
     overallRating = 'excellent';
@@ -347,60 +416,61 @@ export function generateWorkoutSummary(
     overallRating = 'below_average';
   }
 
-  // Motivational message
-  const messages = {
+  const motivationalMessages = {
     excellent: [
-      '🔥 Absolut stark! Neue PRs und mehr Volumen – Biest-Modus!',
-      '💪 Überragend! Du bist heute über dich hinausgewachsen.',
-      '🏆 Was für ein Training! Die Gains kommen!',
+      'Absolut stark. Neue PRs und mehr Volumen.',
+      'Ueberragend. Heute war richtig Zug drin.',
+      'Starkes Training. Genau so fuehlen sich Fortschritte an.',
     ],
     good: [
-      '✅ Solides Training! Du wirst stärker.',
-      '💪 Gute Arbeit! Konsistenz zahlt sich aus.',
-      '🎯 Gut trainiert! Weiter auf Kurs.',
+      'Solides Training. Du bewegst dich weiter nach vorn.',
+      'Gute Arbeit. Konstanz zahlt sich aus.',
+      'Sauber trainiert. Du bleibst auf Kurs.',
     ],
     average: [
-      '✊ Training erledigt – der Konsistenz-Muskel wächst auch!',
-      '💪 Dran bleiben! Jedes Training zählt.',
-      '🎯 Durchgezogen! Manchmal reicht das.',
+      'Training erledigt. Konstanz gewinnt am Ende.',
+      'Dranbleiben. Jede Einheit zaehlt.',
+      'Durchgezogen. Auch normale Einheiten bauen etwas auf.',
     ],
     below_average: [
-      '💡 Nicht dein bestes Training – aber du warst da! Das zählt.',
-      '🔄 Jeder hat mal einen schlechten Tag. Morgen wird besser.',
-      '💪 Wichtig ist: Du hast trainiert. Erholung und weiter.',
+      'Nicht der beste Tag, aber du warst da. Das zaehlt.',
+      'Schlechtere Tage gehoeren dazu. Morgen sieht oft schon anders aus.',
+      'Einheit abgehakt. Erholung mitnehmen und weiter.',
     ],
   };
 
-  const messageList = messages[overallRating];
-  const motivationalMessage = messageList[Math.floor(Math.random() * messageList.length)];
-
-  // Next workout tips
+  const messagePool = motivationalMessages[overallRating];
+  const motivationalMessage = messagePool[Math.floor(Math.random() * messagePool.length)];
   const nextWorkoutTips: string[] = [];
 
   if (newPRs.length > 0) {
-    nextWorkoutTips.push(`Neue PRs bei: ${newPRs.map(p => p.exercise).join(', ')}`);
+    nextWorkoutTips.push(`Neue PRs bei: ${newPRs.map((entry) => entry.exercise).join(', ')}`);
   }
 
-  const highRIRExercises = exerciseInsights.filter(e => e.avgRIR !== undefined && e.avgRIR >= 3);
+  const highRIRExercises = exerciseInsights.filter(
+    (entry) => entry.avgRIR !== undefined && entry.avgRIR >= 3
+  );
   if (highRIRExercises.length > 0) {
     nextWorkoutTips.push(
-      `Gewicht steigern bei: ${highRIRExercises.map(e => e.exerciseName).join(', ')}`
+      `Gewicht steigern bei: ${highRIRExercises.map((entry) => entry.exerciseName).join(', ')}`
     );
   }
 
-  const lowRIRExercises = exerciseInsights.filter(e => e.avgRIR !== undefined && e.avgRIR <= 0);
+  const lowRIRExercises = exerciseInsights.filter(
+    (entry) => entry.avgRIR !== undefined && entry.avgRIR <= 0
+  );
   if (lowRIRExercises.length > 0) {
     nextWorkoutTips.push(
-      `Form verbessern bei: ${lowRIRExercises.map(e => e.exerciseName).join(', ')}`
+      `Technik pruefen bei: ${lowRIRExercises.map((entry) => entry.exerciseName).join(', ')}`
     );
   }
 
   if (durationDiff > 15) {
-    nextWorkoutTips.push(`Training war ${durationDiff} Min länger als üblich. Kürzere Pausen?`);
+    nextWorkoutTips.push(`Training war ${durationDiff} Minuten laenger als ueblich. Pausen pruefen.`);
   }
 
   if (nextWorkoutTips.length === 0) {
-    nextWorkoutTips.push('Versuche nächstes Mal bei jeder Übung 1 Rep oder 2.5kg mehr.');
+    nextWorkoutTips.push('Versuche beim naechsten Mal 1 Wiederholung oder 2.5kg mehr.');
   }
 
   return {
@@ -420,57 +490,68 @@ export function generateWorkoutSummary(
   };
 }
 
-/**
- * Detect stagnation across exercises
- */
 export function detectStagnation(
   workoutSessions: WorkoutSession[],
   trainingDayId: string
 ): StagnationInfo[] {
   const sessions = workoutSessions
-    .filter(s => s.trainingDayId === trainingDayId)
+    .filter((session) => session.trainingDayId === trainingDayId)
     .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime())
     .slice(0, 6);
 
-  if (sessions.length < 3) return [];
+  if (sessions.length < 3) {
+    return [];
+  }
 
   const stagnations: StagnationInfo[] = [];
-  const exerciseIds = new Set(sessions.flatMap(s => s.exercises.map(e => e.exerciseId)));
+  const exerciseIds = new Set(sessions.flatMap((session) => session.exercises.map((exercise) => exercise.exerciseId)));
 
-  exerciseIds.forEach(exerciseId => {
-    const maxWeights = sessions
-      .map(s => {
-        const ex = s.exercises.find(e => e.exerciseId === exerciseId);
-        if (!ex) return null;
-        const maxW = Math.max(...ex.sets.filter(s => s.completed && !s.isWarmup).map(s => s.weight), 0);
-        const maxR = Math.max(...ex.sets.filter(s => s.completed && !s.isWarmup).map(s => s.reps), 0);
-        return { weight: maxW, reps: maxR };
+  exerciseIds.forEach((exerciseId) => {
+    const performance = sessions
+      .map((session) => {
+        const exercise = session.exercises.find((entry) => entry.exerciseId === exerciseId);
+        if (!exercise) {
+          return null;
+        }
+
+        const completedSets = exercise.sets.filter((set) => set.completed && !set.isWarmup);
+        if (completedSets.length === 0) {
+          return null;
+        }
+
+        return {
+          weight: Math.max(...completedSets.map((set) => set.weight), 0),
+          reps: Math.max(...completedSets.map((set) => set.reps), 0),
+          rir: completedSets[0].rir,
+        };
       })
-      .filter(Boolean) as { weight: number; reps: number }[];
+      .filter(Boolean) as PerformanceSnapshot[];
 
-    if (maxWeights.length < 3) return;
+    const recent = performance.slice(0, 3);
+    const stalledTwice =
+      recent.length >= 3 &&
+      !hasMeaningfulProgress(recent[0], recent[1]) &&
+      !hasMeaningfulProgress(recent[1], recent[2]);
 
-    // Check if top weight hasn't changed in last 3+ sessions
-    const sameWeight = maxWeights.slice(0, 3).every(w => w.weight === maxWeights[0].weight);
-    const sameReps = maxWeights.slice(0, 3).every(w => w.reps === maxWeights[0].reps);
-
-    if (sameWeight && maxWeights[0].weight > 0) {
-      const exercise = exerciseDatabase.find(e => e.id === exerciseId);
-      const isCompound = exercise?.category === 'push' || exercise?.category === 'pull' || exercise?.category === 'legs';
-
-      stagnations.push({
-        exerciseId,
-        exerciseName: exercise?.name || exerciseId,
-        weeksSameWeight: maxWeights.filter(w => w.weight === maxWeights[0].weight).length,
-        lastWeight: maxWeights[0].weight,
-        lastReps: maxWeights[0].reps,
-        suggestion: sameReps
-          ? `Deload: Gehe auf ${Math.round(maxWeights[0].weight * 0.85)}kg und baue neu auf, oder probiere eine andere Variante.`
-          : isCompound
-          ? `Versuche ${maxWeights[0].weight + 2.5}kg mit weniger Reps (${Math.max(4, maxWeights[0].reps - 2)}).`
-          : `Versuche ${maxWeights[0].weight + 1.25}kg oder mehr Reps (${maxWeights[0].reps + 2}).`,
-      });
+    if (!stalledTwice || recent[0].weight <= 0) {
+      return;
     }
+
+    const weightIncrement = getWeightIncrement(exerciseId);
+    const exercise = exerciseDatabase.find((entry) => entry.id === exerciseId);
+    const lastReps = recent[0].reps;
+
+    stagnations.push({
+      exerciseId,
+      exerciseName: exercise?.name || exerciseId,
+      weeksSameWeight: 2,
+      lastWeight: recent[0].weight,
+      lastReps,
+      suggestion:
+        lastReps >= 12
+          ? `Naechstes Mal ${recent[0].weight + weightIncrement}kg mit ${Math.max(6, lastReps - 4)} Wiederholungen testen.`
+          : `Alarm: Seit 2 Einheiten keine echte Steigerung. Plane ${recent[0].weight}kg x ${lastReps + 1} oder ${recent[0].weight + weightIncrement}kg.`,
+    });
   });
 
   return stagnations;

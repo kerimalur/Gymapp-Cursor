@@ -69,7 +69,7 @@ export function DashboardLayout({ children, showSidebar = true }: DashboardLayou
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="btn-icon p-2"
-            aria-label="Menu öffnen"
+            aria-label="Menu oeffnen"
           >
             {mobileMenuOpen ? (
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

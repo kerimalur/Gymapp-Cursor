@@ -19,7 +19,7 @@ export function TrainingDayRecovery({ trainingDays }: TrainingDayRecoveryProps) 
   const getStatusText = (recovery: number) => {
     if (recovery >= 80) return 'Bereit zu trainieren';
     if (recovery >= 60) return 'Bald bereit';
-    return 'Noch Ruhe nötig';
+    return 'Noch Ruhe noetig';
   };
 
   return (

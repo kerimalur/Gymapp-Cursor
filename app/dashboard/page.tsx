@@ -14,13 +14,10 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useWorkoutStore } from '@/store/useWorkoutStore';
 import { useNutritionStore } from '@/store/useNutritionStore';
 import { useAppSettingsStore } from '@/store/useAppSettingsStore';
-import { Meal } from '@/types';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { ALL_MUSCLES, MUSCLE_NAMES_DE, calculateRecoveryFromWorkouts } from '@/lib/recovery';
 import { SmartDashboard } from '@/components/dashboard/SmartDashboard';
 import { AchievementsPanel } from '@/components/dashboard/AchievementsPanel';
-import { QuickLogNutrition } from '@/components/nutrition/QuickLogNutrition';
-import { Utensils } from 'lucide-react';
 
 function StatCard({
   title,
@@ -56,11 +53,11 @@ export default function DashboardPage() {
   const router = useRouter();
   const { user, updateProfile } = useAuthStore();
   const { workoutSessions, trainingPlans, trainingDays } = useWorkoutStore();
-  const { nutritionGoals, dailyTracking, meals, trackingSettings } = useNutritionStore();
+  const { nutritionGoals, dailyTracking, trackedMeals, trackingSettings, resetDailyTrackingIfNeeded } =
+    useNutritionStore();
   const { profileName, setProfileName, setProfileBio } = useAppSettingsStore();
   const [mounted, setMounted] = useState(false);
   const [greeting, setGreeting] = useState('');
-  const [showQuickLog, setShowQuickLog] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingName, setOnboardingName] = useState('');
   const [onboardingGoal, setOnboardingGoal] = useState('');
@@ -80,6 +77,10 @@ export default function DashboardPage() {
     setShowOnboarding(!user.hasCompletedOnboarding || !existingName || existingName === 'User');
   }, [user, profileName]);
 
+  useEffect(() => {
+    resetDailyTrackingIfNeeded();
+  }, [resetDailyTrackingIfNeeded]);
+
   const stats = useMemo(() => {
     const now = new Date();
     const weekStart = startOfWeek(now, { locale: de, weekStartsOn: 1 });
@@ -89,9 +90,9 @@ export default function DashboardPage() {
       isWithinInterval(new Date(session.startTime), { start: weekStart, end: weekEnd })
     );
 
-    const totalCalories = (meals || [])
-      .filter((m: Meal) => format(new Date(m.date), 'yyyy-MM-dd') === format(now, 'yyyy-MM-dd'))
-      .reduce((sum: number, m: Meal) => sum + (m.totalCalories || 0), 0);
+    const totalCalories = (trackedMeals || [])
+      .filter((meal) => meal.date === format(now, 'yyyy-MM-dd'))
+      .reduce((sum, meal) => sum + (meal.calories || 0), 0);
 
     const activePlan = trainingPlans.find((p) => p.isActive);
     const nextDayId = activePlan?.trainingDays[activePlan.currentDayIndex ?? 0];
@@ -164,7 +165,7 @@ export default function DashboardPage() {
       tiredMuscles,
       personalRecords,
     };
-  }, [workoutSessions, meals, nutritionGoals, dailyTracking, trainingPlans, trainingDays, trackingSettings]);
+  }, [workoutSessions, trackedMeals, nutritionGoals, dailyTracking, trainingPlans, trainingDays, trackingSettings]);
 
   const handleCompleteOnboarding = async () => {
     const cleaned = onboardingName.trim();
@@ -297,16 +298,6 @@ export default function DashboardPage() {
 
         <BodyWeightWidget compact />
 
-        {/* Floating Quick Log Button */}
-        <button
-          onClick={() => setShowQuickLog(true)}
-          className="fixed bottom-24 left-4 z-40 p-4 bg-gradient-to-br from-emerald-500 to-teal-500 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all hover:scale-105"
-          title="Schnell Mahlzeit loggen"
-        >
-          <Utensils className="w-6 h-6" />
-        </button>
-
-        <QuickLogNutrition isOpen={showQuickLog} onClose={() => setShowQuickLog(false)} />
       </div>
 
       {showOnboarding && (

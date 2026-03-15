@@ -10,7 +10,7 @@ import { de } from 'date-fns/locale';
 // Muscle labels in German
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'Ruecken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -19,12 +19,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'Gesaess',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Rücken',
+  lower_back: 'Unterer Ruecken',
   neck: 'Nacken',
 };
 
@@ -177,7 +177,7 @@ export function ReadableHeatmap({ weeks = 12 }: { weeks?: number }) {
                   `}
                   onMouseEnter={() => setHoveredDay(day)}
                   onMouseLeave={() => setHoveredDay(null)}
-                  title={`${format(day.date, 'dd.MM.yyyy')} - ${day.totalSets} Sätze`}
+                  title={`${format(day.date, 'dd.MM.yyyy')} - ${day.totalSets} Saetze`}
                 />
               ))}
             </div>
@@ -231,13 +231,13 @@ export function ReadableHeatmap({ weeks = 12 }: { weeks?: number }) {
           </div>
           <div className="border-t border-slate-700 pt-3">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-slate-300">Gesamt Sätze:</span>
+              <span className="text-slate-300">Gesamt Saetze:</span>
               <span className="font-bold text-emerald-400">{hoveredDay.totalSets}</span>
             </div>
             {hoveredDay.muscles.slice(0, 5).map(({ muscle, sets }) => (
               <div key={muscle} className="flex items-center justify-between text-sm py-1">
                 <span className="text-slate-400">{MUSCLE_LABELS[muscle]}</span>
-                <span className="text-white">{sets} Sätze</span>
+                <span className="text-white">{sets} Saetze</span>
               </div>
             ))}
             {hoveredDay.muscles.length > 5 && (

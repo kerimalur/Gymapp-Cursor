@@ -75,9 +75,9 @@ export default function MuscleBalancePage() {
     // Map to German muscle names and main categories
     const muscleNameMap: Record<string, string> = {
       chest: 'Brust',
-      back: 'Rücken',
-      lats: 'Rücken',
-      traps: 'Rücken',
+      back: 'Ruecken',
+      lats: 'Ruecken',
+      traps: 'Ruecken',
       shoulders: 'Schultern',
       biceps: 'Bizeps',
       triceps: 'Trizeps',
@@ -89,8 +89,8 @@ export default function MuscleBalancePage() {
       abs: 'Core',
     };
     
-    // Only count main muscles (Brust, Rücken, Schultern, Beine, Core)
-    const mainMuscles = ['Brust', 'Rücken', 'Schultern', 'Beine', 'Core'];
+    // Only count main muscles (Brust, Ruecken, Schultern, Beine, Core)
+    const mainMuscles = ['Brust', 'Ruecken', 'Schultern', 'Beine', 'Core'];
     
     // Count muscle groups trained - only PRIMARY muscle
     const muscleVolume: Record<string, number> = {};
@@ -186,7 +186,7 @@ export default function MuscleBalancePage() {
           />
           <StatCard
             icon={Scale}
-            label="Sätze gesamt"
+            label="Saetze gesamt"
             value={muscleStats.totalSets}
             color="emerald"
           />
@@ -219,7 +219,7 @@ export default function MuscleBalancePage() {
           {/* Muscle Balance Chart */}
           <div className="bg-white rounded-2xl border border-slate-200 p-6">
             <h2 className="text-lg font-bold text-slate-800 mb-2">📊 Volumen pro Muskelgruppe</h2>
-            <p className="text-sm text-slate-500 mb-6">Verteilung der Sätze auf Muskelgruppen</p>
+            <p className="text-sm text-slate-500 mb-6">Verteilung der Saetze auf Muskelgruppen</p>
             <MuscleBalanceChart />
           </div>
 
@@ -237,7 +237,7 @@ export default function MuscleBalancePage() {
             <div className="text-6xl mb-4">⚖️</div>
             <h2 className="text-xl font-bold text-slate-800 mb-2">Keine Daten vorhanden</h2>
             <p className="text-slate-500 max-w-md mx-auto">
-              Schließe dein erstes Training ab, um hier deine Muskelbalance zu sehen.
+              Schliesse dein erstes Training ab, um hier deine Muskelbalance zu sehen.
             </p>
           </div>
         )}

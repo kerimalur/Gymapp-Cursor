@@ -182,7 +182,7 @@ export function Modal({
                     transition-all duration-200
                     focus:outline-none focus:ring-2 focus:ring-primary-500/50
                   "
-                  aria-label="Modal schließen"
+                  aria-label="Modal schliessen"
                 >
                   {Icons.close}
                 </button>
@@ -233,7 +233,7 @@ export function ConfirmDialog({
   onConfirm,
   title,
   message,
-  confirmText = 'Bestätigen',
+  confirmText = 'Bestaetigen',
   cancelText = 'Abbrechen',
   variant = 'danger',
   loading = false,
@@ -316,7 +316,7 @@ export function ConfirmDialog({
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                Lädt...
+                Laedt...
               </span>
             ) : confirmText}
           </button>

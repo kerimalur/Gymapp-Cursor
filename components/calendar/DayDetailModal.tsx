@@ -58,7 +58,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
       toast.error('Bitte gib eine Notiz ein');
       return;
     }
-    toast.success('Notiz hinzugefügt!');
+    toast.success('Notiz hinzugefuegt!');
     setNote('');
     setShowAddNote(false);
   };
@@ -75,7 +75,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
         onClose={onClose}
         size="lg"
         title={format(date, 'EEEE, d. MMMM yyyy', { locale: de })}
-        subtitle="Was möchtest du heute tun?"
+        subtitle="Was moechtest du heute tun?"
         icon={<Calendar className="w-6 h-6" />}
         iconColor="blue"
       >
@@ -95,7 +95,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                     <div>
                       <h3 className="font-bold text-lg">Training planen</h3>
                       <p className="text-blue-100 text-sm">
-                        Plane ein Workout für diesen Tag
+                        Plane ein Workout fuer diesen Tag
                       </p>
                     </div>
                   </div>
@@ -115,9 +115,9 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                       <FileText className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg">Notiz hinzufügen</h3>
+                      <h3 className="font-bold text-lg">Notiz hinzufuegen</h3>
                       <p className="text-purple-100 text-sm">
-                        Füge eine Notiz zu diesem Tag hinzu
+                        Fuege eine Notiz zu diesem Tag hinzu
                       </p>
                     </div>
                   </div>
@@ -156,16 +156,16 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Trainingstag auswählen
+                  Trainingstag auswaehlen
                 </label>
                 <select
                   value={selectedTrainingDay}
                   onChange={(e) => setSelectedTrainingDay(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-primary-500 focus:outline-none transition-colors"
-                  title="Trainingstag auswählen"
-                  aria-label="Trainingstag auswählen"
+                  title="Trainingstag auswaehlen"
+                  aria-label="Trainingstag auswaehlen"
                 >
-                  <option value="">Wähle einen Trainingstag...</option>
+                  <option value="">Waehle einen Trainingstag...</option>
                   {trainingDays.map((day) => (
                     <option key={day.id} value={day.id}>
                       {day.name}
@@ -231,7 +231,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
           {!showPlanWorkout && !showAddNote && (
             <div className="border-t border-slate-200 pt-6">
               <h3 className="text-lg font-bold text-slate-800 mb-4">
-                Aktivitäten an diesem Tag
+                Aktivitaeten an diesem Tag
               </h3>
               {dayWorkouts.length > 0 ? (
                 <div className="space-y-3">
@@ -273,7 +273,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                                 </span>
                               )}
                             </div>
-                            <p className="text-xs text-slate-500 mt-2">Klicken für Details</p>
+                            <p className="text-xs text-slate-500 mt-2">Klicken fuer Details</p>
                           </div>
                         </div>
                       </div>
@@ -282,7 +282,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
                 </div>
               ) : (
                 <div className="text-center py-8 text-slate-500">
-                  Noch keine Aktivitäten
+                  Noch keine Aktivitaeten
                 </div>
               )}
             </div>
@@ -327,7 +327,7 @@ export function DayDetailModal({ date, onClose }: DayDetailModalProps) {
             {/* Exercises */}
             <div>
               <h3 className="text-lg font-bold text-slate-800 mb-4">
-                Übungen ({selectedWorkout.exercises.length})
+                Uebungen ({selectedWorkout.exercises.length})
               </h3>
               <div className="space-y-4 max-h-[40vh] overflow-y-auto">
                 {selectedWorkout.exercises.map((ex, exIdx) => (

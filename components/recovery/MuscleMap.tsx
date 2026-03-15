@@ -6,6 +6,7 @@ import { X, Clock, Dumbbell, Calendar, Users } from 'lucide-react';
 import { format, differenceInHours, differenceInMinutes } from 'date-fns';
 import { de } from 'date-fns/locale';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
+import { getRecoveryState } from '@/lib/recovery';
 
 interface MuscleMapProps {
   view: 'front' | 'back';
@@ -19,7 +20,7 @@ interface MuscleMapProps {
 
 const muscleTranslations: Record<string, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'Ruecken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -28,12 +29,12 @@ const muscleTranslations: Record<string, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'Gesaess',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Rücken',
+  lower_back: 'Unterer Ruecken',
   neck: 'Nacken',
 };
 
@@ -115,6 +116,7 @@ export function MuscleMap({
     const trainedDay = lastTrainedDay?.[muscleKey];
     const role = lastTrainedRole?.[muscleKey];
     const isSecondary = role === 'secondary';
+    const recoveryState = getRecoveryState(recovery);
     
     return {
       name: muscleTranslations[muscle] || muscle,
@@ -124,12 +126,8 @@ export function MuscleMap({
       role,
       isSecondary,
       color: getColor(recovery, isSecondary),
-      status:
-        recovery >= 80
-          ? 'Bereit'
-          : recovery >= 50
-          ? 'Regeneriert'
-          : 'Müde',
+      status: recoveryState.label,
+      statusDescription: recoveryState.description,
     };
   };
 
@@ -684,13 +682,16 @@ export function MuscleMap({
             <div className="flex items-center gap-2">
               <div className={`w-3 h-3 rounded-full ${getStatusColor(info.recovery)}`} />
               <span className="text-sm text-gray-600">
-                {info.recovery}% regeneriert
+                {info.status}
               </span>
             </div>
+            <p className="text-xs text-gray-500 mt-2">
+              {info.hoursRemaining > 0 ? `Noch etwa ${info.hoursRemaining}h` : 'Heute wieder frei'}
+            </p>
             {info.isSecondary && (
               <p className="text-xs text-slate-400 mt-2">Zuletzt als Hilfsmuskel trainiert</p>
             )}
-            <p className="text-xs text-gray-400 mt-1">Klicken für Details</p>
+            <p className="text-xs text-gray-400 mt-1">Klicken fuer Details</p>
           </div>
         );
       })()}
@@ -714,8 +715,8 @@ export function MuscleMap({
               <button
                 onClick={() => setSelectedMuscle(null)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                title="Schließen"
-                aria-label="Schließen"
+                title="Schliessen"
+                aria-label="Schliessen"
               >
                 <X className="w-5 h-5 text-gray-500" />
               </button>
@@ -735,8 +736,8 @@ export function MuscleMap({
               {/* Recovery Status */}
               <div className="bg-gray-50 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-gray-600">Regeneration</span>
-                  <span className="text-2xl font-bold text-gray-900">{muscleInfo.recovery}%</span>
+                  <span className="text-sm font-medium text-gray-600">Status</span>
+                  <span className="text-sm font-semibold text-gray-500">{muscleInfo.statusDescription}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                   <div
@@ -750,7 +751,7 @@ export function MuscleMap({
                   </span>
                   {muscleInfo.hoursRemaining > 0 && (
                     <span className="text-sm text-gray-500">
-                      Noch {muscleInfo.hoursRemaining}h bis 100%
+                      Noch {muscleInfo.hoursRemaining}h bis komplett frei
                     </span>
                   )}
                 </div>
@@ -771,7 +772,7 @@ export function MuscleMap({
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <Dumbbell className="w-5 h-5 text-gray-400" />
-                  <h3 className="font-semibold text-gray-900">Letzte Übungen</h3>
+                  <h3 className="font-semibold text-gray-900">Letzte Uebungen</h3>
                 </div>
                 
                 {muscleExercises.length > 0 ? (
@@ -782,7 +783,7 @@ export function MuscleMap({
                           <div>
                             <p className="font-medium text-gray-900">{exercise.exerciseName}</p>
                             <div className="flex items-center gap-3 mt-1 text-sm text-gray-500">
-                              <span>{exercise.sets} Sätze</span>
+                              <span>{exercise.sets} Saetze</span>
                               <span>•</span>
                               <span>{exercise.totalVolume.toLocaleString()} kg</span>
                             </div>
@@ -799,7 +800,7 @@ export function MuscleMap({
                   </div>
                 ) : (
                   <div className="text-center py-6 bg-gray-50 rounded-xl">
-                    <p className="text-gray-500">Noch keine Übungen für diesen Muskel</p>
+                    <p className="text-gray-500">Noch keine Uebungen fuer diesen Muskel</p>
                   </div>
                 )}
               </div>
@@ -808,7 +809,7 @@ export function MuscleMap({
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4">
                 <h4 className="font-medium text-gray-900 mb-2">Regenerationszeit</h4>
                 <p className="text-sm text-gray-600">
-                  Dieser Muskel benötigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> für vollständige Regeneration.
+                  Dieser Muskel benoetigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> fuer vollstaendige Regeneration.
                 </p>
               </div>
             </div>

@@ -28,10 +28,10 @@ const VOLUME_RECOMMENDATIONS: Record<MuscleGroup, { min: number; optimal: number
 };
 
 const muscleNames: Record<MuscleGroup, string> = {
-  chest: 'Brust', back: 'Rücken', shoulders: 'Schultern', biceps: 'Bizeps',
+  chest: 'Brust', back: 'Ruecken', shoulders: 'Schultern', biceps: 'Bizeps',
   triceps: 'Trizeps', forearms: 'Unterarme', abs: 'Bauch', quadriceps: 'Quadrizeps',
-  hamstrings: 'Beinbeuger', calves: 'Waden', glutes: 'Gesäß', traps: 'Trapez', lats: 'Latissimus',
-  adductors: 'Adduktoren', abductors: 'Abduktoren', lower_back: 'Unterer Rücken', neck: 'Nacken'
+  hamstrings: 'Beinbeuger', calves: 'Waden', glutes: 'Gesaess', traps: 'Trapez', lats: 'Latissimus',
+  adductors: 'Adduktoren', abductors: 'Abduktoren', lower_back: 'Unterer Ruecken', neck: 'Nacken'
 };
 
 interface MuscleVolumeData {
@@ -137,10 +137,10 @@ export function VolumeRecommendations() {
   const getRecommendationText = (data: MuscleVolumeData) => {
     if (data.status === 'under') {
       const needed = data.recommendation.min - data.currentSets;
-      return `+${needed} Sätze bis Minimum`;
+      return `+${needed} Saetze bis Minimum`;
     } else if (data.status === 'over') {
       const excess = data.currentSets - data.recommendation.max;
-      return `${excess} Sätze über Maximum`;
+      return `${excess} Saetze ueber Maximum`;
     }
     return 'Im optimalen Bereich';
   };
@@ -164,7 +164,7 @@ export function VolumeRecommendations() {
         </div>
         <div className="bg-red-50 rounded-xl p-4 border border-red-200">
           <p className="text-red-800 font-bold text-2xl">{overtrainedCount}</p>
-          <p className="text-red-600 text-sm">Übertrainiert</p>
+          <p className="text-red-600 text-sm">Uebertrainiert</p>
         </div>
       </div>
 
@@ -184,7 +184,7 @@ export function VolumeRecommendations() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-bold text-lg">{data.currentSets} Sätze</p>
+                <p className="font-bold text-lg">{data.currentSets} Saetze</p>
                 <p className="text-xs opacity-75">
                   Optimal: {data.recommendation.min}-{data.recommendation.max}
                 </p>
@@ -226,7 +226,7 @@ export function VolumeRecommendations() {
           <ul className="text-sm text-blue-700 space-y-1">
             {volumeData.filter(d => d.status === 'under').slice(0, 3).map(d => (
               <li key={d.muscle}>
-                • {muscleNames[d.muscle]}: Füge {d.recommendation.min - d.currentSets}+ Sätze hinzu
+                • {muscleNames[d.muscle]}: Fuege {d.recommendation.min - d.currentSets}+ Saetze hinzu
               </li>
             ))}
           </ul>

@@ -8,7 +8,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ BRUST ============
   { 
     id: 'ex1', 
-    name: 'Bankdrücken', 
+    name: 'Bankdruecken', 
     muscleGroups: ['chest', 'triceps', 'shoulders'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },
@@ -19,7 +19,7 @@ export const exerciseDatabase: Exercise[] = [
   },
   { 
     id: 'ex2', 
-    name: 'Schrägbankdrücken', 
+    name: 'Schraegbankdruecken', 
     muscleGroups: ['chest', 'shoulders', 'triceps'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },
@@ -72,10 +72,10 @@ export const exerciseDatabase: Exercise[] = [
     category: 'push' 
   },
 
-  // ============ RÜCKEN ============
+  // ============ RUeCKEN ============
   { 
     id: 'ex8', 
-    name: 'Klimmzüge', 
+    name: 'Klimmzuege', 
     muscleGroups: ['lats', 'back', 'biceps'], 
     muscles: [
       { muscle: 'lats', role: 'primary' },
@@ -165,7 +165,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ SCHULTERN ============
   { 
     id: 'ex16', 
-    name: 'Schulterdrücken', 
+    name: 'Schulterdruecken', 
     muscleGroups: ['shoulders', 'triceps'], 
     muscles: [
       { muscle: 'shoulders', role: 'primary' },
@@ -268,7 +268,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ ARME - TRIZEPS ============
   { 
     id: 'ex28', 
-    name: 'Trizeps Drücken', 
+    name: 'Trizeps Druecken', 
     muscleGroups: ['triceps'], 
     muscles: [{ muscle: 'triceps', role: 'primary' }],
     category: 'push' 
@@ -282,7 +282,7 @@ export const exerciseDatabase: Exercise[] = [
   },
   { 
     id: 'ex30', 
-    name: 'Überkopf Trizepsdrücken', 
+    name: 'Ueberkopf Trizepsdruecken', 
     muscleGroups: ['triceps'], 
     muscles: [{ muscle: 'triceps', role: 'primary' }],
     category: 'push' 
@@ -551,7 +551,7 @@ export const exerciseDatabase: Exercise[] = [
     category: 'legs' 
   },
 
-  // ============ UNTERER RÜCKEN ============
+  // ============ UNTERER RUeCKEN ============
   { 
     id: 'ex60', 
     name: 'Back Extensions', 
@@ -611,7 +611,7 @@ export const exerciseDatabase: Exercise[] = [
     category: 'other' 
   },
 
-  // ============ GESÄSS (WEITERE) ============
+  // ============ GESAeSS (WEITERE) ============
   { 
     id: 'ex66', 
     name: 'Hip Thrust', 
@@ -690,7 +690,7 @@ export const exerciseDatabase: Exercise[] = [
   // ============ BRUST (WEITERE) ============
   { 
     id: 'ex74', 
-    name: 'Decline Bankdrücken', 
+    name: 'Decline Bankdruecken', 
     muscleGroups: ['chest', 'triceps'], 
     muscles: [
       { muscle: 'chest', role: 'primary' },
@@ -720,7 +720,7 @@ export const exerciseDatabase: Exercise[] = [
     category: 'push' 
   },
 
-  // ============ RÜCKEN (WEITERE) ============
+  // ============ RUeCKEN (WEITERE) ============
   { 
     id: 'ex77', 
     name: 'Meadows Row', 

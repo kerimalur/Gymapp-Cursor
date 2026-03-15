@@ -4,10 +4,10 @@ import { de } from 'date-fns/locale';
 
 // Muscle group German names
 const muscleNames: Record<MuscleGroup, string> = {
-  chest: 'Brust', back: 'Rücken', shoulders: 'Schultern', biceps: 'Bizeps',
+  chest: 'Brust', back: 'Ruecken', shoulders: 'Schultern', biceps: 'Bizeps',
   triceps: 'Trizeps', forearms: 'Unterarme', abs: 'Bauch', quadriceps: 'Quadrizeps',
-  hamstrings: 'Beinbeuger', calves: 'Waden', glutes: 'Gesäß', traps: 'Trapez', lats: 'Latissimus',
-  adductors: 'Adduktoren', abductors: 'Abduktoren', lower_back: 'Unterer Rücken', neck: 'Nacken'
+  hamstrings: 'Beinbeuger', calves: 'Waden', glutes: 'Gesaess', traps: 'Trapez', lats: 'Latissimus',
+  adductors: 'Adduktoren', abductors: 'Abduktoren', lower_back: 'Unterer Ruecken', neck: 'Nacken'
 };
 
 // Generate PDF for a single workout session
@@ -67,12 +67,12 @@ function generateWorkoutContent(session: WorkoutSession, exerciseDatabase: any[]
     let setsHtml = '';
     ex.sets.forEach((set, idx) => {
       if (set.completed) {
-        const warmupBadge = set.isWarmup ? '<span class="warmup-badge">Aufwärmen</span>' : '';
+        const warmupBadge = set.isWarmup ? '<span class="warmup-badge">Aufwaermen</span>' : '';
         const assistedBadge = set.isAssisted ? '<span class="assisted-badge">Assistiert</span>' : '';
         setsHtml += `
           <tr>
             <td>${idx + 1}</td>
-            <td>${Math.abs(set.weight)} kg ${set.isAssisted && set.weight < 0 ? '(Unterstützung)' : ''}</td>
+            <td>${Math.abs(set.weight)} kg ${set.isAssisted && set.weight < 0 ? '(Unterstuetzung)' : ''}</td>
             <td>${set.reps}</td>
             <td>${set.rir ?? '-'}</td>
             <td>${warmupBadge}${assistedBadge}</td>
@@ -190,7 +190,7 @@ function generateHistoryContent(
                 <th>Datum</th>
                 <th>Training</th>
                 <th>Dauer</th>
-                <th>Sätze</th>
+                <th>Saetze</th>
                 <th>Volumen</th>
               </tr>
             </thead>
@@ -250,7 +250,7 @@ function generateStatsContent(
               <p class="stat-value">${stats.workoutCount}</p>
             </div>
             <div class="stat-card">
-              <h3>Sätze</h3>
+              <h3>Saetze</h3>
               <p class="stat-value">${stats.totalSets}</p>
             </div>
             <div class="stat-card">
@@ -315,8 +315,8 @@ function generatePlanContent(
         <table>
           <thead>
             <tr>
-              <th>Übung</th>
-              <th>Sätze</th>
+              <th>Uebung</th>
+              <th>Saetze</th>
               <th>Wdh</th>
               <th>Muskeln</th>
             </tr>
@@ -497,7 +497,7 @@ function downloadPDF(content: string, filename: string): void {
 
 // Alternative: Export to CSV for spreadsheet import
 export function exportToCSV(sessions: WorkoutSession[], exerciseDatabase: any[]): void {
-  let csv = 'Datum,Training,Übung,Satz,Gewicht (kg),Wiederholungen,RIR,Aufwärmen,Assistiert\n';
+  let csv = 'Datum,Training,Uebung,Satz,Gewicht (kg),Wiederholungen,RIR,Aufwaermen,Assistiert\n';
   
   sessions.forEach(session => {
     const date = format(new Date(session.startTime), 'yyyy-MM-dd');

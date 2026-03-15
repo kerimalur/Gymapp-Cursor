@@ -9,12 +9,28 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useNutritionStore } from '@/store/useNutritionStore';
 import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { WorkoutSession, ExerciseSet } from '@/types';
-import { ArrowLeft, Clock, CheckCircle, X, Plus, Minus, RefreshCw, Flame, Timer, Zap, TrendingUp, MessageSquare, StickyNote } from 'lucide-react';
+import {
+  ArrowLeft,
+  AlertTriangle,
+  Clock,
+  CheckCircle,
+  X,
+  Plus,
+  Minus,
+  RefreshCw,
+  Flame,
+  Search,
+  Timer,
+  Zap,
+  TrendingUp,
+  StickyNote,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Suspense } from 'react';
 import { getProgressionSuggestion, generateWorkoutSummary, WorkoutSummaryData } from '@/lib/progressiveOverload';
 import { WorkoutSummaryModal } from '@/components/workout/WorkoutSummaryModal';
+import { normalizeSearchText } from '@/lib/text';
 
 function WorkoutContent() {
   const router = useRouter();
@@ -22,7 +38,8 @@ function WorkoutContent() {
   const trainingDayId = searchParams.get('id') || '';
   
   const workoutStore = useWorkoutStore();
-  const { trainingDays, workoutSessions, addWorkoutSession, workoutSettings } = workoutStore;
+  const { trainingDays, workoutSessions, addWorkoutSession, workoutSettings, customExercises } =
+    workoutStore;
   const { syncData, user } = useAuthStore();
   const nutritionStore = useNutritionStore();
   
@@ -36,6 +53,7 @@ function WorkoutContent() {
   const [exerciseNotes, setExerciseNotes] = useState<Record<number, string>>({});
   const [showNoteInput, setShowNoteInput] = useState<number | null>(null);
   const [sessionNote, setSessionNote] = useState('');
+  const [exerciseSearchTerm, setExerciseSearchTerm] = useState('');
   
   // Rest Timer State
   const [restTimer, setRestTimer] = useState({
@@ -44,13 +62,33 @@ function WorkoutContent() {
     targetSeconds: 90,
   });
 
+  const allExercises = useMemo(() => [...exerciseDatabase, ...customExercises], [customExercises]);
+
+  const filteredExercises = useMemo(() => {
+    const query = normalizeSearchText(exerciseSearchTerm);
+
+    return allExercises.filter((exercise) => {
+      if (!query) return true;
+
+      return (
+        normalizeSearchText(exercise.name).includes(query) ||
+        exercise.muscleGroups.some((muscleGroup) =>
+          normalizeSearchText(muscleGroup).includes(query)
+        )
+      );
+    });
+  }, [allExercises, exerciseSearchTerm]);
+
   // Check if exercise supports assisted mode
-  const isAssistedExercise = useCallback((exerciseId: string) => {
-    const assistedPatterns = ['klimmzug', 'klimmzüge', 'pull-up', 'chin-up', 'dip', 'muscle-up'];
-    const exercise = exerciseDatabase.find(e => e.id === exerciseId);
-    const name = exercise?.name?.toLowerCase() || '';
-    return assistedPatterns.some(pattern => name.includes(pattern));
-  }, []);
+  const isAssistedExercise = useCallback(
+    (exerciseId: string) => {
+      const assistedPatterns = ['klimmzug', 'klimmzuege', 'pull-up', 'chin-up', 'dip', 'muscle-up'];
+      const exercise = allExercises.find((entry) => entry.id === exerciseId);
+      const name = normalizeSearchText(exercise?.name || '');
+      return assistedPatterns.some((pattern) => name.includes(pattern));
+    },
+    [allExercises]
+  );
 
   // Timer
   useEffect(() => {
@@ -71,7 +109,7 @@ function WorkoutContent() {
           if ('vibrate' in navigator) {
             navigator.vibrate([200, 100, 200]);
           }
-          toast.success('⏱️ Pausenzeit vorbei! Nächster Satz!', { duration: 3000 });
+          toast.success('⏱️ Pausenzeit vorbei! Naechster Satz!', { duration: 3000 });
           return { ...prev, isActive: false, seconds: 0 };
         }
         return { ...prev, seconds: prev.seconds - 1 };
@@ -221,7 +259,7 @@ function WorkoutContent() {
     const set = newWorkout.exercises[exIdx].sets[setIdx];
     set.isWarmup = !set.isWarmup;
     setWorkout(newWorkout);
-    toast.success(set.isWarmup ? '🔥 Aufwärmsatz markiert' : 'Arbeitssatz', { duration: 1500 });
+    toast.success(set.isWarmup ? '🔥 Aufwaermsatz markiert' : 'Arbeitssatz', { duration: 1500 });
   };
 
   // Toggle assisted exercise
@@ -267,11 +305,11 @@ function WorkoutContent() {
   };
 
   const handleRemoveExercise = (exIdx: number) => {
-    if (confirm('Übung wirklich entfernen?')) {
+    if (confirm('Uebung wirklich entfernen?')) {
       const newWorkout = { ...workout };
       newWorkout.exercises.splice(exIdx, 1);
       setWorkout(newWorkout);
-      toast.success('Übung entfernt');
+      toast.success('Uebung entfernt');
     }
   };
 
@@ -293,17 +331,17 @@ function WorkoutContent() {
     newWorkout.exercises[exIdx].sets.push({
       id: `set-${Date.now()}`,
       reps: 0,
-      weight: lastSet?.weight || 0, // Gewicht vom letzten Satz übernehmen
+      weight: lastSet?.weight || 0, // Gewicht vom letzten Satz uebernehmen
       completed: false,
       ghostWeight: lastSet?.ghostWeight,
       ghostReps: lastSet?.ghostReps,
     });
     setWorkout(newWorkout);
-    toast.success('Satz hinzugefügt');
+    toast.success('Satz hinzugefuegt');
   };
 
   const handleAddExercise = (exerciseId: string) => {
-    const exercise = exerciseDatabase.find(e => e.id === exerciseId);
+    const exercise = allExercises.find((entry) => entry.id === exerciseId);
     if (!exercise) return;
 
     const newWorkout = { ...workout };
@@ -317,7 +355,8 @@ function WorkoutContent() {
     });
     setWorkout(newWorkout);
     setShowExerciseSelector(false);
-    toast.success(`${exercise.name} hinzugefügt`);
+    setExerciseSearchTerm('');
+    toast.success(`${exercise.name} hinzugefuegt`);
   };
 
   const handleFinishWorkout = async () => {
@@ -417,7 +456,7 @@ function WorkoutContent() {
               <h1 className="text-2xl font-bold text-gray-900">
                 {workout.trainingDayName}
               </h1>
-              <p className="text-gray-600">Training läuft...</p>
+              <p className="text-gray-600">Training laeuft...</p>
             </div>
             <div className="w-10"></div>
           </div>
@@ -432,7 +471,7 @@ function WorkoutContent() {
             <div className="bg-green-50 rounded-xl p-4 text-center">
               <CheckCircle className="w-6 h-6 text-green-600 mx-auto mb-2" />
               <p className="text-2xl font-bold text-green-600">{completedSets}/{totalSets}</p>
-              <p className="text-sm text-gray-600">Sätze</p>
+              <p className="text-sm text-gray-600">Saetze</p>
             </div>
             <div className="bg-purple-50 rounded-xl p-4 text-center">
               <motion.div
@@ -442,7 +481,7 @@ function WorkoutContent() {
                 <RefreshCw className="w-6 h-6 text-purple-600 mx-auto mb-2" />
               </motion.div>
               <p className="text-2xl font-bold text-purple-600">{workout.exercises.length}</p>
-              <p className="text-sm text-gray-600">Übungen</p>
+              <p className="text-sm text-gray-600">Uebungen</p>
             </div>
           </div>
         </motion.div>
@@ -450,7 +489,7 @@ function WorkoutContent() {
         {/* Exercises */}
         <AnimatePresence>
           {workout.exercises.map((ex, exIdx) => {
-            const exercise = exerciseDatabase.find(e => e.id === ex.exerciseId);
+            const exercise = allExercises.find((entry) => entry.id === ex.exerciseId);
             
             return (
               <motion.div
@@ -471,7 +510,7 @@ function WorkoutContent() {
                       className={`p-2 rounded-lg transition-colors ${
                         exerciseNotes[exIdx] ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100 text-gray-400'
                       }`}
-                      title="Notiz hinzufügen"
+                      title="Notiz hinzufuegen"
                     >
                       <StickyNote className="w-4 h-4" />
                     </button>
@@ -495,13 +534,19 @@ function WorkoutContent() {
                   if (suggestion.type === 'first_time') return null;
                   return (
                     <div className={`mb-3 px-3 py-2 rounded-lg text-xs flex items-center gap-2 ${
-                      suggestion.type === 'deload'
+                      suggestion.type === 'stagnation_alert'
+                        ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                        : suggestion.type === 'deload'
                         ? 'bg-amber-50 text-amber-700 border border-amber-200'
                         : suggestion.type === 'increase_weight'
                         ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                         : 'bg-blue-50 text-blue-700 border border-blue-200'
                     }`}>
-                      <TrendingUp className="w-3.5 h-3.5 flex-shrink-0" />
+                      {suggestion.type === 'stagnation_alert' ? (
+                        <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+                      ) : (
+                        <TrendingUp className="w-3.5 h-3.5 flex-shrink-0" />
+                      )}
                       <span><strong>Ziel:</strong> {suggestion.message} — {suggestion.reason}</span>
                     </div>
                   );
@@ -564,7 +609,7 @@ function WorkoutContent() {
                                 ? 'bg-orange-100 text-orange-600 ring-2 ring-orange-300' 
                                 : 'hover:bg-orange-50 text-gray-400 hover:text-orange-500'
                             }`}
-                            title="Aufwärmsatz"
+                            title="Aufwaermsatz"
                           >
                             <Flame className="w-4 h-4" />
                           </button>
@@ -700,7 +745,7 @@ function WorkoutContent() {
                     className="w-full mt-2 p-2 border-2 border-dashed border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-all text-gray-500 hover:text-blue-600 text-sm font-medium"
                   >
                     <Plus className="w-4 h-4 inline mr-1" />
-                    Satz hinzufügen
+                    Satz hinzufuegen
                   </button>
                 </div>
               </motion.div>
@@ -716,7 +761,7 @@ function WorkoutContent() {
           className="w-full p-4 border-2 border-dashed border-gray-300 rounded-2xl hover:border-primary-500 hover:bg-primary-50 transition-all text-gray-600 hover:text-primary-600 font-medium mb-6"
         >
           <Plus className="w-5 h-5 inline mr-2" />
-          Übung hinzufügen
+          Uebung hinzufuegen
         </motion.button>
 
         {/* Finish Button */}
@@ -735,7 +780,7 @@ function WorkoutContent() {
             onClick={handleFinishWorkout}
             className="px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
           >
-            Training abschließen
+            Training abschliessen
           </button>
         </motion.div>
       </div>
@@ -749,9 +794,12 @@ function WorkoutContent() {
             className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl"
           >
             <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900">Übung hinzufügen</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Uebung hinzufuegen</h2>
               <button
-                onClick={() => setShowExerciseSelector(false)}
+                onClick={() => {
+                  setShowExerciseSelector(false);
+                  setExerciseSearchTerm('');
+                }}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <X className="w-6 h-6 text-gray-600" />
@@ -759,18 +807,45 @@ function WorkoutContent() {
             </div>
 
             <div className="flex-1 overflow-y-auto p-6">
+              <div className="relative mb-4">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input
+                  type="text"
+                  value={exerciseSearchTerm}
+                  onChange={(event) => setExerciseSearchTerm(event.target.value)}
+                  placeholder="Uebung oder Muskelgruppe suchen..."
+                  className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-primary-500"
+                  autoFocus
+                />
+              </div>
+
               <div className="grid grid-cols-1 gap-3">
-              {exerciseDatabase.map((exercise) => (
+              {filteredExercises.map((exercise) => (
                 <button
                   key={exercise.id}
                   onClick={() => handleAddExercise(exercise.id)}
                   className="p-4 text-left border-2 border-gray-200 rounded-xl hover:border-primary-500 hover:bg-primary-50 transition-all"
                 >
-                  <p className="font-semibold text-gray-900">{exercise.name}</p>
-                  <p className="text-sm text-gray-500">{exercise.category}</p>
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="font-semibold text-gray-900">{exercise.name}</p>
+                      <p className="text-sm text-gray-500">{exercise.muscleGroups.join(', ')}</p>
+                    </div>
+                    {exercise.isCustom && (
+                      <span className="px-2 py-1 rounded-full bg-violet-100 text-violet-700 text-xs font-semibold">
+                        Eigene
+                      </span>
+                    )}
+                  </div>
                 </button>
               ))}
               </div>
+
+              {filteredExercises.length === 0 && (
+                <div className="py-10 text-center text-gray-500">
+                  Keine passende Uebung gefunden.
+                </div>
+              )}
             </div>
           </motion.div>
         </div>

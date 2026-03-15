@@ -279,7 +279,7 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
             </div>
             
             <p className="text-sm text-slate-500 mb-4">
-              Wähle die Tage aus, an denen du trainieren möchtest:
+              Waehle die Tage aus, an denen du trainieren moechtest:
             </p>
             
             {/* Day Selection */}
@@ -302,7 +302,7 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
             </div>
             
             <p className="text-xs text-slate-400 text-center mb-4">
-              {tempSelectedDays.length} Trainingstage ausgewählt
+              {tempSelectedDays.length} Trainingstage ausgewaehlt
             </p>
             
             {/* Actions */}

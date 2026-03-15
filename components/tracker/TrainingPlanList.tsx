@@ -37,7 +37,7 @@ export function TrainingPlanList() {
   const handleDelete = (planId: string) => {
     deleteTrainingPlan(planId);
     setConfirmDelete(null);
-    toast.success('Trainingsplan gelöscht');
+    toast.success('Trainingsplan geloescht');
   };
 
   const handleStartWorkout = (trainingDayId: string) => {
@@ -75,7 +75,7 @@ export function TrainingPlanList() {
           <Calendar className="w-8 h-8 text-gray-400" />
         </div>
         <h3 className="text-xl font-semibold text-gray-900 mb-2">
-          Noch keine Trainingspläne
+          Noch keine Trainingsplaene
         </h3>
         <p className="text-gray-600">
           Erstelle deinen ersten Trainingsplan, um strukturiert zu trainieren
@@ -173,7 +173,7 @@ export function TrainingPlanList() {
                           <div>
                             <p className="font-medium text-gray-900">{day?.name || 'Unbekannt'}</p>
                             <p className="text-sm text-gray-500">
-                              {day?.exercises.length || 0} Übungen
+                              {day?.exercises.length || 0} Uebungen
                             </p>
                           </div>
                         </div>
@@ -192,7 +192,7 @@ export function TrainingPlanList() {
                     {planDays.length === 0 && (
                       <div className="text-center py-6 bg-amber-50 rounded-xl">
                         <p className="text-amber-700">Keine Trainingstage gefunden</p>
-                        <p className="text-sm text-amber-600">Die Trainingstage wurden möglicherweise gelöscht.</p>
+                        <p className="text-sm text-amber-600">Die Trainingstage wurden moeglicherweise geloescht.</p>
                       </div>
                     )}
                   </div>
@@ -224,7 +224,7 @@ export function TrainingPlanList() {
                         onClick={() => handleDelete(plan.id)}
                         className="px-4 py-3 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600 transition-colors"
                       >
-                        Ja, löschen
+                        Ja, loeschen
                       </button>
                       <button
                         onClick={() => setConfirmDelete(null)}
@@ -237,8 +237,8 @@ export function TrainingPlanList() {
                     <button
                       onClick={() => setConfirmDelete(plan.id)}
                       className="p-3 border-2 border-gray-200 text-gray-600 rounded-xl hover:border-red-300 hover:text-red-600 transition-colors"
-                      title="Löschen"
-                      aria-label="Plan löschen"
+                      title="Loeschen"
+                      aria-label="Plan loeschen"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>

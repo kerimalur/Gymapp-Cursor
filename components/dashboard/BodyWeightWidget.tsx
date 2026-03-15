@@ -29,7 +29,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
   const handleAddEntry = () => {
     const weight = parseFloat(newWeight);
     if (isNaN(weight) || weight <= 0) {
-      toast.error('Bitte gib ein gültiges Gewicht ein');
+      toast.error('Bitte gib ein gueltiges Gewicht ein');
       return;
     }
 
@@ -48,7 +48,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
   const handleSetGoal = () => {
     const targetWeight = parseFloat(newGoalWeight);
     if (isNaN(targetWeight) || targetWeight <= 0) {
-      toast.error('Bitte gib ein gültiges Zielgewicht ein');
+      toast.error('Bitte gib ein gueltiges Zielgewicht ein');
       return;
     }
 
@@ -125,11 +125,11 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
             <Scale className="w-6 h-6 text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-800">Körpergewicht</h3>
+            <h3 className="text-lg font-bold text-slate-800">Koerpergewicht</h3>
             <p className="text-sm text-slate-500">
               {entries.length > 0 
-                ? `${entries.length} Einträge` 
-                : 'Noch keine Einträge'}
+                ? `${entries.length} Eintraege` 
+                : 'Noch keine Eintraege'}
             </p>
           </div>
         </div>
@@ -214,7 +214,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
       {/* Mini Chart */}
       {recentEntries.length > 1 && (
         <div className="mb-6">
-          <p className="text-xs text-slate-500 mb-2">Letzte 7 Einträge</p>
+          <p className="text-xs text-slate-500 mb-2">Letzte 7 Eintraege</p>
           <div className="flex items-end gap-1 h-16">
             {recentEntries.map((entry, idx) => {
               const minWeight = Math.min(...recentEntries.map(e => e.weight));

@@ -80,8 +80,48 @@ export interface MuscleRecoverySnapshot {
   avgRir: number;
 }
 
+export type RecoveryStateKey = 'ready' | 'recovering' | 'fatigued';
+
+export interface RecoveryStateMeta {
+  key: RecoveryStateKey;
+  label: string;
+  description: string;
+  accentClass: string;
+  softClass: string;
+}
+
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
+}
+
+export function getRecoveryState(recovery: number): RecoveryStateMeta {
+  if (recovery >= 80) {
+    return {
+      key: 'ready',
+      label: 'Bereit',
+      description: 'Kann heute wieder belastet werden.',
+      accentClass: 'text-emerald-700',
+      softClass: 'bg-emerald-50 border-emerald-200',
+    };
+  }
+
+  if (recovery >= 50) {
+    return {
+      key: 'recovering',
+      label: 'Laedt auf',
+      description: 'Noch etwas Zeit fuer volle Frische.',
+      accentClass: 'text-amber-700',
+      softClass: 'bg-amber-50 border-amber-200',
+    };
+  }
+
+  return {
+    key: 'fatigued',
+    label: 'Belastet',
+    description: 'Lieber noch Regeneration mitnehmen.',
+    accentClass: 'text-rose-700',
+    softClass: 'bg-rose-50 border-rose-200',
+  };
 }
 
 export function calculateRecoveryFromWorkouts(

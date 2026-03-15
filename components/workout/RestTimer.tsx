@@ -66,7 +66,7 @@ export function RestTimer() {
             <button
               onClick={stopRestTimer}
               className="absolute top-2 right-2 p-1 hover:bg-black/10 dark:hover:bg-white/10 rounded-lg transition-colors"
-              aria-label="Timer schließen"
+              aria-label="Timer schliessen"
             >
               <X className="w-4 h-4" />
             </button>
@@ -103,7 +103,7 @@ export function RestTimer() {
                 {isFinished ? (
                   <div className="text-center">
                     <div className="text-2xl sm:text-3xl font-bold">Fertig!</div>
-                    <div className="text-sm opacity-90">Bereit für nächsten Satz</div>
+                    <div className="text-sm opacity-90">Bereit fuer naechsten Satz</div>
                   </div>
                 ) : (
                   <>

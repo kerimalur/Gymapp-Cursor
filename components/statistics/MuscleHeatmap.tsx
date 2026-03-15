@@ -21,7 +21,7 @@ type MuscleGroup =
 
 const muscleLabels: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'Ruecken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -30,7 +30,7 @@ const muscleLabels: Record<MuscleGroup, string> = {
   obliques: 'Seitliche Bauchmuskeln',
   quads: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
-  glutes: 'Gesäß',
+  glutes: 'Gesaess',
   calves: 'Waden',
   traps: 'Trapez',
   lats: 'Latissimus',
@@ -38,17 +38,17 @@ const muscleLabels: Record<MuscleGroup, string> = {
 
 // Simplified exercise to muscle mapping
 const exerciseToMuscle: Record<string, MuscleGroup[]> = {
-  'Bankdrücken': ['chest', 'triceps', 'shoulders'],
-  'Schrägbankdrücken': ['chest', 'triceps', 'shoulders'],
+  'Bankdruecken': ['chest', 'triceps', 'shoulders'],
+  'Schraegbankdruecken': ['chest', 'triceps', 'shoulders'],
   'Fliegende': ['chest'],
   'Kabelzug Brust': ['chest'],
   'Butterfly': ['chest'],
   'Dips': ['chest', 'triceps'],
-  'Klimmzüge': ['back', 'biceps', 'lats'],
+  'Klimmzuege': ['back', 'biceps', 'lats'],
   'Latzug': ['back', 'biceps', 'lats'],
   'Rudern': ['back', 'biceps'],
   'Kreuzheben': ['back', 'hamstrings', 'glutes'],
-  'Schulterdrücken': ['shoulders', 'triceps'],
+  'Schulterdruecken': ['shoulders', 'triceps'],
   'Seitheben': ['shoulders'],
   'Frontheben': ['shoulders'],
   'Face Pulls': ['shoulders', 'traps'],
@@ -447,13 +447,13 @@ export function MuscleHeatmap() {
                   <span className="font-medium text-slate-800 dark:text-slate-200">{selectedData.frequency}x</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600 dark:text-slate-400">Sätze (7 Tage):</span>
+                  <span className="text-slate-600 dark:text-slate-400">Saetze (7 Tage):</span>
                   <span className="font-medium text-slate-800 dark:text-slate-200">{selectedData.totalSets}</span>
                 </div>
                 {getRestLevel(selectedMuscle!) > 0 && (
                   <div className="mt-3 p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg">
                     <p className="text-amber-700 dark:text-amber-300 text-xs">
-                      💡 Dieser Muskel könnte noch Erholung brauchen
+                      💡 Dieser Muskel koennte noch Erholung brauchen
                     </p>
                   </div>
                 )}
@@ -462,7 +462,7 @@ export function MuscleHeatmap() {
           ) : (
             <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-center">
               <p className="text-slate-500 dark:text-slate-400 text-sm">
-                Klicke auf einen Muskel für Details
+                Klicke auf einen Muskel fuer Details
               </p>
             </div>
           )}

@@ -42,14 +42,14 @@ import { format } from 'date-fns';
 const QUICK_MEALS = [
   { id: 'light', name: 'Leichte Mahlzeit', calories: 300, protein: 15, icon: '🥗', description: 'Salat, Obst, Snack' },
   { id: 'normal', name: 'Normale Mahlzeit', calories: 500, protein: 30, icon: '🍽️', description: 'Ausgewogene Mahlzeit' },
-  { id: 'big', name: 'Große Mahlzeit', calories: 800, protein: 45, icon: '🍖', description: 'Reichhaltige Mahlzeit' },
+  { id: 'big', name: 'Grosse Mahlzeit', calories: 800, protein: 45, icon: '🍖', description: 'Reichhaltige Mahlzeit' },
   { id: 'snack', name: 'Snack', calories: 150, protein: 5, icon: '🍎', description: 'Obst, Riegel, Kleinigkeit' },
   { id: 'protein', name: 'Protein-Shake', calories: 200, protein: 30, icon: '🥤', description: 'Shake, Quark, Eier' },
-  { id: 'treat', name: 'Süßigkeit', calories: 250, protein: 3, icon: '🍫', description: 'Schokolade, Kuchen, Eis' },
+  { id: 'treat', name: 'Suessigkeit', calories: 250, protein: 3, icon: '🍫', description: 'Schokolade, Kuchen, Eis' },
 ];
 
 const MEAL_TIMES = [
-  { id: 'breakfast', name: 'Frühstück', icon: Coffee, time: '6:00 - 10:00' },
+  { id: 'breakfast', name: 'Fruehstueck', icon: Coffee, time: '6:00 - 10:00' },
   { id: 'lunch', name: 'Mittagessen', icon: Utensils, time: '11:00 - 14:00' },
   { id: 'dinner', name: 'Abendessen', icon: Moon, time: '17:00 - 21:00' },
   { id: 'snacks', name: 'Snacks', icon: Apple, time: 'Zwischendurch' },
@@ -57,27 +57,19 @@ const MEAL_TIMES = [
 
 // Default supplements
 const DEFAULT_SUPPLEMENTS = [
-  { id: 'creatine', name: 'Kreatin', dosage: '5g', timing: 'Täglich' },
+  { id: 'creatine', name: 'Kreatin', dosage: '5g', timing: 'Taeglich' },
   { id: 'omega3', name: 'Omega-3', dosage: '2 Kapseln', timing: 'Zum Essen' },
   { id: 'vitd', name: 'Vitamin D3', dosage: '2000 IE', timing: 'Morgens' },
   { id: 'magnesium', name: 'Magnesium', dosage: '400mg', timing: 'Abends' },
 ];
 
-interface TrackedSupplement {
-  id: string;
-  name: string;
-  dosage: string;
-  taken: boolean;
-}
-
 export default function NutritionPage() {
   const searchParams = useSearchParams();
   const { 
-    nutritionGoals, dailyTracking, updateWater, supplements, addSupplement, 
-    setSupplements, setNutritionGoals, mealTemplates, addMealTemplate, removeMealTemplate,
-    sleepEntries, addSleepEntry, getSleepForDate,
-    trackedMeals, addTrackedMeal, removeTrackedMeal, getTrackedMealsForDate,
-    cleanupOldMeals
+    nutritionGoals, dailyTracking, updateWater, supplements, addSupplement, removeSupplement,
+    toggleSupplementTaken, setNutritionGoals, mealTemplates, addMealTemplate, removeMealTemplate,
+    sleepEntries, addSleepEntry, trackedMeals, addTrackedMeal, removeTrackedMeal,
+    cleanupOldMeals, resetDailyTrackingIfNeeded
   } = useNutritionStore();
   
   // Get today's date for filtering
@@ -94,7 +86,6 @@ export default function NutritionPage() {
   const [customName, setCustomName] = useState('');
   const [showWaterInfo, setShowWaterInfo] = useState(false);
   const [showSupplements, setShowSupplements] = useState(false);
-  const [trackedSupplements, setTrackedSupplements] = useState<TrackedSupplement[]>([]);
   const [showAddSupplement, setShowAddSupplement] = useState(false);
   const [newSupplementName, setNewSupplementName] = useState('');
   const [newSupplementDosage, setNewSupplementDosage] = useState('');
@@ -113,6 +104,10 @@ export default function NutritionPage() {
   const [showNutritionSettings, setShowNutritionSettings] = useState(false);
   const [hasInitializedSupplements, setHasInitializedSupplements] = useState(false);
   const quickAddModalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    resetDailyTrackingIfNeeded();
+  }, [resetDailyTrackingIfNeeded]);
 
   // Get today's sleep entry (reuse todayDate from above)
   const todaySleep = sleepEntries.find(e => e.date === todayDate);
@@ -183,16 +178,6 @@ export default function NutritionPage() {
     }
   }, []);
 
-  // Update tracked supplements when store changes
-  useEffect(() => {
-    setTrackedSupplements(supplements.map(s => ({
-      id: s.id,
-      name: s.name,
-      dosage: s.dosage,
-      taken: false,
-    })));
-  }, [supplements]);
-
   // Calculate today's totals
   const totalCalories = todayMeals.reduce((sum, meal) => sum + meal.calories, 0);
   const totalProtein = todayMeals.reduce((sum, meal) => sum + meal.protein, 0);
@@ -204,9 +189,11 @@ export default function NutritionPage() {
   const proteinProgress = Math.min((totalProtein / dailyProteinGoal) * 100, 100);
 
   // Water tracking
-  const waterGlasses = dailyTracking?.waterIntake || 0;
-  const waterGoal = 8; // 8 glasses = ~2L
-  const waterMl = waterGlasses * 250; // 250ml per glass
+  const waterMl = dailyTracking?.waterIntake || 0;
+  const waterGoalMl = nutritionGoals?.waterGoal || 2000;
+  const waterSegmentCount = Math.max(6, Math.ceil(waterGoalMl / 250));
+  const takenSupplementIds = dailyTracking?.supplementsTaken || [];
+  const activeSupplements = supplements.filter((supplement) => supplement.isActive !== false);
 
   const handleAddQuickMeal = (meal: typeof QUICK_MEALS[0]) => {
     addTrackedMeal({
@@ -216,7 +203,7 @@ export default function NutritionPage() {
       time: selectedMealTime,
     });
     setShowQuickAdd(false);
-    toast.success(`${meal.name} hinzugefügt (+${meal.calories} kcal, +${meal.protein}g Protein)`);
+    toast.success(`${meal.name} hinzugefuegt (+${meal.calories} kcal, +${meal.protein}g Protein)`);
   };
 
   // Add saved meal template to today
@@ -229,7 +216,7 @@ export default function NutritionPage() {
     });
     setShowSavedMeals(false);
     setShowQuickAdd(false);
-    toast.success(`${template.name} hinzugefügt (+${template.calories} kcal)`);
+    toast.success(`${template.name} hinzugefuegt (+${template.calories} kcal)`);
   };
 
   // Save current meal as template
@@ -265,14 +252,14 @@ export default function NutritionPage() {
   // Delete a meal template
   const handleDeleteTemplate = (templateId: string) => {
     removeMealTemplate(templateId);
-    toast.success('Vorlage gelöscht');
+    toast.success('Vorlage geloescht');
   };
 
   // Save sleep entry
   const handleSaveSleep = () => {
     const hours = parseFloat(sleepHours);
     if (isNaN(hours) || hours < 0 || hours > 24) {
-      toast.error('Bitte gültige Stunden eingeben (0-24)');
+      toast.error('Bitte gueltige Stunden eingeben (0-24)');
       return;
     }
 
@@ -287,7 +274,7 @@ export default function NutritionPage() {
 
     addSleepEntry(entry);
     setShowSleepTracker(false);
-    toast.success(`Schlaf gespeichert: ${hours}h, Qualität ${sleepQuality}/5 😴`);
+    toast.success(`Schlaf gespeichert: ${hours}h, Qualitaet ${sleepQuality}/5 😴`);
   };
 
   // Get sleep quality color
@@ -305,7 +292,7 @@ export default function NutritionPage() {
 
   const handleAddCustomMeal = () => {
     if (!customCalories || parseInt(customCalories) <= 0) {
-      toast.error('Bitte gib eine gültige Kalorienzahl ein');
+      toast.error('Bitte gib eine gueltige Kalorienzahl ein');
       return;
     }
     
@@ -320,7 +307,7 @@ export default function NutritionPage() {
     setCustomName('');
     setShowQuickAdd(false);
     setShowDetailedAdd(false);
-    toast.success(`Mahlzeit hinzugefügt (+${customCalories} kcal)`);
+    toast.success(`Mahlzeit hinzugefuegt (+${customCalories} kcal)`);
   };
 
   const handleRemoveMeal = (mealId: string) => {
@@ -329,24 +316,24 @@ export default function NutritionPage() {
   };
 
   const handleAddWater = () => {
-    updateWater((waterGlasses || 0) + 1);
-    toast.success('💧 +1 Glas Wasser (250ml)');
+    updateWater(waterMl + 250);
+    toast.success('+250ml Wasser');
   };
 
   const handleRemoveWater = () => {
-    if (waterGlasses > 0) {
-      updateWater(waterGlasses - 1);
-      toast.success('💧 -1 Glas Wasser');
+    if (waterMl > 0) {
+      updateWater(Math.max(0, waterMl - 250));
+      toast.success('-250ml Wasser');
     }
   };
 
   const handleToggleSupplement = (suppId: string) => {
-    setTrackedSupplements(prev => 
-      prev.map(s => s.id === suppId ? { ...s, taken: !s.taken } : s)
-    );
-    const supp = trackedSupplements.find(s => s.id === suppId);
-    if (supp && !supp.taken) {
-      toast.success(`${supp.name} eingenommen ✓`);
+    const supplement = activeSupplements.find((entry) => entry.id === suppId);
+    const wasTaken = takenSupplementIds.includes(suppId);
+    toggleSupplementTaken(suppId);
+
+    if (supplement && !wasTaken) {
+      toast.success(`${supplement.name} eingenommen`);
     }
   };
 
@@ -360,20 +347,14 @@ export default function NutritionPage() {
       userId: 'user-1',
       name: newSupplementName.trim(),
       dosage: newSupplementDosage.trim() || '-',
-      timing: 'Täglich',
+      timing: 'Taeglich',
       isActive: true,
     };
     addSupplement(newSupp);
-    setTrackedSupplements([...trackedSupplements, {
-      id: newSupp.id,
-      name: newSupp.name,
-      dosage: newSupp.dosage,
-      taken: false,
-    }]);
     setNewSupplementName('');
     setNewSupplementDosage('');
     setShowAddSupplement(false);
-    toast.success('Supplement hinzugefügt!');
+    toast.success('Supplement hinzugefuegt!');
   };
 
   const handleOpenGoalsSettings = () => {
@@ -391,8 +372,10 @@ export default function NutritionPage() {
     return MEAL_TIMES.find(t => t.id === timeId)?.name || timeId;
   };
 
-  const supplementsTaken = trackedSupplements.filter(s => s.taken).length;
-  const supplementsTotal = trackedSupplements.length;
+  const supplementsTaken = activeSupplements.filter((supplement) =>
+    takenSupplementIds.includes(supplement.id)
+  ).length;
+  const supplementsTotal = activeSupplements.length;
 
   return (
     <DashboardLayout>
@@ -401,7 +384,7 @@ export default function NutritionPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-1">
-              Ernährung
+              Ernaehrung
             </h1>
             <p className="text-gray-600">
               Kalorien, Protein & Supplements tracken
@@ -449,7 +432,7 @@ export default function NutritionPage() {
               />
             </div>
             <p className={`text-sm mt-2 ${caloriesRemaining >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-              {caloriesRemaining >= 0 ? `Noch ${caloriesRemaining} kcal übrig` : `${Math.abs(caloriesRemaining)} kcal über Ziel`}
+              {caloriesRemaining >= 0 ? `Noch ${caloriesRemaining} kcal uebrig` : `${Math.abs(caloriesRemaining)} kcal ueber Ziel`}
             </p>
           </div>
 
@@ -473,7 +456,7 @@ export default function NutritionPage() {
               />
             </div>
             <p className={`text-sm mt-2 ${proteinRemaining > 0 ? 'text-blue-600' : 'text-emerald-600'}`}>
-              {proteinRemaining > 0 ? `Noch ${proteinRemaining}g übrig` : `Ziel erreicht! 💪`}
+              {proteinRemaining > 0 ? `Noch ${proteinRemaining}g uebrig` : `Ziel erreicht! 💪`}
             </p>
           </div>
         </div>
@@ -484,7 +467,7 @@ export default function NutritionPage() {
           className="w-full mb-6 p-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3"
         >
           <Plus className="w-6 h-6" />
-          Mahlzeit hinzufügen
+          Mahlzeit hinzufuegen
         </button>
 
         {/* Water & Supplements & Sleep Row */}
@@ -496,7 +479,7 @@ export default function NutritionPage() {
                 <Droplets className="w-6 h-6 text-blue-500" />
                 <div>
                   <span className="font-semibold text-gray-900">Wasser</span>
-                  <p className="text-xs text-gray-500">{waterMl}ml / 2000ml</p>
+                  <p className="text-xs text-gray-500">{waterMl}ml / {waterGoalMl}ml</p>
                 </div>
               </div>
               <button
@@ -510,11 +493,11 @@ export default function NutritionPage() {
             </div>
             
             <div className="flex items-center gap-2 mb-3">
-              {Array.from({ length: waterGoal }).map((_, i) => (
+              {Array.from({ length: waterSegmentCount }).map((_, i) => (
                 <div
                   key={i}
                   className={`flex-1 h-8 rounded-lg transition-all ${
-                    i < waterGlasses 
+                    i * 250 < waterMl
                       ? 'bg-gradient-to-t from-blue-400 to-blue-500' 
                       : 'bg-gray-100'
                   }`}
@@ -525,7 +508,7 @@ export default function NutritionPage() {
             <div className="flex gap-2">
               <button
                 onClick={handleRemoveWater}
-                disabled={waterGlasses === 0}
+                disabled={waterMl === 0}
                 className="flex-1 p-3 border-2 border-gray-200 text-gray-600 rounded-xl font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 title="Wasserglas entfernen"
                 aria-label="Wasserglas entfernen"
@@ -555,7 +538,7 @@ export default function NutritionPage() {
                 <div>
                   <span className="font-semibold text-gray-900">Schlaf</span>
                   {todaySleep ? (
-                    <p className="text-sm text-gray-500">{todaySleep.hoursSlept}h • Qualität {todaySleep.quality}/5</p>
+                    <p className="text-sm text-gray-500">{todaySleep.hoursSlept}h • Qualitaet {todaySleep.quality}/5</p>
                   ) : (
                     <p className="text-sm text-gray-500">Noch nicht getrackt</p>
                   )}
@@ -617,7 +600,7 @@ export default function NutritionPage() {
             <div className="text-center py-8 bg-gray-50 rounded-xl">
               <Utensils className="w-12 h-12 text-gray-300 mx-auto mb-3" />
               <p className="text-gray-500">Noch keine Mahlzeiten heute</p>
-              <p className="text-sm text-gray-400">Füge deine erste Mahlzeit hinzu</p>
+              <p className="text-sm text-gray-400">Fuege deine erste Mahlzeit hinzu</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -693,12 +676,12 @@ export default function NutritionPage() {
           >
             <div className="flex-shrink-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-3xl">
               <div className="flex items-center justify-between">
-                <h3 id="quick-add-meal-title" className="text-xl font-bold text-gray-900">Mahlzeit hinzufügen</h3>
+                <h3 id="quick-add-meal-title" className="text-xl font-bold text-gray-900">Mahlzeit hinzufuegen</h3>
                 <button
                   onClick={() => setShowQuickAdd(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schließen"
-                  aria-label="Schließen"
+                  title="Schliessen"
+                  aria-label="Schliessen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -780,8 +763,8 @@ export default function NutritionPage() {
                         <button
                           onClick={() => handleDeleteTemplate(template.id)}
                           className="p-2 hover:bg-red-100 text-red-500 rounded-lg transition-colors ml-2"
-                          title="Vorlage löschen"
-                          aria-label="Vorlage löschen"
+                          title="Vorlage loeschen"
+                          aria-label="Vorlage loeschen"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -831,7 +814,7 @@ export default function NutritionPage() {
                     disabled={!customCalories}
                     className="w-full py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Hinzufügen
+                    Hinzufuegen
                   </button>
                 </div>
               </div>
@@ -864,8 +847,8 @@ export default function NutritionPage() {
                 <button
                   onClick={() => setShowDetailedAdd(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schließen"
-                  aria-label="Schließen"
+                  title="Schliessen"
+                  aria-label="Schliessen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -875,7 +858,7 @@ export default function NutritionPage() {
             <div className="flex-1 overflow-y-auto p-6">
               <div className="bg-blue-50 rounded-xl p-4 mb-6">
                 <p className="text-sm text-blue-700">
-                  <strong>Tipp:</strong> Für genaues Tracking kannst du die Nährwerte von der Verpackung ablesen oder eine App wie MyFitnessPal nutzen.
+                  <strong>Tipp:</strong> Fuer genaues Tracking kannst du die Naehrwerte von der Verpackung ablesen oder eine App wie MyFitnessPal nutzen.
                 </p>
               </div>
 
@@ -913,7 +896,7 @@ export default function NutritionPage() {
                     type="text"
                     value={customName}
                     onChange={(e) => setCustomName(e.target.value)}
-                    placeholder="z.B. Hähnchenbrust mit Reis"
+                    placeholder="z.B. Haehnchenbrust mit Reis"
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
                   />
                 </div>
@@ -954,7 +937,7 @@ export default function NutritionPage() {
                   disabled={!customCalories}
                   className="w-full py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-medium hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Mahlzeit hinzufügen
+                  Mahlzeit hinzufuegen
                 </button>
               </div>
             </div>
@@ -974,8 +957,8 @@ export default function NutritionPage() {
               <button
                 onClick={() => setShowWaterInfo(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                title="Schließen"
-                aria-label="Schließen"
+                title="Schliessen"
+                aria-label="Schliessen"
               >
                 <X className="w-5 h-5 text-gray-500" />
               </button>
@@ -987,7 +970,7 @@ export default function NutritionPage() {
                   <span>💧</span> 1 Glas = 250ml
                 </h4>
                 <p className="text-sm text-blue-700">
-                  Das entspricht etwa einem normalen Trinkglas. Ziel sind 8 Gläser = 2 Liter pro Tag.
+                  Das entspricht etwa einem normalen Trinkglas. Ziel sind 8 Glaeser = 2 Liter pro Tag.
                 </p>
               </div>
 
@@ -1000,7 +983,7 @@ export default function NutritionPage() {
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-500 mt-0.5">✓</span>
-                    <span><strong>Muskelaufbau:</strong> Wasser transportiert Nährstoffe zu den Muskeln</span>
+                    <span><strong>Muskelaufbau:</strong> Wasser transportiert Naehrstoffe zu den Muskeln</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-500 mt-0.5">✓</span>
@@ -1008,11 +991,11 @@ export default function NutritionPage() {
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-500 mt-0.5">✓</span>
-                    <span><strong>Fettverbrennung:</strong> Unterstützt den Stoffwechsel</span>
+                    <span><strong>Fettverbrennung:</strong> Unterstuetzt den Stoffwechsel</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-500 mt-0.5">✓</span>
-                    <span><strong>Konzentration:</strong> Verhindert Müdigkeit und Kopfschmerzen</span>
+                    <span><strong>Konzentration:</strong> Verhindert Muedigkeit und Kopfschmerzen</span>
                   </div>
                 </div>
               </div>
@@ -1040,8 +1023,8 @@ export default function NutritionPage() {
                 <button
                   onClick={() => setShowSupplements(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schließen"
-                  aria-label="Schließen"
+                  title="Schliessen"
+                  aria-label="Schliessen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -1065,31 +1048,51 @@ export default function NutritionPage() {
 
               {/* Supplements List */}
               <div className="space-y-2 mb-6">
-                {trackedSupplements.map((supp) => (
-                  <button
-                    key={supp.id}
-                    onClick={() => handleToggleSupplement(supp.id)}
-                    className={`w-full p-4 rounded-xl transition-all flex items-center justify-between ${
-                      supp.taken 
-                        ? 'bg-purple-100 border-2 border-purple-300' 
-                        : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                        supp.taken ? 'bg-purple-500' : 'bg-gray-200'
-                      }`}>
-                        {supp.taken && <Check className="w-4 h-4 text-white" />}
-                      </div>
-                      <div className="text-left">
-                        <p className={`font-medium ${supp.taken ? 'text-purple-900' : 'text-gray-900'}`}>
-                          {supp.name}
-                        </p>
-                        <p className="text-sm text-gray-500">{supp.dosage}</p>
-                      </div>
+                {activeSupplements.map((supplement) => {
+                  const isTaken = takenSupplementIds.includes(supplement.id);
+
+                  return (
+                    <div
+                      key={supplement.id}
+                      className={`w-full p-4 rounded-xl transition-all flex items-center justify-between ${
+                        isTaken
+                          ? 'bg-purple-100 border-2 border-purple-300'
+                          : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
+                      }`}
+                    >
+                      <button
+                        onClick={() => handleToggleSupplement(supplement.id)}
+                        className="flex flex-1 items-center gap-3 text-left"
+                      >
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                          isTaken ? 'bg-purple-500' : 'bg-gray-200'
+                        }`}>
+                          {isTaken && <Check className="w-4 h-4 text-white" />}
+                        </div>
+                        <div className="text-left">
+                          <p className={`font-medium ${isTaken ? 'text-purple-900' : 'text-gray-900'}`}>
+                            {supplement.name}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {supplement.dosage} • {supplement.timing}
+                          </p>
+                        </div>
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          removeSupplement(supplement.id);
+                          toast.success('Supplement geloescht');
+                        }}
+                        className="ml-3 p-2 text-gray-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
+                        title="Supplement loeschen"
+                        aria-label="Supplement loeschen"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
-                  </button>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Add Supplement */}
@@ -1099,7 +1102,7 @@ export default function NutritionPage() {
                   className="w-full p-4 border-2 border-dashed border-gray-200 rounded-xl text-gray-500 hover:border-purple-300 hover:text-purple-600 transition-colors flex items-center justify-center gap-2"
                 >
                   <Plus className="w-5 h-5" />
-                  Supplement hinzufügen
+                  Supplement hinzufuegen
                 </button>
               ) : (
                 <div className="bg-gray-50 rounded-xl p-4 space-y-3">
@@ -1133,7 +1136,7 @@ export default function NutritionPage() {
                       disabled={!newSupplementName.trim()}
                       className="flex-1 py-2 bg-purple-500 text-white rounded-lg font-medium hover:bg-purple-600 transition-colors disabled:opacity-50"
                     >
-                      Hinzufügen
+                      Hinzufuegen
                     </button>
                   </div>
                 </div>
@@ -1156,8 +1159,8 @@ export default function NutritionPage() {
                 <button
                   onClick={() => setShowSaveMealModal(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schließen"
-                  aria-label="Schließen"
+                  title="Schliessen"
+                  aria-label="Schliessen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -1179,7 +1182,7 @@ export default function NutritionPage() {
                   type="text"
                   value={templateName}
                   onChange={(e) => setTemplateName(e.target.value)}
-                  placeholder="z.B. Mein Frühstück"
+                  placeholder="z.B. Mein Fruehstueck"
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:outline-none"
                   autoFocus
                 />
@@ -1219,8 +1222,8 @@ export default function NutritionPage() {
                 <button
                   onClick={() => setShowSleepTracker(false)}
                   className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Schließen"
-                  aria-label="Schließen"
+                  title="Schliessen"
+                  aria-label="Schliessen"
                 >
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
@@ -1251,7 +1254,7 @@ export default function NutritionPage() {
               {/* Sleep Quality */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Schlafqualität
+                  Schlafqualitaet
                 </label>
                 <div className="flex gap-2">
                   {[1, 2, 3, 4, 5].map((q) => (
@@ -1302,8 +1305,8 @@ export default function NutritionPage() {
               {/* Info */}
               <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
                 <p className="text-xs text-indigo-700">
-                  💡 <strong>Tipp:</strong> 7-9 Stunden Schlaf sind optimal für Muskelregeneration. 
-                  Schlafqualität beeinflusst deine Recovery-Berechnung.
+                  💡 <strong>Tipp:</strong> 7-9 Stunden Schlaf sind optimal fuer Muskelregeneration. 
+                  Schlafqualitaet beeinflusst deine Recovery-Berechnung.
                 </p>
               </div>
 

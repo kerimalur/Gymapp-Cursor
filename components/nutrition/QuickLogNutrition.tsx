@@ -154,7 +154,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
   if (!isOpen) return null;
 
   const mealTimeLabels: Record<string, string> = {
-    breakfast: '🌅 Frühstück',
+    breakfast: '🌅 Fruehstueck',
     lunch: '☀️ Mittagessen',
     dinner: '🌙 Abendessen',
     snacks: '🍿 Snacks',
@@ -231,7 +231,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                     type="text"
                     value={quickName}
                     onChange={e => setQuickName(e.target.value)}
-                    placeholder="z.B. Hähnchen mit Reis"
+                    placeholder="z.B. Haehnchen mit Reis"
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:outline-none"
                   />
                 </div>
@@ -303,7 +303,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                   <div className="mt-6">
                     <div className="flex items-center gap-2 mb-3">
                       <Clock className="w-4 h-4 text-gray-400" />
-                      <h4 className="text-sm font-bold text-gray-700">Häufig verwendet</h4>
+                      <h4 className="text-sm font-bold text-gray-700">Haeufig verwendet</h4>
                     </div>
 
                     <div className="relative mb-3">
@@ -345,7 +345,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
                   <h4 className="font-bold text-blue-800 mb-1">Von gestern kopieren</h4>
                   <p className="text-xs text-blue-600">
-                    Alle Mahlzeiten von gestern werden für heute übernommen.
+                    Alle Mahlzeiten von gestern werden fuer heute uebernommen.
                   </p>
                 </div>
 
@@ -395,7 +395,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                     <Star className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                     <p className="text-gray-500 font-medium">Keine Vorlagen gespeichert</p>
                     <p className="text-sm text-gray-400 mt-1">
-                      Speichere Mahlzeiten als Vorlagen in der Ernährungs-Seite.
+                      Speichere Mahlzeiten als Vorlagen in der Ernaehrungs-Seite.
                     </p>
                   </div>
                 ) : (

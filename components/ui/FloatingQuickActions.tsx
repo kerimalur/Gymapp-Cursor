@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Dumbbell, Play, Droplets, Utensils, X } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -11,8 +11,12 @@ export function FloatingQuickActions() {
   const router = useRouter();
   const pathname = usePathname();
   const { currentWorkout, trainingPlans, trainingDays } = useWorkoutStore();
-  const nutritionStore = useNutritionStore();
+  const { dailyTracking, updateWater, resetDailyTrackingIfNeeded } = useNutritionStore();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    resetDailyTrackingIfNeeded();
+  }, [resetDailyTrackingIfNeeded]);
 
   const nextTrainingDay = useMemo(() => {
     if (currentWorkout) {
@@ -39,8 +43,8 @@ export function FloatingQuickActions() {
   };
 
   const handleAddWater = () => {
-    const current = nutritionStore.dailyTracking?.waterIntake || 0;
-    nutritionStore.updateWater(current + 250);
+    const current = dailyTracking?.waterIntake || 0;
+    updateWater(current + 250);
     toast.success('+250ml Wasser');
     setOpen(false);
   };
@@ -51,7 +55,7 @@ export function FloatingQuickActions() {
     } else {
       router.push('/nutrition?quickAdd=1');
     }
-    toast.success('Quick-Meal Dialog geöffnet');
+    toast.success('Schnell-Mahlzeit geoeffnet');
     setOpen(false);
   };
 

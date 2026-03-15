@@ -15,7 +15,7 @@ interface CreateCustomExerciseModalProps {
 
 const MUSCLE_GROUPS: { id: MuscleGroup; name: string }[] = [
   { id: 'chest', name: 'Brust' },
-  { id: 'back', name: 'Rücken' },
+  { id: 'back', name: 'Ruecken' },
   { id: 'lats', name: 'Latissimus' },
   { id: 'shoulders', name: 'Schultern' },
   { id: 'biceps', name: 'Bizeps' },
@@ -24,17 +24,17 @@ const MUSCLE_GROUPS: { id: MuscleGroup; name: string }[] = [
   { id: 'abs', name: 'Bauch' },
   { id: 'quadriceps', name: 'Quadrizeps' },
   { id: 'hamstrings', name: 'Beinbeuger' },
-  { id: 'glutes', name: 'Gesäß' },
+  { id: 'glutes', name: 'Gesaess' },
   { id: 'calves', name: 'Waden' },
   { id: 'traps', name: 'Trapez' },
   { id: 'adductors', name: 'Adduktoren' },
   { id: 'abductors', name: 'Abduktoren' },
-  { id: 'lower_back', name: 'Unterer Rücken' },
+  { id: 'lower_back', name: 'Unterer Ruecken' },
   { id: 'neck', name: 'Nacken' },
 ];
 
 const CATEGORIES: { id: ExerciseCategory; name: string }[] = [
-  { id: 'push', name: 'Drücken (Push)' },
+  { id: 'push', name: 'Druecken (Push)' },
   { id: 'pull', name: 'Ziehen (Pull)' },
   { id: 'legs', name: 'Beine' },
   { id: 'core', name: 'Core' },
@@ -65,7 +65,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
       return;
     }
     if (!primaryMuscle) {
-      toast.error('Bitte wähle einen Hauptmuskel');
+      toast.error('Bitte waehle einen Hauptmuskel');
       return;
     }
 
@@ -96,7 +96,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
       onExerciseCreated(newExercise);
     }
     
-    toast.success('Übung erfolgreich erstellt!');
+    toast.success('Uebung erfolgreich erstellt!');
     handleClose();
     setLoading(false);
   };
@@ -115,8 +115,8 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
       isOpen={isOpen}
       onClose={handleClose}
       size="lg"
-      title="Eigene Übung erstellen"
-      subtitle="Füge eine neue Übung zu deiner Bibliothek hinzu"
+      title="Eigene Uebung erstellen"
+      subtitle="Fuege eine neue Uebung zu deiner Bibliothek hinzu"
       icon={<Dumbbell className="w-6 h-6" />}
       iconColor="violet"
       footer={
@@ -133,7 +133,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
             disabled={loading || !name.trim() || !primaryMuscle}
             className="px-6 py-2.5 rounded-xl font-medium text-white bg-gradient-to-r from-violet-500 to-violet-600 hover:from-violet-600 hover:to-violet-700 shadow-lg shadow-violet-500/25 transition-all disabled:opacity-50 disabled:shadow-none"
           >
-            {loading ? 'Speichern...' : 'Übung erstellen'}
+            {loading ? 'Speichern...' : 'Uebung erstellen'}
           </button>
         </div>
       }
@@ -143,9 +143,9 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
           <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
           <div className="text-sm text-blue-700">
-            <p className="font-medium mb-1">Wichtig für die Regeneration</p>
+            <p className="font-medium mb-1">Wichtig fuer die Regeneration</p>
             <p className="text-blue-600">
-              Der Hauptmuskel wird für die Erholungszeit voll berücksichtigt. 
+              Der Hauptmuskel wird fuer die Erholungszeit voll beruecksichtigt. 
               Nebenmuskeln erholen sich schneller (ca. 40% der normalen Zeit).
             </p>
           </div>
@@ -154,7 +154,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
         {/* Name */}
         <div>
           <label className="block text-sm font-semibold text-slate-700 mb-2">
-            Name der Übung *
+            Name der Uebung *
           </label>
           <input
             type="text"
@@ -193,7 +193,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
             Hauptmuskel (Primary) *
           </label>
           <p className="text-xs text-slate-500 mb-3">
-            Der Muskel, der bei dieser Übung am meisten beansprucht wird
+            Der Muskel, der bei dieser Uebung am meisten beansprucht wird
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             {MUSCLE_GROUPS.map((muscle) => (
@@ -223,7 +223,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
             Nebenmuskeln (Secondary)
           </label>
           <p className="text-xs text-slate-500 mb-3">
-            Muskeln, die zusätzlich mittrainiert werden (optional)
+            Muskeln, die zusaetzlich mittrainiert werden (optional)
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             {MUSCLE_GROUPS.filter(m => m.id !== primaryMuscle).map((muscle) => (
@@ -254,7 +254,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Ausführungshinweise, Varianten, Equipment..."
+            placeholder="Ausfuehrungshinweise, Varianten, Equipment..."
             rows={3}
             className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400 resize-none"
           />

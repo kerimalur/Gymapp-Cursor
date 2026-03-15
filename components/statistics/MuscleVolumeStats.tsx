@@ -38,7 +38,7 @@ const VOLUME_RECOMMENDATIONS: Record<MuscleGroup, { min: number; optimal: number
 
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'Ruecken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -47,12 +47,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'Gesaess',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Rücken',
+  lower_back: 'Unterer Ruecken',
   neck: 'Nacken',
 };
 
@@ -281,10 +281,10 @@ export function MuscleVolumeStats() {
   const getRecommendationText = (data: MuscleVolumeData) => {
     if (data.status === 'under') {
       const needed = Math.round((data.recommendation.min - data.effectiveSets) * 10) / 10;
-      return `+${needed} Sätze bis Minimum`;
+      return `+${needed} Saetze bis Minimum`;
     } else if (data.status === 'over') {
       const excess = Math.round((data.effectiveSets - data.recommendation.max) * 10) / 10;
-      return `${excess} Sätze über Maximum`;
+      return `${excess} Saetze ueber Maximum`;
     }
     return 'Im optimalen Bereich';
   };
@@ -321,11 +321,11 @@ export function MuscleVolumeStats() {
         <div className="flex items-center gap-3 text-xs text-slate-500">
           <div className="flex items-center gap-1">
             <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-            <span>Primär</span>
+            <span>Primaer</span>
           </div>
           <div className="flex items-center gap-1">
             <div className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-            <span>Sekundär (×0.5)</span>
+            <span>Sekundaer (×0.5)</span>
           </div>
         </div>
         <div className="flex items-center gap-1 bg-slate-100 rounded-lg p-1">
@@ -532,7 +532,7 @@ export function MuscleVolumeStats() {
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center">
                     <p className="text-2xl font-bold text-slate-800">{selectedMuscle.effectiveSets}</p>
-                    <p className="text-xs text-slate-500">Effektive Sätze</p>
+                    <p className="text-xs text-slate-500">Effektive Saetze</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-bold text-slate-800">{selectedMuscle.recommendation.optimal}</p>
@@ -546,9 +546,9 @@ export function MuscleVolumeStats() {
                   </div>
                 </div>
                 <div className="mt-3 flex items-center justify-center gap-4 text-xs text-slate-500">
-                  <span>Primär: {selectedMuscle.primarySets} Sätze</span>
+                  <span>Primaer: {selectedMuscle.primarySets} Saetze</span>
                   <span>•</span>
-                  <span>Sekundär: {selectedMuscle.secondarySets} Sätze</span>
+                  <span>Sekundaer: {selectedMuscle.secondarySets} Saetze</span>
                 </div>
               </div>
 
@@ -556,7 +556,7 @@ export function MuscleVolumeStats() {
               <div className="p-4 overflow-y-auto max-h-[40vh]">
                 <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
                   <Dumbbell className="w-4 h-4" />
-                  Übungen diese Woche
+                  Uebungen diese Woche
                 </h4>
                 {selectedMuscle.exercises.length > 0 ? (
                   <div className="space-y-2">
@@ -568,7 +568,7 @@ export function MuscleVolumeStats() {
                         <div className="flex items-center justify-between mb-1">
                           <span className="font-medium text-slate-800 text-sm">{exercise.name}</span>
                           <span className={`text-xs px-2 py-0.5 rounded-full ${exercise.role === 'primary' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'}`}>
-                            {exercise.role === 'primary' ? 'Primär' : 'Sekundär'}
+                            {exercise.role === 'primary' ? 'Primaer' : 'Sekundaer'}
                           </span>
                         </div>
                         <div className="flex items-center gap-4 text-xs text-slate-500">
@@ -578,7 +578,7 @@ export function MuscleVolumeStats() {
                           </span>
                           <span className="flex items-center gap-1">
                             <Hash className="w-3 h-3" />
-                            {exercise.sets} Sätze
+                            {exercise.sets} Saetze
                           </span>
                           <span className="flex items-center gap-1">
                             <Weight className="w-3 h-3" />
@@ -591,7 +591,7 @@ export function MuscleVolumeStats() {
                 ) : (
                   <div className="text-center py-8 text-slate-400">
                     <Dumbbell className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm">Keine Übungen diese Woche</p>
+                    <p className="text-sm">Keine Uebungen diese Woche</p>
                   </div>
                 )}
               </div>
@@ -601,7 +601,7 @@ export function MuscleVolumeStats() {
                 <div className="flex items-center gap-2 text-sm text-slate-600">
                   <Target className="w-4 h-4" />
                   <span>
-                    Empfehlung: {selectedMuscle.recommendation.min}-{selectedMuscle.recommendation.max} Sätze/Woche
+                    Empfehlung: {selectedMuscle.recommendation.min}-{selectedMuscle.recommendation.max} Saetze/Woche
                   </span>
                 </div>
               </div>

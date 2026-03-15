@@ -90,10 +90,12 @@ interface NutritionState {
   setSavedMeals: (meals: SavedMeal[]) => void;
   setNutritionGoals: (goals: NutritionGoals) => void;
   setDailyTracking: (tracking: DailyTracking) => void;
-  updateWater: (glasses: number) => void;
+  resetDailyTrackingIfNeeded: () => void;
+  updateWater: (milliliters: number) => void;
   setSupplements: (supplements: Supplement[]) => void;
   addSupplement: (supplement: Supplement) => void;
   removeSupplement: (id: string) => void;
+  toggleSupplementTaken: (id: string) => void;
   // Meal Templates
   addMealTemplate: (template: MealTemplate) => void;
   removeMealTemplate: (id: string) => void;
@@ -130,6 +132,40 @@ const DEFAULT_ENABLED_MUSCLES: MuscleGroup[] = [
   'abs', 'quadriceps', 'hamstrings', 'glutes', 'lats'
 ];
 
+function getTodayKey(date: Date = new Date()) {
+  return date.toISOString().split('T')[0];
+}
+
+function parseTrackingDate(date: Date | string | undefined) {
+  return date ? new Date(date) : new Date();
+}
+
+function normalizeDailyTracking(tracking: DailyTracking | null): DailyTracking {
+  const baseDate = parseTrackingDate(tracking?.date);
+  const isToday = getTodayKey(baseDate) === getTodayKey();
+  const rawWaterIntake = tracking?.waterIntake || 0;
+  const migratedWaterIntake =
+    rawWaterIntake > 0 && rawWaterIntake <= 20 ? rawWaterIntake * 250 : rawWaterIntake;
+
+  if (!isToday) {
+    return {
+      userId: tracking?.userId || '',
+      date: new Date(),
+      waterIntake: 0,
+      caffeineIntake: 0,
+      supplementsTaken: [],
+    };
+  }
+
+  return {
+    userId: tracking?.userId || '',
+    date: baseDate,
+    waterIntake: Math.max(0, migratedWaterIntake),
+    caffeineIntake: Math.max(0, tracking?.caffeineIntake || 0),
+    supplementsTaken: tracking?.supplementsTaken || [],
+  };
+}
+
 export const useNutritionStore = create<NutritionState>()(
   persist(
     (set, get) => ({
@@ -156,22 +192,55 @@ export const useNutritionStore = create<NutritionState>()(
       addMeal: (meal) => set((state) => ({ meals: [...state.meals, meal] })),
       setSavedMeals: (savedMeals) => set({ savedMeals }),
       setNutritionGoals: (nutritionGoals) => set({ nutritionGoals }),
-      setDailyTracking: (dailyTracking) => set({ dailyTracking }),
-      updateWater: (glasses) => set((state) => ({
-        dailyTracking: {
-          ...state.dailyTracking,
-          userId: state.dailyTracking?.userId || '',
-          waterIntake: glasses,
-          date: state.dailyTracking?.date || new Date(),
-          caffeineIntake: state.dailyTracking?.caffeineIntake || 0,
-          supplementsTaken: state.dailyTracking?.supplementsTaken || [],
-        }
+      setDailyTracking: (dailyTracking) => set({ dailyTracking: normalizeDailyTracking(dailyTracking) }),
+      resetDailyTrackingIfNeeded: () => set((state) => ({
+        dailyTracking: normalizeDailyTracking(state.dailyTracking),
       })),
-      setSupplements: (supplements) => set({ supplements }),
+      updateWater: (milliliters) => set((state) => {
+        const dailyTracking = normalizeDailyTracking(state.dailyTracking);
+        return {
+          dailyTracking: {
+            ...dailyTracking,
+            waterIntake: Math.max(0, milliliters),
+          },
+        };
+      }),
+      setSupplements: (supplements) => set((state) => {
+        const validSupplementIds = new Set(supplements.map((supplement) => supplement.id));
+        const dailyTracking = normalizeDailyTracking(state.dailyTracking);
+
+        return {
+          supplements,
+          dailyTracking: {
+            ...dailyTracking,
+            supplementsTaken: dailyTracking.supplementsTaken.filter((id) => validSupplementIds.has(id)),
+          },
+        };
+      }),
       addSupplement: (supplement) => set((state) => ({ supplements: [...state.supplements, supplement] })),
       removeSupplement: (id) => set((state) => {
         const filtered = state.supplements.filter(s => s.id !== id);
-        return { supplements: [...filtered] };
+        const dailyTracking = normalizeDailyTracking(state.dailyTracking);
+        return {
+          supplements: [...filtered],
+          dailyTracking: {
+            ...dailyTracking,
+            supplementsTaken: dailyTracking.supplementsTaken.filter((supplementId) => supplementId !== id),
+          },
+        };
+      }),
+      toggleSupplementTaken: (id) => set((state) => {
+        const dailyTracking = normalizeDailyTracking(state.dailyTracking);
+        const isTaken = dailyTracking.supplementsTaken.includes(id);
+
+        return {
+          dailyTracking: {
+            ...dailyTracking,
+            supplementsTaken: isTaken
+              ? dailyTracking.supplementsTaken.filter((supplementId) => supplementId !== id)
+              : [...dailyTracking.supplementsTaken, id],
+          },
+        };
       }),
       // Meal Templates
       addMealTemplate: (template) => set((state) => ({ 
@@ -292,7 +361,15 @@ export const useNutritionStore = create<NutritionState>()(
         getItem: (name) => {
           if (typeof window === 'undefined') return null;
           const str = localStorage.getItem(name);
-          return str ? JSON.parse(str) : null;
+          if (!str) return null;
+
+          const parsed = JSON.parse(str);
+
+          if (parsed.state.dailyTracking) {
+            parsed.state.dailyTracking = normalizeDailyTracking(parsed.state.dailyTracking);
+          }
+
+          return parsed;
         },
         setItem: (name, value) => {
           if (typeof window !== 'undefined') {

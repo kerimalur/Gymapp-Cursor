@@ -1208,6 +1208,25 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+@layer utilities {
+  .text-gray-400 { color: rgb(107 114 128) !important; }
+  .text-gray-500 { color: rgb(75 85 99) !important; }
+  .text-slate-400 { color: rgb(100 116 139) !important; }
+  .text-slate-500 { color: rgb(71 85 105) !important; }
+  .border-gray-200 { border-color: rgb(209 213 219) !important; }
+  .border-slate-200 { border-color: rgb(203 213 225) !important; }
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgb(37 99 235);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16);
+}
+
 /* Hide on mobile */
 @media (max-width: 768px) {
   .hidden-mobile {

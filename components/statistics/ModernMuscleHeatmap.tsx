@@ -10,7 +10,7 @@ import { de } from 'date-fns/locale';
 // Muscle labels in German
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   chest: 'Brust',
-  back: 'Rücken',
+  back: 'Ruecken',
   shoulders: 'Schultern',
   biceps: 'Bizeps',
   triceps: 'Trizeps',
@@ -19,12 +19,12 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'Gesaess',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
   abductors: 'Abduktoren',
-  lower_back: 'Unterer Rücken',
+  lower_back: 'Unterer Ruecken',
   neck: 'Nacken',
 };
 
@@ -138,7 +138,7 @@ export function ModernMuscleHeatmap() {
       case 'fresh': return { text: 'Heute trainiert', color: 'text-emerald-600', bg: 'bg-emerald-500', emoji: '🔥' };
       case 'recovering': return { text: 'Regeneration', color: 'text-amber-600', bg: 'bg-amber-500', emoji: '⏳' };
       case 'ready': return { text: 'Bereit', color: 'text-blue-600', bg: 'bg-blue-500', emoji: '✅' };
-      case 'overdue': return { text: 'Überfällig', color: 'text-rose-600', bg: 'bg-rose-500', emoji: '⚠️' };
+      case 'overdue': return { text: 'Ueberfaellig', color: 'text-rose-600', bg: 'bg-rose-500', emoji: '⚠️' };
       case 'never': return { text: 'Nie trainiert', color: 'text-slate-400', bg: 'bg-slate-300', emoji: '➖' };
     }
   };
@@ -189,7 +189,7 @@ export function ModernMuscleHeatmap() {
       <div className="space-y-4">
         {/* Upper Body */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Oberkörper</h4>
+          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Oberkoerper</h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {upperBody.map((muscle, i) => {
               const statusInfo = getStatusInfo(muscle.status);
@@ -212,7 +212,7 @@ export function ModernMuscleHeatmap() {
                       <span className="text-white font-bold text-sm drop-shadow">{muscle.label}</span>
                       <span className="text-lg">{statusInfo.emoji}</span>
                     </div>
-                    <p className="text-white/80 text-xs">{muscle.sets} Sätze</p>
+                    <p className="text-white/80 text-xs">{muscle.sets} Saetze</p>
                     {muscle.daysSince !== null && muscle.daysSince > 0 && (
                       <p className="text-white/60 text-xs mt-1">vor {muscle.daysSince}d</p>
                     )}
@@ -247,7 +247,7 @@ export function ModernMuscleHeatmap() {
                       <span className="text-white font-bold text-sm drop-shadow">{muscle.label}</span>
                       <span className="text-lg">{statusInfo.emoji}</span>
                     </div>
-                    <p className="text-white/80 text-xs">{muscle.sets} Sätze</p>
+                    <p className="text-white/80 text-xs">{muscle.sets} Saetze</p>
                     {muscle.daysSince !== null && muscle.daysSince > 0 && (
                       <p className="text-white/60 text-xs mt-1">vor {muscle.daysSince}d</p>
                     )}
@@ -260,7 +260,7 @@ export function ModernMuscleHeatmap() {
 
         {/* Lower Body */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Unterkörper</h4>
+          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Unterkoerper</h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {lowerBody.map((muscle, i) => {
               const statusInfo = getStatusInfo(muscle.status);
@@ -282,7 +282,7 @@ export function ModernMuscleHeatmap() {
                       <span className="text-white font-bold text-sm drop-shadow">{muscle.label}</span>
                       <span className="text-lg">{statusInfo.emoji}</span>
                     </div>
-                    <p className="text-white/80 text-xs">{muscle.sets} Sätze</p>
+                    <p className="text-white/80 text-xs">{muscle.sets} Saetze</p>
                     {muscle.daysSince !== null && muscle.daysSince > 0 && (
                       <p className="text-white/60 text-xs mt-1">vor {muscle.daysSince}d</p>
                     )}
@@ -315,7 +315,7 @@ export function ModernMuscleHeatmap() {
           <div className="grid grid-cols-3 gap-4">
             <div className="text-center p-3 bg-white rounded-xl shadow-sm">
               <p className="text-2xl font-bold text-slate-800">{selectedData.sets}</p>
-              <p className="text-xs text-slate-500">Sätze (7 Tage)</p>
+              <p className="text-xs text-slate-500">Saetze (7 Tage)</p>
             </div>
             <div className="text-center p-3 bg-white rounded-xl shadow-sm">
               <p className="text-2xl font-bold text-slate-800">
@@ -341,7 +341,7 @@ export function ModernMuscleHeatmap() {
 
       {/* Intensity Legend */}
       <div className="flex items-center justify-center gap-4 pt-2">
-        <span className="text-xs text-slate-400">Intensität:</span>
+        <span className="text-xs text-slate-400">Intensitaet:</span>
         <div className="flex items-center gap-1">
           <div className="w-6 h-3 rounded bg-blue-500 opacity-20" />
           <div className="w-6 h-3 rounded bg-blue-500 opacity-40" />
@@ -349,7 +349,7 @@ export function ModernMuscleHeatmap() {
           <div className="w-6 h-3 rounded bg-blue-500 opacity-80" />
           <div className="w-6 h-3 rounded bg-blue-500 opacity-100" />
         </div>
-        <span className="text-xs text-slate-400">mehr Sätze →</span>
+        <span className="text-xs text-slate-400">mehr Saetze →</span>
       </div>
     </div>
   );

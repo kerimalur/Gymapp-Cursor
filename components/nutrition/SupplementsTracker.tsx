@@ -62,7 +62,7 @@ export function SupplementsTracker() {
         userId: 'demo-user',
       };
       addSupplement(supplement);
-      toast.success('Supplement hinzugefügt!');
+      toast.success('Supplement hinzugefuegt!');
     }
     
     setNewSupplement({ name: '', dosage: '', timing: '' });
@@ -83,9 +83,9 @@ export function SupplementsTracker() {
 
   const handleDelete = (id: string, name: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm(`"${name}" wirklich löschen?`)) {
+    if (confirm(`"${name}" wirklich loeschen?`)) {
       removeSupplement(id);
-      toast.success('Supplement gelöscht');
+      toast.success('Supplement geloescht');
     }
   };
 
@@ -104,8 +104,8 @@ export function SupplementsTracker() {
         <button 
           onClick={() => setShowAddModal(true)}
           className="p-3 bg-purple-100 text-purple-600 rounded-xl hover:bg-purple-200 transition-colors"
-          title="Supplement hinzufügen"
-          aria-label="Supplement hinzufügen"
+          title="Supplement hinzufuegen"
+          aria-label="Supplement hinzufuegen"
         >
           <Plus className="w-5 h-5" />
         </button>
@@ -125,7 +125,7 @@ export function SupplementsTracker() {
       {supplements.length === 0 ? (
         <div className="bg-gray-50 rounded-xl p-8 text-center">
           <p className="text-gray-500">
-            Noch keine Supplements hinzugefügt
+            Noch keine Supplements hinzugefuegt
           </p>
           <p className="text-sm text-gray-400 mt-2">
             Klicke auf + um deine ersten Supplements zu verwalten
@@ -178,7 +178,7 @@ export function SupplementsTracker() {
                 <button
                   onClick={(e) => handleDelete(supplement.id, supplement.name, e)}
                   className="p-2 hover:bg-red-100 text-red-600 rounded-lg transition-colors"
-                  title="Löschen"
+                  title="Loeschen"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -192,7 +192,7 @@ export function SupplementsTracker() {
       {supplements.length > 0 && takenCount === totalCount && (
         <div className="mt-4 p-4 bg-green-50 border-2 border-green-200 rounded-xl text-center">
           <p className="text-green-900 font-semibold">
-            🎉 Alle Supplements für heute genommen!
+            🎉 Alle Supplements fuer heute genommen!
           </p>
         </div>
       )}
@@ -203,7 +203,7 @@ export function SupplementsTracker() {
           <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">
-                {editingId ? 'Supplement bearbeiten' : 'Supplement hinzufügen'}
+                {editingId ? 'Supplement bearbeiten' : 'Supplement hinzufuegen'}
               </h3>
               <button 
                 onClick={() => {
@@ -212,8 +212,8 @@ export function SupplementsTracker() {
                   setNewSupplement({ name: '', dosage: '', timing: '' });
                 }}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors" 
-                title="Schließen" 
-                aria-label="Schließen"
+                title="Schliessen" 
+                aria-label="Schliessen"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -253,7 +253,7 @@ export function SupplementsTracker() {
                   onChange={(e) => setNewSupplement({ ...newSupplement, timing: e.target.value })}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
                 >
-                  <option value="">Auswählen oder eingeben</option>
+                  <option value="">Auswaehlen oder eingeben</option>
                   <option value="Morgens">Morgens</option>
                   <option value="Vor dem Training">Vor dem Training</option>
                   <option value="Nach dem Training">Nach dem Training</option>
@@ -283,7 +283,7 @@ export function SupplementsTracker() {
                   onClick={handleAddSupplement}
                   className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all shadow-lg"
                 >
-                  {editingId ? 'Speichern' : 'Hinzufügen'}
+                  {editingId ? 'Speichern' : 'Hinzufuegen'}
                 </button>
               </div>
             </div>

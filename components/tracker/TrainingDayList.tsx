@@ -84,9 +84,9 @@ export function TrainingDayList({ limit }: TrainingDayListProps) {
   };
 
   const handleDelete = (dayId: string) => {
-    if (confirm('Trainingstag wirklich löschen?')) {
+    if (confirm('Trainingstag wirklich loeschen?')) {
       setTrainingDays(trainingDays.filter(d => d.id !== dayId));
-      toast.success('Trainingstag gelöscht');
+      toast.success('Trainingstag geloescht');
     }
   };
 
@@ -134,7 +134,7 @@ export function TrainingDayList({ limit }: TrainingDayListProps) {
                   <h3 className="text-lg font-bold text-gray-900">{day.name}</h3>
                   <div className="flex items-center gap-1.5 text-sm text-gray-500">
                     <span className="text-gray-400">{Icons.exercises}</span>
-                    {day.exercises.length} Übungen
+                    {day.exercises.length} Uebungen
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export function TrainingDayList({ limit }: TrainingDayListProps) {
               <button 
                 onClick={() => handleDelete(day.id)}
                 className="p-3 rounded-xl bg-white/60 border border-gray-100 text-gray-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50/50 transition-all"
-                title="Löschen"
+                title="Loeschen"
               >
                 {Icons.trash}
               </button>

@@ -89,7 +89,7 @@ export interface TrainingPlan {
   sessionsPerWeek: number;
   trainingDays: string[]; // IDs of TrainingDay
   isActive: boolean;
-  currentDayIndex: number; // Index des nächsten Trainingstags
+  currentDayIndex: number; // Index des naechsten Trainingstags
   createdAt: Date;
 }
 

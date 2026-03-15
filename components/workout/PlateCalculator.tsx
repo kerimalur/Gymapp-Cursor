@@ -32,7 +32,7 @@ function calculatePlates(targetWeight: number, barbellWeight: number = BARBELL_W
   const plates: PlateConfig[] = [];
   let remaining = weightPerSide;
 
-  // Greedy Algorithm - größte Scheiben zuerst
+  // Greedy Algorithm - groesste Scheiben zuerst
   for (const plateWeight of AVAILABLE_PLATES) {
     const count = Math.floor(remaining / plateWeight);
 
@@ -45,7 +45,7 @@ function calculatePlates(targetWeight: number, barbellWeight: number = BARBELL_W
       remaining -= count * plateWeight;
     }
 
-    // Präzision auf 2 Dezimalstellen
+    // Praezision auf 2 Dezimalstellen
     remaining = Math.round(remaining * 100) / 100;
 
     if (remaining < 0.01) break;
@@ -54,7 +54,7 @@ function calculatePlates(targetWeight: number, barbellWeight: number = BARBELL_W
   return plates;
 }
 
-// IPF/IWF Standard Farben für olympische Hantelscheiben
+// IPF/IWF Standard Farben fuer olympische Hantelscheiben
 function getPlateColor(weight: number): string {
   switch (weight) {
     case 25: return 'bg-red-500';
@@ -89,7 +89,7 @@ export function PlateCalculator({ targetWeight: initialWeight = 100, onClose }: 
           <button
             onClick={onClose}
             className="btn-icon hover:bg-slate-100 dark:hover:bg-slate-700"
-            aria-label="Schließen"
+            aria-label="Schliessen"
           >
             <X className="w-5 h-5" />
           </button>
@@ -136,7 +136,7 @@ export function PlateCalculator({ targetWeight: initialWeight = 100, onClose }: 
       <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 rounded-xl p-4 mb-6">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-slate-600 dark:text-slate-300">Tatsächliches Gewicht</p>
+            <p className="text-sm text-slate-600 dark:text-slate-300">Tatsaechliches Gewicht</p>
             <p className="text-3xl font-bold text-slate-900 dark:text-white">{actualWeight} kg</p>
           </div>
           {Math.abs(difference) > 0.01 && (
@@ -254,7 +254,7 @@ export function PlateCalculator({ targetWeight: initialWeight = 100, onClose }: 
       ) : (
         <div className="text-center py-8">
           <p className="text-slate-500 dark:text-slate-400">
-            Zielgewicht muss höher als Langhantel-Gewicht sein
+            Zielgewicht muss hoeher als Langhantel-Gewicht sein
           </p>
         </div>
       )}
