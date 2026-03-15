@@ -296,28 +296,28 @@ export function SmartDashboard() {
   if (insights.length === 0) return null;
 
   const typeStyles = {
-    positive: 'bg-emerald-50 border-emerald-200 text-emerald-800',
+    positive: 'bg-emerald-400/10 border-emerald-200 text-emerald-800',
     warning: 'bg-amber-50 border-amber-200 text-amber-800',
-    info: 'bg-blue-50 border-blue-200 text-blue-800',
+    info: 'bg-cyan-400/10 border-cyan-400/20 text-blue-800',
     action: 'bg-violet-50 border-violet-200 text-violet-800',
   };
 
   const iconStyles = {
     positive: 'bg-emerald-100 text-emerald-600',
     warning: 'bg-amber-100 text-amber-600',
-    info: 'bg-blue-100 text-blue-600',
+    info: 'bg-cyan-400/15 text-cyan-400',
     action: 'bg-violet-100 text-violet-600',
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-5 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
         <div className="p-2 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 text-white">
           <Brain className="w-5 h-5" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-slate-800">Smart Insights</h3>
-          <p className="text-xs text-slate-500">Personalisierte Empfehlungen basierend auf deinen Daten</p>
+          <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Smart Insights</h3>
+          <p className="text-xs text-[hsl(var(--fg-muted))]">Personalisierte Empfehlungen basierend auf deinen Daten</p>
         </div>
       </div>
 

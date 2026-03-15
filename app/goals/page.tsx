@@ -47,17 +47,17 @@ function BodyWeightGoalCard() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-5">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Scale className="w-5 h-5 text-cyan-500" />
-          <h3 className="text-lg font-bold text-slate-800">Körpergewicht-Ziel</h3>
+          <Scale className="w-5 h-5 text-cyan-400" />
+          <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Körpergewicht-Ziel</h3>
         </div>
         <div className="flex items-center gap-2">
           {goal && (
             <button
               onClick={() => { setGoal(null); setEditing(false); }}
-              className="flex items-center gap-1 rounded-xl bg-red-50 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
+              className="flex items-center gap-1 rounded-xl bg-red-400/10 px-3 py-1.5 text-sm font-medium text-red-400 hover:bg-red-400/20 transition-colors"
               title="Ziel löschen"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -66,7 +66,7 @@ function BodyWeightGoalCard() {
           )}
           <button
             onClick={() => setEditing(!editing)}
-            className="flex items-center gap-1.5 rounded-xl bg-cyan-50 px-3 py-1.5 text-sm font-medium text-cyan-700 hover:bg-cyan-100 transition-colors"
+            className="flex items-center gap-1.5 rounded-xl bg-cyan-400/10 px-3 py-1.5 text-sm font-medium text-cyan-400 hover:bg-cyan-400/20 transition-colors"
           >
             {goal ? 'Ändern' : 'Ziel setzen'}
           </button>
@@ -74,25 +74,25 @@ function BodyWeightGoalCard() {
       </div>
 
       {editing && (
-        <div className="mb-4 rounded-xl border border-cyan-100 bg-cyan-50 p-4 space-y-3">
+        <div className="mb-4 rounded-xl border border-cyan-400/20 bg-cyan-400/5 p-4 space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Zielgewicht (kg)</label>
+              <label className="mb-1 block text-xs font-medium text-[hsl(var(--fg-muted))]">Zielgewicht (kg)</label>
               <input
                 type="number"
                 value={targetWeight}
                 onChange={e => setTargetWeight(e.target.value)}
                 placeholder={currentWeight?.toString() ?? 'z.B. 80'}
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20"
+                className="w-full rounded-lg border border-[hsl(225,10%,20%)] bg-[hsl(225,14%,8%)] px-3 py-2 text-sm text-[hsl(var(--fg-primary))] outline-none focus:border-cyan-400/50 placeholder:text-[hsl(var(--fg-muted))]"
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Zieldatum (optional)</label>
+              <label className="mb-1 block text-xs font-medium text-[hsl(var(--fg-muted))]">Zieldatum (optional)</label>
               <input
                 type="date"
                 value={targetDate}
                 onChange={e => setTargetDate(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20"
+                className="w-full rounded-lg border border-[hsl(225,10%,20%)] bg-[hsl(225,14%,8%)] px-3 py-2 text-sm text-[hsl(var(--fg-primary))] outline-none focus:border-cyan-400/50"
               />
             </div>
           </div>
@@ -100,13 +100,13 @@ function BodyWeightGoalCard() {
             <button
               onClick={handleSave}
               disabled={!targetWeight}
-              className="flex-1 rounded-xl bg-cyan-600 py-2 text-sm font-semibold text-white hover:bg-cyan-700 disabled:opacity-40 transition-colors"
+              className="flex-1 rounded-xl bg-cyan-500 py-2 text-sm font-semibold text-white hover:bg-cyan-400 disabled:opacity-40 transition-colors"
             >
               Speichern
             </button>
             <button
               onClick={() => setEditing(false)}
-              className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+              className="rounded-xl border border-[hsl(225,10%,20%)] px-4 py-2 text-sm font-medium text-[hsl(var(--fg-muted))] hover:bg-white/5 transition-colors"
             >
               Abbrechen
             </button>
@@ -115,40 +115,40 @@ function BodyWeightGoalCard() {
       )}
 
       {!goal ? (
-        <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="rounded-xl bg-[hsl(225,12%,13%)] p-4 text-sm text-[hsl(var(--fg-muted))]">
           Noch kein Körpergewicht-Ziel gesetzt.
         </p>
       ) : (
         <div>
           <div className="flex items-center justify-between mb-2">
             <div>
-              <p className="font-semibold text-slate-800">
+              <p className="font-semibold text-[hsl(var(--fg-primary))]">
                 {goal.targetWeight} kg {isGain ? 'aufbauen' : 'erreichen'}
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-[hsl(var(--fg-muted))]">
                 Start: {goal.startWeight} kg
                 {goal.targetDate && ` · Ziel: ${format(new Date(goal.targetDate), 'd. MMM yyyy', { locale: de })}`}
               </p>
             </div>
             <div className="flex items-center gap-1.5">
-              {isGain ? <TrendingUp className="w-4 h-4 text-emerald-500" /> : <TrendingDown className="w-4 h-4 text-cyan-500" />}
-              <span className={`text-sm font-bold ${progress === 100 ? 'text-emerald-600' : 'text-cyan-600'}`}>
+              {isGain ? <TrendingUp className="w-4 h-4 text-emerald-400" /> : <TrendingDown className="w-4 h-4 text-cyan-400" />}
+              <span className={`text-sm font-bold ${progress === 100 ? 'text-emerald-400' : 'text-cyan-400'}`}>
                 {progress ?? 0}%
               </span>
             </div>
           </div>
 
-          <div className="h-2 overflow-hidden rounded-full bg-slate-200 mb-2">
+          <div className="h-2 overflow-hidden rounded-full bg-[hsl(225,12%,16%)] mb-2">
             <div
-              className={`h-full rounded-full transition-all ${progress === 100 ? 'bg-emerald-500' : 'bg-cyan-500'}`}
+              className={`h-full rounded-full transition-all ${progress === 100 ? 'bg-emerald-400' : 'bg-cyan-400'}`}
               style={{ width: `${progress ?? 0}%` }}
             />
           </div>
 
-          <div className="flex items-center justify-between text-xs text-slate-500">
+          <div className="flex items-center justify-between text-xs text-[hsl(var(--fg-muted))]">
             <span>Aktuell: {currentWeight !== null ? `${currentWeight} kg` : 'kein Eintrag'}</span>
             {progress === 100 ? (
-              <span className="font-medium text-emerald-600 flex items-center gap-1">
+              <span className="font-medium text-emerald-400 flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" /> Ziel erreicht!
               </span>
             ) : remaining ? (
@@ -203,17 +203,17 @@ function WeeklyVolumeGoalCard() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-5">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Dumbbell className="w-5 h-5 text-violet-500" />
-          <h3 className="text-lg font-bold text-slate-800">Wöchentliches Volumen</h3>
+          <Dumbbell className="w-5 h-5 text-violet-400" />
+          <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Wöchentliches Volumen</h3>
         </div>
         <div className="flex items-center gap-2">
           {weeklyVolumeGoalSets && (
             <button
               onClick={() => { setWeeklyVolumeGoalSets(null); setEditing(false); }}
-              className="flex items-center gap-1 rounded-xl bg-red-50 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
+              className="flex items-center gap-1 rounded-xl bg-red-400/10 px-3 py-1.5 text-sm font-medium text-red-400 hover:bg-red-400/20 transition-colors"
               title="Ziel löschen"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -222,7 +222,7 @@ function WeeklyVolumeGoalCard() {
           )}
           <button
             onClick={() => setEditing(!editing)}
-            className="flex items-center gap-1.5 rounded-xl bg-violet-50 px-3 py-1.5 text-sm font-medium text-violet-700 hover:bg-violet-100 transition-colors"
+            className="flex items-center gap-1.5 rounded-xl bg-violet-400/10 px-3 py-1.5 text-sm font-medium text-violet-400 hover:bg-violet-400/20 transition-colors"
           >
             {weeklyVolumeGoalSets ? 'Ändern' : 'Ziel setzen'}
           </button>
@@ -230,28 +230,28 @@ function WeeklyVolumeGoalCard() {
       </div>
 
       {editing && (
-        <div className="mb-4 rounded-xl border border-violet-100 bg-violet-50 p-4 space-y-3">
+        <div className="mb-4 rounded-xl border border-violet-400/20 bg-violet-400/5 p-4 space-y-3">
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Ziel: Sätze pro Woche</label>
+            <label className="mb-1 block text-xs font-medium text-[hsl(var(--fg-muted))]">Ziel: Sätze pro Woche</label>
             <input
               type="number"
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder={lastWeekSets > 0 ? `z.B. ${lastWeekSets + 5}` : 'z.B. 30'}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
+              className="w-full rounded-lg border border-[hsl(225,10%,20%)] bg-[hsl(225,14%,8%)] px-3 py-2 text-sm text-[hsl(var(--fg-primary))] outline-none focus:border-violet-400/50 placeholder:text-[hsl(var(--fg-muted))]"
             />
           </div>
           <div className="flex gap-2">
             <button
               onClick={handleSave}
               disabled={!input || parseInt(input) <= 0}
-              className="flex-1 rounded-xl bg-violet-600 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-40 transition-colors"
+              className="flex-1 rounded-xl bg-violet-500 py-2 text-sm font-semibold text-white hover:bg-violet-400 disabled:opacity-40 transition-colors"
             >
               Speichern
             </button>
             <button
               onClick={() => setEditing(false)}
-              className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+              className="rounded-xl border border-[hsl(225,10%,20%)] px-4 py-2 text-sm font-medium text-[hsl(var(--fg-muted))] hover:bg-white/5 transition-colors"
             >
               Abbrechen
             </button>
@@ -261,12 +261,12 @@ function WeeklyVolumeGoalCard() {
 
       {!weeklyVolumeGoalSets ? (
         <div className="space-y-3">
-          <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+          <p className="rounded-xl bg-[hsl(225,12%,13%)] p-4 text-sm text-[hsl(var(--fg-muted))]">
             Noch kein Wochen-Ziel gesetzt.
           </p>
           {lastWeekSets > 0 && (
-            <p className="text-xs text-slate-400 px-1">
-              Letzte Woche: <span className="font-semibold text-slate-600">{lastWeekSets} Sätze</span>
+            <p className="text-xs text-[hsl(var(--fg-subtle))] px-1">
+              Letzte Woche: <span className="font-semibold text-[hsl(var(--fg-secondary))]">{lastWeekSets} Sätze</span>
             </p>
           )}
         </div>
@@ -274,31 +274,31 @@ function WeeklyVolumeGoalCard() {
         <div>
           <div className="flex items-center justify-between mb-2">
             <div>
-              <p className="font-semibold text-slate-800">
+              <p className="font-semibold text-[hsl(var(--fg-primary))]">
                 {thisWeekSets} / {weeklyVolumeGoalSets} Sätze diese Woche
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-[hsl(var(--fg-muted))]">
                 Letzte Woche: {lastWeekSets} Sätze
                 {lastWeekSets > 0 && thisWeekSets > lastWeekSets && (
-                  <span className="ml-1 text-emerald-600 font-medium">↑ besser!</span>
+                  <span className="ml-1 text-emerald-400 font-medium">↑ besser!</span>
                 )}
               </p>
             </div>
-            <span className={`text-sm font-bold ${progress === 100 ? 'text-emerald-600' : 'text-violet-600'}`}>
+            <span className={`text-sm font-bold ${progress === 100 ? 'text-emerald-400' : 'text-violet-400'}`}>
               {progress}%
             </span>
           </div>
 
-          <div className="h-2 overflow-hidden rounded-full bg-slate-200 mb-2">
+          <div className="h-2 overflow-hidden rounded-full bg-[hsl(225,12%,16%)] mb-2">
             <div
-              className={`h-full rounded-full transition-all ${progress === 100 ? 'bg-emerald-500' : 'bg-violet-500'}`}
+              className={`h-full rounded-full transition-all ${progress === 100 ? 'bg-emerald-400' : 'bg-violet-400'}`}
               style={{ width: `${progress}%` }}
             />
           </div>
 
-          <div className="text-xs text-slate-500">
+          <div className="text-xs text-[hsl(var(--fg-muted))]">
             {progress === 100 ? (
-              <span className="font-medium text-emerald-600 flex items-center gap-1">
+              <span className="font-medium text-emerald-400 flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" /> Wochenziel erreicht!
               </span>
             ) : (
@@ -319,10 +319,10 @@ export default function GoalsPage() {
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
         <div className="flex items-center gap-3 mb-1">
-          <Target className="w-7 h-7 text-primary-500" />
-          <h1 className="text-2xl font-bold text-slate-800">Meine Ziele</h1>
+          <Target className="w-7 h-7 text-cyan-400" />
+          <h1 className="text-2xl font-bold text-[hsl(var(--fg-primary))]">Meine Ziele</h1>
         </div>
-        <p className="text-sm text-slate-500 ml-10">
+        <p className="text-sm text-[hsl(var(--fg-muted))] ml-10">
           Setze klare Ziele und verfolge deinen Fortschritt über die Zeit.
         </p>
       </div>

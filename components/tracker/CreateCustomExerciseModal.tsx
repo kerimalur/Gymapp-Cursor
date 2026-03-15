@@ -124,7 +124,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
           <button
             onClick={handleClose}
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all disabled:opacity-50"
+            className="px-6 py-2.5 rounded-xl font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] transition-all disabled:opacity-50"
           >
             Abbrechen
           </button>
@@ -140,11 +140,11 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
     >
       <div className="p-6 space-y-6">
         {/* Info Box */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3">
-          <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-          <div className="text-sm text-blue-700">
+        <div className="bg-cyan-400/10 border border-cyan-400/20 rounded-xl p-4 flex items-start gap-3">
+          <Info className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-cyan-300">
             <p className="font-medium mb-1">Wichtig für die Regeneration</p>
-            <p className="text-blue-600">
+            <p className="text-cyan-400">
               Der Hauptmuskel wird für die Erholungszeit voll berücksichtigt. 
               Nebenmuskeln erholen sich schneller (ca. 40% der normalen Zeit).
             </p>
@@ -153,7 +153,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
 
         {/* Name */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Name der Übung *
           </label>
           <input
@@ -161,13 +161,13 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="z.B. Einarmiges Rudern, Incline Curls..."
-            className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
+            className="w-full px-4 py-3.5 bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)] rounded-xl focus:bg-[hsl(225,14%,10%)] focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-subtle))]"
           />
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Kategorie *
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -178,7 +178,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
                 className={`px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                   category === cat.id
                     ? 'bg-violet-500 text-white shadow-lg shadow-violet-500/25'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
                 }`}
               >
                 {cat.name}
@@ -189,10 +189,10 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
 
         {/* Primary Muscle */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Hauptmuskel (Primary) *
           </label>
-          <p className="text-xs text-slate-500 mb-3">
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-3">
             Der Muskel, der bei dieser Übung am meisten beansprucht wird
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -207,7 +207,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
                 className={`px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                   primaryMuscle === muscle.id
                     ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
                 }`}
               >
                 {primaryMuscle === muscle.id && <Check className="w-3 h-3 inline mr-1" />}
@@ -219,10 +219,10 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
 
         {/* Secondary Muscles */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Nebenmuskeln (Secondary)
           </label>
-          <p className="text-xs text-slate-500 mb-3">
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-3">
             Muskeln, die zusaetzlich mittrainiert werden (optional)
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -235,8 +235,8 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
                   secondaryMuscles.includes(muscle.id)
                     ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25'
                     : primaryMuscle
-                      ? 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                      : 'bg-slate-50 text-slate-300 cursor-not-allowed'
+                        ? 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
+                        : 'bg-[hsl(225,12%,13%)] text-[hsl(225,10%,22%)] cursor-not-allowed'
                 }`}
               >
                 {secondaryMuscles.includes(muscle.id) && <Check className="w-3 h-3 inline mr-1" />}
@@ -248,7 +248,7 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
 
         {/* Description (optional) */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Beschreibung (optional)
           </label>
           <textarea
@@ -256,21 +256,21 @@ export function CreateCustomExerciseModal({ isOpen, onClose, onExerciseCreated }
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Ausf?hrungshinweise, Varianten, Equipment..."
             rows={3}
-            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400 resize-none"
+            className="w-full px-4 py-3 bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)] rounded-xl focus:bg-[hsl(225,14%,10%)] focus:border-violet-500 focus:ring-4 focus:ring-violet-500/10 transition-all outline-none text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-subtle))] resize-none"
           />
         </div>
 
         {/* Preview */}
         {name && primaryMuscle && (
-          <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-            <p className="text-xs font-medium text-slate-500 mb-2">Vorschau</p>
+          <div className="bg-[hsl(225,12%,13%)] rounded-xl p-4 border border-[hsl(225,10%,16%)]">
+            <p className="text-xs font-medium text-[hsl(var(--fg-muted))] mb-2">Vorschau</p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-violet-500 flex items-center justify-center">
                 <Dumbbell className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="font-semibold text-slate-800">{name}</p>
-                <p className="text-xs text-slate-500">
+                <p className="font-semibold text-[hsl(var(--fg-primary))]">{name}</p>
+                <p className="text-xs text-[hsl(var(--fg-muted))]">
                   {MUSCLE_GROUPS.find(m => m.id === primaryMuscle)?.name}
                   {secondaryMuscles.length > 0 && (
                     <> + {secondaryMuscles.map(m => MUSCLE_GROUPS.find(mg => mg.id === m)?.name).join(', ')}</>

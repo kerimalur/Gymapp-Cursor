@@ -30,8 +30,8 @@ export function WaterCaffeineTracker() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">
+    <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg p-6">
+      <h2 className="text-2xl font-bold text-[hsl(var(--fg-primary))] mb-6">
         Fluessigkeiten
       </h2>
 
@@ -39,11 +39,11 @@ export function WaterCaffeineTracker() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-3 bg-blue-100 rounded-xl">
-            <Droplets className="w-6 h-6 text-blue-600" />
+            <Droplets className="w-6 h-6 text-cyan-400" />
           </div>
           <div className="flex-1">
-            <h3 className="font-bold text-gray-900">Wasser</h3>
-            <p className="text-sm text-gray-600">
+            <h3 className="font-bold text-[hsl(var(--fg-primary))]">Wasser</h3>
+            <p className="text-sm text-[hsl(var(--fg-secondary))]">
               {water} / {waterGoal} ml
             </p>
           </div>
@@ -63,7 +63,7 @@ export function WaterCaffeineTracker() {
               )}
             </div>
           </div>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-[hsl(var(--fg-muted))] mt-2">
             {waterGoal - water > 0 ? (
               <>Noch {waterGoal - water} ml bis zum Ziel</>
             ) : (
@@ -76,7 +76,7 @@ export function WaterCaffeineTracker() {
         <div className="grid grid-cols-4 gap-2">
           <button
             onClick={() => handleRemoveWater(250)}
-            className="px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:text-red-600 transition-colors flex items-center justify-center gap-2"
+            className="px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl hover:border-red-500 hover:text-red-600 transition-colors flex items-center justify-center gap-2"
           >
             <Minus className="w-4 h-4" />
             250ml
@@ -112,8 +112,8 @@ export function WaterCaffeineTracker() {
             <Coffee className="w-6 h-6 text-orange-600" />
           </div>
           <div className="flex-1">
-            <h3 className="font-bold text-gray-900">Koffein</h3>
-            <p className="text-sm text-gray-600">
+            <h3 className="font-bold text-[hsl(var(--fg-primary))]">Koffein</h3>
+            <p className="text-sm text-[hsl(var(--fg-secondary))]">
               {caffeine} / {caffeineGoal} mg
             </p>
           </div>
@@ -139,7 +139,7 @@ export function WaterCaffeineTracker() {
               )}
             </div>
           </div>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-[hsl(var(--fg-muted))] mt-2">
             {caffeine > caffeineGoal ? (
               <span className="text-red-600 font-medium">
                 ⚠️ Empfohlene Menge überschritten
@@ -156,7 +156,7 @@ export function WaterCaffeineTracker() {
         <div className="grid grid-cols-4 gap-2">
           <button
             onClick={() => handleRemoveCaffeine(80)}
-            className="px-4 py-3 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:text-red-600 transition-colors flex items-center justify-center gap-2"
+            className="px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl hover:border-red-500 hover:text-red-600 transition-colors flex items-center justify-center gap-2"
           >
             <Minus className="w-4 h-4" />
             80mg

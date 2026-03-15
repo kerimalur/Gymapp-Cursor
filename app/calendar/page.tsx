@@ -110,11 +110,11 @@ export default function CalendarPage() {
       <div className="mx-auto max-w-7xl space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-black text-slate-900">Kalender</h1>
-            <p className="mt-1 text-sm text-slate-500">Monat, Woche und Jahr mit Planung pro Tag.</p>
+            <h1 className="text-3xl font-black text-[hsl(var(--fg-primary))]">Kalender</h1>
+            <p className="mt-1 text-sm text-[hsl(var(--fg-muted))]">Monat, Woche und Jahr mit Planung pro Tag.</p>
           </div>
 
-          <div className="inline-flex rounded-xl bg-slate-100 p-1">
+          <div className="inline-flex rounded-xl bg-[hsl(225,12%,13%)] p-1 border border-[hsl(225,10%,16%)]">
             {[
               { key: 'month', label: 'Monat', Icon: CalendarIcon },
               { key: 'week', label: 'Woche', Icon: Timer },
@@ -124,7 +124,7 @@ export default function CalendarPage() {
                 key={key}
                 onClick={() => setCalendarView(key as CalendarView)}
                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
-                  calendarView === key ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                  calendarView === key ? 'bg-[hsl(225,14%,18%)] text-[hsl(var(--fg-primary))] shadow-sm' : 'text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))]'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -135,40 +135,40 @@ export default function CalendarPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="rounded-2xl border border-blue-200 bg-blue-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Trainings Monat</p>
-            <p className="mt-1 text-2xl font-black text-blue-800">{monthStats.completed}</p>
+          <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-cyan-400">Trainings Monat</p>
+            <p className="mt-1 text-2xl font-black text-cyan-300">{monthStats.completed}</p>
           </div>
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">Geplant Monat</p>
-            <p className="mt-1 text-2xl font-black text-emerald-800">{monthStats.planned}</p>
+          <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-emerald-400">Geplant Monat</p>
+            <p className="mt-1 text-2xl font-black text-emerald-300">{monthStats.planned}</p>
           </div>
-          <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">Erfüllung</p>
-            <p className="mt-1 text-2xl font-black text-violet-800">{monthStats.fulfillment}%</p>
+          <div className="rounded-2xl border border-violet-400/20 bg-violet-400/10 p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-violet-400">Erfüllung</p>
+            <p className="mt-1 text-2xl font-black text-violet-300">{monthStats.fulfillment}%</p>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-5">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-2xl font-bold text-slate-800">{headerTitle}</h2>
+            <h2 className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{headerTitle}</h2>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentDate(new Date())}
-                className="rounded-lg bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-200"
+                className="rounded-lg bg-[hsl(225,12%,15%)] px-4 py-2 text-sm font-semibold text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]"
               >
                 Heute
               </button>
               <button
                 onClick={moveBackward}
-                className="rounded-lg bg-slate-100 p-2 text-slate-700 hover:bg-slate-200"
+                className="rounded-lg bg-[hsl(225,12%,15%)] p-2 text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]"
                 title="Zurück"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button
                 onClick={moveForward}
-                className="rounded-lg bg-slate-100 p-2 text-slate-700 hover:bg-slate-200"
+                className="rounded-lg bg-[hsl(225,12%,15%)] p-2 text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]"
                 title="Vor"
               >
                 <ChevronRight className="h-5 w-5" />
@@ -196,22 +196,22 @@ export default function CalendarPage() {
                     onClick={() => setSelectedDate(day)}
                     className={`rounded-2xl border p-4 text-left transition-all hover:-translate-y-0.5 hover:shadow-md ${
                       dayWorkouts.length > 0
-                        ? 'border-emerald-300 bg-emerald-50'
+                        ? 'border-emerald-400/30 bg-emerald-400/10'
                         : isPlanned
-                        ? 'border-blue-300 bg-blue-50'
-                        : 'border-slate-200 bg-slate-50'
+                        ? 'border-cyan-400/30 bg-cyan-400/10'
+                        : 'border-[hsl(225,10%,16%)] bg-[hsl(225,12%,13%)]'
                     }`}
                   >
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-[hsl(var(--fg-muted))]">
                       {format(day, 'EEE', { locale: de })}
                     </p>
-                    <p className="mt-1 text-2xl font-black text-slate-800">{format(day, 'd')}</p>
+                    <p className="mt-1 text-2xl font-black text-[hsl(var(--fg-primary))]">{format(day, 'd')}</p>
 
                     <div className="mt-3 space-y-1 text-xs">
-                      <p className={dayWorkouts.length > 0 ? 'text-emerald-700' : 'text-slate-500'}>
+                      <p className={dayWorkouts.length > 0 ? 'text-emerald-400' : 'text-[hsl(var(--fg-muted))]'}>
                         {dayWorkouts.length > 0 ? `${dayWorkouts.length} Training` : 'Kein Training'}
                       </p>
-                      <p className={isPlanned ? 'text-blue-700' : 'text-slate-400'}>
+                      <p className={isPlanned ? 'text-cyan-400' : 'text-[hsl(var(--fg-subtle))]'}>
                         {isPlanned ? 'Geplant' : 'Nicht geplant'}
                       </p>
                     </div>

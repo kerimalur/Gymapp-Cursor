@@ -8,13 +8,13 @@ import { Toaster } from 'react-hot-toast';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'GymApp Pro - Dein Fitness Tracker',
-  description: 'Professionelle Gym- und Ernährungs-Tracking Software',
+  title: 'FitCoach Pro – Dein Smart Gym Coach',
+  description: 'Intelligenter Fitness-Coach mit automatischer Trainingsoptimierung',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
-    title: 'FitTrack Pro',
+    statusBarStyle: 'black-translucent',
+    title: 'FitCoach Pro',
   },
 };
 
@@ -24,7 +24,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   viewportFit: 'cover',
-  themeColor: '#3b82f6',
+  themeColor: '#0a0f1a',
 };
 
 export default function RootLayout({
@@ -34,28 +34,32 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de" suppressHydrationWarning>
-      <body className={`${inter.className} bg-slate-50`}>
+      <body className={`${inter.className} bg-[hsl(225,15%,6%)]`}>
         <ThemeProvider>
           <AuthProvider>
             {children}
             <Toaster
-              position="top-right"
+              position="top-center"
               toastOptions={{
                 duration: 3000,
                 style: {
-                  background: '#fff',
-                  color: '#1e293b',
+                  background: 'hsl(225, 14%, 11%)',
+                  color: 'hsl(210, 40%, 96%)',
+                  border: '1px solid hsl(225, 10%, 20%)',
+                  borderRadius: '1rem',
+                  fontSize: '0.875rem',
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.4)',
                 },
                 success: {
                   iconTheme: {
                     primary: '#10b981',
-                    secondary: '#fff',
+                    secondary: '#0a0f1a',
                   },
                 },
                 error: {
                   iconTheme: {
                     primary: '#ef4444',
-                    secondary: '#fff',
+                    secondary: '#0a0f1a',
                   },
                 },
               }}

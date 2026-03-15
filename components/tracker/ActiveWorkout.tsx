@@ -86,7 +86,7 @@ function ProgressRing({ progress, size = 120, strokeWidth = 8 }: { progress: num
       <svg className="progress-ring" width={size} height={size}>
         {/* Background circle */}
         <circle
-          className="text-slate-100"
+          className="text-[hsl(225,12%,15%)]"
           strokeWidth={strokeWidth}
           stroke="currentColor"
           fill="transparent"
@@ -109,7 +109,7 @@ function ProgressRing({ progress, size = 120, strokeWidth = 8 }: { progress: num
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-bold text-slate-800">{Math.round(progress)}%</span>
+        <span className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{Math.round(progress)}%</span>
       </div>
     </div>
   );
@@ -462,14 +462,14 @@ export function ActiveWorkout() {
   return (
     <div className="min-h-[calc(100vh-4rem)] pb-32">
       {/* Fixed Header */}
-      <div className="sticky top-0 z-20 -mx-6 lg:-mx-8 px-6 lg:px-8 py-4 glass-card border-0 border-b border-slate-200/50 mb-6">
+      <div className="sticky top-0 z-20 -mx-6 lg:-mx-8 px-6 lg:px-8 py-4 glass-card border-0 border-b border-[hsl(225,10%,16%)]/50 mb-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <ProgressRing progress={progress} size={56} strokeWidth={5} />
               <div>
-                <h1 className="text-xl font-bold text-slate-800">{workout.trainingDayName}</h1>
-                <div className="flex items-center gap-3 text-sm text-slate-500">
+                <h1 className="text-xl font-bold text-[hsl(var(--fg-primary))]">{workout.trainingDayName}</h1>
+                <div className="flex items-center gap-3 text-sm text-[hsl(var(--fg-muted))]">
                   <span className="flex items-center gap-1">
                     {Icons.clock}
                     {formatTime(elapsedTime)}
@@ -507,7 +507,7 @@ export function ActiveWorkout() {
                     ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/30'
                     : isComplete
                     ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
-                    : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'
+                    : 'bg-[hsl(225,14%,10%)] text-[hsl(var(--fg-secondary))] border border-[hsl(225,10%,16%)] hover:border-[hsl(225,10%,22%)]'
                 }`}
               >
                 <span className="flex items-center gap-2">
@@ -551,19 +551,19 @@ export function ActiveWorkout() {
                     {isComplete ? Icons.check : exIdx + 1}
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-800">
+                    <h3 className="font-bold text-[hsl(var(--fg-primary))]">
                       {exerciseData?.name || exercise.exerciseId}
                     </h3>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-[hsl(var(--fg-subtle))]">
                       {exerciseData?.muscleGroups.join(', ')}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-semibold text-slate-600">
+                  <p className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">
                     {completedSets}/{totalSets}
                   </p>
-                  <p className="text-xs text-slate-400">Sätze</p>
+                  <p className="text-xs text-[hsl(var(--fg-subtle))]">Sätze</p>
                 </div>
               </div>
 
@@ -574,27 +574,27 @@ export function ActiveWorkout() {
                     ? 'bg-emerald-50 border-emerald-200' 
                     : recommendation.recommendation === 'decrease'
                     ? 'bg-orange-50 border-orange-200'
-                    : 'bg-blue-50 border-blue-200'
+                    : 'bg-cyan-400/10 border-cyan-400/20'
                 }`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className={`text-lg ${
                         recommendation.recommendation === 'increase' ? 'text-emerald-600' 
                         : recommendation.recommendation === 'decrease' ? 'text-orange-600'
-                        : 'text-blue-600'
+                        : 'text-cyan-400'
                       }`}>
                         {recommendation.recommendation === 'increase' ? '📈' : recommendation.recommendation === 'decrease' ? '📉' : '➡️'}
                       </span>
                       <div>
-                        <p className="text-xs text-slate-500">Ziel heute</p>
-                        <p className="font-bold text-slate-800">
+                        <p className="text-xs text-[hsl(var(--fg-muted))]">Ziel heute</p>
+                        <p className="font-bold text-[hsl(var(--fg-primary))]">
                           {recommendation.recommendedWeight}kg × {recommendation.recommendedReps} @ RIR {recommendation.targetRIR}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs text-slate-400">Letztes Mal</p>
-                      <p className="text-sm text-slate-600">{recommendation.lastWeight}kg × {recommendation.lastReps}</p>
+                      <p className="text-xs text-[hsl(var(--fg-subtle))]">Letztes Mal</p>
+                      <p className="text-sm text-[hsl(var(--fg-secondary))]">{recommendation.lastWeight}kg × {recommendation.lastReps}</p>
                     </div>
                   </div>
                   <p className={`text-xs mt-2 ${
@@ -621,7 +621,7 @@ export function ActiveWorkout() {
                           ? 'bg-orange-400 text-white'
                           : set.completed 
                             ? 'bg-emerald-500 text-white' 
-                            : 'bg-slate-200 text-slate-500'
+                            : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-muted))]'
                       }`}>
                         {set.isWarmup ? 'W' : setIdx + 1}
                       </div>
@@ -631,7 +631,7 @@ export function ActiveWorkout() {
                         className={`p-1 rounded-md transition-all ${
                           set.isWarmup 
                             ? 'bg-orange-100 text-orange-600' 
-                            : 'hover:bg-slate-100 text-slate-400'
+                            : 'hover:bg-[hsl(225,12%,18%)] text-[hsl(var(--fg-subtle))]'
                         }`}
                         title="Aufwärmsatz"
                       >
@@ -644,7 +644,7 @@ export function ActiveWorkout() {
                           className={`p-1 rounded-md transition-all ${
                             set.isAssisted 
                               ? 'bg-purple-100 text-purple-600' 
-                              : 'hover:bg-slate-100 text-slate-400'
+                              : 'hover:bg-[hsl(225,12%,18%)] text-[hsl(var(--fg-subtle))]'
                           }`}
                           title="Assistiert (z.B. mit Gummiband)"
                         >
@@ -657,7 +657,7 @@ export function ActiveWorkout() {
                     <div className="flex items-center gap-1.5">
                       <button 
                         onClick={(e) => { e.stopPropagation(); handleUpdateWeight(exIdx, setIdx, -2.5); }}
-                        className="btn-icon !p-1.5 bg-white border border-slate-200"
+                        className="btn-icon !p-1.5 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)]"
                       >
                         {Icons.minus}
                       </button>
@@ -671,25 +671,25 @@ export function ActiveWorkout() {
                             ? 'bg-purple-50 border-purple-300 text-purple-800 focus:border-purple-400 focus:ring-2 focus:ring-purple-500/20'
                             : set.completed 
                               ? 'bg-emerald-50 border-emerald-300 text-emerald-800 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20' 
-                              : 'bg-white border-slate-200 text-slate-800 focus:border-primary-400 focus:ring-2 focus:ring-primary-500/20'
+                              : 'bg-[hsl(225,14%,10%)] border-[hsl(225,10%,16%)] text-[hsl(var(--fg-primary))] focus:border-primary-400 focus:ring-2 focus:ring-primary-500/20'
                         }`}
                       />
                       <button 
                         onClick={(e) => { e.stopPropagation(); handleUpdateWeight(exIdx, setIdx, 2.5); }}
-                        className="btn-icon !p-1.5 bg-white border border-slate-200"
+                        className="btn-icon !p-1.5 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)]"
                       >
                         {Icons.plus}
                       </button>
-                      <span className="text-xs text-slate-400 w-6">{set.isAssisted && set.weight < 0 ? '-kg' : 'kg'}</span>
+                      <span className="text-xs text-[hsl(var(--fg-subtle))] w-6">{set.isAssisted && set.weight < 0 ? '-kg' : 'kg'}</span>
                     </div>
 
-                    <span className="text-slate-300">×</span>
+                    <span className="text-[hsl(225,10%,22%)]">×</span>
 
                     {/* Reps Control */}
                     <div className="flex items-center gap-1.5">
                       <button 
                         onClick={(e) => { e.stopPropagation(); handleUpdateReps(exIdx, setIdx, -1); }}
-                        className="btn-icon !p-1.5 bg-white border border-slate-200"
+                        className="btn-icon !p-1.5 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)]"
                       >
                         {Icons.minus}
                       </button>
@@ -701,12 +701,12 @@ export function ActiveWorkout() {
                         className={`w-14 px-2 py-1.5 border rounded-lg text-center font-semibold outline-none transition-all ${
                           set.completed 
                             ? 'bg-emerald-50 border-emerald-300 text-emerald-800 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20' 
-                            : 'bg-white border-slate-200 text-slate-800 focus:border-primary-400 focus:ring-2 focus:ring-primary-500/20'
+                            : 'bg-[hsl(225,14%,10%)] border-[hsl(225,10%,16%)] text-[hsl(var(--fg-primary))] focus:border-primary-400 focus:ring-2 focus:ring-primary-500/20'
                         }`}
                       />
                       <button 
                         onClick={(e) => { e.stopPropagation(); handleUpdateReps(exIdx, setIdx, 1); }}
-                        className="btn-icon !p-1.5 bg-white border border-slate-200"
+                        className="btn-icon !p-1.5 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)]"
                       >
                         {Icons.plus}
                       </button>
@@ -714,7 +714,7 @@ export function ActiveWorkout() {
 
                     {/* RIR Control */}
                     <div className="flex items-center gap-1.5">
-                      <span className="text-xs text-slate-400 w-8">RIR</span>
+                      <span className="text-xs text-[hsl(var(--fg-subtle))] w-8">RIR</span>
                       <select
                         value={set.rir ?? 2}
                         onChange={(e) => { e.stopPropagation(); handleUpdateRir(exIdx, setIdx, parseInt(e.target.value)); }}
@@ -722,7 +722,7 @@ export function ActiveWorkout() {
                         className={`w-14 px-2 py-1.5 border rounded-lg text-center font-semibold outline-none transition-all cursor-pointer ${
                           set.completed 
                             ? 'bg-emerald-50 border-emerald-300 text-emerald-800' 
-                            : 'bg-white border-slate-200 text-slate-800'
+                            : 'bg-[hsl(225,14%,10%)] border-[hsl(225,10%,16%)] text-[hsl(var(--fg-primary))]'
                         }`}
                       >
                         {[0, 1, 2, 3, 4, 5].map(val => (
@@ -755,7 +755,7 @@ export function ActiveWorkout() {
       </div>
 
       {/* Fixed Bottom Bar */}
-      <div className="fixed bottom-0 left-64 right-0 p-4 glass-card border-0 border-t border-slate-200/50 z-30">
+      <div className="fixed bottom-0 left-64 right-0 p-4 glass-card border-0 border-t border-[hsl(225,10%,16%)]/50 z-30">
         <div className="max-w-4xl mx-auto">
           {/* Check if any sets have weight and reps filled */}
           {(() => {
@@ -777,7 +777,7 @@ export function ActiveWorkout() {
                     ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:scale-[1.01]'
                     : hasFilledSets
                     ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25'
-                    : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                    : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-subtle))] cursor-not-allowed'
                 }`}
               >
                 {filledProgress === 100 ? (

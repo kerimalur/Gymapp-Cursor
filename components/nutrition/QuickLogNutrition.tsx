@@ -173,31 +173,31 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
           initial={{ opacity: 0, scale: 0.9, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 30 }}
-          className="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl"
+          className="bg-[hsl(225,14%,10%)] rounded-3xl max-w-lg w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl"
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex-shrink-0 border-b border-gray-100 px-6 py-4">
+          <div className="flex-shrink-0 border-b border-[hsl(225,10%,14%)] px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white">
                   <Zap className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900">Quick Log</h3>
-                  <p className="text-xs text-gray-500">Schnell eintragen, kein Aufwand</p>
+                  <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Quick Log</h3>
+                  <p className="text-xs text-[hsl(var(--fg-muted))]">Schnell eintragen, kein Aufwand</p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
               </button>
             </div>
 
             {/* Mode Tabs */}
-            <div className="flex gap-1 mt-4 bg-gray-100 rounded-xl p-1">
+            <div className="flex gap-1 mt-4 bg-[hsl(225,12%,15%)] rounded-xl p-1">
               {[
                 { id: 'quick', label: 'Schnell', icon: <Zap className="w-3.5 h-3.5" /> },
                 { id: 'copy', label: 'Gestern', icon: <Copy className="w-3.5 h-3.5" /> },
@@ -208,8 +208,8 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                   onClick={() => setMode(tab.id as any)}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold transition-all ${
                     mode === tab.id
-                      ? 'bg-white text-gray-900 shadow-sm'
-                      : 'text-gray-500 hover:text-gray-700'
+                    ? 'bg-[hsl(225,14%,10%)] text-[hsl(var(--fg-primary))] shadow-sm'
+                    : 'text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))]'
                   }`}
                 >
                   {tab.icon}
@@ -224,7 +224,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
             {mode === 'quick' && (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                     Mahlzeit (optional)
                   </label>
                   <input
@@ -232,13 +232,13 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                     value={quickName}
                     onChange={e => setQuickName(e.target.value)}
                     placeholder="z.B. H?hnchen mit Reis"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:outline-none"
+                    className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-emerald-500 focus:outline-none"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                       Kalorien *
                     </label>
                     <div className="relative">
@@ -247,14 +247,14 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                         value={quickCalories}
                         onChange={e => setQuickCalories(e.target.value)}
                         placeholder="500"
-                        className="w-full px-4 py-3 pr-16 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:outline-none text-lg font-semibold"
+                        className="w-full px-4 py-3 pr-16 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-emerald-500 focus:outline-none text-lg font-semibold"
                         min="0"
                       />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">kcal</span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[hsl(var(--fg-subtle))] text-sm">kcal</span>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                       Protein
                     </label>
                     <div className="relative">
@@ -263,16 +263,16 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                         value={quickProtein}
                         onChange={e => setQuickProtein(e.target.value)}
                         placeholder="30"
-                        className="w-full px-4 py-3 pr-10 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:outline-none text-lg font-semibold"
+                        className="w-full px-4 py-3 pr-10 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-emerald-500 focus:outline-none text-lg font-semibold"
                         min="0"
                       />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">g</span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[hsl(var(--fg-subtle))] text-sm">g</span>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Mahlzeit</label>
+                  <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">Mahlzeit</label>
                   <div className="grid grid-cols-2 gap-2">
                     {Object.entries(mealTimeLabels).map(([key, label]) => (
                       <button
@@ -281,7 +281,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                         className={`py-2.5 rounded-xl text-sm font-semibold transition-all ${
                           quickMealTime === key
                             ? 'bg-emerald-500 text-white'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
                         }`}
                       >
                         {label}
@@ -302,18 +302,18 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                 {frequentMeals.length > 0 && (
                   <div className="mt-6">
                     <div className="flex items-center gap-2 mb-3">
-                      <Clock className="w-4 h-4 text-gray-400" />
-                      <h4 className="text-sm font-bold text-gray-700">Haeufig verwendet</h4>
+                      <Clock className="w-4 h-4 text-[hsl(var(--fg-subtle))]" />
+                      <h4 className="text-sm font-bold text-[hsl(var(--fg-secondary))]">Haeufig verwendet</h4>
                     </div>
 
                     <div className="relative mb-3">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[hsl(var(--fg-subtle))]" />
                       <input
                         type="text"
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                         placeholder="Suchen..."
-                        className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-emerald-400"
+                        className="w-full pl-10 pr-4 py-2.5 bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)] rounded-xl text-sm focus:outline-none focus:border-emerald-400"
                       />
                     </div>
 
@@ -322,14 +322,14 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                         <button
                           key={i}
                           onClick={() => handleAddFrequent(meal)}
-                          className="w-full flex items-center justify-between p-3 rounded-xl border border-gray-200 hover:border-emerald-300 hover:bg-emerald-50 transition-all text-left"
+                          className="w-full flex items-center justify-between p-3 rounded-xl border border-[hsl(225,10%,16%)] hover:border-emerald-300 hover:bg-emerald-50 transition-all text-left"
                         >
                           <div>
-                            <p className="font-semibold text-gray-800 text-sm">{meal.name}</p>
-                            <p className="text-xs text-gray-500">{meal.calories} kcal · {meal.protein}g P</p>
+                            <p className="font-semibold text-[hsl(var(--fg-primary))] text-sm">{meal.name}</p>
+                            <p className="text-xs text-[hsl(var(--fg-muted))]">{meal.calories} kcal · {meal.protein}g P</p>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-400">{meal.count}×</span>
+                            <span className="text-xs text-[hsl(var(--fg-subtle))]">{meal.count}×</span>
                             <Plus className="w-4 h-4 text-emerald-500" />
                           </div>
                         </button>
@@ -342,9 +342,9 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
 
             {mode === 'copy' && (
               <div className="space-y-4">
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <div className="bg-cyan-400/10 border border-cyan-400/20 rounded-xl p-4">
                   <h4 className="font-bold text-blue-800 mb-1">Von gestern kopieren</h4>
-                  <p className="text-xs text-blue-600">
+                  <p className="text-xs text-cyan-400">
                     Alle Mahlzeiten von gestern werden für heute übernommen.
                   </p>
                 </div>
@@ -352,17 +352,17 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                 {yesterdayMeals.length === 0 ? (
                   <div className="text-center py-8">
                     <Utensils className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500 font-medium">Keine Mahlzeiten von gestern</p>
-                    <p className="text-sm text-gray-400 mt-1">Gestern wurde nichts geloggt.</p>
+                    <p className="text-[hsl(var(--fg-muted))] font-medium">Keine Mahlzeiten von gestern</p>
+                    <p className="text-sm text-[hsl(var(--fg-subtle))] mt-1">Gestern wurde nichts geloggt.</p>
                   </div>
                 ) : (
                   <>
                     <div className="space-y-2">
                       {yesterdayMeals.map((meal, i) => (
-                        <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-200">
+                        <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)]">
                           <div>
-                            <p className="font-semibold text-gray-800 text-sm">{meal.name}</p>
-                            <p className="text-xs text-gray-500">
+                            <p className="font-semibold text-[hsl(var(--fg-primary))] text-sm">{meal.name}</p>
+                            <p className="text-xs text-[hsl(var(--fg-muted))]">
                               {meal.calories} kcal · {meal.protein}g P · {mealTimeLabels[meal.time] || meal.time}
                             </p>
                           </div>
@@ -370,8 +370,8 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                       ))}
                     </div>
 
-                    <div className="bg-gray-50 rounded-xl p-3 border border-gray-200">
-                      <p className="text-sm font-semibold text-gray-700">
+                    <div className="bg-[hsl(225,12%,13%)] rounded-xl p-3 border border-[hsl(225,10%,16%)]">
+                      <p className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">
                         Gesamt: {yesterdayMeals.reduce((s, m) => s + m.calories, 0)} kcal · {yesterdayMeals.reduce((s, m) => s + m.protein, 0)}g Protein
                       </p>
                     </div>
@@ -393,8 +393,8 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                 {(!mealTemplates || mealTemplates.length === 0) ? (
                   <div className="text-center py-8">
                     <Star className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500 font-medium">Keine Vorlagen gespeichert</p>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className="text-[hsl(var(--fg-muted))] font-medium">Keine Vorlagen gespeichert</p>
+                    <p className="text-sm text-[hsl(var(--fg-subtle))] mt-1">
                       Speichere Mahlzeiten als Vorlagen in der Ernährungs-Seite.
                     </p>
                   </div>
@@ -404,18 +404,18 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
                       <button
                         key={template.id}
                         onClick={() => handleAddTemplate(template)}
-                        className="w-full flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 hover:border-amber-300 hover:bg-amber-50 transition-all text-left"
+                        className="w-full flex items-center justify-between p-4 rounded-xl border-2 border-[hsl(225,10%,16%)] hover:border-amber-300 hover:bg-amber-50 transition-all text-left"
                       >
                         <div>
                           <div className="flex items-center gap-2">
                             <Star className="w-4 h-4 text-amber-500" />
-                            <p className="font-semibold text-gray-800">{template.name}</p>
+                            <p className="font-semibold text-[hsl(var(--fg-primary))]">{template.name}</p>
                           </div>
-                          <p className="text-sm text-gray-500 mt-1">
+                          <p className="text-sm text-[hsl(var(--fg-muted))] mt-1">
                             {template.calories} kcal · {template.protein}g Protein
                           </p>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-gray-400" />
+                        <ChevronRight className="w-5 h-5 text-[hsl(var(--fg-subtle))]" />
                       </button>
                     ))}
                   </div>

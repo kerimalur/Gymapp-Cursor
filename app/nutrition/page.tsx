@@ -387,14 +387,14 @@ export default function NutritionPage() {
       <div className="max-w-4xl mx-auto">
 
         {/* ── Sticky top bar: daily macro summary ─────────────────────────── */}
-        <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b border-gray-100 -mx-4 px-4 py-3 mb-6">
+        <div className="sticky top-0 z-10 bg-[hsl(225,14%,10%)]/95 backdrop-blur-sm border-b border-[hsl(225,10%,16%)] -mx-4 px-4 py-3 mb-6">
           <div className="flex items-center justify-between gap-3">
             {/* Title + settings */}
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-bold text-gray-900">Ernährung</h1>
+              <h1 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Ernährung</h1>
               <button
                 onClick={handleOpenGoalsSettings}
-                className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-gray-400"
+                className="p-1.5 hover:bg-[hsl(225,12%,13%)] rounded-lg transition-colors text-[hsl(var(--fg-subtle))]"
                 title="Ziele anpassen"
                 aria-label="Ziele anpassen"
               >
@@ -431,15 +431,15 @@ export default function NutritionPage() {
         </div>
 
         {/* ── Tab navigation ───────────────────────────────────────────────── */}
-        <div className="flex bg-gray-100 rounded-xl p-1 mb-6 overflow-x-auto">
+        <div className="flex bg-[hsl(225,12%,13%)] rounded-xl p-1 mb-6 overflow-x-auto">
           {TABS.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-[hsl(225,14%,10%)] text-[hsl(var(--fg-primary))] shadow-sm'
+                  : 'text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))]'
               }`}
             >
               {tab.label}
@@ -454,7 +454,7 @@ export default function NutritionPage() {
           <div className="space-y-5">
             {/* Quick-add templates – horizontal scroll */}
             <div>
-              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Schnell hinzufügen</p>
+              <p className="text-sm font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wide mb-3">Schnell hinzufügen</p>
               <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
                 {/* Saved templates first */}
                 {mealTemplates.map(template => (
@@ -464,8 +464,8 @@ export default function NutritionPage() {
                     className="flex-shrink-0 flex flex-col items-center gap-1.5 p-3 bg-amber-50 border-2 border-amber-200 hover:border-amber-400 rounded-2xl transition-all w-24 text-center"
                   >
                     <Star className="w-5 h-5 text-amber-500" />
-                    <p className="text-xs font-semibold text-gray-800 leading-tight line-clamp-2">{template.name}</p>
-                    <p className="text-xs text-gray-500">{template.calories} kcal</p>
+                    <p className="text-xs font-semibold text-[hsl(var(--fg-primary))] leading-tight line-clamp-2">{template.name}</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">{template.calories} kcal</p>
                   </button>
                 ))}
                 {/* Preset quick meals */}
@@ -476,22 +476,22 @@ export default function NutritionPage() {
                       addTrackedMeal({ name: meal.name, calories: meal.calories, protein: meal.protein, time: 'snacks' });
                       toast.success(`${meal.name} hinzugefügt`);
                     }}
-                    className="flex-shrink-0 flex flex-col items-center gap-1.5 p-3 bg-white border-2 border-gray-200 hover:border-primary-400 hover:bg-primary-50 rounded-2xl transition-all w-24 text-center"
+                    className="flex-shrink-0 flex flex-col items-center gap-1.5 p-3 bg-[hsl(225,14%,10%)] border-2 border-[hsl(225,10%,16%)] hover:border-primary-400 hover:bg-primary-50 rounded-2xl transition-all w-24 text-center"
                   >
                     <span className="text-2xl">{meal.icon}</span>
-                    <p className="text-xs font-semibold text-gray-800 leading-tight line-clamp-2">{meal.name}</p>
-                    <p className="text-xs text-gray-500">{meal.calories} kcal</p>
+                    <p className="text-xs font-semibold text-[hsl(var(--fg-primary))] leading-tight line-clamp-2">{meal.name}</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">{meal.calories} kcal</p>
                   </button>
                 ))}
                 {/* Custom add */}
                 <button
                   onClick={() => setShowQuickAdd(true)}
-                  className="flex-shrink-0 flex flex-col items-center justify-center gap-1.5 p-3 bg-white border-2 border-dashed border-gray-300 hover:border-primary-400 rounded-2xl transition-all w-24 text-center"
+                  className="flex-shrink-0 flex flex-col items-center justify-center gap-1.5 p-3 bg-[hsl(225,14%,10%)] border-2 border-dashed border-[hsl(225,10%,16%)] hover:border-primary-400 rounded-2xl transition-all w-24 text-center"
                 >
                   <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
                     <Plus className="w-4 h-4 text-primary-600" />
                   </div>
-                  <p className="text-xs font-semibold text-gray-600">Eigene</p>
+                  <p className="text-xs font-semibold text-[hsl(var(--fg-secondary))]">Eigene</p>
                 </button>
               </div>
             </div>
@@ -506,33 +506,33 @@ export default function NutritionPage() {
             </button>
 
             {/* Calorie progress bar */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-sm border border-[hsl(225,10%,16%)] p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
                     <Flame className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Kalorien heute</p>
-                    <p className="text-lg font-bold text-gray-900">
-                      {totalCalories.toLocaleString()} <span className="text-sm font-normal text-gray-400">/ {dailyCalorieGoal}</span>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Kalorien heute</p>
+                    <p className="text-lg font-bold text-[hsl(var(--fg-primary))]">
+                      {totalCalories.toLocaleString()} <span className="text-sm font-normal text-[hsl(var(--fg-subtle))]">/ {dailyCalorieGoal}</span>
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">Protein</p>
-                    <p className="text-lg font-bold text-blue-600">{totalProtein}g</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Protein</p>
+                    <p className="text-lg font-bold text-cyan-400">{totalProtein}g</p>
                   </div>
                   <div className={`text-right px-3 py-1 rounded-xl ${caloriesRemaining >= 0 ? 'bg-emerald-50' : 'bg-red-50'}`}>
-                    <p className="text-xs text-gray-500">Verbleibend</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Verbleibend</p>
                     <p className={`text-sm font-bold ${caloriesRemaining >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
                       {caloriesRemaining >= 0 ? `${caloriesRemaining}` : `+${Math.abs(caloriesRemaining)}`} kcal
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+              <div className="w-full bg-[hsl(225,12%,13%)] rounded-full h-2.5 overflow-hidden">
                 <div
                   className={`h-full rounded-full bg-gradient-to-r ${getCalorieProgressColor()} transition-all duration-500`}
                   style={{ width: `${calorieProgress}%` }}
@@ -541,17 +541,17 @@ export default function NutritionPage() {
             </div>
 
             {/* Meals grouped by time */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-              <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-                <h2 className="font-semibold text-gray-900">Heutige Mahlzeiten</h2>
-                <span className="text-xs text-gray-400">{todayMeals.length} Einträge</span>
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] shadow-sm">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-[hsl(225,10%,16%)]">
+                <h2 className="font-semibold text-[hsl(var(--fg-primary))]">Heutige Mahlzeiten</h2>
+                <span className="text-xs text-[hsl(var(--fg-subtle))]">{todayMeals.length} Einträge</span>
               </div>
 
               {todayMeals.length === 0 ? (
                 <div className="text-center py-10 px-5">
-                  <Utensils className="w-10 h-10 text-gray-200 mx-auto mb-3" />
-                  <p className="text-gray-500 font-medium">Noch keine Mahlzeiten heute</p>
-                  <p className="text-sm text-gray-400 mt-1">Füge deine erste Mahlzeit hinzu</p>
+                  <Utensils className="w-10 h-10 text-[hsl(var(--fg-subtle))] mx-auto mb-3" />
+                  <p className="text-[hsl(var(--fg-muted))] font-medium">Noch keine Mahlzeiten heute</p>
+                  <p className="text-sm text-[hsl(var(--fg-subtle))] mt-1">Füge deine erste Mahlzeit hinzu</p>
                 </div>
               ) : (
                 <div>
@@ -560,13 +560,13 @@ export default function NutritionPage() {
                     if (mealsForTime.length === 0) return null;
                     const MealIcon = mealTime.icon;
                     return (
-                      <div key={mealTime.id} className="border-b border-gray-50 last:border-0">
-                        <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-50">
-                          <MealIcon className="w-3.5 h-3.5 text-gray-400" />
-                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{mealTime.name}</span>
-                          <span className="text-xs text-gray-400">{mealTime.time}</span>
+                      <div key={mealTime.id} className="border-b border-[hsl(225,10%,16%)] last:border-0">
+                        <div className="flex items-center gap-2 px-5 py-2.5 bg-[hsl(225,12%,13%)]">
+                          <MealIcon className="w-3.5 h-3.5 text-[hsl(var(--fg-subtle))]" />
+                          <span className="text-xs font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wide">{mealTime.name}</span>
+                          <span className="text-xs text-[hsl(var(--fg-subtle))]">{mealTime.time}</span>
                         </div>
-                        <div className="divide-y divide-gray-50">
+                        <div className="divide-y divide-[hsl(225,10%,16%)]">
                           {mealsForTime.map(meal => (
                             <div key={meal.id} className="flex items-center justify-between px-5 py-3">
                               <div className="flex items-center gap-3">
@@ -574,12 +574,12 @@ export default function NutritionPage() {
                                   <Flame className="w-4 h-4 text-orange-500" />
                                 </div>
                                 <div>
-                                  <p className="font-medium text-gray-900 text-sm">{meal.name}</p>
-                                  <p className="text-xs text-blue-600">{meal.protein}g Protein</p>
+                                  <p className="font-medium text-[hsl(var(--fg-primary))] text-sm">{meal.name}</p>
+                                  <p className="text-xs text-cyan-400">{meal.protein}g Protein</p>
                                 </div>
                               </div>
                               <div className="flex items-center gap-1">
-                                <span className="text-sm font-semibold text-gray-800 mr-2">{meal.calories} kcal</span>
+                                <span className="text-sm font-semibold text-[hsl(var(--fg-primary))] mr-2">{meal.calories} kcal</span>
                                 <button
                                   onClick={() => handleOpenSaveMealModal(meal)}
                                   className="p-1.5 hover:bg-amber-100 text-amber-400 rounded-lg transition-colors"
@@ -609,12 +609,12 @@ export default function NutritionPage() {
                     const otherMeals = todayMeals.filter(m => !knownTimeIds.includes(m.time));
                     if (otherMeals.length === 0) return null;
                     return (
-                      <div className="border-t border-gray-50">
-                        <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-50">
-                          <Clock className="w-3.5 h-3.5 text-gray-400" />
-                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Sonstige</span>
+                      <div className="border-t border-[hsl(225,10%,16%)]">
+                        <div className="flex items-center gap-2 px-5 py-2.5 bg-[hsl(225,12%,13%)]">
+                          <Clock className="w-3.5 h-3.5 text-[hsl(var(--fg-subtle))]" />
+                          <span className="text-xs font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wide">Sonstige</span>
                         </div>
-                        <div className="divide-y divide-gray-50">
+                        <div className="divide-y divide-[hsl(225,10%,16%)]">
                           {otherMeals.map(meal => (
                             <div key={meal.id} className="flex items-center justify-between px-5 py-3">
                               <div className="flex items-center gap-3">
@@ -622,12 +622,12 @@ export default function NutritionPage() {
                                   <Flame className="w-4 h-4 text-orange-500" />
                                 </div>
                                 <div>
-                                  <p className="font-medium text-gray-900 text-sm">{meal.name}</p>
-                                  <p className="text-xs text-gray-400">{getMealTimeLabel(meal.time)}</p>
+                                  <p className="font-medium text-[hsl(var(--fg-primary))] text-sm">{meal.name}</p>
+                                  <p className="text-xs text-[hsl(var(--fg-subtle))]">{getMealTimeLabel(meal.time)}</p>
                                 </div>
                               </div>
                               <div className="flex items-center gap-1">
-                                <span className="text-sm font-semibold text-gray-800 mr-2">{meal.calories} kcal</span>
+                                <span className="text-sm font-semibold text-[hsl(var(--fg-primary))] mr-2">{meal.calories} kcal</span>
                                 <button
                                   onClick={() => handleRemoveMeal(meal.id)}
                                   className="p-1.5 hover:bg-red-100 text-red-400 rounded-lg transition-colors"
@@ -654,20 +654,20 @@ export default function NutritionPage() {
         {activeTab === 'wasser-schlaf' && (
           <div className="space-y-5">
             {/* Water Tracker */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-sm border border-[hsl(225,10%,16%)] p-6">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
                     <Droplets className="w-5 h-5 text-blue-500" />
                   </div>
                   <div>
-                    <h2 className="font-semibold text-gray-900">Wasserzufuhr</h2>
-                    <p className="text-sm text-gray-500">{waterMl}ml / {waterGoalMl}ml</p>
+                    <h2 className="font-semibold text-[hsl(var(--fg-primary))]">Wasserzufuhr</h2>
+                    <p className="text-sm text-[hsl(var(--fg-muted))]">{waterMl}ml / {waterGoalMl}ml</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setShowWaterInfo(true)}
-                  className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-blue-500 transition-colors"
+                  className="p-2 hover:bg-[hsl(225,12%,13%)] rounded-lg text-[hsl(var(--fg-subtle))] hover:text-blue-500 transition-colors"
                   title="Info"
                   aria-label="Wasser-Info"
                 >
@@ -691,7 +691,7 @@ export default function NutritionPage() {
                     className={`flex-1 h-7 rounded-lg transition-all ${
                       i * 250 < waterMl
                         ? 'bg-gradient-to-t from-blue-400 to-blue-500'
-                        : 'bg-gray-100'
+                        : 'bg-[hsl(225,12%,13%)]'
                     }`}
                   />
                 ))}
@@ -701,7 +701,7 @@ export default function NutritionPage() {
                 <button
                   onClick={handleRemoveWater}
                   disabled={waterMl === 0}
-                  className="flex-1 p-3 border-2 border-gray-200 text-gray-600 rounded-xl font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 p-3 border-2 border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] rounded-xl font-medium hover:bg-[hsl(225,12%,13%)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   aria-label="Wasserglas entfernen"
                 >
                   <Minus className="w-5 h-5" />
@@ -709,7 +709,7 @@ export default function NutritionPage() {
                 </button>
                 <button
                   onClick={handleAddWater}
-                  className="flex-1 p-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 p-3 bg-cyan-500 text-white rounded-xl font-medium hover:bg-cyan-600 transition-colors flex items-center justify-center gap-2"
                 >
                   <Plus className="w-5 h-5" />
                   <span>+250ml</span>
@@ -718,18 +718,18 @@ export default function NutritionPage() {
             </div>
 
             {/* Sleep Tracker */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-sm border border-[hsl(225,10%,16%)] p-6">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center">
                     <Bed className="w-5 h-5 text-indigo-600" />
                   </div>
                   <div>
-                    <h2 className="font-semibold text-gray-900">Schlaf</h2>
+                    <h2 className="font-semibold text-[hsl(var(--fg-primary))]">Schlaf</h2>
                     {todaySleep ? (
-                      <p className="text-sm text-gray-500">{todaySleep.hoursSlept}h · Qualität {todaySleep.quality}/5</p>
+                      <p className="text-sm text-[hsl(var(--fg-muted))]">{todaySleep.hoursSlept}h · Qualität {todaySleep.quality}/5</p>
                     ) : (
-                      <p className="text-sm text-gray-500">Noch nicht getrackt</p>
+                      <p className="text-sm text-[hsl(var(--fg-muted))]">Noch nicht getrackt</p>
                     )}
                   </div>
                 </div>
@@ -750,7 +750,7 @@ export default function NutritionPage() {
                         className={`flex-1 h-3 rounded-full ${
                           q <= todaySleep.quality
                             ? 'bg-gradient-to-r from-indigo-400 to-indigo-600'
-                            : 'bg-gray-100'
+                            : 'bg-[hsl(225,12%,13%)]'
                         }`}
                       />
                     ))}
@@ -764,9 +764,9 @@ export default function NutritionPage() {
                       <p className="text-2xl font-bold">{todaySleep.quality}/5</p>
                       <p className="text-xs opacity-70">Qualität</p>
                     </div>
-                    <div className="bg-gray-50 rounded-xl p-3 text-center">
-                      <p className="text-sm font-bold text-gray-700">{todaySleep.bedTime}</p>
-                      <p className="text-xs text-gray-500">Einschlaf</p>
+                    <div className="bg-[hsl(225,12%,13%)] rounded-xl p-3 text-center">
+                      <p className="text-sm font-bold text-[hsl(var(--fg-secondary))]">{todaySleep.bedTime}</p>
+                      <p className="text-xs text-[hsl(var(--fg-muted))]">Einschlaf</p>
                     </div>
                   </div>
                 </div>
@@ -782,18 +782,18 @@ export default function NutritionPage() {
 
             {/* Recent sleep history */}
             {sleepEntries.length > 1 && (
-              <div className="bg-white rounded-2xl border border-gray-100 p-5">
-                <h3 className="font-semibold text-gray-900 mb-3">Letzte Einträge</h3>
+              <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5">
+                <h3 className="font-semibold text-[hsl(var(--fg-primary))] mb-3">Letzte Einträge</h3>
                 <div className="space-y-2">
                   {sleepEntries
                     .filter(e => e.date !== todayDate)
                     .sort((a, b) => b.date.localeCompare(a.date))
                     .slice(0, 5)
                     .map(entry => (
-                      <div key={entry.id} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
-                        <span className="text-sm text-gray-600">{entry.date}</span>
+                      <div key={entry.id} className="flex items-center justify-between py-2 border-b border-[hsl(225,10%,16%)] last:border-0">
+                        <span className="text-sm text-[hsl(var(--fg-secondary))]">{entry.date}</span>
                         <div className="flex items-center gap-3">
-                          <span className="text-sm font-medium text-gray-900">{entry.hoursSlept}h</span>
+                          <span className="text-sm font-medium text-[hsl(var(--fg-primary))]">{entry.hoursSlept}h</span>
                           <span className={`text-xs px-2 py-0.5 rounded-full ${getSleepQualityColor(entry.quality)}`}>
                             {getSleepQualityLabel(entry.quality)}
                           </span>
@@ -812,14 +812,14 @@ export default function NutritionPage() {
         {activeTab === 'supplements' && (
           <div className="space-y-5">
             {/* Progress header */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
                   <Pill className="w-5 h-5 text-purple-600" />
                 </div>
                 <div className="flex-1">
-                  <h2 className="font-semibold text-gray-900">Heutige Supplements</h2>
-                  <p className="text-sm text-gray-500">{supplementsTaken} von {supplementsTotal} eingenommen</p>
+                  <h2 className="font-semibold text-[hsl(var(--fg-primary))]">Heutige Supplements</h2>
+                  <p className="text-sm text-[hsl(var(--fg-muted))]">{supplementsTaken} von {supplementsTotal} eingenommen</p>
                 </div>
                 <div className="w-14 h-14 rounded-full border-4 border-purple-100 flex items-center justify-center">
                   <span className="text-sm font-bold text-purple-700">
@@ -827,7 +827,7 @@ export default function NutritionPage() {
                   </span>
                 </div>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+              <div className="w-full bg-[hsl(225,12%,13%)] rounded-full h-2.5 overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-purple-400 to-purple-600 transition-all"
                   style={{ width: `${supplementsTotal > 0 ? (supplementsTaken / supplementsTotal) * 100 : 0}%` }}
@@ -836,38 +836,38 @@ export default function NutritionPage() {
             </div>
 
             {/* Supplements list */}
-            <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-              <div className="divide-y divide-gray-50">
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] overflow-hidden">
+              <div className="divide-y divide-[hsl(225,10%,16%)]">
                 {activeSupplements.map(supplement => {
                   const isTaken = takenSupplementIds.includes(supplement.id);
                   return (
                     <div
                       key={supplement.id}
                       className={`flex items-center gap-3 px-5 py-4 transition-all ${
-                        isTaken ? 'bg-purple-50' : 'bg-white hover:bg-gray-50'
+                        isTaken ? 'bg-purple-50' : 'bg-[hsl(225,14%,10%)] hover:bg-[hsl(225,12%,13%)]'
                       }`}
                     >
                       <button
                         onClick={() => handleToggleSupplement(supplement.id)}
                         className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
-                          isTaken ? 'bg-purple-500' : 'bg-gray-200 hover:bg-gray-300'
+                          isTaken ? 'bg-purple-500' : 'bg-[hsl(225,12%,20%)] hover:bg-[hsl(225,12%,25%)]'
                         }`}
                         aria-label={isTaken ? 'Als nicht eingenommen markieren' : 'Als eingenommen markieren'}
                       >
                         {isTaken && <Check className="w-4 h-4 text-white" />}
                       </button>
                       <div className="flex-1 min-w-0">
-                        <p className={`font-medium text-sm ${isTaken ? 'text-purple-900' : 'text-gray-900'}`}>
+                        <p className={`font-medium text-sm ${isTaken ? 'text-purple-900' : 'text-[hsl(var(--fg-primary))]'}`}>
                           {supplement.name}
                         </p>
-                        <p className="text-xs text-gray-500">{supplement.dosage} · {supplement.timing}</p>
+                        <p className="text-xs text-[hsl(var(--fg-muted))]">{supplement.dosage} · {supplement.timing}</p>
                       </div>
                       <button
                         onClick={() => {
                           removeSupplement(supplement.id);
                           toast.success('Supplement gelöscht');
                         }}
-                        className="p-1.5 text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
+                        className="p-1.5 text-[hsl(var(--fg-subtle))] hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
                         aria-label="Supplement löschen"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -879,8 +879,8 @@ export default function NutritionPage() {
 
               {activeSupplements.length === 0 && (
                 <div className="text-center py-10">
-                  <Pill className="w-10 h-10 text-gray-200 mx-auto mb-3" />
-                  <p className="text-gray-500 font-medium">Keine Supplements</p>
+                  <Pill className="w-10 h-10 text-[hsl(var(--fg-subtle))] mx-auto mb-3" />
+                  <p className="text-[hsl(var(--fg-muted))] font-medium">Keine Supplements</p>
                 </div>
               )}
             </div>
@@ -889,32 +889,32 @@ export default function NutritionPage() {
             {!showAddSupplement ? (
               <button
                 onClick={() => setShowAddSupplement(true)}
-                className="w-full p-4 border-2 border-dashed border-gray-200 rounded-2xl text-gray-500 hover:border-purple-300 hover:text-purple-600 transition-colors flex items-center justify-center gap-2 bg-white"
+                className="w-full p-4 border-2 border-dashed border-[hsl(225,10%,16%)] rounded-2xl text-[hsl(var(--fg-muted))] hover:border-purple-300 hover:text-purple-600 transition-colors flex items-center justify-center gap-2 bg-[hsl(225,14%,10%)]"
               >
                 <Plus className="w-5 h-5" />
                 Supplement hinzufügen
               </button>
             ) : (
-              <div className="bg-white rounded-2xl border border-gray-200 p-5 space-y-3">
-                <h3 className="font-semibold text-gray-900">Neues Supplement</h3>
+              <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5 space-y-3">
+                <h3 className="font-semibold text-[hsl(var(--fg-primary))]">Neues Supplement</h3>
                 <input
                   type="text"
                   value={newSupplementName}
                   onChange={(e) => setNewSupplementName(e.target.value)}
                   placeholder="Name (z.B. Zink)"
-                  className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                  className="w-full px-4 py-2.5 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-purple-500 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                 />
                 <input
                   type="text"
                   value={newSupplementDosage}
                   onChange={(e) => setNewSupplementDosage(e.target.value)}
                   placeholder="Dosierung (z.B. 25mg)"
-                  className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none"
+                  className="w-full px-4 py-2.5 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-purple-500 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                 />
                 <div className="flex gap-2">
                   <button
                     onClick={() => { setShowAddSupplement(false); setNewSupplementName(''); setNewSupplementDosage(''); }}
-                    className="flex-1 py-2.5 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+                    className="flex-1 py-2.5 bg-[hsl(225,12%,13%)] text-[hsl(var(--fg-secondary))] rounded-xl font-medium hover:bg-[hsl(225,12%,20%)] transition-colors"
                   >
                     Abbrechen
                   </button>
@@ -937,31 +937,31 @@ export default function NutritionPage() {
         {activeTab === 'analyse' && (
           <div className="space-y-5">
             {/* 7-day macro trend */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-lg font-bold text-gray-900 mb-1">7-Tage Trend</h2>
-              <p className="text-sm text-gray-500 mb-5">Kalorien- und Proteinverlauf der letzten Woche</p>
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-sm border border-[hsl(225,10%,16%)] p-6">
+              <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))] mb-1">7-Tage Trend</h2>
+              <p className="text-sm text-[hsl(var(--fg-muted))] mb-5">Kalorien- und Proteinverlauf der letzten Woche</p>
               <NutritionTrend showGoals />
             </div>
 
             {/* Meal timing */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-lg font-bold text-gray-900 mb-1">Mahlzeiten-Timing</h2>
-              <p className="text-sm text-gray-500 mb-5">Wann isst du am meisten?</p>
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-sm border border-[hsl(225,10%,16%)] p-6">
+              <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))] mb-1">Mahlzeiten-Timing</h2>
+              <p className="text-sm text-[hsl(var(--fg-muted))] mb-5">Wann isst du am meisten?</p>
               <MealTimingAnalysis />
             </div>
 
             {/* Protein progress */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <h3 className="font-semibold text-gray-900 mb-4">Heutige Ziele</h3>
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5">
+              <h3 className="font-semibold text-[hsl(var(--fg-primary))] mb-4">Heutige Ziele</h3>
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-700 flex items-center gap-1.5">
+                    <span className="text-sm font-medium text-[hsl(var(--fg-secondary))] flex items-center gap-1.5">
                       <Flame className="w-3.5 h-3.5 text-orange-500" /> Kalorien
                     </span>
-                    <span className="text-sm text-gray-500">{totalCalories} / {dailyCalorieGoal} kcal</span>
+                    <span className="text-sm text-[hsl(var(--fg-muted))]">{totalCalories} / {dailyCalorieGoal} kcal</span>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                  <div className="w-full bg-[hsl(225,12%,13%)] rounded-full h-2.5 overflow-hidden">
                     <div
                       className={`h-full rounded-full bg-gradient-to-r ${getCalorieProgressColor()} transition-all`}
                       style={{ width: `${calorieProgress}%` }}
@@ -970,12 +970,12 @@ export default function NutritionPage() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium text-gray-700 flex items-center gap-1.5">
+                    <span className="text-sm font-medium text-[hsl(var(--fg-secondary))] flex items-center gap-1.5">
                       <Beef className="w-3.5 h-3.5 text-blue-500" /> Protein
                     </span>
-                    <span className="text-sm text-gray-500">{totalProtein}g / {dailyProteinGoal}g</span>
+                    <span className="text-sm text-[hsl(var(--fg-muted))]">{totalProtein}g / {dailyProteinGoal}g</span>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                  <div className="w-full bg-[hsl(225,12%,13%)] rounded-full h-2.5 overflow-hidden">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all"
                       style={{ width: `${proteinProgress}%` }}
@@ -1002,17 +1002,17 @@ export default function NutritionPage() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="quick-add-meal-title"
-            className="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl ring-1 ring-black/5"
+            className="bg-[hsl(225,14%,10%)] rounded-3xl max-w-lg w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl ring-1 ring-black/5"
           >
-            <div className="flex-shrink-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-3xl">
+            <div className="flex-shrink-0 bg-[hsl(225,14%,10%)] border-b border-[hsl(225,10%,16%)] px-6 py-4 rounded-t-3xl">
               <div className="flex items-center justify-between">
-                <h3 id="quick-add-meal-title" className="text-xl font-bold text-gray-900">Mahlzeit hinzufügen</h3>
+                <h3 id="quick-add-meal-title" className="text-xl font-bold text-[hsl(var(--fg-primary))]">Mahlzeit hinzufügen</h3>
                 <button
                   onClick={() => setShowQuickAdd(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-[hsl(225,12%,13%)] rounded-lg transition-colors"
                   aria-label="Schließen"
                 >
-                  <X className="w-5 h-5 text-gray-500" />
+                  <X className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
                 </button>
               </div>
             </div>
@@ -1020,7 +1020,7 @@ export default function NutritionPage() {
             <div className="flex-1 overflow-y-auto p-6">
               {/* Meal Time Selection */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Tageszeit</label>
+                <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-2">Tageszeit</label>
                 <div className="grid grid-cols-4 gap-2">
                   {MEAL_TIMES.map((time) => {
                     const Icon = time.icon;
@@ -1030,12 +1030,12 @@ export default function NutritionPage() {
                         onClick={() => setSelectedMealTime(time.id)}
                         className={`p-3 rounded-xl transition-all text-center ${
                           selectedMealTime === time.id
-                            ? 'bg-blue-100 border-2 border-blue-500'
-                            : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
+                            ? 'bg-cyan-500/20 border-2 border-cyan-500'
+                            : 'bg-[hsl(225,12%,13%)] border-2 border-transparent hover:bg-[hsl(225,12%,20%)]'
                         }`}
                       >
-                        <Icon className={`w-5 h-5 mx-auto mb-1 ${selectedMealTime === time.id ? 'text-blue-600' : 'text-gray-400'}`} />
-                        <p className="text-xs font-medium text-gray-700">{time.name}</p>
+                        <Icon className={`w-5 h-5 mx-auto mb-1 ${selectedMealTime === time.id ? 'text-cyan-400' : 'text-[hsl(var(--fg-subtle))]'}`} />
+                        <p className="text-xs font-medium text-[hsl(var(--fg-secondary))]">{time.name}</p>
                       </button>
                     );
                   })}
@@ -1044,20 +1044,20 @@ export default function NutritionPage() {
 
               {/* Quick Meals */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Schnellauswahl</label>
+                <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-2">Schnellauswahl</label>
                 <div className="grid grid-cols-2 gap-2">
                   {QUICK_MEALS.map((meal) => (
                     <button
                       key={meal.id}
                       onClick={() => handleAddQuickMeal(meal)}
-                      className="p-4 bg-gray-50 rounded-xl hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent transition-all text-left"
+                      className="p-4 bg-[hsl(225,12%,13%)] rounded-xl hover:bg-cyan-500/10 hover:border-cyan-500/30 border-2 border-transparent transition-all text-left"
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{meal.icon}</span>
                         <div>
-                          <p className="font-medium text-gray-900">{meal.name}</p>
-                          <p className="text-sm text-gray-500">~{meal.calories} kcal</p>
-                          <p className="text-xs text-blue-600">~{meal.protein}g Protein</p>
+                          <p className="font-medium text-[hsl(var(--fg-primary))]">{meal.name}</p>
+                          <p className="text-sm text-[hsl(var(--fg-muted))]">~{meal.calories} kcal</p>
+                          <p className="text-xs text-cyan-400">~{meal.protein}g Protein</p>
                         </div>
                       </div>
                     </button>
@@ -1068,7 +1068,7 @@ export default function NutritionPage() {
               {/* Saved Meal Templates */}
               {mealTemplates.length > 0 && (
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-2 flex items-center gap-2">
                     <Star className="w-4 h-4 text-amber-500" />
                     Meine gespeicherten Mahlzeiten
                   </label>
@@ -1082,8 +1082,8 @@ export default function NutritionPage() {
                           onClick={() => handleAddSavedMeal(template)}
                           className="flex-1 text-left"
                         >
-                          <p className="font-medium text-gray-900">{template.name}</p>
-                          <p className="text-sm text-gray-500">
+                          <p className="font-medium text-[hsl(var(--fg-primary))]">{template.name}</p>
+                          <p className="text-sm text-[hsl(var(--fg-muted))]">
                             {template.calories} kcal · {template.protein}g Protein
                           </p>
                         </button>
@@ -1101,15 +1101,15 @@ export default function NutritionPage() {
               )}
 
               {/* Custom Entry */}
-              <div className="border-t border-gray-100 pt-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Eigene Eingabe</label>
+              <div className="border-t border-[hsl(225,10%,16%)] pt-6">
+                <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-2">Eigene Eingabe</label>
                 <div className="space-y-3">
                   <input
                     type="text"
                     value={customName}
                     onChange={(e) => setCustomName(e.target.value)}
                     placeholder="Name (optional)"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-cyan-400/50 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                   />
                   <div className="grid grid-cols-2 gap-3">
                     <div className="relative">
@@ -1118,10 +1118,10 @@ export default function NutritionPage() {
                         value={customCalories}
                         onChange={(e) => setCustomCalories(e.target.value)}
                         placeholder="Kalorien"
-                        className="w-full px-4 py-3 pr-14 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
+                        className="w-full px-4 py-3 pr-14 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-cyan-400/50 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                         min="0"
                       />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">kcal</span>
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[hsl(var(--fg-subtle))] text-sm">kcal</span>
                     </div>
                     <div className="relative">
                       <input
@@ -1129,16 +1129,16 @@ export default function NutritionPage() {
                         value={customProtein}
                         onChange={(e) => setCustomProtein(e.target.value)}
                         placeholder="Protein"
-                        className="w-full px-4 py-3 pr-10 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
+                        className="w-full px-4 py-3 pr-10 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-cyan-400/50 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                         min="0"
                       />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">g</span>
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[hsl(var(--fg-subtle))] text-sm">g</span>
                     </div>
                   </div>
                   <button
                     onClick={handleAddCustomMeal}
                     disabled={!customCalories}
-                    className="w-full py-3 bg-blue-500 text-white rounded-xl font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-3 bg-cyan-500 text-white rounded-xl font-medium hover:bg-cyan-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Hinzufügen
                   </button>
@@ -1146,13 +1146,13 @@ export default function NutritionPage() {
               </div>
 
               {/* Detailed Tracking Option */}
-              <div className="mt-6 pt-6 border-t border-gray-100">
+              <div className="mt-6 pt-6 border-t border-[hsl(225,10%,16%)]">
                 <button
                   onClick={() => {
                     setShowQuickAdd(false);
                     setShowDetailedAdd(true);
                   }}
-                  className="w-full p-4 bg-gray-50 rounded-xl text-gray-700 hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
+                  className="w-full p-4 bg-[hsl(225,12%,13%)] rounded-xl text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)] transition-colors flex items-center justify-center gap-2"
                 >
                   <Search className="w-5 h-5" />
                   <span>Genaueres Tracking mit Lebensmittel-Suche</span>
@@ -1166,16 +1166,16 @@ export default function NutritionPage() {
       {/* Detailed Add Modal */}
       {showDetailedAdd && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
-            <div className="flex-shrink-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-3xl">
+          <div className="bg-[hsl(225,14%,10%)] rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
+            <div className="flex-shrink-0 bg-[hsl(225,14%,10%)] border-b border-[hsl(225,10%,16%)] px-6 py-4 rounded-t-3xl">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-900">Genaues Tracking</h3>
+                <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Genaues Tracking</h3>
                 <button
                   onClick={() => setShowDetailedAdd(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-[hsl(225,12%,13%)] rounded-lg transition-colors"
                   aria-label="Schließen"
                 >
-                  <X className="w-5 h-5 text-gray-500" />
+                  <X className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
                 </button>
               </div>
             </div>
@@ -1189,7 +1189,7 @@ export default function NutritionPage() {
 
               {/* Meal Time Selection */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Tageszeit</label>
+                <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-2">Tageszeit</label>
                 <div className="grid grid-cols-4 gap-2">
                   {MEAL_TIMES.map((time) => {
                     const Icon = time.icon;
@@ -1199,12 +1199,12 @@ export default function NutritionPage() {
                         onClick={() => setSelectedMealTime(time.id)}
                         className={`p-3 rounded-xl transition-all text-center ${
                           selectedMealTime === time.id
-                            ? 'bg-blue-100 border-2 border-blue-500'
-                            : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
+                            ? 'bg-cyan-500/20 border-2 border-cyan-500'
+                            : 'bg-[hsl(225,12%,13%)] border-2 border-transparent hover:bg-[hsl(225,12%,20%)]'
                         }`}
                       >
-                        <Icon className={`w-5 h-5 mx-auto mb-1 ${selectedMealTime === time.id ? 'text-blue-600' : 'text-gray-400'}`} />
-                        <p className="text-xs font-medium text-gray-700">{time.name}</p>
+                        <Icon className={`w-5 h-5 mx-auto mb-1 ${selectedMealTime === time.id ? 'text-cyan-400' : 'text-[hsl(var(--fg-subtle))]'}`} />
+                        <p className="text-xs font-medium text-[hsl(var(--fg-secondary))]">{time.name}</p>
                       </button>
                     );
                   })}
@@ -1214,43 +1214,43 @@ export default function NutritionPage() {
               {/* Detailed Entry Form */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Mahlzeit / Lebensmittel</label>
+                  <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-1">Mahlzeit / Lebensmittel</label>
                   <input
                     type="text"
                     value={customName}
                     onChange={(e) => setCustomName(e.target.value)}
                     placeholder="z.B. Hähnchenbrust mit Reis"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-cyan-400/50 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Kalorien *</label>
+                    <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-1">Kalorien *</label>
                     <div className="relative">
                       <input
                         type="number"
                         value={customCalories}
                         onChange={(e) => setCustomCalories(e.target.value)}
                         placeholder="0"
-                        className="w-full px-4 py-3 pr-14 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
+                        className="w-full px-4 py-3 pr-14 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-cyan-400/50 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                         min="0"
                       />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">kcal</span>
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[hsl(var(--fg-subtle))]">kcal</span>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Protein</label>
+                    <label className="block text-sm font-medium text-[hsl(var(--fg-secondary))] mb-1">Protein</label>
                     <div className="relative">
                       <input
                         type="number"
                         value={customProtein}
                         onChange={(e) => setCustomProtein(e.target.value)}
                         placeholder="0"
-                        className="w-full px-4 py-3 pr-10 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none"
+                        className="w-full px-4 py-3 pr-10 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-cyan-400/50 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                         min="0"
                       />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">g</span>
+                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[hsl(var(--fg-subtle))]">g</span>
                     </div>
                   </div>
                 </div>
@@ -1271,18 +1271,18 @@ export default function NutritionPage() {
       {/* Water Info Modal */}
       {showWaterInfo && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl">
-            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl max-w-md w-full shadow-2xl">
+            <div className="flex items-center justify-between p-4 border-b border-[hsl(225,10%,16%)]">
               <div className="flex items-center gap-3">
                 <Droplets className="w-6 h-6 text-blue-500" />
-                <h3 className="font-bold text-gray-900">Wasser trinken</h3>
+                <h3 className="font-bold text-[hsl(var(--fg-primary))]">Wasser trinken</h3>
               </div>
               <button
                 onClick={() => setShowWaterInfo(false)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-[hsl(225,12%,13%)] rounded-lg transition-colors"
                 aria-label="Schließen"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
               </button>
             </div>
 
@@ -1295,8 +1295,8 @@ export default function NutritionPage() {
               </div>
 
               <div className="space-y-3">
-                <h4 className="font-semibold text-gray-900">Warum ist Wasser so wichtig?</h4>
-                <div className="space-y-2 text-sm text-gray-600">
+                <h4 className="font-semibold text-[hsl(var(--fg-primary))]">Warum ist Wasser so wichtig?</h4>
+                <div className="space-y-2 text-sm text-[hsl(var(--fg-secondary))]">
                   {[
                     ['Leistung', 'Schon 2% Dehydration reduziert die Trainingsleistung um bis zu 25%'],
                     ['Muskelaufbau', 'Wasser transportiert Nährstoffe zu den Muskeln'],
@@ -1325,19 +1325,19 @@ export default function NutritionPage() {
       {/* Save Meal as Template Modal */}
       {showSaveMealModal && mealToSave && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl">
-            <div className="flex-shrink-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-3xl">
+          <div className="bg-[hsl(225,14%,10%)] rounded-3xl max-w-md w-full shadow-2xl">
+            <div className="flex-shrink-0 bg-[hsl(225,14%,10%)] border-b border-[hsl(225,10%,16%)] px-6 py-4 rounded-t-3xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Star className="w-6 h-6 text-amber-500" />
-                  <h3 className="text-xl font-bold text-gray-900">Als Vorlage speichern</h3>
+                  <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Als Vorlage speichern</h3>
                 </div>
                 <button
                   onClick={() => setShowSaveMealModal(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-[hsl(225,12%,13%)] rounded-lg transition-colors"
                   aria-label="Schließen"
                 >
-                  <X className="w-5 h-5 text-gray-500" />
+                  <X className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
                 </button>
               </div>
             </div>
@@ -1350,13 +1350,13 @@ export default function NutritionPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Name der Vorlage</label>
+                <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">Name der Vorlage</label>
                 <input
                   type="text"
                   value={templateName}
                   onChange={(e) => setTemplateName(e.target.value)}
                   placeholder="z.B. Mein Frühstück"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:outline-none"
+                  className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-amber-500 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                   autoFocus
                 />
               </div>
@@ -1364,7 +1364,7 @@ export default function NutritionPage() {
               <div className="flex gap-3 pt-2">
                 <button
                   onClick={() => setShowSaveMealModal(false)}
-                  className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
+                  className="flex-1 py-3 bg-[hsl(225,12%,13%)] text-[hsl(var(--fg-secondary))] rounded-xl font-semibold hover:bg-[hsl(225,12%,20%)] transition-colors"
                 >
                   Abbrechen
                 </button>
@@ -1385,19 +1385,19 @@ export default function NutritionPage() {
       {/* Sleep Tracker Modal */}
       {showSleepTracker && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full shadow-2xl">
-            <div className="flex-shrink-0 bg-white border-b border-gray-100 px-6 py-4 rounded-t-3xl">
+          <div className="bg-[hsl(225,14%,10%)] rounded-3xl max-w-md w-full shadow-2xl">
+            <div className="flex-shrink-0 bg-[hsl(225,14%,10%)] border-b border-[hsl(225,10%,16%)] px-6 py-4 rounded-t-3xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Bed className="w-6 h-6 text-indigo-600" />
-                  <h3 className="text-xl font-bold text-gray-900">Schlaf tracken</h3>
+                  <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Schlaf tracken</h3>
                 </div>
                 <button
                   onClick={() => setShowSleepTracker(false)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 hover:bg-[hsl(225,12%,13%)] rounded-lg transition-colors"
                   aria-label="Schließen"
                 >
-                  <X className="w-5 h-5 text-gray-500" />
+                  <X className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
                 </button>
               </div>
             </div>
@@ -1405,25 +1405,25 @@ export default function NutritionPage() {
             <div className="p-6 space-y-5">
               {/* Sleep Duration */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Schlafdauer</label>
+                <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">Schlafdauer</label>
                 <div className="relative">
                   <input
                     type="number"
                     value={sleepHours}
                     onChange={(e) => setSleepHours(e.target.value)}
                     placeholder="7"
-                    className="w-full px-4 py-3 pr-20 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none text-lg font-semibold"
+                    className="w-full px-4 py-3 pr-20 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-indigo-500 focus:outline-none text-lg font-semibold bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))]"
                     min="0"
                     max="24"
                     step="0.5"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium">Stunden</span>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[hsl(var(--fg-subtle))] font-medium">Stunden</span>
                 </div>
               </div>
 
               {/* Sleep Quality */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Schlafqualität</label>
+                <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">Schlafqualität</label>
                 <div className="flex gap-2">
                   {[1, 2, 3, 4, 5].map((q) => (
                     <button
@@ -1432,34 +1432,34 @@ export default function NutritionPage() {
                       className={`flex-1 py-3 rounded-xl font-semibold transition-all ${
                         sleepQuality === q
                           ? 'bg-indigo-500 text-white'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          : 'bg-[hsl(225,12%,13%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,20%)]'
                       }`}
                     >
                       {q}
                     </button>
                   ))}
                 </div>
-                <p className="text-center text-sm text-gray-500 mt-2">{getSleepQualityLabel(sleepQuality)}</p>
+                <p className="text-center text-sm text-[hsl(var(--fg-muted))] mt-2">{getSleepQualityLabel(sleepQuality)}</p>
               </div>
 
               {/* Times */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Einschlafzeit</label>
+                  <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">Einschlafzeit</label>
                   <input
                     type="time"
                     value={bedTime}
                     onChange={(e) => setBedTime(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none"
+                    className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-indigo-500 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))]"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Aufwachzeit</label>
+                  <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">Aufwachzeit</label>
                   <input
                     type="time"
                     value={wakeTime}
                     onChange={(e) => setWakeTime(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none"
+                    className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-indigo-500 focus:outline-none bg-[hsl(225,14%,8%)] text-[hsl(var(--fg-primary))]"
                   />
                 </div>
               </div>
@@ -1476,7 +1476,7 @@ export default function NutritionPage() {
               <div className="flex gap-3 pt-2">
                 <button
                   onClick={() => setShowSleepTracker(false)}
-                  className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
+                  className="flex-1 py-3 bg-[hsl(225,12%,13%)] text-[hsl(var(--fg-secondary))] rounded-xl font-semibold hover:bg-[hsl(225,12%,20%)] transition-colors"
                 >
                   Abbrechen
                 </button>

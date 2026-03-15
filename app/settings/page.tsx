@@ -17,7 +17,7 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (value: boolean
     <button
       type="button"
       onClick={() => onChange(!value)}
-      className={`relative h-7 w-12 rounded-full transition-colors ${value ? 'bg-blue-600' : 'bg-slate-300'}`}
+      className={`relative h-7 w-12 rounded-full transition-colors ${value ? 'bg-cyan-500' : 'bg-[hsl(225,12%,20%)]'}`}
     >
       <span
         className={`absolute top-1 h-5 w-5 rounded-full bg-white transition-transform ${
@@ -224,7 +224,7 @@ export default function SettingsPage() {
           <div className="mt-4 flex flex-wrap gap-3">
             <button
               onClick={handleSaveAll}
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-semibold text-blue-700 hover:bg-blue-50"
+              className="inline-flex items-center gap-2 rounded-xl bg-[hsl(225,14%,10%)] px-4 py-2.5 font-semibold text-cyan-400 hover:bg-cyan-400/10"
             >
               <Save className="h-4 w-4" />
               Alles speichern
@@ -237,15 +237,15 @@ export default function SettingsPage() {
         </div>
 
         {/* Tab Bar */}
-        <div className="flex gap-1 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm">
+        <div className="flex gap-1 rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-1.5 shadow-sm">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all ${
                 activeTab === tab.id
-                  ? 'bg-blue-600 text-white shadow'
-                  : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'
+                  ? 'bg-cyan-500 text-white shadow'
+                  : 'text-[hsl(var(--fg-muted))] hover:bg-[hsl(225,12%,15%)] hover:text-[hsl(var(--fg-secondary))]'
               }`}
             >
               {tab.icon}
@@ -256,75 +256,75 @@ export default function SettingsPage() {
 
         {/* Tab: Profil */}
         {activeTab === 'profil' && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-6 shadow-sm">
             <div className="mb-5 flex items-center gap-3">
-              <div className="rounded-xl bg-slate-100 p-2 text-slate-700">
+              <div className="rounded-xl bg-[hsl(225,12%,15%)] p-2 text-[hsl(var(--fg-secondary))]">
                 <User className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-slate-900">Profil</h2>
-                <p className="text-sm text-slate-500">Wird in App und Cloud genutzt</p>
+                <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Profil</h2>
+                <p className="text-sm text-[hsl(var(--fg-muted))]">Wird in App und Cloud genutzt</p>
               </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <label className="mb-1 block text-sm font-semibold text-slate-700">Name</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Name</label>
                 <input
                   type="text"
                   value={nameInput}
                   onChange={(e) => setNameInput(e.target.value)}
                   placeholder="Dein Name"
-                  className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+                  className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))] outline-none transition-colors focus:border-cyan-400/50"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-semibold text-slate-700">E-Mail</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">E-Mail</label>
                 <input
                   type="email"
                   value={user?.email || ''}
                   disabled
-                  className="w-full rounded-xl border-2 border-slate-200 bg-slate-50 px-4 py-3 text-slate-500"
+                  className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,12%,13%)] px-4 py-3 text-[hsl(var(--fg-muted))]"
                 />
               </div>
             </div>
 
             <div className="mt-4">
-              <label className="mb-1 block text-sm font-semibold text-slate-700">Kurzprofil / Bio</label>
+              <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Kurzprofil / Bio</label>
               <textarea
                 value={bioInput}
                 onChange={(e) => setBioInput(e.target.value)}
                 rows={3}
                 placeholder="Optional: Ziele, Fokus, Hinweise"
-                className="w-full resize-none rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+                className="w-full resize-none rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))] outline-none transition-colors focus:border-cyan-400/50"
               />
             </div>
 
             <div className="mt-4 grid gap-4 md:grid-cols-2">
               <div>
-                <label className="mb-1 block text-sm font-semibold text-slate-700">Alter</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Alter</label>
                 <input
                   type="number"
                   value={ageInput}
                   onChange={(e) => setAgeInput(e.target.value ? parseInt(e.target.value, 10) : '')}
-                  className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+                  className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))] outline-none transition-colors focus:border-cyan-400/50"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-semibold text-slate-700">Groesse (cm)</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Groesse (cm)</label>
                 <input
                   type="number"
                   value={heightInput}
                   onChange={(e) => setHeightInput(e.target.value ? parseInt(e.target.value, 10) : '')}
-                  className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+                  className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))] outline-none transition-colors focus:border-cyan-400/50"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-semibold text-slate-700">Trainingslevel</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Trainingslevel</label>
                 <select
                   value={experienceInput}
                   onChange={(e) => setExperienceInput(e.target.value as any)}
-                  className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+                  className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] outline-none transition-colors focus:border-cyan-400/50"
                 >
                   <option value="beginner">Beginner</option>
                   <option value="intermediate">Intermediate</option>
@@ -332,20 +332,20 @@ export default function SettingsPage() {
                 </select>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-semibold text-slate-700">Primaeres Ziel</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Primaeres Ziel</label>
                 <input
                   type="text"
                   value={goalInput}
                   onChange={(e) => setGoalInput(e.target.value)}
                   placeholder="z. B. Muskelaufbau"
-                  className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-blue-500"
+                  className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))] outline-none transition-colors focus:border-cyan-400/50"
                 />
               </div>
             </div>
 
             <button
               onClick={handleSaveProfile}
-              className="mt-6 w-full rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700 transition-colors"
+              className="mt-6 w-full rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-white hover:bg-cyan-400 transition-colors"
             >
               Profil speichern
             </button>
@@ -354,20 +354,20 @@ export default function SettingsPage() {
 
         {/* Tab: Training */}
         {activeTab === 'training' && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-6 shadow-sm">
             <div className="mb-5 flex items-center gap-3">
-              <div className="rounded-xl bg-slate-100 p-2 text-slate-700">
+              <div className="rounded-xl bg-[hsl(225,12%,15%)] p-2 text-[hsl(var(--fg-secondary))]">
                 <Dumbbell className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-slate-900">Training</h2>
-                <p className="text-sm text-slate-500">Rest-Timer und Trainingsverhalten</p>
+                <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Training</h2>
+                <p className="text-sm text-[hsl(var(--fg-muted))]">Rest-Timer und Trainingsverhalten</p>
               </div>
             </div>
 
             <div className="space-y-5">
               <div>
-                <label className="mb-1 block text-sm font-semibold text-slate-700">Standard Pause (Sekunden)</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Standard Pause (Sekunden)</label>
                 <input
                   type="number"
                   min={30}
@@ -379,28 +379,28 @@ export default function SettingsPage() {
                       defaultRestTime: parseInt(e.target.value || '90', 10),
                     })
                   }
-                  className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-violet-500"
+                  className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))] outline-none transition-colors focus:border-violet-500"
                 />
-                <p className="mt-1 text-xs text-slate-500">Empfohlen: 60–180 Sekunden</p>
+                <p className="mt-1 text-xs text-[hsl(var(--fg-muted))]">Empfohlen: 60–180 Sekunden</p>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-4">
-                <p className="text-sm font-semibold text-slate-700">Timer-Optionen</p>
+              <div className="rounded-xl border border-[hsl(225,10%,16%)] bg-[hsl(225,12%,13%)] p-4 space-y-4">
+                <p className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">Timer-Optionen</p>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-slate-800">Timer automatisch starten</p>
-                    <p className="text-xs text-slate-500">Nach einem abgeschlossenen Satz</p>
+                    <p className="font-medium text-[hsl(var(--fg-primary))]">Timer automatisch starten</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Nach einem abgeschlossenen Satz</p>
                   </div>
                   <Toggle
                     value={workoutStore.workoutSettings.autoStartRestTimer}
                     onChange={(value) => workoutStore.updateWorkoutSettings({ autoStartRestTimer: value })}
                   />
                 </div>
-                <div className="h-px bg-slate-200" />
+                <div className="h-px bg-[hsl(225,12%,20%)]" />
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-slate-800">Timer Signal</p>
-                    <p className="text-xs text-slate-500">Sound/Hinweis bei Ablauf</p>
+                    <p className="font-medium text-[hsl(var(--fg-primary))]">Timer Signal</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Sound/Hinweis bei Ablauf</p>
                   </div>
                   <Toggle
                     value={workoutStore.workoutSettings.restTimerSound}
@@ -410,7 +410,7 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="mt-6 rounded-xl bg-violet-50 px-4 py-3 text-sm text-violet-700">
+            <div className="mt-6 rounded-xl bg-violet-400/10 px-4 py-3 text-sm text-violet-400">
               Aenderungen am Rest-Timer werden sofort gespeichert.
             </div>
           </div>
@@ -418,14 +418,14 @@ export default function SettingsPage() {
 
         {/* Tab: Ernaehrung */}
         {activeTab === 'ernaehrung' && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-6 shadow-sm">
             <div className="mb-5 flex items-center gap-3">
-              <div className="rounded-xl bg-slate-100 p-2 text-slate-700">
+              <div className="rounded-xl bg-[hsl(225,12%,15%)] p-2 text-[hsl(var(--fg-secondary))]">
                 <Apple className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-slate-900">Ernaehrung</h2>
-                <p className="text-sm text-slate-500">Tageliche Ziele fuer Kalorien und Makros</p>
+                <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Ernaehrung</h2>
+                <p className="text-sm text-[hsl(var(--fg-muted))]">Tageliche Ziele fuer Kalorien und Makros</p>
               </div>
             </div>
 
@@ -439,7 +439,7 @@ export default function SettingsPage() {
                 { key: 'caffeine', label: 'Koffein (mg)' },
               ].map((item) => (
                 <div key={item.key}>
-                  <label className="mb-1 block text-sm font-semibold text-slate-700">{item.label}</label>
+                  <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">{item.label}</label>
                   <input
                     type="number"
                     value={(nutritionGoals as any)[item.key]}
@@ -449,7 +449,7 @@ export default function SettingsPage() {
                         [item.key]: parseInt(e.target.value || '0', 10),
                       }))
                     }
-                    className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-emerald-500"
+                    className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-muted))] outline-none transition-colors focus:border-emerald-500"
                   />
                 </div>
               ))}
@@ -468,37 +468,37 @@ export default function SettingsPage() {
         {activeTab === 'app' && (
           <div className="space-y-5">
             {/* App Praeferenzen */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-6 shadow-sm">
               <div className="mb-5 flex items-center gap-3">
-                <div className="rounded-xl bg-slate-100 p-2 text-slate-700">
+                <div className="rounded-xl bg-[hsl(225,12%,15%)] p-2 text-[hsl(var(--fg-secondary))]">
                   <SlidersHorizontal className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900">App-Praeferenzen</h2>
-                  <p className="text-sm text-slate-500">Sprache, Ansicht und Darstellung</p>
+                  <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">App-Praeferenzen</h2>
+                  <p className="text-sm text-[hsl(var(--fg-muted))]">Sprache, Ansicht und Darstellung</p>
                 </div>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-slate-700">Sprache</label>
+                  <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Sprache</label>
                   <select
                     value={preferences.language}
                     onChange={(e) => updatePreferences({ language: e.target.value as 'de' | 'en' })}
-                    className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-indigo-500"
+                    className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] outline-none transition-colors focus:border-indigo-500"
                   >
                     <option value="de">Deutsch</option>
                     <option value="en">English</option>
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-slate-700">Standard Kalenderansicht</label>
+                  <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Standard Kalenderansicht</label>
                   <select
                     value={preferences.calendarView}
                     onChange={(e) =>
                       updatePreferences({ calendarView: e.target.value as 'month' | 'week' | 'year' })
                     }
-                    className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-indigo-500"
+                    className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] outline-none transition-colors focus:border-indigo-500"
                   >
                     <option value="month">Monat</option>
                     <option value="week">Woche</option>
@@ -506,13 +506,13 @@ export default function SettingsPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-semibold text-slate-700">Dashboard Akzent</label>
+                  <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Dashboard Akzent</label>
                   <select
                     value={preferences.dashboardAccent}
                     onChange={(e) =>
                       updatePreferences({ dashboardAccent: e.target.value as 'blue' | 'violet' | 'teal' })
                     }
-                    className="w-full rounded-xl border-2 border-slate-200 px-4 py-3 outline-none transition-colors focus:border-indigo-500"
+                    className="w-full rounded-xl border-2 border-[hsl(225,10%,16%)] bg-[hsl(225,14%,8%)] px-4 py-3 text-[hsl(var(--fg-primary))] outline-none transition-colors focus:border-indigo-500"
                   >
                     <option value="blue">Blue</option>
                     <option value="violet">Violet</option>
@@ -521,34 +521,34 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-4">
-                <p className="text-sm font-semibold text-slate-700">Darstellung</p>
+              <div className="mt-4 rounded-xl border border-[hsl(225,10%,16%)] bg-[hsl(225,12%,13%)] p-4 space-y-4">
+                <p className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">Darstellung</p>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-slate-800">Kompakter Modus</p>
-                    <p className="text-xs text-slate-500">Dichtere Karten/Abstaende</p>
+                    <p className="font-medium text-[hsl(var(--fg-primary))]">Kompakter Modus</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Dichtere Karten/Abstaende</p>
                   </div>
                   <Toggle
                     value={preferences.compactMode}
                     onChange={(value) => updatePreferences({ compactMode: value })}
                   />
                 </div>
-                <div className="h-px bg-slate-200" />
+                <div className="h-px bg-[hsl(225,12%,20%)]" />
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-slate-800">Advanced Stats zeigen</p>
-                    <p className="text-xs text-slate-500">Detailmetriken einblenden</p>
+                    <p className="font-medium text-[hsl(var(--fg-primary))]">Advanced Stats zeigen</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Detailmetriken einblenden</p>
                   </div>
                   <Toggle
                     value={preferences.showAdvancedStats}
                     onChange={(value) => updatePreferences({ showAdvancedStats: value })}
                   />
                 </div>
-                <div className="h-px bg-slate-200" />
+                <div className="h-px bg-[hsl(225,12%,20%)]" />
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-slate-800">Muskelbalance sichtbar</p>
-                    <p className="text-xs text-slate-500">Kann spaeter auch ausgeblendet werden</p>
+                    <p className="font-medium text-[hsl(var(--fg-primary))]">Muskelbalance sichtbar</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Kann spaeter auch ausgeblendet werden</p>
                   </div>
                   <Toggle
                     value={preferences.showMuscleBalance}
@@ -559,14 +559,14 @@ export default function SettingsPage() {
             </div>
 
             {/* Benachrichtigungen */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-6 shadow-sm">
               <div className="mb-5 flex items-center gap-3">
-                <div className="rounded-xl bg-slate-100 p-2 text-slate-700">
+                <div className="rounded-xl bg-[hsl(225,12%,15%)] p-2 text-[hsl(var(--fg-secondary))]">
                   <Bell className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900">Benachrichtigungen</h2>
-                  <p className="text-sm text-slate-500">Was du aktiv sehen willst</p>
+                  <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Benachrichtigungen</h2>
+                  <p className="text-sm text-[hsl(var(--fg-muted))]">Was du aktiv sehen willst</p>
                 </div>
               </div>
 
@@ -579,8 +579,8 @@ export default function SettingsPage() {
                   ['recoveryAlerts', 'Recovery Warnungen'],
                   ['syncAlerts', 'Cloud Sync Hinweise'],
                 ].map(([key, label]) => (
-                  <div key={key} className="flex items-center justify-between rounded-xl bg-slate-50 p-4">
-                    <p className="font-medium text-slate-800">{label}</p>
+                  <div key={key} className="flex items-center justify-between rounded-xl bg-[hsl(225,12%,13%)] p-4">
+                    <p className="font-medium text-[hsl(var(--fg-primary))]">{label}</p>
                     <Toggle
                       value={(notifications as any)[key]}
                       onChange={(value) => updateNotifications({ [key]: value } as any)}
@@ -591,12 +591,12 @@ export default function SettingsPage() {
             </div>
 
             {/* Hinweis */}
-            <section className="rounded-2xl border border-red-200 bg-red-50 p-5">
-              <div className="mb-2 flex items-center gap-2 text-red-700">
+            <section className="rounded-2xl border border-red-400/20 bg-red-400/10 p-5">
+              <div className="mb-2 flex items-center gap-2 text-red-400">
                 <Shield className="h-5 w-5" />
                 <h3 className="font-bold">Hinweis</h3>
               </div>
-              <p className="text-sm text-red-700">
+              <p className="text-sm text-red-400">
                 Alle Einstellungen werden lokal gespeichert und bei Login mit Supabase synchronisiert.
                 Mit "Alles speichern" schreibst du sofort in die Cloud.
               </p>

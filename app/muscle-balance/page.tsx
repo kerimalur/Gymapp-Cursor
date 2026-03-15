@@ -94,10 +94,10 @@ const RECOMMENDATIONS: Record<string, string[]> = {
 
 function ScoreBadge({ score, size = 'md' }: { score: number; size?: 'sm' | 'md' | 'lg' }) {
   const color =
-    score >= 80 ? 'text-emerald-700 bg-emerald-50 border-emerald-200' :
-    score >= 60 ? 'text-blue-700 bg-blue-50 border-blue-200' :
-    score >= 40 ? 'text-amber-700 bg-amber-50 border-amber-200' :
-                  'text-rose-700 bg-rose-50 border-rose-200';
+    score >= 80 ? 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20' :
+    score >= 60 ? 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20' :
+    score >= 40 ? 'text-amber-400 bg-amber-400/10 border-amber-400/20' :
+                  'text-rose-400 bg-rose-400/10 border-rose-400/20';
 
   const textSize = size === 'lg' ? 'text-4xl' : size === 'md' ? 'text-2xl' : 'text-lg';
   return (
@@ -122,19 +122,19 @@ function BalanceBar({
   return (
     <div>
       <div className="flex items-center justify-between mb-1 text-sm">
-        <span className="font-medium text-slate-700">{leftLabel}</span>
-        <span className="font-medium text-slate-700">{rightLabel}</span>
+        <span className="font-medium text-[hsl(var(--fg-secondary))]">{leftLabel}</span>
+        <span className="font-medium text-[hsl(var(--fg-secondary))]">{rightLabel}</span>
       </div>
-      <div className="relative h-4 bg-slate-100 rounded-full overflow-hidden flex">
+      <div className="relative h-4 bg-[hsl(225,12%,15%)] rounded-full overflow-hidden flex">
         <div
           className={`h-full ${barColor} transition-all duration-700`}
           style={{ width: `${leftPct}%` }}
         />
-        <div className="h-full bg-slate-200 flex-1" />
+        <div className="h-full bg-[hsl(225,12%,20%)] flex-1" />
       </div>
-      <div className="flex items-center justify-between mt-1 text-xs text-slate-500">
+      <div className="flex items-center justify-between mt-1 text-xs text-[hsl(var(--fg-muted))]">
         <span>{leftPct}%</span>
-        <span className={isBalanced ? 'text-emerald-600 font-semibold' : 'text-amber-600 font-semibold'}>
+        <span className={isBalanced ? 'text-emerald-400 font-semibold' : 'text-amber-400 font-semibold'}>
           {isBalanced ? 'Gut ausgewogen' : 'Ungleichgewicht'}
         </span>
         <span>{rightPct}%</span>
@@ -148,22 +148,22 @@ function WeaknessCard({
 }: {
   rank: number; muscle: string; sets: number; recommendation: string;
 }) {
-  const rankColors = ['bg-rose-100 text-rose-700', 'bg-orange-100 text-orange-700', 'bg-amber-100 text-amber-700'];
+  const rankColors = ['bg-rose-400/10 text-rose-400', 'bg-orange-400/10 text-orange-400', 'bg-amber-400/10 text-amber-400'];
   return (
-    <div className="flex items-start gap-4 p-4 bg-white rounded-xl border border-slate-200 hover:shadow-sm transition-shadow">
+    <div className="flex items-start gap-4 p-4 bg-[hsl(225,14%,10%)] rounded-xl border border-[hsl(225,10%,16%)] hover:shadow-sm transition-shadow">
       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${rankColors[rank] || rankColors[2]}`}>
         {rank + 1}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <p className="font-semibold text-slate-800">{muscle}</p>
+          <p className="font-semibold text-[hsl(var(--fg-primary))]">{muscle}</p>
           {sets === 0 ? (
-            <span className="text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full font-medium">Nicht trainiert</span>
+            <span className="text-xs bg-rose-400/10 text-rose-400 px-2 py-0.5 rounded-full font-medium">Nicht trainiert</span>
           ) : (
-            <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">{sets.toFixed(1)} Sätze</span>
+            <span className="text-xs bg-amber-400/10 text-amber-400 px-2 py-0.5 rounded-full font-medium">{sets.toFixed(1)} Sätze</span>
           )}
         </div>
-        <p className="text-sm text-slate-500 leading-relaxed">{recommendation}</p>
+        <p className="text-sm text-[hsl(var(--fg-muted))] leading-relaxed">{recommendation}</p>
       </div>
     </div>
   );
@@ -333,10 +333,10 @@ export default function MuscleBalancePage() {
         {/* ── Header ── */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Muskelbalance</h1>
-            <p className="text-slate-500 mt-1">Analysiere deine Trainingsverteilung</p>
+            <h1 className="text-3xl font-bold text-[hsl(var(--fg-primary))]">Muskelbalance</h1>
+            <p className="text-[hsl(var(--fg-muted))] mt-1">Analysiere deine Trainingsverteilung</p>
           </div>
-          <div className="flex bg-slate-100 rounded-xl p-1 flex-shrink-0">
+          <div className="flex bg-[hsl(225,12%,15%)] rounded-xl p-1 flex-shrink-0">
             {[
               { key: 'week', label: 'Woche' },
               { key: 'month', label: 'Monat' },
@@ -347,8 +347,8 @@ export default function MuscleBalancePage() {
                 onClick={() => setTimeRange(key as typeof timeRange)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   timeRange === key
-                    ? 'bg-white text-slate-800 shadow-sm'
-                    : 'text-slate-500 hover:text-slate-700'
+                    ? 'bg-[hsl(225,14%,10%)] text-[hsl(var(--fg-primary))] shadow-sm'
+                    : 'text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))]'
                 }`}
               >
                 {label}
@@ -359,10 +359,10 @@ export default function MuscleBalancePage() {
 
         {/* ── No Data State ── */}
         {workoutSessions.length === 0 && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
-            <Scale className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-slate-800 mb-2">Keine Daten vorhanden</h2>
-            <p className="text-slate-500 max-w-md mx-auto">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-12 text-center">
+            <Scale className="w-16 h-16 text-[hsl(var(--fg-subtle))] mx-auto mb-4" />
+            <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))] mb-2">Keine Daten vorhanden</h2>
+            <p className="text-[hsl(var(--fg-muted))] max-w-md mx-auto">
               Schließe dein erstes Training ab, um hier deine Muskelbalance zu sehen.
             </p>
           </div>
@@ -378,39 +378,39 @@ export default function MuscleBalancePage() {
                   label: 'Trainings',
                   value: filteredSessions.length,
                   sub: timeRangeLabel,
-                  color: 'bg-blue-100 text-blue-700',
+                  color: 'bg-cyan-400/10 text-cyan-400',
                 },
                 {
                   icon: Scale,
                   label: 'Gewichtete Sätze',
                   value: Math.round(totalSets * 10) / 10,
                   sub: 'inkl. Hilfsmuskeln',
-                  color: 'bg-emerald-100 text-emerald-700',
+                  color: 'bg-emerald-400/10 text-emerald-400',
                 },
                 {
                   icon: TrendingUp,
                   label: 'Meisttrainiert',
                   value: mostTrained,
                   sub: `${(muscleVolume[mostTrained] || 0).toFixed(1)} Sätze`,
-                  color: 'bg-violet-100 text-violet-700',
+                  color: 'bg-violet-400/10 text-violet-400',
                 },
                 {
                   icon: Target,
                   label: 'Balancescore',
                   value: compositeScore,
                   sub: scoreLabel(compositeScore),
-                  color: compositeScore >= 70 ? 'bg-emerald-100 text-emerald-700' : compositeScore >= 50 ? 'bg-amber-100 text-amber-700' : 'bg-rose-100 text-rose-700',
+                  color: compositeScore >= 70 ? 'bg-emerald-400/10 text-emerald-400' : compositeScore >= 50 ? 'bg-amber-400/10 text-amber-400' : 'bg-rose-400/10 text-rose-400',
                 },
               ].map(({ icon: Icon, label, value, sub, color }) => (
-                <div key={label} className="bg-white rounded-2xl border border-slate-200 p-5 hover:shadow-md transition-shadow">
+                <div key={label} className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5 hover:shadow-md transition-shadow">
                   <div className="flex items-start gap-3">
                     <div className={`p-2.5 rounded-xl ${color}`}>
                       <Icon className="w-5 h-5" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-medium text-slate-500 mb-1">{label}</p>
-                      <p className="text-xl font-bold text-slate-800 truncate">{value}</p>
-                      {sub && <p className="text-xs text-slate-400 mt-0.5 truncate">{sub}</p>}
+                      <p className="text-xs font-medium text-[hsl(var(--fg-muted))] mb-1">{label}</p>
+                      <p className="text-xl font-bold text-[hsl(var(--fg-primary))] truncate">{value}</p>
+                      {sub && <p className="text-xs text-[hsl(var(--fg-subtle))] mt-0.5 truncate">{sub}</p>}
                     </div>
                   </div>
                 </div>
@@ -418,14 +418,14 @@ export default function MuscleBalancePage() {
             </div>
 
             {/* ── Balancescore Section ── */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2.5 rounded-xl bg-indigo-100 text-indigo-700">
+                <div className="p-2.5 rounded-xl bg-indigo-400/10 text-indigo-400">
                   <Scale className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-slate-800">Balancescore</h2>
-                  <p className="text-sm text-slate-500">Push/Pull, Ober-/Unterkörper und Gesamtverteilung</p>
+                  <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Balancescore</h2>
+                  <p className="text-sm text-[hsl(var(--fg-muted))]">Push/Pull, Ober-/Unterkörper und Gesamtverteilung</p>
                 </div>
               </div>
 
@@ -447,12 +447,12 @@ export default function MuscleBalancePage() {
                     description: 'Oberkörper vs. Beine',
                   },
                 ].map(({ label, score, description }) => (
-                  <div key={label} className="bg-slate-50 rounded-xl p-4 text-center">
+                  <div key={label} className="bg-[hsl(225,12%,13%)] rounded-xl p-4 text-center">
                     <ScoreBadge score={score} size="lg" />
-                    <p className="font-semibold text-slate-800 mt-3">{label}</p>
-                    <p className="text-xs text-slate-500 mt-1">{description}</p>
+                    <p className="font-semibold text-[hsl(var(--fg-primary))] mt-3">{label}</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))] mt-1">{description}</p>
                     <p className={`text-xs font-medium mt-1.5 ${
-                      score >= 70 ? 'text-emerald-600' : score >= 50 ? 'text-amber-600' : 'text-rose-600'
+                      score >= 70 ? 'text-emerald-400' : score >= 50 ? 'text-amber-400' : 'text-rose-400'
                     }`}>
                       {scoreLabel(score)}
                     </p>
@@ -478,19 +478,19 @@ export default function MuscleBalancePage() {
             </div>
 
             {/* ── Schwachstellen Section ── */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-6">
               <div className="flex items-center gap-3 mb-5">
-                <div className="p-2.5 rounded-xl bg-orange-100 text-orange-700">
+                <div className="p-2.5 rounded-xl bg-orange-400/10 text-orange-400">
                   <AlertTriangle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-slate-800">Schwachstellen</h2>
-                  <p className="text-sm text-slate-500">Muskelgruppen mit dem wenigsten Volumen – hier lohnt es sich anzusetzen</p>
+                  <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Schwachstellen</h2>
+                  <p className="text-sm text-[hsl(var(--fg-muted))]">Muskelgruppen mit dem wenigsten Volumen – hier lohnt es sich anzusetzen</p>
                 </div>
               </div>
 
               {filteredSessions.length === 0 ? (
-                <p className="text-slate-400 text-sm">Noch keine Daten für diesen Zeitraum.</p>
+                <p className="text-[hsl(var(--fg-subtle))] text-sm">Noch keine Daten für diesen Zeitraum.</p>
               ) : (
                 <div className="space-y-3">
                   {weaknesses.map((w, i) => (
@@ -506,9 +506,9 @@ export default function MuscleBalancePage() {
               )}
 
               {filteredSessions.length > 0 && weaknesses.every(w => w.sets > 0) && (
-                <div className="mt-4 flex items-center gap-3 p-4 bg-emerald-50 rounded-xl border border-emerald-200">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-                  <p className="text-sm text-emerald-700 font-medium">
+                <div className="mt-4 flex items-center gap-3 p-4 bg-emerald-400/10 rounded-xl border border-emerald-400/20">
+                  <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                  <p className="text-sm text-emerald-400 font-medium">
                     Alle Hauptmuskelgruppen wurden in diesem Zeitraum trainiert.
                   </p>
                 </div>
@@ -517,17 +517,17 @@ export default function MuscleBalancePage() {
 
             {/* ── Charts ── */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-2xl border border-slate-200 p-6">
-                <h2 className="text-lg font-bold text-slate-800 mb-1">Volumen pro Muskelgruppe</h2>
-                <p className="text-sm text-slate-500 mb-5">
+              <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-6">
+                <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))] mb-1">Volumen pro Muskelgruppe</h2>
+                <p className="text-sm text-[hsl(var(--fg-muted))] mb-5">
                   Primärer Muskel = 1,0 Satz · Hilfsmuskel = 0,5 Satz
                 </p>
                 <MuscleBalanceChart />
               </div>
 
-              <div className="bg-white rounded-2xl border border-slate-200 p-6">
-                <h2 className="text-lg font-bold text-slate-800 mb-1">Trainingsfrequenz</h2>
-                <p className="text-sm text-slate-500 mb-5">Trainingstage pro Muskelgruppe</p>
+              <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-6">
+                <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))] mb-1">Trainingsfrequenz</h2>
+                <p className="text-sm text-[hsl(var(--fg-muted))] mb-5">Trainingstage pro Muskelgruppe</p>
                 <TrainingFrequencyAnalysis />
               </div>
             </div>

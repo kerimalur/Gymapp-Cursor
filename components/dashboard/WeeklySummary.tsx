@@ -82,19 +82,19 @@ export function WeeklySummary() {
   const workoutsUp = summary.thisWorkouts >= summary.lastWorkouts;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-5 shadow-sm">
       <div className="mb-4 flex items-center gap-2">
         <svg className="h-5 w-5 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
         </svg>
-        <h3 className="text-lg font-bold text-slate-800">Wochenrückblick</h3>
+        <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Wochenrückblick</h3>
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="rounded-xl bg-slate-50 p-3">
-          <p className="text-xs text-slate-500 mb-1">Trainings diese Woche</p>
+        <div className="rounded-xl bg-[hsl(225,12%,13%)] p-3">
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-1">Trainings diese Woche</p>
           <div className="flex items-end gap-2">
-            <p className="text-2xl font-bold text-slate-800">{summary.thisWorkouts}</p>
+            <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{summary.thisWorkouts}</p>
             {summary.lastWorkouts > 0 && (
               <span className={`text-xs font-medium mb-1 ${workoutsUp ? 'text-emerald-600' : 'text-orange-500'}`}>
                 {workoutsUp ? '↑' : '↓'} {Math.abs(summary.thisWorkouts - summary.lastWorkouts)} vs. letzte Wo.
@@ -103,10 +103,10 @@ export function WeeklySummary() {
           </div>
         </div>
 
-        <div className="rounded-xl bg-slate-50 p-3">
-          <p className="text-xs text-slate-500 mb-1">Volumen diese Woche</p>
+        <div className="rounded-xl bg-[hsl(225,12%,13%)] p-3">
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-1">Volumen diese Woche</p>
           <div className="flex items-end gap-2">
-            <p className="text-2xl font-bold text-slate-800">
+            <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
               {summary.thisVolume > 0 ? `${(summary.thisVolume / 1000).toFixed(1)}t` : '0kg'}
             </p>
             {summary.volumeChange !== null && (
@@ -132,13 +132,13 @@ export function WeeklySummary() {
       )}
 
       {summary.topExercise && (
-        <p className="text-xs text-slate-500">
-          Meiste Arbeit: <span className="font-medium text-slate-700">{summary.topExercise}</span>
+        <p className="text-xs text-[hsl(var(--fg-muted))]">
+          Meiste Arbeit: <span className="font-medium text-[hsl(var(--fg-secondary))]">{summary.topExercise}</span>
         </p>
       )}
 
       {summary.thisWorkouts === 0 && (
-        <p className="text-sm text-slate-500">Diese Woche noch kein Training. Los geht's!</p>
+        <p className="text-sm text-[hsl(var(--fg-muted))]">Diese Woche noch kein Training. Los geht's!</p>
       )}
     </div>
   );

@@ -93,11 +93,11 @@ export function SupplementsTracker() {
   const totalCount = supplements.length;
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
+    <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Supplements</h2>
-          <p className="text-sm text-gray-600">
+          <h2 className="text-2xl font-bold text-[hsl(var(--fg-primary))]">Supplements</h2>
+          <p className="text-sm text-[hsl(var(--fg-secondary))]">
             {takenCount} von {totalCount} genommen
           </p>
         </div>
@@ -123,11 +123,11 @@ export function SupplementsTracker() {
 
       {/* Supplements List */}
       {supplements.length === 0 ? (
-        <div className="bg-gray-50 rounded-xl p-8 text-center">
-          <p className="text-gray-500">
+        <div className="bg-[hsl(225,12%,13%)] rounded-xl p-8 text-center">
+          <p className="text-[hsl(var(--fg-muted))]">
             Noch keine Supplements hinzugefügt
           </p>
-          <p className="text-sm text-gray-400 mt-2">
+          <p className="text-sm text-[hsl(var(--fg-subtle))] mt-2">
             Klicke auf + um deine ersten Supplements zu verwalten
           </p>
         </div>
@@ -139,7 +139,7 @@ export function SupplementsTracker() {
             className={`relative group p-4 rounded-xl transition-all border-2 ${
               supplement.taken
                 ? 'bg-green-50 border-green-500'
-                : 'bg-gray-50 border-gray-200 hover:border-purple-300'
+                : 'bg-[hsl(225,12%,13%)] border-[hsl(225,10%,16%)] hover:border-purple-400/30'
             }`}
           >
             <div className="flex items-center gap-3">
@@ -158,12 +158,12 @@ export function SupplementsTracker() {
                   className={`font-semibold ${
                     supplement.taken
                       ? 'text-green-900 line-through'
-                      : 'text-gray-900'
+                      : 'text-[hsl(var(--fg-primary))]'
                   }`}
                 >
                   {supplement.name}
                 </p>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-[hsl(var(--fg-secondary))]">
                   {supplement.dosage} • {supplement.timing}
                 </p>
               </div>
@@ -200,9 +200,9 @@ export function SupplementsTracker() {
       {/* Add/Edit Supplement Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl">
+          <div className="bg-[hsl(225,14%,10%)] rounded-3xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">
                 {editingId ? 'Supplement bearbeiten' : 'Supplement hinzufügen'}
               </h3>
               <button 
@@ -211,7 +211,7 @@ export function SupplementsTracker() {
                   setEditingId(null);
                   setNewSupplement({ name: '', dosage: '', timing: '' });
                 }}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors" 
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-lg transition-colors" 
                 title="Schlie?en" 
                 aria-label="Schlie?en"
               >
@@ -220,7 +220,7 @@ export function SupplementsTracker() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                   Name *
                 </label>
                 <input
@@ -228,12 +228,12 @@ export function SupplementsTracker() {
                   value={newSupplement.name}
                   onChange={(e) => setNewSupplement({ ...newSupplement, name: e.target.value })}
                   placeholder="z.B. Whey Protein, Kreatin, BCAA..."
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
                   autoFocus
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                   Dosierung
                 </label>
                 <input
@@ -241,17 +241,17 @@ export function SupplementsTracker() {
                   value={newSupplement.dosage}
                   onChange={(e) => setNewSupplement({ ...newSupplement, dosage: e.target.value })}
                   placeholder="z.B. 30g, 5g, 2 Kapseln..."
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
                   Einnahmezeitpunkt
                 </label>
                 <select
                   value={newSupplement.timing}
                   onChange={(e) => setNewSupplement({ ...newSupplement, timing: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-purple-500 focus:outline-none transition-colors"
                 >
                   <option value="">Ausw?hlen oder eingeben</option>
                   <option value="Morgens">Morgens</option>
@@ -265,17 +265,17 @@ export function SupplementsTracker() {
                   value={newSupplement.timing}
                   onChange={(e) => setNewSupplement({ ...newSupplement, timing: e.target.value })}
                   placeholder="Oder eigenen Zeitpunkt eingeben..."
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none transition-colors mt-2"
+                  className="w-full px-4 py-3 border-2 border-[hsl(225,10%,16%)] rounded-xl focus:border-purple-500 focus:outline-none transition-colors mt-2"
                 />
               </div>
-              <div className="flex gap-3 pt-4 border-t border-gray-200">
+              <div className="flex gap-3 pt-4 border-t border-[hsl(225,10%,16%)]">
                 <button
                   onClick={() => {
                     setShowAddModal(false);
                     setEditingId(null);
                     setNewSupplement({ name: '', dosage: '', timing: '' });
                   }}
-                  className="flex-1 px-4 py-3 border-2 border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-4 py-3 border-2 border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] font-semibold rounded-xl hover:bg-[hsl(225,12%,13%)] transition-colors"
                 >
                   Abbrechen
                 </button>

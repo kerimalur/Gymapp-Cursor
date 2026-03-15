@@ -66,8 +66,8 @@ const ClockIcon = () => (
 function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <div className="mb-5">
-      <h2 className="text-lg font-bold text-slate-800 tracking-tight">{title}</h2>
-      {subtitle && <p className="text-sm text-slate-500 mt-0.5">{subtitle}</p>}
+      <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))] tracking-tight">{title}</h2>
+      {subtitle && <p className="text-sm text-[hsl(var(--fg-muted))] mt-0.5">{subtitle}</p>}
     </div>
   );
 }
@@ -85,11 +85,11 @@ interface StatCardProps {
 }
 
 const COLOR_MAP: Record<StatCardProps['color'], { icon: string; trend: string }> = {
-  blue:    { icon: 'bg-blue-100 text-blue-600',    trend: '' },
-  emerald: { icon: 'bg-emerald-100 text-emerald-600', trend: '' },
-  violet:  { icon: 'bg-violet-100 text-violet-600', trend: '' },
-  orange:  { icon: 'bg-orange-100 text-orange-600', trend: '' },
-  rose:    { icon: 'bg-rose-100 text-rose-600',    trend: '' },
+  blue:    { icon: 'bg-cyan-400/15 text-cyan-400',    trend: '' },
+  emerald: { icon: 'bg-emerald-400/15 text-emerald-400', trend: '' },
+  violet:  { icon: 'bg-violet-400/15 text-violet-400', trend: '' },
+  orange:  { icon: 'bg-orange-400/15 text-orange-400', trend: '' },
+  rose:    { icon: 'bg-rose-400/15 text-rose-400',    trend: '' },
 };
 
 function StatCard({ icon, label, value, subValue, trend, trendLabel, color }: StatCardProps) {
@@ -98,29 +98,29 @@ function StatCard({ icon, label, value, subValue, trend, trendLabel, color }: St
   const isNegative = trend !== undefined && trend < 0;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-4 flex flex-col gap-3 hover:shadow-md transition-shadow">
+    <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-4 flex flex-col gap-3 hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between">
         <div className={`p-2 rounded-xl ${iconCls}`}>{icon}</div>
         {trend !== undefined && trend !== 0 && (
           <div className={`flex items-center gap-0.5 text-xs font-bold px-2 py-1 rounded-full ${
-            isPositive ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
+            isPositive ? 'bg-emerald-400/10 text-emerald-400' : 'bg-rose-400/10 text-rose-400'
           }`}>
             {isPositive ? <ArrowUpIcon /> : <ArrowDownIcon />}
             {Math.abs(trend)}%
           </div>
         )}
         {trend === 0 && (
-          <div className="text-xs font-medium text-slate-400 px-2 py-1">—</div>
+          <div className="text-xs font-medium text-[hsl(var(--fg-subtle))] px-2 py-1">—</div>
         )}
       </div>
 
       <div>
-        <p className="text-xs font-medium text-slate-500 mb-1">{label}</p>
-        <p className="text-2xl font-bold text-slate-900 leading-none">{value}</p>
-        {subValue && <p className="text-xs text-slate-400 mt-1.5">{subValue}</p>}
+        <p className="text-xs font-medium text-[hsl(var(--fg-muted))] mb-1">{label}</p>
+        <p className="text-2xl font-bold text-[hsl(var(--fg-primary))] leading-none">{value}</p>
+        {subValue && <p className="text-xs text-[hsl(var(--fg-subtle))] mt-1.5">{subValue}</p>}
         {trendLabel && (
           <p className={`text-xs font-medium mt-1.5 ${
-            isPositive ? 'text-emerald-600' : isNegative ? 'text-rose-600' : 'text-slate-400'
+            isPositive ? 'text-emerald-400' : isNegative ? 'text-rose-400' : 'text-[hsl(var(--fg-subtle))]'
           }`}>
             {trendLabel}
           </p>
@@ -147,15 +147,15 @@ function TimeRangeTabs({
   onChange: (v: TimeRange) => void;
 }) {
   return (
-    <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+    <div className="flex items-center gap-1 bg-[hsl(225,12%,13%)] p-1 rounded-xl border border-[hsl(225,10%,16%)]">
       {TIME_RANGE_OPTIONS.map((opt) => (
         <button
           key={opt.key}
           onClick={() => onChange(opt.key)}
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
             value === opt.key
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-500 hover:text-slate-700'
+              ? 'bg-[hsl(225,14%,18%)] text-[hsl(var(--fg-primary))] shadow-sm'
+              : 'text-[hsl(var(--fg-muted))] hover:text-[hsl(var(--fg-secondary))]'
           }`}
         >
           {opt.label}
@@ -266,14 +266,14 @@ export default function StatisticsPage() {
         {/* ── Header ─────────────────────────────────────────────────────── */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Statistiken</h1>
-            <p className="text-sm text-slate-500 mt-0.5">Dein Fortschritt im Überblick</p>
+            <h1 className="text-2xl font-bold text-[hsl(var(--fg-primary))]">Statistiken</h1>
+            <p className="text-sm text-[hsl(var(--fg-muted))] mt-0.5">Dein Fortschritt im Überblick</p>
           </div>
           <div className="flex items-center gap-3">
             <TimeRangeTabs value={timeRange} onChange={setTimeRange} />
             <button
               onClick={() => setShowSettings(true)}
-              className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors flex-shrink-0"
+              className="p-2.5 rounded-xl bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] text-[hsl(var(--fg-muted))] transition-colors flex-shrink-0"
               title="Einstellungen"
             >
               <SettingsIcon />

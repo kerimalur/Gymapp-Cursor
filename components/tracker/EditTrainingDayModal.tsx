@@ -180,7 +180,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all disabled:opacity-50"
+            className="px-6 py-2.5 rounded-xl font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] hover:bg-[hsl(225,12%,20%)] transition-all disabled:opacity-50"
           >
             Abbrechen
           </button>
@@ -197,7 +197,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
       <div className="p-6 space-y-6">
         {/* Name Input */}
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
+          <label className="block text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-2">
             Name des Trainingstags
           </label>
           <input
@@ -205,17 +205,17 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="z.B. Push Day, Oberkörper, Beine..."
-            className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none text-slate-800 placeholder:text-slate-400"
+            className="w-full px-4 py-3.5 bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)] rounded-xl focus:bg-[hsl(225,14%,10%)] focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none text-[hsl(var(--fg-primary))] placeholder:text-[hsl(var(--fg-subtle))]"
           />
         </div>
 
         {/* Exercise Toggle */}
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-slate-700">
+            <h3 className="text-sm font-semibold text-[hsl(var(--fg-secondary))]">
               Übungen ({selectedExercises.length})
             </h3>
-            <p className="text-xs text-slate-500">Bearbeite deine Übungen</p>
+            <p className="text-xs text-[hsl(var(--fg-muted))]">Bearbeite deine Übungen</p>
           </div>
           <button
             onClick={() => setShowExerciseList(!showExerciseList)}
@@ -232,16 +232,16 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
 
         {/* Exercise Selection Panel */}
         {showExerciseList && (
-          <div className="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden animate-slide-up">
-            <div className="p-4 border-b border-slate-200 space-y-3">
+          <div className="bg-[hsl(225,12%,13%)] rounded-2xl border border-[hsl(225,10%,16%)] overflow-hidden animate-slide-up">
+            <div className="p-4 border-b border-[hsl(225,10%,16%)] space-y-3">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[hsl(var(--fg-subtle))]" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Übung oder Muskelgruppe suchen..."
-                  className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none"
                   autoFocus
                 />
               </div>
@@ -253,7 +253,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                     className={`px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${
                       selectedCategory === cat.id
                         ? 'bg-emerald-500 text-white'
-                        : 'bg-white text-slate-600 border border-slate-200 hover:border-emerald-300'
+                        : 'bg-[hsl(225,14%,10%)] text-[hsl(var(--fg-secondary))] border border-[hsl(225,10%,16%)] hover:border-emerald-300'
                     }`}
                   >
                     {cat.name}
@@ -284,7 +284,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                             ? 'bg-emerald-50 border-2 border-emerald-200'
                             : exercise.isCustom
                               ? 'bg-violet-50 border border-violet-200 hover:border-violet-300 hover:shadow-sm'
-                              : 'bg-white border border-slate-200 hover:border-emerald-300 hover:shadow-sm'
+                              : 'bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] hover:border-emerald-300 hover:shadow-sm'
                         }`}
                       >
                         <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
@@ -292,7 +292,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                             ? 'bg-emerald-100 text-emerald-600'
                             : exercise.isCustom
                               ? 'bg-violet-100 text-violet-600'
-                              : 'bg-slate-100 text-slate-500'
+                              : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-muted))]'
                         }`}>
                           {isAdded ? (
                             <Check className="w-5 h-5" />
@@ -303,13 +303,13 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-slate-800 truncate">
+                          <p className="font-medium text-[hsl(var(--fg-primary))] truncate">
                             {exercise.name}
                             {exercise.isCustom && (
                               <span className="text-violet-500 text-xs ml-1">(Eigene)</span>
                             )}
                           </p>
-                          <p className="text-xs text-slate-500 truncate">
+                          <p className="text-xs text-[hsl(var(--fg-muted))] truncate">
                             {exercise.muscleGroups.join(', ')}
                           </p>
                       </div>
@@ -318,7 +318,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                 })}
               </div>
               {filteredExercises.length === 0 && (
-                <div className="text-center py-8 text-slate-500">
+                <div className="text-center py-8 text-[hsl(var(--fg-muted))]">
                   Keine Übungen gefunden
                 </div>
               )}
@@ -328,12 +328,12 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
 
         {/* Selected Exercises */}
           {selectedExercises.length === 0 ? (
-          <div className="bg-slate-50 rounded-2xl p-12 text-center border-2 border-dashed border-slate-200">
-            <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-4">
-              <Dumbbell className="w-8 h-8 text-slate-400" />
+          <div className="bg-[hsl(225,12%,13%)] rounded-2xl p-12 text-center border-2 border-dashed border-[hsl(225,10%,16%)]">
+            <div className="w-16 h-16 rounded-2xl bg-[hsl(225,12%,15%)] flex items-center justify-center mx-auto mb-4">
+              <Dumbbell className="w-8 h-8 text-[hsl(var(--fg-subtle))]" />
             </div>
-            <p className="text-slate-600 font-medium mb-1">Keine Übungen</p>
-            <p className="text-sm text-slate-400">F?ge Übungen hinzu</p>
+            <p className="text-[hsl(var(--fg-secondary))] font-medium mb-1">Keine Übungen</p>
+            <p className="text-sm text-[hsl(var(--fg-subtle))]">F?ge Übungen hinzu</p>
           </div>
           ) : (
             <div className="space-y-3">
@@ -344,27 +344,27 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
               return (
                 <div
                   key={index}
-                  className={`bg-white rounded-xl border-2 transition-all overflow-hidden ${
-                    isExpanded ? 'border-emerald-300 shadow-lg shadow-emerald-500/10' : 'border-slate-200'
+                  className={`bg-[hsl(225,14%,10%)] rounded-xl border-2 transition-all overflow-hidden ${
+                    isExpanded ? 'border-emerald-300 shadow-lg shadow-emerald-500/10' : 'border-[hsl(225,10%,16%)]'
                   }`}
                 >
                   {/* Header */}
                   <div
-                    className="p-4 flex items-center gap-3 cursor-pointer hover:bg-slate-50 transition-colors"
+                    className="p-4 flex items-center gap-3 cursor-pointer hover:bg-[hsl(225,12%,13%)] transition-colors"
                     onClick={() => setExpandedExercise(isExpanded ? null : index)}
                   >
                     <div className="flex flex-col gap-0.5">
                       <button
                         onClick={(e) => { e.stopPropagation(); handleMoveExercise(index, 'up'); }}
                         disabled={index === 0}
-                        className="p-1 hover:bg-slate-200 rounded disabled:opacity-30 transition-colors"
+                        className="p-1 hover:bg-[hsl(225,12%,20%)] rounded disabled:opacity-30 transition-colors"
                       >
                         <ChevronUp className="w-4 h-4" />
                       </button>
                       <button
                         onClick={(e) => { e.stopPropagation(); handleMoveExercise(index, 'down'); }}
                         disabled={index === selectedExercises.length - 1}
-                        className="p-1 hover:bg-slate-200 rounded disabled:opacity-30 transition-colors"
+                        className="p-1 hover:bg-[hsl(225,12%,20%)] rounded disabled:opacity-30 transition-colors"
                       >
                         <ChevronDown className="w-4 h-4" />
                       </button>
@@ -375,8 +375,8 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                     </div>
 
                     <div className="flex-1">
-                      <p className="font-semibold text-slate-800">{exerciseData?.name}</p>
-                      <p className="text-sm text-slate-500">
+                      <p className="font-semibold text-[hsl(var(--fg-primary))]">{exerciseData?.name}</p>
+                      <p className="text-sm text-[hsl(var(--fg-muted))]">
                         {exercise.sets.length} Sätze
                         {exercise.notes && ' • Notiz vorhanden'}
                       </p>
@@ -384,19 +384,19 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
 
                     <button
                       onClick={(e) => { e.stopPropagation(); handleRemoveExercise(index); }}
-                      className="p-2 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all"
+                      className="p-2 rounded-lg text-[hsl(var(--fg-subtle))] hover:text-rose-500 hover:bg-rose-50 transition-all"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>
 
-                    <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-5 h-5 text-[hsl(var(--fg-subtle))] transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                   </div>
 
                   {/* Expanded Content */}
                   {isExpanded && (
-                    <div className="px-4 pb-4 border-t border-slate-100 pt-4 animate-slide-up">
-                      <div className="bg-slate-50 rounded-xl p-4 mb-4">
-                        <div className="grid grid-cols-12 gap-2 mb-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    <div className="px-4 pb-4 border-t border-[hsl(225,10%,14%)] pt-4 animate-slide-up">
+                      <div className="bg-[hsl(225,12%,13%)] rounded-xl p-4 mb-4">
+                        <div className="grid grid-cols-12 gap-2 mb-3 text-xs font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wide">
                           <div className="col-span-1 text-center">Satz</div>
                           <div className="col-span-3 text-center">Wdh</div>
                           <div className="col-span-4 text-center">Gewicht</div>
@@ -408,7 +408,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                           {exercise.sets.map((set, setIdx) => (
                             <div key={setIdx} className="grid grid-cols-12 gap-2 items-center">
                               <div className="col-span-1 flex justify-center">
-                                <span className="w-7 h-7 rounded-full bg-white border border-slate-200 text-slate-600 font-semibold flex items-center justify-center text-sm">
+                                <span className="w-7 h-7 rounded-full bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] font-semibold flex items-center justify-center text-sm">
                                   {setIdx + 1}
                                 </span>
                               </div>
@@ -417,7 +417,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                                   type="number"
                                   value={set.reps}
                                   onChange={(e) => handleUpdateSet(index, setIdx, 'reps', parseInt(e.target.value) || 0)}
-                                  className="w-full px-2 py-2 bg-white border border-slate-200 rounded-lg text-center focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
+                                  className="w-full px-2 py-2 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-lg text-center focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
                                   min="0"
                                 />
                               </div>
@@ -427,12 +427,12 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                                     type="number"
                                     value={set.weight || ''}
                                     onChange={(e) => handleUpdateSet(index, setIdx, 'weight', parseFloat(e.target.value) || 0)}
-                                    className="w-full px-2 py-2 pr-8 bg-white border border-slate-200 rounded-lg text-center focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
+                                    className="w-full px-2 py-2 pr-8 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-lg text-center focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
                                     placeholder="0"
                                     min="0"
                                     step="0.5"
                                   />
-                                  <span className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">kg</span>
+                                  <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[hsl(var(--fg-subtle))] text-xs">kg</span>
                                 </div>
                               </div>
                               <div className="col-span-3">
@@ -440,7 +440,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                                   type="number"
                                   value={set.rir || ''}
                                   onChange={(e) => handleUpdateSet(index, setIdx, 'rir', parseInt(e.target.value) || 0)}
-                                  className="w-full px-2 py-2 bg-white border border-slate-200 rounded-lg text-center focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
+                                  className="w-full px-2 py-2 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-lg text-center focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
                                   placeholder="0"
                                   min="0"
                                   max="10"
@@ -450,7 +450,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                                 <button
                                   onClick={() => handleRemoveSet(index, setIdx)}
                                   disabled={exercise.sets.length <= 1}
-                                  className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all disabled:opacity-30"
+                                  className="p-1.5 rounded-lg text-[hsl(var(--fg-subtle))] hover:text-rose-500 hover:bg-rose-50 transition-all disabled:opacity-30"
                                 >
                                   <X className="w-4 h-4" />
                                 </button>
@@ -463,14 +463,14 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                       <div className="flex gap-2 mb-4">
                         <button
                           onClick={() => handleAddSet(index)}
-                          className="flex-1 px-4 py-2.5 border-2 border-dashed border-slate-300 text-slate-600 rounded-xl hover:border-emerald-400 hover:text-emerald-600 hover:bg-emerald-50 transition-all flex items-center justify-center gap-2"
+                          className="flex-1 px-4 py-2.5 border-2 border-dashed border-[hsl(225,10%,22%)] text-[hsl(var(--fg-secondary))] rounded-xl hover:border-emerald-400 hover:text-emerald-600 hover:bg-emerald-50 transition-all flex items-center justify-center gap-2"
                         >
                           <Plus className="w-4 h-4" />
                           Satz hinzufügen
                         </button>
                         <button
                           onClick={() => handleCopyLastSet(index)}
-                          className="px-4 py-2.5 border border-slate-200 text-slate-600 rounded-xl hover:border-emerald-300 hover:text-emerald-600 hover:bg-emerald-50 transition-all flex items-center gap-2"
+                          className="px-4 py-2.5 border border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] rounded-xl hover:border-emerald-300 hover:text-emerald-600 hover:bg-emerald-50 transition-all flex items-center gap-2"
                           title="Letzten Satz duplizieren"
                         >
                           <Copy className="w-4 h-4" />
@@ -478,14 +478,14 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
+                        <label className="block text-xs font-semibold text-[hsl(var(--fg-muted))] mb-1.5 uppercase tracking-wide">
                           Notizen
                         </label>
                         <textarea
                           value={exercise.notes || ''}
                           onChange={(e) => handleUpdateNotes(index, e.target.value)}
                           placeholder="Pausenzeit, Tempo, Hinweise..."
-                          className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none resize-none transition-all"
+                          className="w-full px-3 py-2.5 bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none resize-none transition-all"
                           rows={2}
                         />
                       </div>

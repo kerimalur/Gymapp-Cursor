@@ -150,7 +150,7 @@ export function Sidebar({ mobileOpen = false, onMobileClose }: SidebarProps) {
                 </div>
                 <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-[hsl(var(--success))] rounded-full border-2 border-[hsl(var(--bg-elevated))]" />
               </div>
-              <span className="font-bold text-lg text-primary tracking-tight">FitTrack</span>
+              <span className="font-bold text-lg text-primary tracking-tight">FitCoach</span>
             </div>
           )}
           {/* Hide collapse button on mobile, show only on desktop */}

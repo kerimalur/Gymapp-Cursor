@@ -62,7 +62,7 @@ function MuscleBar({ recovery, state }: { recovery: number; state: ReturnType<ty
     : state.key === 'recovering' ? 'bg-amber-400'
     :                              'bg-rose-500';
   return (
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+    <div className="h-1.5 w-full overflow-hidden rounded-full bg-[hsl(225,12%,16%)]">
       <div
         className={`h-full rounded-full transition-all duration-500 ${barColor}`}
         style={{ width: `${recovery}%` }}
@@ -162,23 +162,23 @@ export default function RecoveryPage() {
       <div className="mx-auto max-w-6xl space-y-8">
 
         {/* ── Hero Card ──────────────────────────────────────────────────── */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-6">
           <div className="flex flex-col sm:flex-row sm:items-center gap-6">
             {/* Ring */}
             <div className="relative flex-shrink-0 self-center">
               <RecoveryRing pct={overallRecovery} />
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold text-slate-900">{overallRecovery}%</span>
-                <span className="text-xs font-medium text-slate-500 mt-0.5">Gesamt</span>
+                <span className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{overallRecovery}%</span>
+                <span className="text-xs font-medium text-[hsl(var(--fg-muted))] mt-0.5">Gesamt</span>
               </div>
             </div>
 
             {/* Text + chips */}
             <div className="flex-1 min-w-0">
               <div className="mb-1">
-                <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">Regeneration</span>
+                <span className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--fg-subtle))]">Regeneration</span>
               </div>
-              <h1 className="text-2xl font-bold text-slate-900 mb-3">
+              <h1 className="text-2xl font-bold text-[hsl(var(--fg-primary))] mb-3">
                 Gesamtregeneration{' '}
                 <span
                   className={
@@ -195,22 +195,22 @@ export default function RecoveryPage() {
 
               {/* Status chips */}
               <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-sm font-semibold text-emerald-700">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-sm font-semibold text-emerald-400">
                   <span className="text-base leading-none">✓</span>
                   {summary.ready.length} bereit
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-sm font-semibold text-amber-700">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20 text-sm font-semibold text-amber-400">
                   <span className="text-base leading-none">⏱</span>
                   {summary.recovering.length} erholen
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-50 border border-rose-200 text-sm font-semibold text-rose-700">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-400/10 border border-rose-400/20 text-sm font-semibold text-rose-400">
                   <span className="text-base leading-none">⚠</span>
                   {summary.fatigued.length} belastet
                 </span>
               </div>
 
               {/* Hint tip */}
-              <p className="mt-3 text-sm text-slate-500">
+              <p className="mt-3 text-sm text-[hsl(var(--fg-muted))]">
                 {overallState.key === 'ready'
                   ? 'Dein Körper ist gut erholt. Optimale Zeit für intensives Training.'
                   : overallState.key === 'recovering'
@@ -222,20 +222,20 @@ export default function RecoveryPage() {
         </div>
 
         {/* ── Muskelkarte ────────────────────────────────────────────────── */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+        <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5">
           <div className="mb-5 flex items-start justify-between gap-3">
             <div>
-              <h2 className="text-lg font-bold text-slate-900">Muskelkarte</h2>
-              <p className="text-sm text-slate-500 mt-0.5">Dein aktuelles Recovery-Bild</p>
+              <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Muskelkarte</h2>
+              <p className="text-sm text-[hsl(var(--fg-muted))] mt-0.5">Dein aktuelles Recovery-Bild</p>
             </div>
-            <span className="hidden sm:block rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-500">
+            <span className="hidden sm:block rounded-full border border-[hsl(225,10%,20%)] bg-[hsl(225,12%,13%)] px-3 py-1 text-xs font-medium text-[hsl(var(--fg-muted))]">
               Tap auf einen Muskel für Details
             </span>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Vorderseite</p>
+            <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,12%,13%)] p-4">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-[hsl(var(--fg-muted))]">Vorderseite</p>
               <MuscleMap
                 view="front"
                 muscleRecovery={muscleRecoveryValues}
@@ -243,8 +243,8 @@ export default function RecoveryPage() {
                 enabledMuscles={enabledMuscles}
               />
             </div>
-            <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Rückseite</p>
+            <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,12%,13%)] p-4">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-[hsl(var(--fg-muted))]">Rückseite</p>
               <MuscleMap
                 view="back"
                 muscleRecovery={muscleRecoveryValues}
@@ -255,11 +255,11 @@ export default function RecoveryPage() {
           </div>
 
           {/* Interpretation note */}
-          <div className="mt-4 flex items-start gap-3 rounded-xl bg-slate-50 border border-slate-200 p-4">
-            <div className="mt-0.5 rounded-xl bg-white p-2 shadow-sm text-slate-500 flex-shrink-0">
+          <div className="mt-4 flex items-start gap-3 rounded-xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)] p-4">
+            <div className="mt-0.5 rounded-xl bg-[hsl(225,14%,16%)] p-2 text-[hsl(var(--fg-muted))] flex-shrink-0">
               <Sparkles className="h-4 w-4" />
             </div>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-[hsl(var(--fg-muted))]">
               Mehr Sätze, mehrere Übungen für denselben Muskel und niedriger RIR verlängern die
               Regeneration sichtbar. Die Karte reagiert direkt auf Trainingsintensität.
             </p>
@@ -270,8 +270,8 @@ export default function RecoveryPage() {
         {dayReadiness.length > 0 && (
           <section>
             <div className="mb-4">
-              <h2 className="text-lg font-bold text-slate-900">Trainingstag-Freigabe</h2>
-              <p className="text-sm text-slate-500 mt-0.5">
+              <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Trainingstag-Freigabe</h2>
+              <p className="text-sm text-[hsl(var(--fg-muted))] mt-0.5">
                 Welcher Tag passt heute am besten zu deinem Recovery-Bild.
               </p>
             </div>
@@ -286,12 +286,12 @@ export default function RecoveryPage() {
                   {/* Top row: name + chevron */}
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <div>
-                      <p className="font-bold text-slate-900 text-base">{day.name}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">
+                      <p className="font-bold text-[hsl(var(--fg-primary))] text-base">{day.name}</p>
+                      <p className="text-xs text-[hsl(var(--fg-muted))] mt-0.5">
                         {day.exerciseCount} Übungen · {day.muscles.length} Muskelgruppen
                       </p>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-[hsl(var(--fg-subtle))] mt-0.5 flex-shrink-0" />
                   </div>
 
                   {/* Recovery bar */}
@@ -302,7 +302,7 @@ export default function RecoveryPage() {
                     <span className={`text-sm font-bold ${day.state.accentClass}`}>
                       {day.state.label} · {day.avgRecovery}%
                     </span>
-                    <span className="text-xs font-medium text-slate-500">
+                    <span className="text-xs font-medium text-[hsl(var(--fg-muted))]">
                       {day.nextFreeInHours > 0 ? `Noch ~${day.nextFreeInHours}h` : 'Heute frei'}
                     </span>
                   </div>
@@ -313,13 +313,13 @@ export default function RecoveryPage() {
                       {day.muscles.slice(0, 5).map((muscle) => (
                         <span
                           key={muscle}
-                          className="rounded-full border border-white/70 bg-white/80 px-2.5 py-0.5 text-xs font-medium text-slate-600"
+                          className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs font-medium text-[hsl(var(--fg-secondary))]"
                         >
                           {MUSCLE_NAMES_DE[muscle]}
                         </span>
                       ))}
                       {day.muscles.length > 5 && (
-                        <span className="rounded-full border border-white/70 bg-white/80 px-2.5 py-0.5 text-xs font-medium text-slate-400">
+                        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs font-medium text-[hsl(var(--fg-subtle))]">
                           +{day.muscles.length - 5}
                         </span>
                       )}
@@ -334,13 +334,13 @@ export default function RecoveryPage() {
         {/* ── Alle Muskeln ───────────────────────────────────────────────── */}
         <section>
           <div className="mb-4">
-            <h2 className="text-lg font-bold text-slate-900">Alle Muskeln im Überblick</h2>
-            <p className="text-sm text-slate-500 mt-0.5">
+            <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Alle Muskeln im Überblick</h2>
+            <p className="text-sm text-[hsl(var(--fg-muted))] mt-0.5">
               Sortiert nach Erholungsstand — müdeste Muskeln zuerst.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] overflow-hidden">
             {sortedMuscles.map((muscle, idx) => {
               const info  = recoveryMap[muscle];
               const state = getRecoveryState(info.recovery);
@@ -349,7 +349,7 @@ export default function RecoveryPage() {
               return (
                 <div
                   key={muscle}
-                  className={`px-4 py-3 flex items-center gap-4 ${!isLast ? 'border-b border-slate-100' : ''}`}
+                  className={`px-4 py-3 flex items-center gap-4 ${!isLast ? 'border-b border-[hsl(225,10%,14%)]' : ''}`}
                 >
                   {/* Status dot */}
                   <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
@@ -363,7 +363,7 @@ export default function RecoveryPage() {
                   {/* Name + bar */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-semibold text-slate-800 truncate">
+                      <span className="text-sm font-semibold text-[hsl(var(--fg-primary))] truncate">
                         {MUSCLE_NAMES_DE[muscle]}
                       </span>
                       <span className={`text-xs font-bold ml-3 flex-shrink-0 ${state.accentClass}`}>
@@ -374,7 +374,7 @@ export default function RecoveryPage() {
                   </div>
 
                   {/* Metadata */}
-                  <div className="hidden sm:flex items-center gap-4 text-xs text-slate-400 flex-shrink-0">
+                  <div className="hidden sm:flex items-center gap-4 text-xs text-[hsl(var(--fg-subtle))] flex-shrink-0">
                     <span className="font-medium">
                       {info.hoursLeft > 0 ? `Frei in ${info.hoursLeft}h` : 'Jetzt frei'}
                     </span>
@@ -389,7 +389,7 @@ export default function RecoveryPage() {
                   </div>
 
                   {/* Mobile: just hours */}
-                  <div className="sm:hidden text-xs text-slate-400 flex-shrink-0">
+                  <div className="sm:hidden text-xs text-[hsl(var(--fg-subtle))] flex-shrink-0">
                     {info.hoursLeft > 0 ? `${info.hoursLeft}h` : 'Frei'}
                   </div>
                 </div>
@@ -403,36 +403,36 @@ export default function RecoveryPage() {
       {/* ── Day Detail Modal ──────────────────────────────────────────────── */}
       {selectedDay && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           onClick={() => setSelectedDayId(null)}
         >
           <div
-            className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl max-h-[90vh] overflow-y-auto"
+            className="w-full max-w-2xl rounded-2xl border border-[hsl(225,10%,18%)] bg-[hsl(225,14%,11%)] p-6 shadow-2xl max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal header */}
             <div className="mb-5 flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Trainingstag</p>
-                <h3 className="text-xl font-bold text-slate-900 mt-0.5">{selectedDay.name}</h3>
-                <p className="mt-1 text-sm text-slate-500">{selectedDay.state.description}</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--fg-subtle))]">Trainingstag</p>
+                <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))] mt-0.5">{selectedDay.name}</h3>
+                <p className="mt-1 text-sm text-[hsl(var(--fg-muted))]">{selectedDay.state.description}</p>
               </div>
               <button
                 onClick={() => setSelectedDayId(null)}
-                className="rounded-xl bg-slate-100 p-2 text-slate-600 hover:bg-slate-200 transition-colors flex-shrink-0"
+                className="rounded-xl bg-[hsl(225,12%,15%)] p-2 text-[hsl(var(--fg-muted))] hover:bg-[hsl(225,12%,20%)] transition-colors flex-shrink-0"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
             {/* Next training window */}
-            <div className="mb-5 flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <div className="rounded-xl bg-white p-2.5 shadow-sm text-slate-600 flex-shrink-0">
+            <div className="mb-5 flex items-center gap-3 rounded-xl border border-[hsl(225,10%,16%)] bg-[hsl(225,12%,13%)] p-4">
+              <div className="rounded-xl bg-[hsl(225,14%,16%)] p-2.5 text-[hsl(var(--fg-muted))] flex-shrink-0">
                 <Clock3 className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-800">Nächstes gutes Fenster</p>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm font-semibold text-[hsl(var(--fg-primary))]">Nächstes gutes Fenster</p>
+                <p className="text-sm text-[hsl(var(--fg-muted))]">
                   {selectedDay.nextFreeInHours > 0
                     ? `In etwa ${selectedDay.nextFreeInHours} Stunden ist der Tag frei`
                     : 'Der Tag ist aus Recovery-Sicht bereits frei'}
@@ -453,8 +453,8 @@ export default function RecoveryPage() {
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div>
-                        <p className="font-semibold text-slate-900">{MUSCLE_NAMES_DE[muscle]}</p>
-                        <p className="text-xs text-slate-500 mt-0.5">
+                        <p className="font-semibold text-[hsl(var(--fg-primary))]">{MUSCLE_NAMES_DE[muscle]}</p>
+                        <p className="text-xs text-[hsl(var(--fg-muted))] mt-0.5">
                           {info.lastTrainedAt ? `Zuletzt: ${formatDate(info.lastTrainedAt)}` : 'Noch nicht trainiert'}
                         </p>
                       </div>
@@ -466,21 +466,21 @@ export default function RecoveryPage() {
                     <MuscleBar recovery={info.recovery} state={state} />
 
                     <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
-                      <div className="rounded-lg border border-white/70 bg-white/80 p-2.5">
-                        <p className="font-semibold uppercase tracking-wide text-slate-400 text-[10px]">Frei in</p>
-                        <p className="mt-0.5 font-bold text-slate-900">
+                      <div className="rounded-lg border border-white/10 bg-white/5 p-2.5">
+                        <p className="font-semibold uppercase tracking-wide text-[hsl(var(--fg-subtle))] text-[10px]">Frei in</p>
+                        <p className="mt-0.5 font-bold text-[hsl(var(--fg-primary))]">
                           {info.hoursLeft > 0 ? `${info.hoursLeft}h` : 'Jetzt'}
                         </p>
                       </div>
-                      <div className="rounded-lg border border-white/70 bg-white/80 p-2.5">
-                        <p className="font-semibold uppercase tracking-wide text-slate-400 text-[10px]">Sätze</p>
-                        <p className="mt-0.5 font-bold text-slate-900">
+                      <div className="rounded-lg border border-white/10 bg-white/5 p-2.5">
+                        <p className="font-semibold uppercase tracking-wide text-[hsl(var(--fg-subtle))] text-[10px]">Sätze</p>
+                        <p className="mt-0.5 font-bold text-[hsl(var(--fg-primary))]">
                           {info.weightedSets > 0 ? info.weightedSets : '—'}
                         </p>
                       </div>
-                      <div className="rounded-lg border border-white/70 bg-white/80 p-2.5">
-                        <p className="font-semibold uppercase tracking-wide text-slate-400 text-[10px]">Avg. RIR</p>
-                        <p className="mt-0.5 font-bold text-slate-900">{info.avgRir}</p>
+                      <div className="rounded-lg border border-white/10 bg-white/5 p-2.5">
+                        <p className="font-semibold uppercase tracking-wide text-[hsl(var(--fg-subtle))] text-[10px]">Avg. RIR</p>
+                        <p className="mt-0.5 font-bold text-[hsl(var(--fg-primary))]">{info.avgRir}</p>
                       </div>
                     </div>
                   </div>

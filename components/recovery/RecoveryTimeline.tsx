@@ -184,7 +184,7 @@ export function RecoveryTimeline({
   const muscleExercises = selectedMuscle ? getMuscleExercises(selectedMuscle) : [];
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
+    <div className="bg-[hsl(225,14%,10%)] rounded-2xl shadow-lg p-6">
       <div className="space-y-4">
         {sortedMuscles.map(([muscle, recovery]) => {
           const muscleKey = muscle as MuscleGroup;
@@ -206,7 +206,7 @@ export function RecoveryTimeline({
                 });
                 setSelectedMuscle(muscle);
               }}
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer"
+              className="flex items-center gap-4 p-4 rounded-xl hover:bg-[hsl(225,12%,13%)] transition-colors cursor-pointer"
             >
               {/* Icon */}
               <div
@@ -245,7 +245,7 @@ export function RecoveryTimeline({
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-semibold text-gray-900">
+                    <h4 className="font-semibold text-[hsl(var(--fg-primary))]">
                       {muscleTranslations[muscle] || muscle}
                     </h4>
                     {isSecondaryMuscle && (
@@ -256,16 +256,16 @@ export function RecoveryTimeline({
                     )}
                   </div>
                   <div className="text-right">
-                    <span className="text-sm font-bold text-gray-900">
+                    <span className="text-sm font-bold text-[hsl(var(--fg-primary))]">
                       {recovery}%
                     </span>
                     {!isReady && hoursRemaining > 0 && (
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-[hsl(var(--fg-muted))]">
                         noch {hoursRemaining}h
                       </p>
                     )}
                     {trainedDay && (
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-[hsl(var(--fg-subtle))]">
                         {trainedDay}
                       </p>
                     )}
@@ -305,14 +305,14 @@ export function RecoveryTimeline({
       </div>
 
       {/* Info Box */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <div className="flex items-start gap-3 bg-blue-50 rounded-xl p-4">
-          <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+      <div className="mt-6 pt-6 border-t border-[hsl(225,10%,16%)]">
+        <div className="flex items-start gap-3 bg-cyan-400/10 rounded-xl p-4">
+          <AlertCircle className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-blue-900 mb-1">
               Regenerations-Hinweis
             </p>
-            <p className="text-sm text-blue-700">
+            <p className="text-sm text-cyan-400">
               Klicke auf einen Muskel, um Details zu sehen. Nur Sätze mit Gewicht werden berücksichtigt.
             </p>
           </div>
@@ -322,14 +322,14 @@ export function RecoveryTimeline({
       {/* Muscle Detail Modal */}
       {selectedMuscle && muscleInfo && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white rounded-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
             {/* Header - same as MuscleMap */}
-            <div className="flex-shrink-0 bg-white border-b border-gray-100 p-4 flex items-center justify-between">
+            <div className="flex-shrink-0 bg-[hsl(225,14%,10%)] border-b border-[hsl(225,10%,14%)] p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className={`w-4 h-4 rounded-full ${getStatusColor(muscleInfo.recovery)}`} />
-                <h2 className="text-xl font-bold text-gray-900">{muscleInfo.name}</h2>
+                <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">{muscleInfo.name}</h2>
                 {muscleInfo.isSecondary && (
-                  <span className="px-2 py-0.5 text-xs font-medium bg-slate-100 text-slate-600 rounded-full flex items-center gap-1">
+                  <span className="px-2 py-0.5 text-xs font-medium bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] rounded-full flex items-center gap-1">
                     <Users className="w-3 h-3" />
                     Hilfsmuskel
                   </span>
@@ -337,30 +337,30 @@ export function RecoveryTimeline({
               </div>
               <button
                 onClick={() => setSelectedMuscle(null)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-[hsl(225,12%,18%)] rounded-lg transition-colors"
                 title="Schlie?en"
                 aria-label="Schlie?en"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
               </button>
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-6">
               {/* Role Info Banner - same as MuscleMap */}
               {muscleInfo.isSecondary && (
-                <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
-                  <Users className="w-5 h-5 text-slate-500" />
-                  <p className="text-sm text-slate-600">
+                <div className="flex items-center gap-3 p-3 bg-[hsl(225,12%,13%)] rounded-xl border border-[hsl(225,10%,16%)]">
+                  <Users className="w-5 h-5 text-[hsl(var(--fg-muted))]" />
+                  <p className="text-sm text-[hsl(var(--fg-secondary))]">
                     Dieser Muskel wurde zuletzt als <strong>Hilfsmuskel</strong> trainiert und regeneriert schneller.
                   </p>
                 </div>
               )}
 
               {/* Recovery Status - same as MuscleMap */}
-              <div className="bg-gray-50 rounded-xl p-4">
+              <div className="bg-[hsl(225,12%,13%)] rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-medium text-gray-600">Regeneration</span>
-                  <span className="text-2xl font-bold text-gray-900">{muscleInfo.recovery}%</span>
+                  <span className="text-sm font-medium text-[hsl(var(--fg-secondary))]">Regeneration</span>
+                  <span className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{muscleInfo.recovery}%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                   <div
@@ -373,7 +373,7 @@ export function RecoveryTimeline({
                     {muscleInfo.status}
                   </span>
                   {muscleInfo.hoursRemaining > 0 && (
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-[hsl(var(--fg-muted))]">
                       Noch {muscleInfo.hoursRemaining}h bis 100%
                     </span>
                   )}
@@ -381,38 +381,38 @@ export function RecoveryTimeline({
               </div>
 
               {/* Time Since Training */}
-              <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-xl">
+              <div className="flex items-center gap-3 p-4 bg-cyan-400/10 rounded-xl">
                 <div className="p-2 bg-blue-100 rounded-lg">
-                  <Clock className="w-5 h-5 text-blue-600" />
+                  <Clock className="w-5 h-5 text-cyan-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Zeit seit Training</p>
-                  <p className="font-semibold text-gray-900">{getTimeSinceTraining(selectedMuscle)}</p>
+                  <p className="text-sm text-[hsl(var(--fg-secondary))]">Zeit seit Training</p>
+                  <p className="font-semibold text-[hsl(var(--fg-primary))]">{getTimeSinceTraining(selectedMuscle)}</p>
                 </div>
               </div>
 
               {/* Recent Exercises */}
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <Dumbbell className="w-5 h-5 text-gray-400" />
-                  <h3 className="font-semibold text-gray-900">Letzte Übungen</h3>
+                  <Dumbbell className="w-5 h-5 text-[hsl(var(--fg-subtle))]" />
+                  <h3 className="font-semibold text-[hsl(var(--fg-primary))]">Letzte Übungen</h3>
                 </div>
                 
                 {muscleExercises.length > 0 ? (
                   <div className="space-y-3">
                     {muscleExercises.map((exercise, index) => (
-                      <div key={index} className="bg-gray-50 rounded-xl p-4">
+                      <div key={index} className="bg-[hsl(225,12%,13%)] rounded-xl p-4">
                         <div className="flex items-start justify-between">
                           <div>
-                            <p className="font-medium text-gray-900">{exercise.exerciseName}</p>
-                            <div className="flex items-center gap-3 mt-1 text-sm text-gray-500">
+                            <p className="font-medium text-[hsl(var(--fg-primary))]">{exercise.exerciseName}</p>
+                            <div className="flex items-center gap-3 mt-1 text-sm text-[hsl(var(--fg-muted))]">
                               <span>{exercise.sets} Sätze</span>
                               <span>•</span>
                               <span>{exercise.totalVolume.toLocaleString()} kg</span>
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="flex items-center gap-1 text-sm text-gray-400">
+                            <div className="flex items-center gap-1 text-sm text-[hsl(var(--fg-subtle))]">
                               <Calendar className="w-4 h-4" />
                               {format(exercise.date, 'dd.MM', { locale: de })}
                             </div>
@@ -422,16 +422,16 @@ export function RecoveryTimeline({
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-6 bg-gray-50 rounded-xl">
-                    <p className="text-gray-500">Noch keine Übungen für diesen Muskel</p>
+                  <div className="text-center py-6 bg-[hsl(225,12%,13%)] rounded-xl">
+                    <p className="text-[hsl(var(--fg-muted))]">Noch keine Übungen für diesen Muskel</p>
                   </div>
                 )}
               </div>
 
               {/* Recovery Info */}
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4">
-                <h4 className="font-medium text-gray-900 mb-2">Regenerationszeit</h4>
-                <p className="text-sm text-gray-600">
+              <div className="bg-gradient-to-br from-[hsl(225,12%,13%)] to-[hsl(225,12%,15%)] rounded-xl p-4">
+                <h4 className="font-medium text-[hsl(var(--fg-primary))] mb-2">Regenerationszeit</h4>
+                <p className="text-sm text-[hsl(var(--fg-secondary))]">
                   Dieser Muskel benoetigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> für vollst?ndige Regeneration.
                 </p>
               </div>

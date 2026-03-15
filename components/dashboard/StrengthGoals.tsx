@@ -86,13 +86,13 @@ export function StrengthGoals() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] p-5 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <svg className="h-5 w-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zm6.75-4.5c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
           </svg>
-          <h3 className="text-lg font-bold text-slate-800">Kraftziele</h3>
+          <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Kraftziele</h3>
         </div>
         <button
           onClick={() => setShowAdd(!showAdd)}
@@ -108,11 +108,11 @@ export function StrengthGoals() {
       {showAdd && (
         <div className="mb-4 rounded-xl border border-violet-100 bg-violet-50 p-4 space-y-3">
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Übung</label>
+            <label className="mb-1 block text-xs font-medium text-[hsl(var(--fg-secondary))]">Übung</label>
             <select
               value={selectedExercise}
               onChange={e => setSelectedExercise(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
+              className="w-full rounded-lg border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
             >
               <option value="">Übung wählen...</option>
               {allExercises.map(e => (
@@ -125,32 +125,32 @@ export function StrengthGoals() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Zielgewicht (kg)</label>
+              <label className="mb-1 block text-xs font-medium text-[hsl(var(--fg-secondary))]">Zielgewicht (kg)</label>
               <input
                 type="number"
                 value={targetWeight}
                 onChange={e => setTargetWeight(e.target.value)}
                 placeholder="z.B. 100"
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
+                className="w-full rounded-lg border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-600">Wiederholungen</label>
+              <label className="mb-1 block text-xs font-medium text-[hsl(var(--fg-secondary))]">Wiederholungen</label>
               <input
                 type="number"
                 value={targetReps}
                 onChange={e => setTargetReps(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
+                className="w-full rounded-lg border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
               />
             </div>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Deadline (optional)</label>
+            <label className="mb-1 block text-xs font-medium text-[hsl(var(--fg-secondary))]">Deadline (optional)</label>
             <input
               type="date"
               value={deadline}
               onChange={e => setDeadline(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
+              className="w-full rounded-lg border border-[hsl(225,10%,16%)] bg-[hsl(225,14%,10%)] px-3 py-2 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-500/20"
             />
           </div>
           <div className="flex gap-2">
@@ -163,7 +163,7 @@ export function StrengthGoals() {
             </button>
             <button
               onClick={() => setShowAdd(false)}
-              className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+              className="rounded-xl border border-[hsl(225,10%,16%)] px-4 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,15%)] transition-colors"
             >
               Abbrechen
             </button>
@@ -172,17 +172,17 @@ export function StrengthGoals() {
       )}
 
       {goalsWithProgress.length === 0 ? (
-        <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="rounded-xl bg-[hsl(225,12%,13%)] p-4 text-sm text-[hsl(var(--fg-muted))]">
           Noch keine Ziele gesetzt. Füge dein erstes Kraftziel hinzu, z.B. „Bankdrücken 100kg".
         </p>
       ) : (
         <div className="space-y-4">
           {goalsWithProgress.map(goal => (
-            <div key={goal.id} className="rounded-xl border border-slate-100 bg-slate-50 p-4">
+            <div key={goal.id} className="rounded-xl border border-[hsl(225,10%,14%)] bg-[hsl(225,12%,13%)] p-4">
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <p className="font-semibold text-slate-800">{goal.exerciseName}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="font-semibold text-[hsl(var(--fg-primary))]">{goal.exerciseName}</p>
+                  <p className="text-xs text-[hsl(var(--fg-muted))]">
                     Ziel: {goal.targetWeight}kg × {goal.targetReps} Wdh
                   </p>
                 </div>
@@ -208,7 +208,7 @@ export function StrengthGoals() {
                 />
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-500">
+              <div className="flex items-center justify-between text-xs text-[hsl(var(--fg-muted))]">
                 <span>Aktuell: {goal.currentMax > 0 ? `${goal.currentMax}kg` : 'kein Eintrag'}</span>
                 <span>
                   {goal.progress >= 100 ? (
@@ -224,7 +224,7 @@ export function StrengthGoals() {
               </div>
 
               {goal.weeklyRate > 0 && goal.progress < 100 && (
-                <p className="mt-1 text-xs text-slate-400">
+                <p className="mt-1 text-xs text-[hsl(var(--fg-subtle))]">
                   +{goal.weeklyRate.toFixed(1)}kg/Woche aktuell
                 </p>
               )}

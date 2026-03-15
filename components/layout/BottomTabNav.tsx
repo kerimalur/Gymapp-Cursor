@@ -130,7 +130,7 @@ export function BottomTabNav() {
   return (
     <>
       {/* Bottom Tab Bar */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-slate-200 shadow-lg" style={{ height: 56 }}>
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[hsl(225,14%,9%)]/95 backdrop-blur-xl border-t border-[hsl(225,10%,16%)] shadow-[0_-4px_20px_rgba(0,0,0,0.3)]" style={{ height: 56 }}>
         <div className="flex items-stretch h-full">
           {mainTabs.map((tab) => {
             const isMehr = tab.href === null;
@@ -145,14 +145,14 @@ export function BottomTabNav() {
                 className="flex-1 flex flex-col items-center justify-center gap-0.5 relative focus:outline-none"
                 aria-label={tab.label}
               >
-                <span className={isActive ? 'text-blue-600' : 'text-slate-400'}>
+                <span className={isActive ? 'text-cyan-400' : 'text-slate-500'}>
                   {tabIcons[tab.icon]}
                 </span>
-                <span className={`text-[10px] font-medium leading-none ${isActive ? 'text-blue-600' : 'text-slate-400'}`}>
+                <span className={`text-[10px] font-medium leading-none ${isActive ? 'text-cyan-400' : 'text-slate-500'}`}>
                   {tab.label}
                 </span>
                 {isActive && (
-                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-600" />
+                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.6)]" />
                 )}
               </button>
             );
@@ -165,23 +165,23 @@ export function BottomTabNav() {
         <>
           {/* Backdrop */}
           <div
-            className={`lg:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${sheetVisible ? 'opacity-100' : 'opacity-0'}`}
+            className={`lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${sheetVisible ? 'opacity-100' : 'opacity-0'}`}
             onClick={handleCloseSheet}
             aria-hidden="true"
           />
 
           {/* Slide-up Sheet */}
           <div
-            className={`lg:hidden fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-2xl shadow-2xl transition-transform duration-300 ease-out ${sheetVisible ? 'translate-y-0' : 'translate-y-full'}`}
+            className={`lg:hidden fixed inset-x-0 bottom-0 z-50 bg-[hsl(225,14%,10%)] border-t border-[hsl(225,10%,20%)] rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.5)] transition-transform duration-300 ease-out ${sheetVisible ? 'translate-y-0' : 'translate-y-full'}`}
           >
             {/* Handle */}
             <div className="flex justify-center pt-3 pb-1">
-              <div className="w-10 h-1 rounded-full bg-slate-200" />
+              <div className="w-10 h-1 rounded-full bg-[hsl(225,10%,25%)]" />
             </div>
 
             {/* Title */}
-            <div className="px-5 pt-2 pb-3 border-b border-slate-100">
-              <p className="text-sm font-semibold text-slate-500 uppercase tracking-wide">Mehr</p>
+            <div className="px-5 pt-2 pb-3 border-b border-[hsl(225,10%,16%)]">
+              <p className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Mehr</p>
             </div>
 
             {/* Nav Items */}
@@ -194,16 +194,16 @@ export function BottomTabNav() {
                       onClick={() => handleNavigate(item.href)}
                       className={`w-full flex items-center gap-4 px-5 py-3.5 text-left transition-colors duration-150 ${
                         isActive
-                          ? 'text-blue-600 bg-blue-50'
-                          : 'text-slate-700 hover:bg-slate-50 active:bg-slate-100'
+                          ? 'text-cyan-400 bg-cyan-400/10'
+                          : 'text-slate-300 hover:bg-white/5 active:bg-white/10'
                       }`}
                     >
-                      <span className={isActive ? 'text-blue-600' : 'text-slate-400'}>
+                      <span className={isActive ? 'text-cyan-400' : 'text-slate-500'}>
                         {tabIcons[item.icon]}
                       </span>
                       <span className="font-medium text-sm">{item.label}</span>
                       {isActive && (
-                        <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600" />
+                        <span className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.5)]" />
                       )}
                     </button>
                   </li>
@@ -212,13 +212,13 @@ export function BottomTabNav() {
             </ul>
 
             {/* Divider */}
-            <div className="mx-5 border-t border-slate-100" />
+            <div className="mx-5 border-t border-[hsl(225,10%,16%)]" />
 
             {/* Logout */}
             <div className="py-2 pb-6">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-4 px-5 py-3.5 text-left text-red-500 hover:bg-red-50 active:bg-red-100 transition-colors duration-150"
+                className="w-full flex items-center gap-4 px-5 py-3.5 text-left text-red-400 hover:bg-red-500/10 active:bg-red-500/15 transition-colors duration-150"
               >
                 <span className="text-red-400">{tabIcons.logout}</span>
                 <span className="font-medium text-sm">Abmelden</span>
