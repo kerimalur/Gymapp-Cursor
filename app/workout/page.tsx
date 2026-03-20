@@ -297,9 +297,16 @@ function WorkoutContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[hsl(225,14%,10%)]">
+    <div className="min-h-[100dvh] bg-[hsl(225,14%,10%)] relative">
+      {/* Ambient glow that changes with progress */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className={`absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full blur-[140px] transition-all duration-[2000ms] ${
+          progress >= 100 ? 'bg-emerald-400/[0.08]' : progress >= 50 ? 'bg-cyan-400/[0.06]' : 'bg-violet-500/[0.04]'
+        }`} />
+      </div>
+
       {/* ── Sticky Header ─────────────────────────────────────────────── */}
-      <div className="sticky top-0 z-30 bg-[hsl(225,14%,11%)] border-b border-[hsl(225,10%,16%)]">
+      <div className="sticky top-0 z-30 bg-[hsl(225,14%,11%)]/95 backdrop-blur-md border-b border-[hsl(225,10%,16%)]">
         <div className="max-w-3xl mx-auto px-4 py-3">
           <div className="flex items-center gap-3">
             <button onClick={handleCancelWorkout} className="p-2 rounded-xl hover:bg-[hsl(225,12%,15%)] transition-colors">
@@ -351,7 +358,7 @@ function WorkoutContent() {
       </div>
 
       {/* ── Exercise list ──────────────────────────────────────────────── */}
-      <div className="max-w-3xl mx-auto px-4 py-4 space-y-4 pb-32">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 py-4 space-y-4 pb-32">
         {workout.exercises.map((ex, exIdx) => {
           const exData = allExercises.find(e => e.id === ex.exerciseId);
           const exName = exData?.name || ex.exerciseId;
@@ -367,7 +374,7 @@ function WorkoutContent() {
               ref={el => { exerciseRefs.current[exIdx] = el; }}
               onClick={() => setActiveExIdx(exIdx)}
               className={`bg-[hsl(225,14%,11%)] rounded-2xl border transition-all ${
-                isActive ? 'border-cyan-400/30' : 'border-[hsl(225,10%,16%)] opacity-90 hover:opacity-100'
+                isActive ? 'border-cyan-400/30 shadow-lg shadow-cyan-400/[0.06]' : 'border-[hsl(225,10%,16%)] opacity-80 hover:opacity-100'
               }`}
             >
               {/* Exercise header */}
@@ -566,7 +573,7 @@ function WorkoutContent() {
       </div>
 
       {/* ── Fixed bottom bar ───────────────────────────────────────────── */}
-      <div className="fixed bottom-0 inset-x-0 z-30 bg-[hsl(225,14%,11%)] border-t border-[hsl(225,10%,16%)] p-3 lg:left-64">
+      <div className="fixed bottom-0 inset-x-0 z-30 bg-[hsl(225,14%,11%)]/95 backdrop-blur-md border-t border-[hsl(225,10%,16%)] p-3 lg:left-64">
         <div className="max-w-3xl mx-auto flex gap-3">
           <button
             onClick={handleCancelWorkout}

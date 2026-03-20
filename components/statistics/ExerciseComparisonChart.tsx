@@ -73,13 +73,13 @@ const CustomTooltip = ({ active, payload, label, metricType }: any) => {
                   className="w-2.5 h-2.5 rounded-full" 
                   style={{ backgroundColor: entry.color }}
                 />
-                <span className="text-xs text-gray-600 truncate max-w-[100px]">{entry.name}</span>
+                <span className="text-xs text-[hsl(var(--fg-secondary))] truncate max-w-[100px]">{entry.name}</span>
               </div>
               <span className="text-sm font-bold text-gray-900">{entry.value} kg</span>
             </div>
           ))}
         </div>
-        <p className="text-xs text-gray-400 mt-2 pt-2 border-t border-gray-100">
+        <p className="text-xs text-[hsl(var(--fg-subtle))] mt-2 pt-2 border-t border-[hsl(225,10%,16%)]">
           {metricType === '1rm' ? 'Gesch?tztes 1RM' : 'Max. Gewicht'}
         </p>
       </div>
@@ -179,13 +179,13 @@ export function ExerciseComparisonChart() {
     <div className="space-y-6">
       {/* Metric Type Selector & Info */}
       <div className="flex items-center justify-between">
-        <div className="flex p-1 bg-gray-100 rounded-xl">
+        <div className="flex p-1 bg-[hsl(225,12%,13%)] rounded-xl">
           <button
             onClick={() => setMetricType('maxWeight')}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               metricType === 'maxWeight'
                 ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-[hsl(var(--fg-secondary))] hover:text-gray-900'
             }`}
           >
             Max. Gewicht
@@ -195,7 +195,7 @@ export function ExerciseComparisonChart() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               metricType === '1rm'
                 ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-[hsl(var(--fg-secondary))] hover:text-gray-900'
             }`}
           >
             Gesch?tztes 1RM
@@ -203,7 +203,7 @@ export function ExerciseComparisonChart() {
         </div>
         <button
           onClick={() => setShowInfo(true)}
-          className="p-2.5 rounded-xl bg-white/60 border border-gray-100 text-gray-400 hover:text-primary-500 hover:border-primary-200 transition-all"
+          className="p-2.5 rounded-xl bg-white/60 border border-[hsl(225,10%,16%)] text-[hsl(var(--fg-subtle))] hover:text-primary-500 hover:border-primary-200 transition-all"
           title="Info"
         >
           {Icons.help}
@@ -212,8 +212,8 @@ export function ExerciseComparisonChart() {
 
       {/* Exercise Selector */}
       <div>
-        <p className="text-sm font-medium text-gray-600 mb-3">
-          Übungen ausw?hlen <span className="text-gray-400">(max. 3)</span>
+        <p className="text-sm font-medium text-[hsl(var(--fg-secondary))] mb-3">
+          Übungen ausw?hlen <span className="text-[hsl(var(--fg-subtle))]">(max. 3)</span>
         </p>
         <div className="flex flex-wrap gap-2">
           {trainedExercises.map((exercise, index) => {
@@ -229,7 +229,7 @@ export function ExerciseComparisonChart() {
                 className={`px-4 py-2 rounded-xl font-medium transition-all flex items-center gap-2 ${
                   isSelected
                     ? `${colorClass?.bg} text-white shadow-lg`
-                    : 'bg-white/60 text-gray-700 border border-gray-100 hover:border-gray-200 disabled:opacity-40 disabled:cursor-not-allowed'
+                    : 'bg-white/60 text-gray-700 border border-[hsl(225,10%,16%)] hover:border-gray-200 disabled:opacity-40 disabled:cursor-not-allowed'
                 }`}
                 style={{ animationDelay: `${index * 30}ms` }}
               >
@@ -289,14 +289,14 @@ export function ExerciseComparisonChart() {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-full flex items-center justify-center rounded-2xl bg-gray-50 border border-gray-100">
+            <div className="h-full flex items-center justify-center rounded-2xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)]">
               <p className="text-gray-500">Nicht genug Daten für ausgew?hlte Übungen</p>
             </div>
           )
         ) : (
-          <div className="h-full flex items-center justify-center rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-100">
+          <div className="h-full flex items-center justify-center rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-[hsl(225,10%,16%)]">
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-white shadow-sm flex items-center justify-center text-gray-400">
+              <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-white shadow-sm flex items-center justify-center text-[hsl(var(--fg-subtle))]">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                 </svg>
@@ -315,7 +315,7 @@ export function ExerciseComparisonChart() {
             return (
               <div key={exId} className="flex items-center gap-2">
                 <span className={`w-3 h-3 rounded-full ${chartColors[index].bg}`} />
-                <span className="text-sm text-gray-600">{exercise?.name}</span>
+                <span className="text-sm text-[hsl(var(--fg-secondary))]">{exercise?.name}</span>
               </div>
             );
           })}
@@ -329,7 +329,7 @@ export function ExerciseComparisonChart() {
           onClick={(e) => e.target === e.currentTarget && setShowInfo(false)}
         >
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
-            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-gray-100 bg-white">
+            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-[hsl(225,10%,16%)] bg-white">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center text-primary-600">
                   {Icons.info}
@@ -338,38 +338,38 @@ export function ExerciseComparisonChart() {
               </div>
               <button
                 onClick={() => setShowInfo(false)}
-                className="p-2 hover:bg-gray-100 rounded-xl transition-colors text-gray-400 hover:text-gray-600"
+                className="p-2 hover:bg-[hsl(225,12%,13%)] rounded-xl transition-colors text-[hsl(var(--fg-subtle))] hover:text-[hsl(var(--fg-secondary))]"
               >
                 {Icons.close}
               </button>
             </div>
             
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
-              <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
+              <div className="p-4 rounded-xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)]">
                 <h4 className="font-semibold text-gray-900 mb-2">📊 Max. Gewicht</h4>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-[hsl(var(--fg-secondary))] leading-relaxed">
                   Zeigt das hoechste Gewicht, das du bei jeder Trainingseinheit für diese Übung 
                   verwendet hast. Ideal um deinen Kraftfortschritt zu tracken.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-gray-50 border border-gray-100">
+              <div className="p-4 rounded-xl bg-[hsl(225,12%,13%)] border border-[hsl(225,10%,16%)]">
                 <h4 className="font-semibold text-gray-900 mb-2">💪 Gesch?tztes 1RM</h4>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-[hsl(var(--fg-secondary))] leading-relaxed">
                   Das 1RM (One-Rep-Maximum) ist das gesch?tzte Maximalgewicht, das du einmal 
-                  heben koenntest. Berechnung mit Epley-Formel:
+                  heben könntest. Berechnung mit Epley-Formel:
                 </p>
                 <div className="mt-3 p-3 rounded-lg bg-primary-50 border border-primary-100 text-center">
                   <code className="text-sm font-mono text-primary-700">1RM = Gewicht × (1 + Wdh / 30)</code>
                 </div>
-                <p className="text-sm text-gray-600 mt-3">
+                <p className="text-sm text-[hsl(var(--fg-secondary))] mt-3">
                   Das 1RM ist aussagekraeftiger, da es Gewicht UND Wiederholungen berücksichtigt.
                 </p>
               </div>
 
               <div className="p-4 rounded-xl bg-gradient-to-br from-primary-50 to-indigo-50 border border-primary-100">
                 <h4 className="font-semibold text-gray-900 mb-3">💡 Tipps</h4>
-                <ul className="text-sm text-gray-600 space-y-2">
+                <ul className="text-sm text-[hsl(var(--fg-secondary))] space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-primary-500 mt-0.5">•</span>
                     Vergleiche ?hnliche Übungen (z.B. alle DrueckÜbungen)

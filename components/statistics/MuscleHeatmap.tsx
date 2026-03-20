@@ -453,7 +453,7 @@ export function MuscleHeatmap() {
                 {getRestLevel(selectedMuscle!) > 0 && (
                   <div className="mt-3 p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg">
                     <p className="text-amber-700 dark:text-amber-300 text-xs">
-                      💡 Dieser Muskel koennte noch Erholung brauchen
+                      💡 Dieser Muskel könnte noch Erholung brauchen
                     </p>
                   </div>
                 )}

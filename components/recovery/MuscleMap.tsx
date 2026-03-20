@@ -739,7 +739,7 @@ export function MuscleMap({
                   <span className="text-sm font-medium text-[hsl(var(--fg-secondary))]">Status</span>
                   <span className="text-sm font-semibold text-[hsl(var(--fg-muted))]">{muscleInfo.statusDescription}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <div className="w-full bg-[hsl(225,12%,13%)] rounded-full h-3 overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all"
                     ref={(el) => { if (el) { el.style.width = `${muscleInfo.recovery}%`; el.style.backgroundColor = muscleInfo.color; }}}
@@ -809,7 +809,7 @@ export function MuscleMap({
               <div className="bg-gradient-to-br from-[hsl(225,12%,13%)] to-[hsl(225,12%,15%)] rounded-xl p-4">
                 <h4 className="font-medium text-[hsl(var(--fg-primary))] mb-2">Regenerationszeit</h4>
                 <p className="text-sm text-[hsl(var(--fg-secondary))]">
-                  Dieser Muskel benoetigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> für vollst?ndige Regeneration.
+                  Dieser Muskel benötigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> für vollständige Regeneration.
                 </p>
               </div>
             </div>

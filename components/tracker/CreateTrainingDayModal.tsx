@@ -544,7 +544,7 @@ className="p-1 hover:bg-[hsl(225,12%,18%)] rounded disabled:opacity-30 transitio
             </h4>
             <ul className="text-sm text-primary-700 space-y-1">
               <li>• Klicke auf eine Übung um sie zu bearbeiten</li>
-              <li>• Nutze die Pfeile um die Reihenfolge zu aendern</li>
+              <li>• Nutze die Pfeile um die Reihenfolge zu ändern</li>
               <li>• Notizen helfen dir, Details zu merken</li>
             </ul>
           </div>

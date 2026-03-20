@@ -35,7 +35,7 @@ export function QuickStartWidget() {
         <div className="flex items-center gap-3 mb-4 text-sm text-white/90">
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
-            <span>Laeuft...</span>
+            <span>Läuft...</span>
           </div>
           <div className="flex items-center gap-1">
             <Zap className="w-4 h-4" />

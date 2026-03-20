@@ -189,7 +189,7 @@ export function EditTrainingDayModal({ isOpen, trainingDay, onClose, onSave }: E
             disabled={loading || !name.trim() || selectedExercises.length === 0}
             className="px-6 py-2.5 rounded-xl font-medium text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 shadow-lg shadow-emerald-500/25 transition-all disabled:opacity-50 disabled:shadow-none"
           >
-            {loading ? 'Speichern...' : 'Aenderungen speichern'}
+            {loading ? 'Speichern...' : 'Änderungen speichern'}
           </button>
         </div>
       }

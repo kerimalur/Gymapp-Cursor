@@ -105,12 +105,12 @@ export function BodyHeatmap() {
     const maxSets = Math.max(...Object.values(muscleData).map(m => m.sets), 1);
     const intensity = (sets / maxSets) * 100;
     
-    if (sets === 0) return '#e2e8f0'; // slate-200
-    if (intensity <= 20) return '#bef264'; // lime-300
-    if (intensity <= 40) return '#84cc16'; // lime-500
-    if (intensity <= 60) return '#22c55e'; // green-500
-    if (intensity <= 80) return '#16a34a'; // green-600
-    return '#15803d'; // green-700
+    if (sets === 0) return 'hsl(225,12%,20%)'; // dark neutral
+    if (intensity <= 20) return '#67e8f9'; // cyan-300
+    if (intensity <= 40) return '#22d3ee'; // cyan-400
+    if (intensity <= 60) return '#06b6d4'; // cyan-500
+    if (intensity <= 80) return '#0891b2'; // cyan-600
+    return '#0e7490'; // cyan-700
   };
 
   const getOpacity = (muscle: MuscleGroup): number => {
@@ -124,7 +124,7 @@ export function BodyHeatmap() {
   const getStroke = (muscle: MuscleGroup): { color: string; width: number } => {
     const isSelected = selectedMuscle === muscle;
     return {
-      color: isSelected ? '#1e40af' : '#475569',
+      color: isSelected ? '#22d3ee' : 'hsl(225,10%,25%)',
       width: isSelected ? 3 : 1
     };
   };
@@ -167,10 +167,10 @@ export function BodyHeatmap() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* SVG Body */}
+      <div className="flex flex-col gap-5">
+        {/* SVG Body - maximized for mobile */}
         <div className="flex justify-center">
-          <svg viewBox="0 0 200 400" className="w-full max-w-[220px] h-auto">
+          <svg viewBox="0 0 200 400" className="w-full max-w-[300px] sm:max-w-[260px] h-auto">
             <defs>
               <filter id="bodyShadow">
                 <feDropShadow dx="0" dy="2" stdDeviation="2" floodOpacity="0.15"/>
@@ -180,10 +180,10 @@ export function BodyHeatmap() {
             {view === 'front' ? (
               <>
                 {/* Head */}
-                <ellipse cx="100" cy="28" rx="22" ry="26" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1"/>
+                <ellipse cx="100" cy="28" rx="22" ry="26" fill="hsl(225,12%,20%)" stroke="hsl(225,10%,30%)" strokeWidth="1"/>
                 
                 {/* Neck */}
-                <rect x="92" y="52" width="16" height="14" rx="3" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="0.5"/>
+                <rect x="92" y="52" width="16" height="14" rx="3" fill="hsl(225,12%,20%)" stroke="hsl(225,10%,30%)" strokeWidth="0.5"/>
                 
                 {/* Shoulders */}
                 <g
@@ -339,10 +339,10 @@ export function BodyHeatmap() {
             ) : (
               <>
                 {/* Head */}
-                <ellipse cx="100" cy="28" rx="22" ry="26" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1"/>
+                <ellipse cx="100" cy="28" rx="22" ry="26" fill="hsl(225,12%,20%)" stroke="hsl(225,10%,30%)" strokeWidth="1"/>
                 
                 {/* Neck */}
-                <rect x="92" y="52" width="16" height="14" rx="3" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="0.5"/>
+                <rect x="92" y="52" width="16" height="14" rx="3" fill="hsl(225,12%,20%)" stroke="hsl(225,10%,30%)" strokeWidth="0.5"/>
                 
                 {/* Traps */}
                 <g
@@ -553,12 +553,12 @@ export function BodyHeatmap() {
           <div className="p-4 bg-[hsl(225,12%,13%)] rounded-xl">
             <h4 className="text-sm font-semibold text-[hsl(var(--fg-secondary))] mb-3">Intensität (Sätze)</h4>
             <div className="flex items-center gap-1">
-              <div className="flex-1 h-3 rounded-l-full bg-slate-200" />
-              <div className="flex-1 h-3 bg-lime-300" />
-              <div className="flex-1 h-3 bg-lime-500" />
-              <div className="flex-1 h-3 bg-green-500" />
-              <div className="flex-1 h-3 bg-green-600" />
-              <div className="flex-1 h-3 rounded-r-full bg-green-700" />
+              <div className="flex-1 h-3 rounded-l-full bg-[hsl(225,12%,20%)]" />
+              <div className="flex-1 h-3 bg-cyan-300" />
+              <div className="flex-1 h-3 bg-cyan-400" />
+              <div className="flex-1 h-3 bg-cyan-500" />
+              <div className="flex-1 h-3 bg-cyan-600" />
+              <div className="flex-1 h-3 rounded-r-full bg-cyan-700" />
             </div>
             <div className="flex justify-between mt-1 text-xs text-[hsl(var(--fg-muted))]">
               <span>0</span>
@@ -570,7 +570,7 @@ export function BodyHeatmap() {
           {selectedData ? (
             <div className="p-4 bg-cyan-400/10 rounded-xl border border-cyan-400/20 animate-fade-in">
               <div className="flex items-center justify-between mb-3">
-                <h4 className="text-lg font-bold text-blue-800">
+                <h4 className="text-lg font-bold text-cyan-400">
                   {MUSCLE_LABELS[selectedMuscle!]}
                 </h4>
                 <button
@@ -617,17 +617,17 @@ export function BodyHeatmap() {
 
           {/* Quick Stats */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="p-3 bg-emerald-50 rounded-xl text-center">
-              <p className="text-2xl font-bold text-emerald-600">
+            <div className="p-3 bg-emerald-400/10 rounded-xl text-center">
+              <p className="text-2xl font-bold text-emerald-400">
                 {Object.values(muscleData).filter(m => m.daysSince !== null && m.daysSince <= 3).length}
               </p>
-              <p className="text-xs text-emerald-700">Aktiv (≤3 Tage)</p>
+              <p className="text-xs text-emerald-400/70">Aktiv (≤3 Tage)</p>
             </div>
-            <div className="p-3 bg-amber-50 rounded-xl text-center">
-              <p className="text-2xl font-bold text-amber-600">
+            <div className="p-3 bg-amber-400/10 rounded-xl text-center">
+              <p className="text-2xl font-bold text-amber-400">
                 {Object.values(muscleData).filter(m => m.daysSince === null || m.daysSince > 5).length}
               </p>
-              <p className="text-xs text-amber-700">Braucht Training</p>
+              <p className="text-xs text-amber-400/70">Braucht Training</p>
             </div>
           </div>
         </div>

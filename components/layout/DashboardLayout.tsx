@@ -27,38 +27,19 @@ export function DashboardLayout({ children, showSidebar = true }: DashboardLayou
   const shouldShowBottomNav = showSidebar && pathname !== '/workout';
 
   return (
-    <div className="min-h-screen app-background relative overflow-hidden">
-      {/* Animated Mesh Gradient Background */}
-      <div className="gradient-mesh" />
+    <div className="min-h-screen min-h-[100dvh] bg-[hsl(var(--bg-primary))] relative overflow-x-hidden">
+      {/* Subtle ambient background — no heavy blurs/orbs on mobile */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-cyan-400/[0.03] rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-violet-500/[0.03] rounded-full blur-[120px] translate-x-1/3 translate-y-1/3" />
+      </div>
 
-      {/* Dot Pattern Overlay */}
-      <div className="pattern-dots" />
-
-      {/* Floating Orbs */}
-      <div className="floating-orb floating-orb-1" />
-      <div className="floating-orb floating-orb-2" />
-      <div className="floating-orb floating-orb-3" />
-
-      {/* Mobile Header */}
-      {showSidebar && (
-        <div className="lg:hidden fixed top-0 left-0 right-0 h-14 z-40 card-glass border-b border-[hsl(var(--border-light))] flex items-center justify-between px-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center shadow-glow">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-              </svg>
-            </div>
-            <span className="font-bold text-base text-gradient">FitCoach</span>
-          </div>
-        </div>
-      )}
-
-      {/* Sidebar - Desktop always visible */}
+      {/* Sidebar - Desktop only */}
       {showSidebar && <Sidebar />}
 
       {/* Main Content */}
-      <div className={`relative z-10 transition-all duration-300 ${showSidebar ? 'lg:ml-64' : ''} ${showSidebar ? 'pt-14 lg:pt-0' : ''}`}>
-        <main className={`p-3 sm:p-4 md:p-6 lg:p-8 mobile-scroll-smooth pb-16 lg:pb-0 ${mounted ? 'animate-slide-up' : 'opacity-0'}`}>
+      <div className={`relative z-10 ${showSidebar ? 'lg:ml-64' : ''}`}>
+        <main className={`px-4 pt-4 pb-24 sm:px-5 md:px-6 lg:px-8 lg:pt-6 lg:pb-8 ${mounted ? '' : 'opacity-0'}`}>
           {children}
         </main>
       </div>

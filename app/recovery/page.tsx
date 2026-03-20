@@ -39,7 +39,7 @@ function RecoveryRing({ pct }: { pct: number }) {
 
   return (
     <svg width="128" height="128" className="rotate-[-90deg]">
-      <circle cx="64" cy="64" r={r} fill="none" stroke="#e2e8f0" strokeWidth="10" />
+      <circle cx="64" cy="64" r={r} fill="none" stroke="hsl(225,12%,20%)" strokeWidth="10" />
       <circle
         cx="64" cy="64" r={r}
         fill="none"

@@ -328,7 +328,7 @@ export default function StatisticsPage() {
         {/* ── Muskel-Heatmap ─────────────────────────────────────────────── */}
         {workoutSessions.length > 0 && (
           <section className="mb-8">
-            <div className="bg-white rounded-2xl border border-slate-200 p-5">
+            <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5">
               <SectionHeader
                 title="Muskel-Heatmap"
                 subtitle="Trainingsbelastung der letzten 7 Tage"
@@ -340,7 +340,7 @@ export default function StatisticsPage() {
 
         {/* ── Muskelvolumen ──────────────────────────────────────────────── */}
         <section className="mb-8">
-          <div className="bg-white rounded-2xl border border-slate-200 p-5">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5">
             <SectionHeader
               title="Muskelvolumen"
               subtitle="Wöchentliche Sätze pro Muskelgruppe mit Empfehlungen"
@@ -351,7 +351,7 @@ export default function StatisticsPage() {
 
         {/* ── Übungsanalyse ──────────────────────────────────────────────── */}
         <section className="mb-8">
-          <div className="bg-white rounded-2xl border border-slate-200 p-5">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5">
             <SectionHeader
               title="Übungsanalyse"
               subtitle="Detaillierter Vergleich deiner Übungen über die Zeit"
@@ -362,7 +362,7 @@ export default function StatisticsPage() {
 
         {/* ── Körpergewicht ──────────────────────────────────────────────── */}
         <section className="mb-8">
-          <div className="bg-white rounded-2xl border border-slate-200 p-5">
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-5">
             <SectionHeader
               title="Körpergewicht"
               subtitle="Gewichtsverlauf und letzter Eintrag"
@@ -373,15 +373,15 @@ export default function StatisticsPage() {
 
         {/* ── Empty State ────────────────────────────────────────────────── */}
         {workoutSessions.length === 0 && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
-            <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <div className="bg-[hsl(225,14%,10%)] rounded-2xl border border-[hsl(225,10%,16%)] p-12 text-center">
+            <div className="w-16 h-16 bg-[hsl(225,12%,15%)] rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-[hsl(var(--fg-subtle))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
               </svg>
             </div>
-            <h2 className="text-lg font-bold text-slate-800 mb-2">Noch keine Daten</h2>
-            <p className="text-sm text-slate-500 max-w-sm mx-auto">
-              Schliesse dein erstes Training ab, um hier deine Fortschritte zu sehen.
+            <h2 className="text-lg font-bold text-[hsl(var(--fg-primary))] mb-2">Noch keine Daten</h2>
+            <p className="text-sm text-[hsl(var(--fg-muted))] max-w-sm mx-auto">
+              Schließe dein erstes Training ab, um hier deine Fortschritte zu sehen.
             </p>
           </div>
         )}

@@ -168,7 +168,7 @@ export function EditTrainingPlanModal({ isOpen, onClose, plan }: EditTrainingPla
             disabled={loading || !name.trim()}
             className="px-6 py-2.5 rounded-xl font-medium text-white bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 shadow-lg shadow-violet-500/25 transition-all disabled:opacity-50 disabled:shadow-none"
           >
-            {loading ? 'Speichern...' : 'Aenderungen speichern'}
+            {loading ? 'Speichern...' : 'Änderungen speichern'}
           </button>
         </div>
       }

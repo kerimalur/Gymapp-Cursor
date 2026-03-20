@@ -398,7 +398,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                       />
                     </div>
                     <div>
-                      <label className="text-xs text-[hsl(var(--fg-muted))]">Portionsgroesse</label>
+                      <label className="text-xs text-[hsl(var(--fg-muted))]">Portionsgröße</label>
                       <input
                         type="number"
                         value={newFood.servingSize || ''}
@@ -437,7 +437,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                   <div className="flex gap-2 mt-4">
                     <button
                       onClick={() => setShowAddFood(false)}
-                      className="flex-1 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] rounded-lg hover:bg-slate-200"
+                      className="flex-1 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] rounded-lg hover:bg-[hsl(225,12%,20%)]"
                     >
                       Abbrechen
                     </button>
@@ -549,7 +549,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                     <div className="flex gap-2 mt-4">
                       <button
                         onClick={() => setShowAddActiveSupplement(false)}
-                        className="flex-1 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] rounded-lg hover:bg-slate-200"
+                        className="flex-1 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] rounded-lg hover:bg-[hsl(225,12%,20%)]"
                       >
                         Abbrechen
                       </button>
@@ -628,7 +628,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                   </div>
                   <button
                     onClick={() => setShowAddSupplement(true)}
-                    className="flex items-center gap-2 px-3 py-2 bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-secondary))] rounded-lg text-sm font-medium hover:bg-[hsl(225,12%,20%)] transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     Vorlage
@@ -688,7 +688,7 @@ export function NutritionSettingsModal({ isOpen, onClose }: NutritionSettingsMod
                   <div className="flex gap-2 mt-4">
                     <button
                       onClick={() => setShowAddSupplement(false)}
-                      className="flex-1 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] rounded-lg hover:bg-slate-200"
+                      className="flex-1 py-2 text-sm font-medium text-[hsl(var(--fg-secondary))] bg-[hsl(225,12%,15%)] rounded-lg hover:bg-[hsl(225,12%,20%)]"
                     >
                       Abbrechen
                     </button>

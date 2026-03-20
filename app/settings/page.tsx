@@ -33,7 +33,7 @@ type TabId = 'profil' | 'training' | 'ernaehrung' | 'app';
 const TABS: { id: TabId; label: string; icon: React.ReactNode }[] = [
   { id: 'profil', label: 'Profil', icon: <User className="h-4 w-4" /> },
   { id: 'training', label: 'Training', icon: <Dumbbell className="h-4 w-4" /> },
-  { id: 'ernaehrung', label: 'Ernaehrung', icon: <Apple className="h-4 w-4" /> },
+  { id: 'ernaehrung', label: 'Ernährung', icon: <Apple className="h-4 w-4" /> },
   { id: 'app', label: 'App', icon: <SlidersHorizontal className="h-4 w-4" /> },
 ];
 
@@ -126,7 +126,7 @@ export default function SettingsPage() {
       waterGoal: Number.isFinite(nutritionGoals.water) ? nutritionGoals.water : 3000,
       caffeineGoal: Number.isFinite(nutritionGoals.caffeine) ? nutritionGoals.caffeine : 400,
     });
-    toast.success('Ernaehrungsziele gespeichert');
+    toast.success('Ernährungsziele gespeichert');
   };
 
   const handleSaveProfile = async () => {
@@ -220,7 +220,7 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 p-6 text-white shadow-xl">
           <h1 className="text-3xl font-bold">Einstellungen</h1>
-          <p className="mt-1 text-sm text-blue-100">Persoenlich, trainingsspezifisch und cloud-synchron.</p>
+          <p className="mt-1 text-sm text-blue-100">Persönlich, trainingsspezifisch und cloud-synchron.</p>
           <div className="mt-4 flex flex-wrap gap-3">
             <button
               onClick={handleSaveAll}
@@ -311,7 +311,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Groesse (cm)</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Größe (cm)</label>
                 <input
                   type="number"
                   value={heightInput}
@@ -332,7 +332,7 @@ export default function SettingsPage() {
                 </select>
               </div>
               <div>
-                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Primaeres Ziel</label>
+                <label className="mb-1 block text-sm font-semibold text-[hsl(var(--fg-secondary))]">Primäres Ziel</label>
                 <input
                   type="text"
                   value={goalInput}
@@ -411,7 +411,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="mt-6 rounded-xl bg-violet-400/10 px-4 py-3 text-sm text-violet-400">
-              Aenderungen am Rest-Timer werden sofort gespeichert.
+              Änderungen am Rest-Timer werden sofort gespeichert.
             </div>
           </div>
         )}
@@ -424,8 +424,8 @@ export default function SettingsPage() {
                 <Apple className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Ernaehrung</h2>
-                <p className="text-sm text-[hsl(var(--fg-muted))]">Tageliche Ziele fuer Kalorien und Makros</p>
+                <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Ernährung</h2>
+                <p className="text-sm text-[hsl(var(--fg-muted))]">Tägliche Ziele für Kalorien und Makros</p>
               </div>
             </div>
 
@@ -459,7 +459,7 @@ export default function SettingsPage() {
               onClick={handleSaveNutrition}
               className="mt-6 w-full rounded-xl bg-emerald-600 px-5 py-3 font-semibold text-white hover:bg-emerald-700 transition-colors"
             >
-              Ernaehrungsziele speichern
+              Ernährungsziele speichern
             </button>
           </div>
         )}
@@ -474,7 +474,7 @@ export default function SettingsPage() {
                   <SlidersHorizontal className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">App-Praeferenzen</h2>
+                  <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">App-Präferenzen</h2>
                   <p className="text-sm text-[hsl(var(--fg-muted))]">Sprache, Ansicht und Darstellung</p>
                 </div>
               </div>
@@ -526,7 +526,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium text-[hsl(var(--fg-primary))]">Kompakter Modus</p>
-                    <p className="text-xs text-[hsl(var(--fg-muted))]">Dichtere Karten/Abstaende</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Dichtere Karten/Abstände</p>
                   </div>
                   <Toggle
                     value={preferences.compactMode}
@@ -548,7 +548,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium text-[hsl(var(--fg-primary))]">Muskelbalance sichtbar</p>
-                    <p className="text-xs text-[hsl(var(--fg-muted))]">Kann spaeter auch ausgeblendet werden</p>
+                    <p className="text-xs text-[hsl(var(--fg-muted))]">Kann später auch ausgeblendet werden</p>
                   </div>
                   <Toggle
                     value={preferences.showMuscleBalance}

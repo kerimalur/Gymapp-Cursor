@@ -128,8 +128,8 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
             <h3 className="text-lg font-bold text-[hsl(var(--fg-primary))]">Körpergewicht</h3>
             <p className="text-sm text-[hsl(var(--fg-muted))]">
               {entries.length > 0 
-                ? `${entries.length} Eintraege` 
-                : 'Noch keine Eintraege'}
+                ? `${entries.length} Einträge` 
+                : 'Noch keine Einträge'}
             </p>
           </div>
         </div>
@@ -214,7 +214,7 @@ export function BodyWeightWidget({ compact = false }: BodyWeightWidgetProps) {
       {/* Mini Chart */}
       {recentEntries.length > 1 && (
         <div className="mb-6">
-          <p className="text-xs text-[hsl(var(--fg-muted))] mb-2">Letzte 7 Eintraege</p>
+          <p className="text-xs text-[hsl(var(--fg-muted))] mb-2">Letzte 7 Einträge</p>
           <div className="flex items-end gap-1 h-16">
             {recentEntries.map((entry, idx) => {
               const minWeight = Math.min(...recentEntries.map(e => e.weight));

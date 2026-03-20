@@ -201,7 +201,7 @@ export function StrengthGoals() {
                 </div>
               </div>
 
-              <div className="h-2 overflow-hidden rounded-full bg-slate-200 mb-2">
+              <div className="h-2 overflow-hidden rounded-full bg-[hsl(225,12%,13%)] mb-2">
                 <div
                   className={`h-full rounded-full transition-all ${goal.progress >= 100 ? 'bg-emerald-500' : 'bg-violet-500'}`}
                   style={{ width: `${goal.progress}%` }}

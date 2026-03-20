@@ -80,7 +80,7 @@ const muscleInfo: Record<string, { description: string; avgSetsPerWeek: string; 
     tips: ['Farmer Walks für funktionelle Kraft', 'Curls und Reverse Curls', 'Griffvarianten beim Training']
   },
   'Beine': {
-    description: 'Quadrizeps, Beinbeuger, Waden und Gesäß - die groessten Muskelgruppen des Körpers.',
+    description: 'Quadrizeps, Beinbeuger, Waden und Gesäß - die größten Muskelgruppen des Körpers.',
     avgSetsPerWeek: '14-22 Sätze/Woche',
     tips: ['Compound-Übungen priorisieren', 'Volle Range of Motion', 'Isolation für Schwachstellen']
   },

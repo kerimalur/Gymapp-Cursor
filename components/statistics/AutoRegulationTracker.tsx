@@ -212,7 +212,7 @@ export function AutoRegulationTracker() {
         <div className="text-center py-8">
           <Info className="w-12 h-12 text-slate-300 mx-auto mb-3" />
           <p className="text-[hsl(var(--fg-muted))]">Trainiere mit RIR-Tracking für automatische Empfehlungen.</p>
-          <p className="text-sm text-[hsl(var(--fg-subtle))] mt-1">Mindestens 2 Sessions pro Übung benoetigt.</p>
+          <p className="text-sm text-[hsl(var(--fg-subtle))] mt-1">Mindestens 2 Sessions pro Übung benötigt.</p>
         </div>
       </div>
     );

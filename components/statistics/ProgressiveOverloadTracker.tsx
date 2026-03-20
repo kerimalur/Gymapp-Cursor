@@ -143,7 +143,7 @@ export function ProgressiveOverloadTracker() {
         } else if (volumeTrend > 10) {
           suggestion = 'Volumen ist hoch, versuche Gewicht zu steigern statt mehr SÃƒÂ¤tze';
         } else {
-          suggestion = 'Probiere eine Variation der ÃƒÅ“bung oder aendere Rep-Range';
+          suggestion = 'Probiere eine Variation der Übung oder ändere Rep-Range';
         }
       } else {
         status = 'progressing';

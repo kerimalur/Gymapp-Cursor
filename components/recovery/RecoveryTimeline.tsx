@@ -432,7 +432,7 @@ export function RecoveryTimeline({
               <div className="bg-gradient-to-br from-[hsl(225,12%,13%)] to-[hsl(225,12%,15%)] rounded-xl p-4">
                 <h4 className="font-medium text-[hsl(var(--fg-primary))] mb-2">Regenerationszeit</h4>
                 <p className="text-sm text-[hsl(var(--fg-secondary))]">
-                  Dieser Muskel benoetigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> für vollst?ndige Regeneration.
+                  Dieser Muskel benötigt typischerweise <span className="font-semibold">{recoveryTimes[selectedMuscle as MuscleGroup] || 48} Stunden</span> für vollständige Regeneration.
                 </p>
               </div>
             </div>
