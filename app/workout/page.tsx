@@ -11,7 +11,7 @@ import { exerciseDatabase } from '@/data/exerciseDatabase';
 import { WorkoutSession } from '@/types';
 import {
   ArrowLeft, CheckCircle, X, Plus, Minus, Flame, Search,
-  Timer, TrendingUp, AlertTriangle, StickyNote,
+  Timer, TrendingUp, AlertTriangle, StickyNote, ChevronRight, ChevronLeft,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import toast from 'react-hot-toast';
@@ -19,6 +19,7 @@ import { Suspense } from 'react';
 import { getProgressionSuggestion, generateWorkoutSummary, WorkoutSummaryData } from '@/lib/progressiveOverload';
 import { gradeWorkout, WorkoutGrade } from '@/lib/coachingEngine';
 import { WorkoutSummaryModal } from '@/components/workout/WorkoutSummaryModal';
+import { WorkoutSetup } from '@/components/workout/WorkoutSetup';
 import { normalizeSearchText } from '@/lib/text';
 
 // ─── Helper ──────────────────────────────────────────────────────────────────
@@ -44,6 +45,10 @@ function WorkoutContent() {
   const { trainingDays, workoutSessions, workoutSettings, customExercises, trainingPlans } = workoutStore;
   const { syncData, user } = useAuthStore();
   const nutritionStore = useNutritionStore();
+
+  // Setup phase state 
+  const [showSetup, setShowSetup] = useState(true);
+  const [setupConfig, setSetupConfig] = useState<{exerciseId: string; sets: number}[] | null>(null);
 
   const [workout, setWorkout] = useState<WorkoutSession | null>(null);
   const [startTime] = useState(new Date());
@@ -84,7 +89,7 @@ function WorkoutContent() {
       setRestTimer(prev => {
         if (prev.seconds <= 1) {
           if ('vibrate' in navigator) navigator.vibrate([200, 100, 200]);
-          toast.success('⏱️ Pause vorbei! Nächster Satz!', { duration: 3000 });
+          toast.success('Pause vorbei! Nächster Satz!', { duration: 3000 });
           return { ...prev, isActive: false, seconds: 0 };
         }
         return { ...prev, seconds: prev.seconds - 1 };
@@ -96,7 +101,7 @@ function WorkoutContent() {
   const startRestTimer = useCallback((seconds?: number) => {
     const target = seconds || workoutSettings?.defaultRestTime || 90;
     setRestTimer({ isActive: true, seconds: target, targetSeconds: target });
-    toast.success(`⏱️ ${Math.floor(target / 60)}:${(target % 60).toString().padStart(2, '0')} Pause`, { duration: 2000 });
+    toast.success(`${Math.floor(target / 60)}:${(target % 60).toString().padStart(2, '0')} Pause`, { duration: 2000 });
   }, [workoutSettings?.defaultRestTime]);
 
   const stopRestTimer = useCallback(() =>
@@ -106,6 +111,8 @@ function WorkoutContent() {
 
   useEffect(() => {
     if (!trainingDayId) { router.push('/tracker'); return; }
+    if (showSetup || !setupConfig) return; // Don't init until setup is done
+    
     const day = trainingDays.find(d => d.id === trainingDayId);
     if (!day) { router.push('/tracker'); return; }
 
@@ -120,17 +127,18 @@ function WorkoutContent() {
       trainingDayName: day.name,
       startTime,
       totalVolume: 0,
-      exercises: day.exercises.map(ex => {
-        const lastEx = lastWorkout?.exercises.find(e => e.exerciseId === ex.exerciseId);
+      exercises: setupConfig.map(cfg => {
+        const originalEx = day.exercises.find(e => e.exerciseId === cfg.exerciseId);
+        const lastEx = lastWorkout?.exercises.find(e => e.exerciseId === cfg.exerciseId);
         return {
-          ...ex,
-          sets: ex.sets.map((set, idx) => {
+          exerciseId: cfg.exerciseId,
+          sets: Array.from({ length: cfg.sets }, (_, idx) => {
             const lastWeight = lastEx?.sets[idx]?.weight;
             return {
               id: `set-${Date.now()}-${idx}`,
-              weight: lastWeight ?? 0,   // pre-fill last weight; 0 = blank on first time
-              reps: 8,                    // always default 8
-              rir: 1,                     // always default RIR 1
+              weight: lastWeight ?? 0,
+              reps: 8,
+              rir: 1,
               completed: false,
               ghostWeight: lastWeight,
               ghostReps: lastEx?.sets[idx]?.reps,
@@ -140,7 +148,13 @@ function WorkoutContent() {
       }),
     };
     setWorkout(newWorkout);
-  }, [trainingDayId, trainingDays, workoutSessions, router, startTime]);
+  }, [trainingDayId, trainingDays, workoutSessions, router, startTime, showSetup, setupConfig]);
+
+  // Handle setup completion
+  const handleSetupComplete = (exercises: {exerciseId: string; sets: number}[]) => {
+    setSetupConfig(exercises);
+    setShowSetup(false);
+  };
 
   // ── Derived ────────────────────────────────────────────────────────────────
 
@@ -167,9 +181,13 @@ function WorkoutContent() {
         const withComplete = { ...next, exercises: next.exercises.map((ex, ei) =>
           ei !== exIdx ? ex : { ...ex, sets: ex.sets.map((s, si) => si !== setIdx ? s : { ...s, completed: true }) }
         )};
-        toast.success('Satz abgeschlossen! 💪', { duration: 1500 });
+        toast.success('Satz abgeschlossen!', { duration: 1500 });
         const remaining = withComplete.exercises[exIdx].sets.filter((s, i) => i > setIdx && !s.completed).length;
         if (remaining > 0 && workoutSettings?.autoStartRestTimer) startRestTimer();
+        // Auto-advance to next exercise if all sets done
+        if (remaining === 0 && exIdx < withComplete.exercises.length - 1) {
+          setTimeout(() => setActiveExIdx(exIdx + 1), 600);
+        }
         return withComplete;
       }
       return next;
@@ -190,9 +208,13 @@ function WorkoutContent() {
         ei !== exIdx ? ex : { ...ex, sets: ex.sets.map((s, si) => si !== setIdx ? s : { ...s, completed: !wasCompleted }) }
       )};
       if (!wasCompleted) {
-        toast.success('Satz abgeschlossen! 💪', { duration: 1500 });
+        toast.success('Satz abgeschlossen!', { duration: 1500 });
         const remaining = next.exercises[exIdx].sets.filter((s, i) => i > setIdx && !s.completed).length;
         if (remaining > 0 && workoutSettings?.autoStartRestTimer) startRestTimer();
+        // Auto-advance to next exercise if all sets done
+        if (remaining === 0 && exIdx < next.exercises.length - 1) {
+          setTimeout(() => setActiveExIdx(exIdx + 1), 600);
+        }
       }
       return next;
     });
@@ -202,7 +224,7 @@ function WorkoutContent() {
     setWorkout(prev => {
       if (!prev) return prev;
       const isWarmup = !prev.exercises[exIdx].sets[setIdx].isWarmup;
-      toast.success(isWarmup ? '🔥 Aufwärmsatz' : 'Arbeitssatz', { duration: 1500 });
+      toast.success(isWarmup ? 'Aufwärmsatz' : 'Arbeitssatz', { duration: 1500 });
       return { ...prev, exercises: prev.exercises.map((ex, ei) =>
         ei !== exIdx ? ex : { ...ex, sets: ex.sets.map((s, si) => si !== setIdx ? s : { ...s, isWarmup }) }
       )};
@@ -284,6 +306,17 @@ function WorkoutContent() {
     setActiveExIdx(idx);
     exerciseRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+
+  // Show setup screen first
+  if (showSetup) {
+    return (
+      <WorkoutSetup
+        trainingDayId={trainingDayId}
+        onStart={handleSetupComplete}
+        onCancel={() => router.push('/tracker')}
+      />
+    );
+  }
 
   if (!workout) {
     return (
@@ -373,42 +406,51 @@ function WorkoutContent() {
               key={`${ex.exerciseId}-${exIdx}`}
               ref={el => { exerciseRefs.current[exIdx] = el; }}
               onClick={() => setActiveExIdx(exIdx)}
-              className={`bg-[hsl(225,14%,11%)] rounded-2xl border transition-all ${
-                isActive ? 'border-cyan-400/30 shadow-lg shadow-cyan-400/[0.06]' : 'border-[hsl(225,10%,16%)] opacity-80 hover:opacity-100'
+              className={`bg-[hsl(225,14%,11%)] rounded-2xl border transition-all cursor-pointer ${
+                isActive ? 'border-cyan-400/30 shadow-lg shadow-cyan-400/[0.06]' : 'border-[hsl(225,10%,16%)] opacity-60 hover:opacity-80'
               }`}
             >
               {/* Exercise header */}
-              <div className="flex items-center justify-between px-4 pt-4 pb-3">
+              <div className={`flex items-center justify-between px-4 ${isActive ? 'pt-4 pb-3' : 'py-3'}`}>
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 ${
-                    done === ex.sets.length ? 'bg-emerald-500 text-white' : 'bg-cyan-400/10 text-cyan-400'
+                  <div className={`${isActive ? 'w-9 h-9' : 'w-7 h-7'} rounded-xl flex items-center justify-center text-sm font-bold shrink-0 transition-all ${
+                    done === ex.sets.length ? 'bg-emerald-500 text-white' : isActive ? 'bg-cyan-400/10 text-cyan-400' : 'bg-[hsl(225,12%,15%)] text-[hsl(var(--fg-muted))]'
                   }`}>
-                    {done === ex.sets.length ? <CheckCircle className="w-4 h-4" /> : exIdx + 1}
+                    {done === ex.sets.length ? <CheckCircle className={`${isActive ? 'w-4 h-4' : 'w-3.5 h-3.5'}`} /> : exIdx + 1}
                   </div>
                   <div className="min-w-0">
-                    <p className="font-bold text-[hsl(var(--fg-primary))] truncate">{exName}</p>
-                    {muscles && <p className="text-xs text-[hsl(var(--fg-subtle))] truncate">{muscles}</p>}
+                    <p className={`font-bold truncate ${isActive ? 'text-[hsl(var(--fg-primary))]' : 'text-[hsl(var(--fg-secondary))] text-sm'}`}>{exName}</p>
+                    {muscles && isActive && <p className="text-xs text-[hsl(var(--fg-subtle))] truncate">{muscles}</p>}
                   </div>
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   <span className="text-xs font-semibold text-[hsl(var(--fg-muted))] mr-1">{done}/{ex.sets.length}</span>
-                  <button
-                    onClick={e => { e.stopPropagation(); setShowNoteInput(showNoteInput === exIdx ? null : exIdx); }}
-                    className={`p-1.5 rounded-lg transition-colors ${exerciseNotes[exIdx] ? 'text-cyan-400 bg-cyan-400/10' : 'text-[hsl(var(--fg-subtle))] hover:bg-[hsl(225,12%,15%)]'}`}
-                  >
-                    <StickyNote className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={e => { e.stopPropagation(); handleRemoveExercise(exIdx); }}
-                    className="p-1.5 rounded-lg text-[hsl(var(--fg-subtle))] hover:text-red-400 hover:bg-red-400/10 transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
+                  {isActive && (
+                    <>
+                      <button
+                        onClick={e => { e.stopPropagation(); setShowNoteInput(showNoteInput === exIdx ? null : exIdx); }}
+                        className={`p-1.5 rounded-lg transition-colors ${exerciseNotes[exIdx] ? 'text-cyan-400 bg-cyan-400/10' : 'text-[hsl(var(--fg-subtle))] hover:bg-[hsl(225,12%,15%)]'}`}
+                      >
+                        <StickyNote className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={e => { e.stopPropagation(); handleRemoveExercise(exIdx); }}
+                        className="p-1.5 rounded-lg text-[hsl(var(--fg-subtle))] hover:text-red-400 hover:bg-red-400/10 transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </>
+                  )}
+                  {!isActive && done === ex.sets.length && (
+                    <CheckCircle className="w-4 h-4 text-emerald-400 ml-1" />
+                  )}
                 </div>
               </div>
 
+              {/* ── Expanded content (only active exercise) ── */}
+              {isActive && (<>
               {/* Progression suggestion */}
-              {suggestion.type !== 'first_time' && isActive && (
+              {suggestion.type !== 'first_time' && (
                 <div className={`mx-4 mb-3 px-3 py-2 rounded-xl text-xs flex items-center gap-2 ${
                   suggestion.type === 'stagnation_alert' ? 'bg-rose-400/10 text-rose-400 border border-rose-400/20'
                   : suggestion.type === 'deload' ? 'bg-amber-400/10 text-amber-400 border border-amber-400/20'
@@ -559,9 +601,39 @@ function WorkoutContent() {
                   <Plus className="w-3.5 h-3.5" /> Satz hinzufügen
                 </button>
               </div>
+              </>)}
             </div>
           );
         })}
+
+        {/* Prev / Next exercise navigation */}
+        {workout.exercises.length > 1 && (
+          <div className="flex items-center justify-between gap-3">
+            <button
+              onClick={() => setActiveExIdx(Math.max(0, activeExIdx - 1))}
+              disabled={activeExIdx === 0}
+              className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                activeExIdx === 0
+                  ? 'opacity-30 cursor-not-allowed text-[hsl(var(--fg-subtle))]'
+                  : 'bg-[hsl(225,14%,13%)] border border-[hsl(225,10%,18%)] text-[hsl(var(--fg-secondary))] hover:border-cyan-400/30 hover:text-cyan-400'
+              }`}
+            >
+              <ChevronLeft className="w-4 h-4" /> Vorherige
+            </button>
+            <span className="text-xs font-semibold text-[hsl(var(--fg-muted))]">{activeExIdx + 1} / {workout.exercises.length}</span>
+            <button
+              onClick={() => setActiveExIdx(Math.min(workout.exercises.length - 1, activeExIdx + 1))}
+              disabled={activeExIdx === workout.exercises.length - 1}
+              className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                activeExIdx === workout.exercises.length - 1
+                  ? 'opacity-30 cursor-not-allowed text-[hsl(var(--fg-subtle))]'
+                  : 'bg-[hsl(225,14%,13%)] border border-[hsl(225,10%,18%)] text-[hsl(var(--fg-secondary))] hover:border-cyan-400/30 hover:text-cyan-400'
+              }`}
+            >
+              Nächste <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         {/* Add exercise */}
         <button
@@ -593,7 +665,7 @@ function WorkoutContent() {
             }`}
           >
             {isSaving ? 'Speichern…'
-              : completedSets === totalSets && totalSets > 0 ? '🏆 Training abschließen'
+              : completedSets === totalSets && totalSets > 0 ? 'Training abschließen'
               : completedSets > 0 ? `Training beenden (${completedSets}/${totalSets})`
               : 'Mindestens 1 Satz abschließen'}
           </button>

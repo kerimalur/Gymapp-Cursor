@@ -289,7 +289,7 @@ export function calculateMomentum(
 
   // ── Message ──
   let message: string;
-  if (totalScore >= 80) message = 'Du bist on fire! Weiter so, dein Körper dankt es dir. 🔥';
+  if (totalScore >= 80) message = 'Du bist on fire! Weiter so, dein Körper dankt es dir.';
   else if (totalScore >= 60) message = 'Guter Fortschritt! Kleine Anpassungen für noch mehr Power.';
   else if (totalScore >= 40) message = 'Du machst was – aber da geht mehr! Schau auf die Schwächen.';
   else if (totalScore >= 20) message = 'Dein Momentum sinkt. Lass uns das wieder aufbauen!';
@@ -586,7 +586,7 @@ export function generateCoachInsights(
       id: 'consistency-achieved',
       category: 'consistency',
       priority: 'positive',
-      title: 'Wochenziel erreicht! 🎯',
+      title: 'Wochenziel erreicht!',
       message: `${weekWorkouts} Trainings diese Woche – stark! Dein Körper transformiert sich gerade.`,
       icon: '🏆',
       timestamp: now,

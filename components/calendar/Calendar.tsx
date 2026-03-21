@@ -168,7 +168,7 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
                     cy="18"
                     r="13"
                     fill="none"
-                    stroke="#e2e8f0"
+                    stroke="hsl(225, 12%, 20%)"
                     strokeWidth="3"
                   />
                   {/* Progress circle */}
@@ -209,15 +209,15 @@ export function Calendar({ currentMonth, onDateClick }: CalendarProps) {
                   className={`
                     relative h-20 w-full flex items-center justify-center rounded-xl border text-sm font-semibold
                     transition-all duration-150
-                    ${!isCurrentMonth ? 'text-slate-300' : ''}
+                    ${!isCurrentMonth ? 'text-[hsl(var(--fg-subtle))] opacity-40' : ''}
                     ${isCurrentDay 
                       ? 'border-cyan-500 bg-cyan-500 text-white shadow-sm' 
                       : hasWorkout && isCurrentMonth
-                        ? 'border-emerald-300 bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                        ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-400 hover:bg-emerald-400/15'
                         : isPlanned && isCurrentMonth
                           ? 'border-2 border-dashed border-cyan-400/30 bg-cyan-400/10 text-cyan-400 hover:bg-cyan-400/15'
                           : isCurrentMonth
-                            ? 'border-[hsl(225,10%,16%)] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(225,12%,18%)]'
+                            ? 'border-[hsl(var(--border-light))] text-[hsl(var(--fg-secondary))] hover:bg-[hsl(var(--bg-tertiary))]'
                             : 'border-[hsl(225,10%,14%)] hover:bg-[hsl(225,12%,13%)]'
                     }
                   `}

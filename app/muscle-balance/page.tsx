@@ -56,7 +56,7 @@ const RECOMMENDATIONS: Record<string, string[]> = {
   Rücken: [
     'Latziehen und Rudern kombinieren',
     'Klimmzüge für vertikales Ziehen',
-    'Rücken ist der größte Oberkörpermuskel – priorisieren!',
+    'Rücken ist der grösste Oberkörpermuskel – priorisieren!',
   ],
   Schultern: [
     'Schulterdrücken als Compound-Übung einbauen',
@@ -75,7 +75,7 @@ const RECOMMENDATIONS: Record<string, string[]> = {
   ],
   Beine: [
     'Kniebeuge und Kreuzheben priorisieren',
-    'Beine sind die größten Muskeln – nicht vernachlässigen!',
+    'Beine sind die grössten Muskeln – nicht vernachlässigen!',
     'Beintraining fördert auch Hormonausschüttung',
   ],
   Core: [

@@ -52,7 +52,7 @@ export const MUSCLE_NAMES_DE: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'Gesäss',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',

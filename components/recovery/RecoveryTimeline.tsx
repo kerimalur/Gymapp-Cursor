@@ -26,7 +26,7 @@ const muscleTranslations: Record<string, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'Gesäss',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',

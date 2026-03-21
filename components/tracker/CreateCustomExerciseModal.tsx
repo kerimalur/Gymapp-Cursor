@@ -24,7 +24,7 @@ const MUSCLE_GROUPS: { id: MuscleGroup; name: string }[] = [
   { id: 'abs', name: 'Bauch' },
   { id: 'quadriceps', name: 'Quadrizeps' },
   { id: 'hamstrings', name: 'Beinbeuger' },
-  { id: 'glutes', name: 'Gesäß' },
+  { id: 'glutes', name: 'Gesäss' },
   { id: 'calves', name: 'Waden' },
   { id: 'traps', name: 'Trapez' },
   { id: 'adductors', name: 'Adduktoren' },

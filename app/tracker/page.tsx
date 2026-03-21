@@ -98,7 +98,7 @@ export default function TrackerPage() {
             <p className="text-xs font-semibold text-[hsl(var(--fg-secondary))]">
               {weekOffset === 0 ? 'Diese Woche' : format(weekDays[0].date, 'd. MMM', { locale: de }) + ' – ' + format(weekDays[6].date, 'd. MMM', { locale: de })}
             </p>
-            <button onClick={() => setWeekOffset(w => Math.min(w + 1, 0))} className="p-1 text-[hsl(var(--fg-muted))] active:text-[hsl(var(--fg-primary))]" disabled={weekOffset >= 0}>
+            <button onClick={() => setWeekOffset(w => w + 1)} className="p-1 text-[hsl(var(--fg-muted))] active:text-[hsl(var(--fg-primary))]">
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

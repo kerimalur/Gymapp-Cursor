@@ -97,7 +97,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
       time: quickMealTime,
     });
 
-    toast.success(`✅ ${cal} kcal, ${prot || 0}g Protein geloggt`);
+    toast.success(`${cal} kcal, ${prot || 0}g Protein geloggt`);
     setQuickCalories('');
     setQuickProtein('');
     setQuickName('');
@@ -121,7 +121,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
       });
     });
 
-    toast.success(`✅ ${yesterdayMeals.length} Mahlzeiten von gestern kopiert`);
+    toast.success(`${yesterdayMeals.length} Mahlzeiten von gestern kopiert`);
     onClose();
   };
 
@@ -135,7 +135,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
       time: meal.time,
     });
 
-    toast.success(`✅ ${meal.name} geloggt`);
+    toast.success(`${meal.name} geloggt`);
   };
 
   const handleAddTemplate = (template: MealTemplate) => {
@@ -148,7 +148,7 @@ export function QuickLogNutrition({ isOpen, onClose }: QuickLogNutritionProps) {
       time: template.mealTime,
     });
 
-    toast.success(`✅ ${template.name} geloggt`);
+    toast.success(`${template.name} geloggt`);
   };
 
   if (!isOpen) return null;

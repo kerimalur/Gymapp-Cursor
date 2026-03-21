@@ -142,7 +142,7 @@ export function WaterCaffeineTracker() {
           <p className="text-sm text-[hsl(var(--fg-muted))] mt-2">
             {caffeine > caffeineGoal ? (
               <span className="text-red-600 font-medium">
-                ⚠️ Empfohlene Menge überschritten
+                Empfohlene Menge überschritten
               </span>
             ) : caffeineGoal - caffeine > 0 ? (
               <>Noch {caffeineGoal - caffeine} mg verfuegbar</>

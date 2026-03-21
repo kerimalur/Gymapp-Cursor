@@ -6,6 +6,7 @@ import { getMuscleInvolvement } from '@/data/exerciseDatabase';
 import { MuscleGroup } from '@/types';
 import { differenceInDays, format } from 'date-fns';
 import { de } from 'date-fns/locale';
+import { Flame, Clock, CheckCircle, AlertTriangle, Minus, X } from 'lucide-react';
 
 // Muscle labels in German
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
@@ -19,7 +20,7 @@ const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   quadriceps: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
   calves: 'Waden',
-  glutes: 'Gesäß',
+  glutes: 'Gesäss',
   traps: 'Trapez',
   lats: 'Latissimus',
   adductors: 'Adduktoren',
@@ -135,11 +136,11 @@ export function ModernMuscleHeatmap() {
 
   const getStatusInfo = (status: MuscleData['status']) => {
     switch (status) {
-      case 'fresh': return { text: 'Heute trainiert', color: 'text-emerald-600', bg: 'bg-emerald-500', emoji: '🔥' };
-      case 'recovering': return { text: 'Regeneration', color: 'text-amber-600', bg: 'bg-amber-500', emoji: '⏳' };
-      case 'ready': return { text: 'Bereit', color: 'text-blue-600', bg: 'bg-blue-500', emoji: '✅' };
-      case 'overdue': return { text: 'Überfällig', color: 'text-rose-600', bg: 'bg-rose-500', emoji: '⚠️' };
-      case 'never': return { text: 'Nie trainiert', color: 'text-slate-400', bg: 'bg-slate-300', emoji: '➖' };
+      case 'fresh': return { text: 'Heute trainiert', color: 'text-emerald-400', bg: 'bg-emerald-500', icon: Flame };
+      case 'recovering': return { text: 'Regeneration', color: 'text-amber-400', bg: 'bg-amber-500', icon: Clock };
+      case 'ready': return { text: 'Bereit', color: 'text-cyan-400', bg: 'bg-cyan-500', icon: CheckCircle };
+      case 'overdue': return { text: 'Überfällig', color: 'text-rose-400', bg: 'bg-rose-500', icon: AlertTriangle };
+      case 'never': return { text: 'Nie trainiert', color: 'text-[hsl(var(--fg-subtle))]', bg: 'bg-[hsl(var(--fg-subtle))]', icon: Minus };
     }
   };
 
@@ -163,7 +164,7 @@ export function ModernMuscleHeatmap() {
   if (!mounted) {
     return (
       <div className="animate-pulse space-y-4">
-        <div className="h-40 bg-slate-100 rounded-xl" />
+        <div className="h-40 bg-[hsl(var(--bg-tertiary))] rounded-xl" />
       </div>
     );
   }
@@ -176,10 +177,11 @@ export function ModernMuscleHeatmap() {
       <div className="flex flex-wrap gap-3 justify-center">
         {(['fresh', 'recovering', 'ready', 'overdue'] as const).map(status => {
           const info = getStatusInfo(status);
+          const StatusIcon = info.icon;
           return (
-            <div key={status} className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full">
-              <div className={`w-3 h-3 rounded-full ${info.bg}`} />
-              <span className="text-xs font-medium text-slate-600">{info.text}</span>
+            <div key={status} className="flex items-center gap-2 px-3 py-1.5 bg-[hsl(var(--bg-tertiary))] rounded-full border border-[hsl(var(--border-light))]">
+              <StatusIcon className={`w-3 h-3 ${info.color}`} />
+              <span className="text-xs font-medium text-[hsl(var(--fg-secondary))]">{info.text}</span>
             </div>
           );
         })}
@@ -189,11 +191,11 @@ export function ModernMuscleHeatmap() {
       <div className="space-y-4">
         {/* Upper Body */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Oberkörper</h4>
+          <h4 className="text-xs font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wider mb-3">Oberkörper</h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {upperBody.map((muscle, i) => {
               const statusInfo = getStatusInfo(muscle.status);
-              const colors = MUSCLE_COLORS[muscle.muscle];
+              const StatusIcon = statusInfo.icon;
               const isSelected = selectedMuscle === muscle.muscle;
               
               return (
@@ -201,22 +203,30 @@ export function ModernMuscleHeatmap() {
                   key={muscle.muscle}
                   onClick={() => setSelectedMuscle(isSelected ? null : muscle.muscle)}
                   className={`
-                    relative p-4 rounded-xl transition-all duration-300 text-left
-                    ${isSelected ? 'ring-2 ring-blue-500 shadow-lg scale-[1.02]' : 'hover:shadow-md hover:scale-[1.01]'}
-                    bg-gradient-to-br ${colors.gradient} ${getIntensityClass(muscle.sets)}
+                    relative p-4 rounded-xl transition-all duration-300 text-left border
+                    ${isSelected ? 'ring-2 ring-cyan-500 shadow-lg scale-[1.02] border-cyan-500/30' : 'hover:shadow-md hover:scale-[1.01] border-[hsl(var(--border-light))]'}
+                    ${muscle.sets > 0 ? 'bg-[hsl(var(--bg-elevated))]' : 'bg-[hsl(var(--bg-card))] opacity-60'}
                   `}
                   style={{ animationDelay: `${i * 50}ms` }}
                 >
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-white font-bold text-sm drop-shadow">{muscle.label}</span>
-                      <span className="text-lg">{statusInfo.emoji}</span>
+                      <span className="text-[hsl(var(--fg-primary))] font-bold text-sm">{muscle.label}</span>
+                      <StatusIcon className={`w-4 h-4 ${statusInfo.color}`} />
                     </div>
-                    <p className="text-white/80 text-xs">{muscle.sets} Sätze</p>
+                    <p className="text-[hsl(var(--fg-muted))] text-xs">{muscle.sets} Sätze</p>
                     {muscle.daysSince !== null && muscle.daysSince > 0 && (
-                      <p className="text-white/60 text-xs mt-1">vor {muscle.daysSince}d</p>
+                      <p className="text-[hsl(var(--fg-subtle))] text-xs mt-1">vor {muscle.daysSince}d</p>
                     )}
                   </div>
+                  {muscle.sets > 0 && (
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 rounded-b-xl ${
+                      muscle.status === 'fresh' ? 'bg-emerald-500' :
+                      muscle.status === 'recovering' ? 'bg-amber-500' :
+                      muscle.status === 'ready' ? 'bg-cyan-500' :
+                      'bg-rose-500'
+                    }`} style={{ opacity: Math.min(1, muscle.sets / 15) }} />
+                  )}
                 </button>
               );
             })}
@@ -225,11 +235,11 @@ export function ModernMuscleHeatmap() {
 
         {/* Core */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Core</h4>
+          <h4 className="text-xs font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wider mb-3">Core</h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {core.map((muscle, i) => {
               const statusInfo = getStatusInfo(muscle.status);
-              const colors = MUSCLE_COLORS[muscle.muscle];
+              const StatusIcon = statusInfo.icon;
               const isSelected = selectedMuscle === muscle.muscle;
               
               return (
@@ -237,21 +247,29 @@ export function ModernMuscleHeatmap() {
                   key={muscle.muscle}
                   onClick={() => setSelectedMuscle(isSelected ? null : muscle.muscle)}
                   className={`
-                    relative p-4 rounded-xl transition-all duration-300 text-left
-                    ${isSelected ? 'ring-2 ring-blue-500 shadow-lg scale-[1.02]' : 'hover:shadow-md hover:scale-[1.01]'}
-                    bg-gradient-to-br ${colors.gradient} ${getIntensityClass(muscle.sets)}
+                    relative p-4 rounded-xl transition-all duration-300 text-left border
+                    ${isSelected ? 'ring-2 ring-cyan-500 shadow-lg scale-[1.02] border-cyan-500/30' : 'hover:shadow-md hover:scale-[1.01] border-[hsl(var(--border-light))]'}
+                    ${muscle.sets > 0 ? 'bg-[hsl(var(--bg-elevated))]' : 'bg-[hsl(var(--bg-card))] opacity-60'}
                   `}
                 >
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-white font-bold text-sm drop-shadow">{muscle.label}</span>
-                      <span className="text-lg">{statusInfo.emoji}</span>
+                      <span className="text-[hsl(var(--fg-primary))] font-bold text-sm">{muscle.label}</span>
+                      <StatusIcon className={`w-4 h-4 ${statusInfo.color}`} />
                     </div>
-                    <p className="text-white/80 text-xs">{muscle.sets} Sätze</p>
+                    <p className="text-[hsl(var(--fg-muted))] text-xs">{muscle.sets} Sätze</p>
                     {muscle.daysSince !== null && muscle.daysSince > 0 && (
-                      <p className="text-white/60 text-xs mt-1">vor {muscle.daysSince}d</p>
+                      <p className="text-[hsl(var(--fg-subtle))] text-xs mt-1">vor {muscle.daysSince}d</p>
                     )}
                   </div>
+                  {muscle.sets > 0 && (
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 rounded-b-xl ${
+                      muscle.status === 'fresh' ? 'bg-emerald-500' :
+                      muscle.status === 'recovering' ? 'bg-amber-500' :
+                      muscle.status === 'ready' ? 'bg-cyan-500' :
+                      'bg-rose-500'
+                    }`} style={{ opacity: Math.min(1, muscle.sets / 15) }} />
+                  )}
                 </button>
               );
             })}
@@ -260,11 +278,11 @@ export function ModernMuscleHeatmap() {
 
         {/* Lower Body */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Unterkörper</h4>
+          <h4 className="text-xs font-semibold text-[hsl(var(--fg-muted))] uppercase tracking-wider mb-3">Unterkörper</h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {lowerBody.map((muscle, i) => {
               const statusInfo = getStatusInfo(muscle.status);
-              const colors = MUSCLE_COLORS[muscle.muscle];
+              const StatusIcon = statusInfo.icon;
               const isSelected = selectedMuscle === muscle.muscle;
               
               return (
@@ -272,21 +290,29 @@ export function ModernMuscleHeatmap() {
                   key={muscle.muscle}
                   onClick={() => setSelectedMuscle(isSelected ? null : muscle.muscle)}
                   className={`
-                    relative p-4 rounded-xl transition-all duration-300 text-left
-                    ${isSelected ? 'ring-2 ring-blue-500 shadow-lg scale-[1.02]' : 'hover:shadow-md hover:scale-[1.01]'}
-                    bg-gradient-to-br ${colors.gradient} ${getIntensityClass(muscle.sets)}
+                    relative p-4 rounded-xl transition-all duration-300 text-left border
+                    ${isSelected ? 'ring-2 ring-cyan-500 shadow-lg scale-[1.02] border-cyan-500/30' : 'hover:shadow-md hover:scale-[1.01] border-[hsl(var(--border-light))]'}
+                    ${muscle.sets > 0 ? 'bg-[hsl(var(--bg-elevated))]' : 'bg-[hsl(var(--bg-card))] opacity-60'}
                   `}
                 >
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-white font-bold text-sm drop-shadow">{muscle.label}</span>
-                      <span className="text-lg">{statusInfo.emoji}</span>
+                      <span className="text-[hsl(var(--fg-primary))] font-bold text-sm">{muscle.label}</span>
+                      <StatusIcon className={`w-4 h-4 ${statusInfo.color}`} />
                     </div>
-                    <p className="text-white/80 text-xs">{muscle.sets} Sätze</p>
+                    <p className="text-[hsl(var(--fg-muted))] text-xs">{muscle.sets} Sätze</p>
                     {muscle.daysSince !== null && muscle.daysSince > 0 && (
-                      <p className="text-white/60 text-xs mt-1">vor {muscle.daysSince}d</p>
+                      <p className="text-[hsl(var(--fg-subtle))] text-xs mt-1">vor {muscle.daysSince}d</p>
                     )}
                   </div>
+                  {muscle.sets > 0 && (
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 rounded-b-xl ${
+                      muscle.status === 'fresh' ? 'bg-emerald-500' :
+                      muscle.status === 'recovering' ? 'bg-amber-500' :
+                      muscle.status === 'ready' ? 'bg-cyan-500' :
+                      'bg-rose-500'
+                    }`} style={{ opacity: Math.min(1, muscle.sets / 15) }} />
+                  )}
                 </button>
               );
             })}
@@ -295,61 +321,68 @@ export function ModernMuscleHeatmap() {
       </div>
 
       {/* Selected Muscle Detail */}
-      {selectedData && (
-        <div className="animate-fade-in bg-slate-50 rounded-xl p-5 border border-slate-200">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className={`w-4 h-4 rounded-full bg-gradient-to-br ${MUSCLE_COLORS[selectedData.muscle].gradient}`} />
-              <h4 className="font-bold text-slate-800">{selectedData.label}</h4>
+      {selectedData && (() => {
+        const statusInfo = getStatusInfo(selectedData.status);
+        const StatusIcon = statusInfo.icon;
+        return (
+          <div className="animate-fade-in bg-[hsl(var(--bg-elevated))] rounded-xl p-5 border border-[hsl(var(--border-default))]">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className={`w-4 h-4 rounded-full ${
+                  selectedData.status === 'fresh' ? 'bg-emerald-500' :
+                  selectedData.status === 'recovering' ? 'bg-amber-500' :
+                  selectedData.status === 'ready' ? 'bg-cyan-500' :
+                  selectedData.status === 'overdue' ? 'bg-rose-500' : 'bg-[hsl(var(--fg-subtle))]'
+                }`} />
+                <h4 className="font-bold text-[hsl(var(--fg-primary))]">{selectedData.label}</h4>
+              </div>
+              <button 
+                onClick={() => setSelectedMuscle(null)}
+                className="text-[hsl(var(--fg-subtle))] hover:text-[hsl(var(--fg-secondary))] transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
-            <button 
-              onClick={() => setSelectedMuscle(null)}
-              className="text-slate-400 hover:text-slate-600 transition-colors"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-3 bg-white rounded-xl shadow-sm">
-              <p className="text-2xl font-bold text-slate-800">{selectedData.sets}</p>
-              <p className="text-xs text-slate-500">Sätze (7 Tage)</p>
+            
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center p-3 bg-[hsl(var(--bg-card))] rounded-xl border border-[hsl(var(--border-light))]">
+                <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">{selectedData.sets}</p>
+                <p className="text-xs text-[hsl(var(--fg-muted))]">Sätze (7 Tage)</p>
+              </div>
+              <div className="text-center p-3 bg-[hsl(var(--bg-card))] rounded-xl border border-[hsl(var(--border-light))]">
+                <p className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
+                  {selectedData.daysSince !== null ? selectedData.daysSince : '-'}
+                </p>
+                <p className="text-xs text-[hsl(var(--fg-muted))]">Tage seit Training</p>
+              </div>
+              <div className="text-center p-3 bg-[hsl(var(--bg-card))] rounded-xl border border-[hsl(var(--border-light))]">
+                <StatusIcon className={`w-5 h-5 mx-auto mb-1 ${statusInfo.color}`} />
+                <p className={`text-xs font-medium ${statusInfo.color}`}>
+                  {statusInfo.text}
+                </p>
+              </div>
             </div>
-            <div className="text-center p-3 bg-white rounded-xl shadow-sm">
-              <p className="text-2xl font-bold text-slate-800">
-                {selectedData.daysSince !== null ? selectedData.daysSince : '-'}
-              </p>
-              <p className="text-xs text-slate-500">Tage seit Training</p>
-            </div>
-            <div className="text-center p-3 bg-white rounded-xl shadow-sm">
-              <p className="text-lg">{getStatusInfo(selectedData.status).emoji}</p>
-              <p className={`text-xs font-medium ${getStatusInfo(selectedData.status).color}`}>
-                {getStatusInfo(selectedData.status).text}
-              </p>
-            </div>
-          </div>
 
-          {selectedData.lastTrained && (
-            <p className="text-sm text-slate-500 mt-4 text-center">
-              Zuletzt trainiert: {format(selectedData.lastTrained, 'EEEE, d. MMMM', { locale: de })}
-            </p>
-          )}
-        </div>
-      )}
+            {selectedData.lastTrained && (
+              <p className="text-sm text-[hsl(var(--fg-muted))] mt-4 text-center">
+                Zuletzt trainiert: {format(selectedData.lastTrained, 'EEEE, d. MMMM', { locale: de })}
+              </p>
+            )}
+          </div>
+        );
+      })()}
 
       {/* Intensity Legend */}
       <div className="flex items-center justify-center gap-4 pt-2">
-        <span className="text-xs text-slate-400">Intensit?t:</span>
+        <span className="text-xs text-[hsl(var(--fg-subtle))]">Intensität:</span>
         <div className="flex items-center gap-1">
-          <div className="w-6 h-3 rounded bg-blue-500 opacity-20" />
-          <div className="w-6 h-3 rounded bg-blue-500 opacity-40" />
-          <div className="w-6 h-3 rounded bg-blue-500 opacity-60" />
-          <div className="w-6 h-3 rounded bg-blue-500 opacity-80" />
-          <div className="w-6 h-3 rounded bg-blue-500 opacity-100" />
+          <div className="w-6 h-3 rounded bg-cyan-500 opacity-20" />
+          <div className="w-6 h-3 rounded bg-cyan-500 opacity-40" />
+          <div className="w-6 h-3 rounded bg-cyan-500 opacity-60" />
+          <div className="w-6 h-3 rounded bg-cyan-500 opacity-80" />
+          <div className="w-6 h-3 rounded bg-cyan-500 opacity-100" />
         </div>
-        <span className="text-xs text-slate-400">mehr Sätze →</span>
+        <span className="text-xs text-[hsl(var(--fg-subtle))]">mehr Sätze →</span>
       </div>
     </div>
   );

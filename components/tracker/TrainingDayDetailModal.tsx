@@ -156,7 +156,7 @@ export function TrainingDayDetailModal({ isOpen, trainingDay, onClose, onStart }
     quadriceps: 'Quadrizeps',
     hamstrings: 'Beinbizeps',
     calves: 'Waden',
-    glutes: 'Gesäß',
+    glutes: 'Gesäss',
     traps: 'Trapez',
     lats: 'Latissimus',
     adductors: 'Adduktoren',

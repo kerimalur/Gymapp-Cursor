@@ -8,6 +8,8 @@ import { format, startOfWeek, endOfWeek, isWithinInterval } from 'date-fns';
 import { de } from 'date-fns/locale';
 import {
   Droplets, Flame, ChevronRight, Dumbbell, Trophy, Clock, Zap,
+  Heart, Calendar, Target, BarChart3, AlertTriangle, ShieldCheck, Hand,
+  Apple, Activity,
 } from 'lucide-react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { SkeletonDashboard } from '@/components/ui/Skeleton';
@@ -154,7 +156,7 @@ export default function DashboardPage() {
         <div className="pt-4 pb-1">
           <p className="text-[hsl(var(--fg-muted))] text-sm">{format(new Date(), 'EEEE, d. MMMM', { locale: de })}</p>
           <h1 className="text-2xl font-bold text-[hsl(var(--fg-primary))]">
-            {greeting}, {displayName} 👋
+            {greeting}, {displayName}
           </h1>
         </div>
 
@@ -170,7 +172,7 @@ export default function DashboardPage() {
           </div>
           {momentum.streak > 0 && (
             <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold bg-orange-400/10 text-orange-400 border border-orange-400/20">
-              🔥 {momentum.streak} Tage
+              <Flame className="w-3.5 h-3.5" /> {momentum.streak} Tage
             </div>
           )}
         </div>
@@ -282,7 +284,9 @@ export default function DashboardPage() {
         {fatigue.index > 50 && (
           <div className={`rounded-xl p-3.5 border ${fatigue.needsDeload ? 'border-red-400/30 bg-red-400/5' : 'border-amber-400/30 bg-amber-400/5'}`}>
             <div className="flex items-center gap-3">
-              <span className="text-lg">{fatigue.needsDeload ? '🛑' : '⚠️'}</span>
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${fatigue.needsDeload ? 'bg-red-400/10' : 'bg-amber-400/10'}`}>
+                <AlertTriangle className={`w-4 h-4 ${fatigue.needsDeload ? 'text-red-400' : 'text-amber-400'}`} />
+              </div>
               <div>
                 <p className="font-semibold text-sm text-[hsl(var(--fg-primary))]">Ermüdung: {fatigue.index}%</p>
                 <p className="text-xs text-[hsl(var(--fg-muted))]">{fatigue.message}</p>
@@ -328,56 +332,22 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* ── Weak Points ──────────────────────────────────────── */}
-        {weakPoints.length > 0 && (
-          <div>
-            <h2 className="text-sm font-semibold text-[hsl(var(--fg-secondary))] uppercase tracking-wider mb-3">Schwachstellen</h2>
-            <div className="space-y-2">
-              {weakPoints.slice(0, 3).map((wp) => (
-                <div key={wp.muscle} className="flex items-center justify-between rounded-xl bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] p-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-amber-400" />
-                    <p className="text-sm font-medium text-[hsl(var(--fg-primary))]">{MUSCLE_NAMES_DE[wp.muscle] || wp.muscle}</p>
-                  </div>
-                  <p className="text-xs text-[hsl(var(--fg-muted))]">{wp.weeklyVolume} Sätze/Woche</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── Personal Records ─────────────────────────────────── */}
-        {stats.personalRecords.length > 0 && (
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <Trophy className="w-4 h-4 text-amber-400" />
-              <h2 className="text-sm font-semibold text-[hsl(var(--fg-secondary))] uppercase tracking-wider">Rekorde</h2>
-            </div>
-            <div className="space-y-2">
-              {stats.personalRecords.map((r) => (
-                <div key={r.exercise} className="flex items-center justify-between rounded-xl bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] p-3">
-                  <p className="text-sm font-medium text-[hsl(var(--fg-primary))] truncate">{r.exercise}</p>
-                  <p className="text-sm font-bold text-amber-400 shrink-0 ml-2">{r.weight}kg × {r.reps}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* ── Quick Access Grid ────────────────────────────────── */}
         <div className="grid grid-cols-2 gap-2 pb-2">
           {[
-            { label: 'Ernährung', icon: '🍎', href: '/nutrition' },
-            { label: 'Kalender', icon: '📅', href: '/calendar' },
-            { label: 'Ziele', icon: '🎯', href: '/goals' },
-            { label: 'Muskelbalance', icon: '⚖️', href: '/muscle-balance' },
+            { label: 'Ernährung', Icon: Apple, href: '/nutrition', color: 'text-emerald-400 bg-emerald-400/10' },
+            { label: 'Kalender', Icon: Calendar, href: '/calendar', color: 'text-blue-400 bg-blue-400/10' },
+            { label: 'Ziele', Icon: Target, href: '/goals', color: 'text-amber-400 bg-amber-400/10' },
+            { label: 'Analyse', Icon: BarChart3, href: '/muscle-balance', color: 'text-violet-400 bg-violet-400/10' },
           ].map((item) => (
             <button
               key={item.label}
               onClick={() => router.push(item.href)}
-              className="flex items-center gap-3 rounded-xl bg-[hsl(225,14%,10%)] border border-[hsl(225,10%,16%)] p-3.5 active:scale-[0.97] transition-transform"
+              className="flex items-center gap-3 rounded-xl bg-[hsl(var(--bg-card))] border border-[hsl(var(--border-light))] p-3.5 active:scale-[0.97] transition-transform"
             >
-              <span className="text-lg">{item.icon}</span>
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${item.color}`}>
+                <item.Icon className="w-4.5 h-4.5" />
+              </div>
               <span className="text-sm font-medium text-[hsl(var(--fg-primary))]">{item.label}</span>
             </button>
           ))}
@@ -389,7 +359,7 @@ export default function DashboardPage() {
       {showOnboarding && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="w-full max-w-sm rounded-2xl bg-[hsl(225,14%,11%)] border border-[hsl(225,10%,18%)] p-6 shadow-2xl">
-            <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Willkommen 👋</h2>
+            <h2 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Willkommen</h2>
             <p className="mt-1 text-sm text-[hsl(var(--fg-muted))]">Wie sollen wir dich nennen?</p>
             <div className="mt-4 space-y-3">
               <div>

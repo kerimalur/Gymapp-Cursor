@@ -6,7 +6,7 @@ import { de } from 'date-fns/locale';
 const muscleNames: Record<MuscleGroup, string> = {
   chest: 'Brust', back: 'Rücken', shoulders: 'Schultern', biceps: 'Bizeps',
   triceps: 'Trizeps', forearms: 'Unterarme', abs: 'Bauch', quadriceps: 'Quadrizeps',
-  hamstrings: 'Beinbeuger', calves: 'Waden', glutes: 'Gesäß', traps: 'Trapez', lats: 'Latissimus',
+  hamstrings: 'Beinbeuger', calves: 'Waden', glutes: 'Gesäss', traps: 'Trapez', lats: 'Latissimus',
   adductors: 'Adduktoren', abductors: 'Abduktoren', lower_back: 'Unterer Rücken', neck: 'Nacken'
 };
 

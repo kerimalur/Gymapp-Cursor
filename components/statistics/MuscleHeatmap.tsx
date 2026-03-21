@@ -30,7 +30,7 @@ const muscleLabels: Record<MuscleGroup, string> = {
   obliques: 'Seitliche Bauchmuskeln',
   quads: 'Quadrizeps',
   hamstrings: 'Beinbeuger',
-  glutes: 'Gesäß',
+  glutes: 'Gesäss',
   calves: 'Waden',
   traps: 'Trapez',
   lats: 'Latissimus',

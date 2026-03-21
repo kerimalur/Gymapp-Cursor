@@ -131,40 +131,39 @@ export function WorkoutHeatMap({ year }: WorkoutHeatMapProps) {
   const dayLabels = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
   
   const getLevelColor = (level: number) => {
-    // Light colors that work well on white/light backgrounds
     switch (level) {
       case -1: return 'bg-transparent';
-      case 0: return 'bg-slate-100 border border-slate-200';
-      case 1: return 'bg-emerald-200 border border-emerald-300';
-      case 2: return 'bg-emerald-400 border border-emerald-500';
-      case 3: return 'bg-emerald-600 border border-emerald-700';
-      default: return 'bg-slate-100 border border-slate-200';
+      case 0: return 'bg-[hsl(225,12%,15%)] border border-[hsl(225,10%,18%)]';
+      case 1: return 'bg-emerald-400/30 border border-emerald-400/40';
+      case 2: return 'bg-emerald-400/60 border border-emerald-400/70';
+      case 3: return 'bg-emerald-500 border border-emerald-600';
+      default: return 'bg-[hsl(225,12%,15%)] border border-[hsl(225,10%,18%)]';
     }
   };
   
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6">
+    <div className="bg-[hsl(225,14%,11%)] rounded-2xl border border-[hsl(225,10%,16%)] p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-xl font-bold text-slate-800">Trainings-Aktivit?t {currentYear}</h3>
-          <p className="text-sm text-slate-500 mt-1">
+          <h3 className="text-xl font-bold text-[hsl(var(--fg-primary))]">Trainings-Aktivität {currentYear}</h3>
+          <p className="text-sm text-[hsl(var(--fg-muted))] mt-1">
             {stats.totalWorkouts} Trainings an {stats.workoutDays} Tagen
           </p>
         </div>
         
         {/* Stats badges */}
         <div className="flex gap-3">
-          <div className="bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg">
-            <p className="text-xs text-emerald-600 font-medium">Aktueller Streak</p>
-            <p className="text-lg font-bold text-emerald-700">{stats.currentStreak} Tage</p>
+          <div className="bg-emerald-400/10 border border-emerald-400/20 px-3 py-1.5 rounded-lg">
+            <p className="text-xs text-emerald-400 font-medium">Aktueller Streak</p>
+            <p className="text-lg font-bold text-emerald-300">{stats.currentStreak} Tage</p>
           </div>
-          <div className="bg-orange-50 border border-orange-200 px-3 py-1.5 rounded-lg">
-            <p className="text-xs text-orange-600 font-medium">Bester Streak</p>
-            <p className="text-lg font-bold text-orange-700">{stats.maxStreak} Tage</p>
+          <div className="bg-orange-400/10 border border-orange-400/20 px-3 py-1.5 rounded-lg">
+            <p className="text-xs text-orange-400 font-medium">Bester Streak</p>
+            <p className="text-lg font-bold text-orange-300">{stats.maxStreak} Tage</p>
           </div>
-          <div className="bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-lg">
-            <p className="text-xs text-blue-600 font-medium">Ø pro Woche</p>
-            <p className="text-lg font-bold text-blue-700">{stats.avgPerWeek}</p>
+          <div className="bg-cyan-400/10 border border-cyan-400/20 px-3 py-1.5 rounded-lg">
+            <p className="text-xs text-cyan-400 font-medium">Ø pro Woche</p>
+            <p className="text-lg font-bold text-cyan-300">{stats.avgPerWeek}</p>
           </div>
         </div>
       </div>
@@ -172,7 +171,7 @@ export function WorkoutHeatMap({ year }: WorkoutHeatMapProps) {
       {/* Month labels */}
       <div className="flex mb-2 ml-8">
         {months.map((month, i) => (
-          <div key={month} className="flex-1 text-xs text-slate-500 font-medium">
+          <div key={month} className="flex-1 text-xs text-[hsl(var(--fg-muted))] font-medium">
             {month}
           </div>
         ))}
@@ -181,7 +180,7 @@ export function WorkoutHeatMap({ year }: WorkoutHeatMapProps) {
       {/* Heat map grid */}
       <div className="flex">
         {/* Day labels */}
-        <div className="flex flex-col gap-[3px] mr-2 text-xs text-slate-500">
+        <div className="flex flex-col gap-[3px] mr-2 text-xs text-[hsl(var(--fg-muted))]">
           {dayLabels.map((day, i) => (
             <div key={day} className="h-[14px] flex items-center">
               {i % 2 === 1 ? day : ''}
@@ -206,7 +205,7 @@ export function WorkoutHeatMap({ year }: WorkoutHeatMapProps) {
       </div>
       
       {/* Legend */}
-      <div className="flex items-center justify-end gap-2 mt-4 text-xs text-slate-500">
+      <div className="flex items-center justify-end gap-2 mt-4 text-xs text-[hsl(var(--fg-muted))]">
         <span>Weniger</span>
         <div className={`w-[14px] h-[14px] rounded-sm ${getLevelColor(0)}`} />
         <div className={`w-[14px] h-[14px] rounded-sm ${getLevelColor(1)}`} />

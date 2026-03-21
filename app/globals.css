@@ -9,59 +9,59 @@
 
 @layer base {
   :root {
-    /* Background & Surface - Deep Dark */
-    --bg-primary: 225 15% 6%;
-    --bg-secondary: 225 14% 9%;
-    --bg-tertiary: 225 12% 13%;
-    --bg-elevated: 225 13% 11%;
-    --bg-card: 225 14% 10%;
+    /* Background & Surface - Refined Dark (lighter, better contrast) */
+    --bg-primary: 225 14% 10%;
+    --bg-secondary: 225 13% 13%;
+    --bg-tertiary: 225 11% 17%;
+    --bg-elevated: 225 12% 15%;
+    --bg-card: 225 13% 14%;
     
-    /* Foreground */
-    --fg-primary: 210 40% 96%;
-    --fg-secondary: 215 20% 75%;
-    --fg-muted: 215 15% 55%;
-    --fg-subtle: 215 12% 40%;
+    /* Foreground - Higher contrast */
+    --fg-primary: 210 40% 98%;
+    --fg-secondary: 215 20% 82%;
+    --fg-muted: 215 15% 62%;
+    --fg-subtle: 215 12% 48%;
     
-    /* Brand – Electric Cyan & Neon Magenta */
-    --primary: 190 95% 55%;
-    --primary-light: 190 95% 15%;
-    --primary-dark: 190 85% 40%;
-    --secondary: 280 85% 60%;
-    --secondary-light: 280 85% 15%;
-    --accent: 155 85% 50%;
-    --accent-light: 155 85% 12%;
+    /* Brand – Clean Cyan & Violet */
+    --primary: 190 90% 50%;
+    --primary-light: 190 90% 18%;
+    --primary-dark: 190 80% 38%;
+    --secondary: 280 80% 60%;
+    --secondary-light: 280 80% 18%;
+    --accent: 155 80% 48%;
+    --accent-light: 155 80% 15%;
     
     /* Neon palette for highlights */
-    --neon-cyan: 185 100% 60%;
-    --neon-magenta: 320 100% 60%;
-    --neon-lime: 100 95% 55%;
-    --neon-orange: 25 100% 60%;
+    --neon-cyan: 185 95% 58%;
+    --neon-magenta: 320 95% 58%;
+    --neon-lime: 100 90% 52%;
+    --neon-orange: 25 95% 58%;
     
     /* Semantic Colors */
-    --success: 155 85% 50%;
-    --success-light: 155 75% 12%;
-    --warning: 38 100% 55%;
-    --warning-light: 38 80% 12%;
-    --error: 0 90% 60%;
-    --error-light: 0 70% 12%;
-    --info: 210 100% 60%;
-    --info-light: 210 80% 12%;
+    --success: 155 80% 48%;
+    --success-light: 155 70% 15%;
+    --warning: 38 95% 52%;
+    --warning-light: 38 75% 15%;
+    --error: 0 85% 58%;
+    --error-light: 0 65% 15%;
+    --info: 210 95% 58%;
+    --info-light: 210 75% 15%;
     
-    /* Borders & Dividers */
-    --border-light: 225 10% 16%;
-    --border-default: 225 12% 22%;
-    --border-strong: 225 15% 35%;
-    --border-glow: 190 95% 55%;
+    /* Borders & Dividers - More visible */
+    --border-light: 225 10% 20%;
+    --border-default: 225 12% 26%;
+    --border-strong: 225 15% 38%;
+    --border-glow: 190 90% 50%;
     
     /* Shadows */
-    --shadow-color: 225 50% 3%;
+    --shadow-color: 225 50% 5%;
     
     /* Glass */
-    --glass-bg: 225 15% 10%;
-    --glass-border: 225 10% 20%;
+    --glass-bg: 225 14% 14%;
+    --glass-border: 225 10% 24%;
     
     /* Mesh Gradient Opacities */
-    --mesh-opacity: 0.08;
+    --mesh-opacity: 0.06;
     
     /* Radius */
     --radius-sm: 0.5rem;

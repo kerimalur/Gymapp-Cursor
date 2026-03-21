@@ -80,7 +80,7 @@ const muscleInfo: Record<string, { description: string; avgSetsPerWeek: string; 
     tips: ['Farmer Walks für funktionelle Kraft', 'Curls und Reverse Curls', 'Griffvarianten beim Training']
   },
   'Beine': {
-    description: 'Quadrizeps, Beinbeuger, Waden und Gesäß - die größten Muskelgruppen des Körpers.',
+    description: 'Quadrizeps, Beinbeuger, Waden und Gesäss - die grössten Muskelgruppen des Körpers.',
     avgSetsPerWeek: '14-22 Sätze/Woche',
     tips: ['Compound-Übungen priorisieren', 'Volle Range of Motion', 'Isolation für Schwachstellen']
   },
@@ -534,7 +534,7 @@ export function MuscleBalanceChart() {
 
                   {/* Recommended Volume */}
                   <div className={`p-4 rounded-xl ${muscleColors[showMuscleInfo]?.bg || 'bg-primary-500'} bg-opacity-10 border ${muscleColors[showMuscleInfo]?.border || 'border-primary-200'}`}>
-                    <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-2">📊 Empfohlenes Volumen</h4>
+                    <h4 className="font-semibold text-[hsl(var(--fg-primary))] mb-2">Empfohlenes Volumen</h4>
                     <p className={`text-2xl font-bold ${muscleColors[showMuscleInfo]?.text || 'text-primary-600'}`}>
                       {muscleInfo[showMuscleInfo].avgSetsPerWeek}
                     </p>

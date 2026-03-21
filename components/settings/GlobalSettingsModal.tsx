@@ -34,7 +34,7 @@ const ALL_MUSCLES: { id: MuscleGroup; label: string; category: 'upper' | 'core' 
   { id: 'abs', label: 'Bauch', category: 'core' },
   { id: 'quadriceps', label: 'Quadrizeps', category: 'lower' },
   { id: 'hamstrings', label: 'Beinbizeps', category: 'lower' },
-  { id: 'glutes', label: 'Gesäß', category: 'lower' },
+  { id: 'glutes', label: 'Gesäss', category: 'lower' },
   { id: 'calves', label: 'Waden', category: 'lower' },
 ];
 
